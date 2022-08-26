@@ -1,6 +1,5 @@
 site_url: https://mlopsvn.github.io/mlops.vn/
 site_name: School Of MLOps
-docs_dir: courses
 theme:
     name: material
 nav:
