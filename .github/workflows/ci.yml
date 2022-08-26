@@ -2,8 +2,8 @@ name: ci
 on:
   push:
     branches:
-      - master
       - main
+      - quandv/fix-bug-not-render
 jobs:
   deploy:
     runs-on: ubuntu-latest
