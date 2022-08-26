@@ -1,4 +1,4 @@
-site_url: https://mlopsvn.github.io/school-of-mlops/
+site_url: https://mlopsvn.github.io/mlops.vn/
 site_name: School Of MLOps
 docs_dir: courses
 theme:
@@ -73,4 +73,4 @@ copyright: "Copyright 2022 MLOps VN Community. All Rights Reserved. Licensed und
 extra:
     social:
         - icon: fontawesome/brands/github
-          link: https://github.com/mlopsvn/school-of-mlops
+          link: https://github.com/mlopsvn/mlops.vn
