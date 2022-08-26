@@ -8,14 +8,11 @@ Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hi�
 
 TODO: Vẽ markdown table từ [gsheet này](https://docs.google.com/spreadsheets/d/117R4m1nc161BVYX3qut8Sk6SR8CCzhk07BS9y9qg5pc/edit#gid=0)
 
-TODO: viết chi tiết phần Time ra, giả sử có các bước:
-- Định nghĩa problem
-- POC 1, POC 2
-- Xây dựng data pipeline
-- Xây dựng model development pipeline
-- Xây dựng deployment pipeline
-- Xây dựng monitoring pipeline
-- Xây dựng CI/CD
+Về timeline của một dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:
+
+TODO: Paste [hình](https://app.diagrams.net/#G1_kqFsxN5brmNlekqu71Z1ThI1HC9PzR8) vô đây
+
+Trong thực thế, một dự án có thể có 1 hoặc nhiều POC. Sau mỗi bước thực hiện POC, business problem lại được định nghĩa rõ ràng hơn, cung cấp nhiều thông tin hơn cho quá trình xây dựng hệ thống. Ở bước Pipelines building, chúng ta không thể xây dựng các pipelines (data pipeline, model development pipeline, deployment pipeline, monitoring pipeline) một lần rồi xong, mà nó là nhiều vòng lặp. Tuỳ thuộc vào trạng thái hiện tại của dự án mà chúng ta sẽ tập trung vào các chức năng tối thiểu trước, sau đó mới đến các chức năng nâng cao như là tự động hoá pipelines, hay tối ưu thời gian chạy, tối ưu bộ nhớ, v.v.
 
 Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào business problem mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới business của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời.
 
