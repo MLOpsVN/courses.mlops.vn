@@ -1,1 +1,1 @@
-courses/CONTRIBUTING.md
+docs/CONTRIBUTING.md

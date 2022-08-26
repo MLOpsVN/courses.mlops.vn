@@ -1,1 +1,1 @@
-courses/index.md
+docs/index.md
