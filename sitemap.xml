@@ -16,6 +16,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/</loc>
+         <lastmod>2022-08-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/gioi-thieu/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
