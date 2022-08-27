@@ -12,9 +12,12 @@ plugins:
       height: auto
       zoomable: true
       draggable: true
+  - section-index
+
 nav:
   - Home: index.md
   - MLOps Crash Course:
+      - mlops-crash-course/index.md
       - Tổng quan hệ thống:
           - Giới thiệu: mlops-crash-course/tong-quan-he-thong/gioi-thieu.md
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
