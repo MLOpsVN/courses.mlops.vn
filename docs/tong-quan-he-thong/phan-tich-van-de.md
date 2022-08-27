@@ -1,7 +1,3 @@
-# Tổng quan hệ thống - Topic 02
-
-## Phân tích problem
-
 Một ML System cũng chính là một Software system. Khi đi xây dựng một Software system, việc đầu tiên cần làm chính là đi định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một ML system vẫn là business problem của một tổ chức.
 
 Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hiểu về ML, và quyết định chọn giải pháp sử dụng ML để giải quyết một business problem công ty: *dự đoán xem tài xế có hoàn thành một cuốc xe hay không?*. Quá trình định nghĩa một business problem bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi và các câu trả lời cho vấn đề của chúng ta trong khoá học này.
