@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://mlops.vn/</loc>
+         <loc>https://courses.mlops.vn/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mlops.vn/CODE_OF_CONDUCT/</loc>
+         <loc>https://courses.mlops.vn/CODE_OF_CONDUCT/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mlops.vn/CONTRIBUTING/</loc>
+         <loc>https://courses.mlops.vn/CONTRIBUTING/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mlops.vn/tong-quan-he-thong/gioi-thieu/</loc>
+         <loc>https://courses.mlops.vn/tong-quan-he-thong/gioi-thieu/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://mlops.vn/tong-quan-he-thong/phan-tich-van-de/</loc>
+         <loc>https://courses.mlops.vn/tong-quan-he-thong/phan-tich-van-de/</loc>
          <lastmod>2022-08-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
