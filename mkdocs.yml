@@ -1,5 +1,5 @@
 site_url: https://courses.mlops.vn/
-site_name: MLOpsVN
+site_name: MLOpsVN Courses
 docs_dir: docs
 theme:
   name: material
