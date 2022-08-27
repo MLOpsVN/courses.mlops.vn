@@ -1,85 +1,53 @@
-site_url: https://mlopsvn.github.io/mlops.vn/
-site_name: School Of MLOps
+site_url: https://mlops.vn/
+site_name: MLOpsVN
 docs_dir: docs
 theme:
-      name: material
+  name: material
 plugins:
-      - glightbox:
-              touchNavigation: true
-              loop: false
-              effect: zoom
-              width: 100%
-              height: auto
-              zoomable: true
-              draggable: true
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
 nav:
-      - Home: index.md
-      - Phân tích bài toán:
-              - Xác định mục tiêu kinh doanh: phan-tich-bai-toan/muc-tieu-kinh-doanh.md
-              - Chuyển mục tiêu kinh doanh sang mục tiêu ML: phan-tich-bai-toan/chuyen-muc-tieu-kinh-doanh-sang-ML.md
-              - Thu thập dữ liệu: phan-tich-bai-toan/thu-thap-du-lieu.md
-              - Đánh giá tính khả thi của bài toán: phan-tich-bai-toan/danh-gia-tinh-kha-thi-bai-toan.md
-              - Tạo PoC: phan-tich-bai-toan/tao-poc.md
+  - Home: index.md
+  - Tổng quan hệ thống:
+      - Giới thiệu: tong-quan-he-thong/gioi-thieu.md
+      - Phân tích vấn đề: tong-quan-he-thong/phan-tich-van-de.md
+  - PoC:
+      - Định nghĩa PoC: poc/dinh-nghia-poc.md
+      - Xây dựng PoC: poc/thuc-hien-poc.md
+  - Xây dựng data pipeline:
+      - Tổng quan pipeline: xay-dung-data-pipeline/tong-quan-pipeline.md
+      - Data ingestion: xay-dung-data-pipeline/data-ingestion.md
+      - Data cleaning: xay-dung-data-pipeline/data-cleaning.md
+      - Data exploration & validation: xay-dung-data-pipeline/data-exploration-validation.md
+  - Xây dựng training pipeline:
+      - Tổng quan pipeline: xay-dung-training-pipeline/tong-quan-pipeline.md
+      - Xây dựng pipeline: xay-dung-training-pipeline/xay-dung-pipeline.md
+  - Triển khai model serving:
+      - Tổng quan: trien-khai-model-serving/tong-quan.md
+      - Thực hiện: trien-khai-model-serving/thuc-hien.md
+  - Theo dõi hệ thống:
+      - Tổng quan: theo-doi-he-thong/tong-quan.md
+      - Theo dõi hệ thống: theo-doi-he-thong/theo-doi-he-thong.md
+      - Theo dõi model: theo-doi-he-thong/theo-doi-model.md
+      - Theo dõi data: theo-doi-he-thong/theo-doi-data.md
+  - CI/CD:
+      - Giới thiệu: ci-cd/gioi-thieu.md
+      - Kiểm thử hệ thống: ci-cd/kiem-thu-he-thong.md
+      - CI/CD cho data pipeline: ci-cd/data-pipeline.md
+      - CI/CD cho training pipeline: ci-cd/training-pipeline.md
+      - CI/CD cho model serving: ci-cd/model-serving.md
+  - Tổng kết:
+      - Tóm tắt nội dung: tong-ket/tom-tat-noi-dung.md
+      - Một số vấn đề khác: tong-ket/mot-so-van-de-khac.md
 
-      - PoC:
-              - Định nghĩa PoC:
-                      - Nguồn dữ liệu: dinh-nghia-poc/nguon-du-lieu.md
-                      - Features: dinh-nghia-poc/features.md
-                      - Model: dinh-nghia-poc/model.md
-                      - Đánh giá PoC: dinh-nghia-poc/danh-gia-poc.md
-              - Thực hiện PoC:
-                      - Thí nghiệm trên notebook: thuc-hien-poc/thi-nghiem-tren-notebook.md
-                      - Data versioning: thuc-hien-poc/data-versioning.md
-                      - Theo dõi các thí nghiệm: thuc-hien-poc/theo-doi-cac-thi-nghiem.md
-
-      - Xây dựng các data pipeline:
-              - Giới thiệu: xay-dung-data-pipeline/gioi-thieu.md
-              - Data ingestion: xay-dung-data-pipeline/data-ingestion.md
-              - Data cleaning: xay-dung-data-pipeline/data-cleaning.md
-              - Data exploration & validation: xay-dung-data-pipeline/data-exploration-validation.md
-              - Quy trình phát triển: xay-dung-data-pipeline/quy-trinh-phat-trien.md
-
-      - Xây dựng các ML pipeline:
-              - Giới thiệu: xay-dung-ml-pipeline/gioi-thieu.md
-              - Batch serving pipeline:
-                      - Giới thiệu: xay-dung-ml-pipeline/batch-serving-pipeline/gioi-thieu.md
-                      - Kéo dữ liệu: xay-dung-ml-pipeline/batch-serving-pipeline/keo-du-lieu.md
-                      - Batch serving: xay-dung-ml-pipeline/batch-serving-pipeline/batch-serving.md
-              - Training pipeline:
-                      - Giới thiệu: xay-dung-ml-pipeline/training-pipeline/gioi-thieu.md
-                      - Kéo dữ liệu: xay-dung-ml-pipeline/training-pipeline/keo-du-lieu.md
-                      - Huấn luyện model: xay-dung-ml-pipeline/training-pipeline/huan-luyen-model.md
-                      - Đánh giá model: xay-dung-ml-pipeline/training-pipeline/danh-gia-model.md
-                      - Đăng ký model: xay-dung-ml-pipeline/training-pipeline/dang-ky-model.md
-              - Tối ưu chi phí và hiệu năng: xay-dung-ml-pipeline/toi-uu-chi-phi-va-hieu-nang.md
-
-      - Triển khai model serving API:
-              - Giới thiệu: theo-doi-he-thong/gioi-thieu.md
-              - Thực hiện triển khai: trien-khai-model-serving-api/thuc-hien-trien-khai.md
-
-      - Theo dõi hệ thống:
-              - Giới thiệu: theo-doi-he-thong/gioi-thieu.md
-              - Xây dựng dashboard:
-                      - Theo dõi tài nguyên hệ thống: theo-doi-he-thong/dashboard-theo-doi-tai-nguyen-he-thong.md
-                      - Theo dõi model serving API: theo-doi-he-thong/dashboard-theo-doi-API.md
-                      - Theo dõi chất lượng dữ liệu: theo-doi-he-thong/dashboard-theo-doi-chat-luong-du-lieu.md
-
-      - CI/CD:
-              - Giới thiệu: ci-cd/gioi-thieu.md
-              - Kiểm thử hệ thống: ci-cd/kiem-thu-he-thong-ml.md
-              - Thực hiện triển khai:
-                      - Giới thiệu: ci-cd/thuc-hien-trien-khai.md
-                      - CI/CD cho data pipeline: ci-cd/thuc-hien-trien-khai/ci-cd-data-pipeline.md
-                      - CI/CD cho training pipeline: ci-cd/thuc-hien-trien-khai/ci-cd-training-pipeline.md
-                      - CI/CD cho model serving: ci-cd/thuc-hien-trien-khai/ci-cd-model-serving.md
-              - Trigger tự động và thủ công: ci-cd/trigger-tu-dong-va-thu-cong.md
-
-      - Tổng kết:
-              - Tóm tắt nội dung khóa học: tong-ket/tom-tat-noi-dung.md
-              - Một số vấn đề khác: tong-ket/mot-so-van-de-khac.md
-
-copyright: "Copyright 2022 MLOps VN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License"
+copyright: "Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License"
 extra:
-      social:
-            - icon: fontawesome/brands/github
-              link: https://github.com/mlopsvn/mlops.vn
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mlopsvn/mlops.vn
