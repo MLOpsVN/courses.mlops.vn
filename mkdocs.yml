@@ -14,37 +14,40 @@ plugins:
       draggable: true
 nav:
   - Home: index.md
-  - Tổng quan hệ thống:
-      - Giới thiệu: tong-quan-he-thong/gioi-thieu.md
-      - Phân tích vấn đề: tong-quan-he-thong/phan-tich-van-de.md
-  - PoC:
-      - Định nghĩa PoC: poc/dinh-nghia-poc.md
-      - Xây dựng PoC: poc/thuc-hien-poc.md
-  - Xây dựng data pipeline:
-      - Tổng quan pipeline: xay-dung-data-pipeline/tong-quan-pipeline.md
-      - Data ingestion: xay-dung-data-pipeline/data-ingestion.md
-      - Data cleaning: xay-dung-data-pipeline/data-cleaning.md
-      - Data exploration & validation: xay-dung-data-pipeline/data-exploration-validation.md
-  - Xây dựng training pipeline:
-      - Tổng quan pipeline: xay-dung-training-pipeline/tong-quan-pipeline.md
-      - Xây dựng pipeline: xay-dung-training-pipeline/xay-dung-pipeline.md
-  - Triển khai model serving:
-      - Tổng quan: trien-khai-model-serving/tong-quan.md
-      - Thực hiện: trien-khai-model-serving/thuc-hien.md
-  - Theo dõi hệ thống:
-      - Tổng quan: theo-doi-he-thong/tong-quan.md
-      - Theo dõi hệ thống: theo-doi-he-thong/theo-doi-he-thong.md
-      - Theo dõi model: theo-doi-he-thong/theo-doi-model.md
-      - Theo dõi data: theo-doi-he-thong/theo-doi-data.md
-  - CI/CD:
-      - Giới thiệu: ci-cd/gioi-thieu.md
-      - Kiểm thử hệ thống: ci-cd/kiem-thu-he-thong.md
-      - CI/CD cho data pipeline: ci-cd/data-pipeline.md
-      - CI/CD cho training pipeline: ci-cd/training-pipeline.md
-      - CI/CD cho model serving: ci-cd/model-serving.md
-  - Tổng kết:
-      - Tóm tắt nội dung: tong-ket/tom-tat-noi-dung.md
-      - Một số vấn đề khác: tong-ket/mot-so-van-de-khac.md
+  - MLOps Crash Course:
+      - Tổng quan hệ thống:
+          - Giới thiệu: mlops-crash-course/tong-quan-he-thong/gioi-thieu.md
+          - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
+      - PoC:
+          - Định nghĩa PoC: mlops-crash-course/poc/dinh-nghia-poc.md
+          - Xây dựng PoC: mlops-crash-course/poc/thuc-hien-poc.md
+      - Xây dựng data pipeline:
+          - Tổng quan pipeline: mlops-crash-course/xay-dung-data-pipeline/tong-quan-pipeline.md
+          - Data ingestion: mlops-crash-course/xay-dung-data-pipeline/data-ingestion.md
+          - Data cleaning: mlops-crash-course/xay-dung-data-pipeline/data-cleaning.md
+          - Data exploration & validation: mlops-crash-course/xay-dung-data-pipeline/data-exploration-validation.md
+      - Xây dựng training pipeline:
+          - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline.md
+          - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline.md
+      - Triển khai model serving:
+          - Tổng quan: mlops-crash-course/trien-khai-model-serving/tong-quan.md
+          - Thực hiện: mlops-crash-course/trien-khai-model-serving/thuc-hien.md
+      - Theo dõi hệ thống:
+          - Tổng quan: mlops-crash-course/theo-doi-he-thong/tong-quan.md
+          - Theo dõi hệ thống: mlops-crash-course/theo-doi-he-thong/theo-doi-he-thong.md
+          - Theo dõi model: mlops-crash-course/theo-doi-he-thong/theo-doi-model.md
+          - Theo dõi data: mlops-crash-course/theo-doi-he-thong/theo-doi-data.md
+      - CI/CD:
+          - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
+          - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md
+          - CI/CD cho data pipeline: mlops-crash-course/ci-cd/data-pipeline.md
+          - CI/CD cho training pipeline: mlops-crash-course/ci-cd/training-pipeline.md
+          - CI/CD cho model serving: mlops-crash-course/ci-cd/model-serving.md
+      - Tổng kết:
+          - Tóm tắt nội dung: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
+          - Một số vấn đề khác: mlops-crash-course/tong-ket/mot-so-van-de-khac.md
+  - Contributing: CONTRIBUTING.md
+  - Code of Conduct: CODE_OF_CONDUCT.md
 
 copyright: "Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License"
 extra:

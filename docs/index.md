@@ -11,8 +11,8 @@ MLOpsVN community is an organization committed to filling the gap between AI in 
 
 ## Contact Us
 
-- [Main site: mlops.vn](https://mlops.vn)
-- [Courses site: courses.mlops.vn](https://courses.mlops.vn)
+- Main site: [mlops.vn](https://mlops.vn)
+- Courses site: [courses.mlops.vn](https://courses.mlops.vn)
 - [Facebook page](https://www.facebook.com/MLOpsVN)
 - [Facebook group](https://www.facebook.com/groups/mlopsvn)
-- [Email: mlopsvn@gmail.com](maito:mlopsvn@gmail.com)
+- Email: [mlopsvn@gmail.com](maito:mlopsvn@gmail.com)
