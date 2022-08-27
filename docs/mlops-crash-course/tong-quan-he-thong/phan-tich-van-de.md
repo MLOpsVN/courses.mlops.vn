@@ -39,7 +39,7 @@ Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hi�
 
 Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:
 
-![timeline](../../assets/images/tong-quan-he-thong/phan-tich-van-de/timeline.png)
+<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" style="width:100%;" />
 
 Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm [ở đây](https://ml-ops.org/content/phase-zero) về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.
 
