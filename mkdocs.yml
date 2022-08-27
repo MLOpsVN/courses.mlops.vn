@@ -1,4 +1,4 @@
-site_url: https://mlops.vn/
+site_url: https://courses.mlops.vn/
 site_name: MLOpsVN
 docs_dir: docs
 theme:
@@ -50,4 +50,4 @@ copyright: "Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed unde
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/mlopsvn/mlops.vn
+      link: https://github.com/mlopsvn/courses.mlops.vn

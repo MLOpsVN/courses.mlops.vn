@@ -2,7 +2,7 @@ We realise that the initial content we created is just a starting point and our 
 
 As a contributor, you represent that the content you submit is not plagiarised. By submitting the content, you (and, if applicable, your employer) are licensing the submitted content to MLOpsVN and the open source community subject to the Creative Commons Attribution 4.0 International Public License.
 
-Repository URL: [https://github.com/mlopsvn/mlops.vn](https://github.com/mlopsvn/mlops.vn)
+Repository URL: [https://github.com/mlopsvn/courses.mlops.vn](https://github.com/mlopsvn/courses.mlops.vn)
 
 Contributing Guidelines
 Ensure that you adhere to the following guidelines:
