@@ -49,8 +49,8 @@ nav:
       - Tổng kết:
           - Tóm tắt nội dung: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
           - Một số vấn đề khác: mlops-crash-course/tong-ket/mot-so-van-de-khac.md
-  - Contributing: CONTRIBUTING.md
-  - Code of Conduct: CODE_OF_CONDUCT.md
+      - Contributing: CONTRIBUTING.md
+      - Code of Conduct: CODE_OF_CONDUCT.md
 
 copyright: "Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License"
 extra:
