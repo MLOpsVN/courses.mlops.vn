@@ -47,4 +47,4 @@ Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh 
 
 Ngoài ra, trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
 
-Ở bài tiếp theo, chúng ta sẽ cùng tìm hiểu về architecture, các workflow và các tool được dùng trong hệ thống. Tập hợp các workflow và tool này được gọi là MLOps platform.
+Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về architecture của hệ thống, các workflow và MLOps platform được dùng trong hệ thống.
