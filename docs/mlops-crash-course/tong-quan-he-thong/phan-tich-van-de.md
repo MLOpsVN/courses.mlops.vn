@@ -1,3 +1,5 @@
+<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg" loading="lazy"/>
+
 Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.
 
 Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hiểu về ML, và quyết định chọn giải pháp sử dụng ML để giải quyết một vấn đề kinh doanh, đó là: *Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?*. Quá trình định nghĩa vấn đề kinh doanh này bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta trong khoá học này.
@@ -39,7 +41,7 @@ Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hi�
 
 Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:
 
-<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" style="width:100%;" />
+<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" loading="lazy"/>
 
 Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm [ở đây](https://ml-ops.org/content/phase-zero) về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.
 
