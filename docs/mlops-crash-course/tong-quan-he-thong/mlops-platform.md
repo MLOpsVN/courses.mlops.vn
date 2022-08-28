@@ -6,7 +6,7 @@ MLOps platform (một số nơi cũng gọi là AI/ML platform) ra đời với 
 | CI/CD | Tự động hóa quá trình test và deploy | Github Actions |
 | Orchestrator | Xây dựng và quản lý các pipeline | Airflow |
 | Model registry | Lưu trữ và quản lý các model | MLFlow |
-| Feature store | Lưu trữ feature | PostgreSQL & Redis |
+| Feature store | Lưu trữ, quản lý và tương tác với các feature | Feast (PostgreSQL & Redis backend) |
 | Experiment tracking | Lưu trữ thông tin và quản lý các experiment | MLFlow |
 | ML Metadata Store | Lưu trữ artifact của các pipeline | MLFlow |
 | Monitoring | Theo dõi resource hệ thống, hiệu năng của model và chất lượng dữ liệu trên production | Prometheus & Grafana & ELK |
@@ -21,7 +21,7 @@ Các tương tác chính trong MLOps platform:
 
 1\. Airflow data pipeline đẩ y feature vào feature store
 
-2\. Data Scientist (DS) kéo dữ liệu từ offline store về để thực hiện các experiment: eda, train và tune
+2\. Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune
 
 3\. DS lưu thông tin mỗi lần thí nghiệm vào MLFlow
 
@@ -37,6 +37,6 @@ Các tương tác chính trong MLOps platform:
 
 15\. CI/CD cho model serving kéo model và metadata từ MLFlow để đóng gói trước khi deploy
 
-16\. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán
+16\. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán 
 
 17\. Kéo features về để train model
