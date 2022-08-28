@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/gioi-thieu/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/mlops-platform/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Giới thiệu - MLOpsVN Courses</title>
+<title>MLOps platform - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -43,7 +43,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Giới thiệu
+              MLOps platform
             
           </span>
 </div>
@@ -96,15 +96,15 @@
           Tổng quan hệ thống
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./">
-        Giới thiệu
-      </a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../phan-tich-van-de/">
         Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
+        MLOps platform
       </a>
 </li>
 </ul>
@@ -348,16 +348,111 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Giới thiệu</h1>
-<p>À suýt quên, mọi người sẽ cùng nhau triển khai hệ thống như này này</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/gioi-thieu/architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/gioi-thieu/architecture.png"/></a></p>
+<h1>MLOps platform</h1>
+<p>MLOps platform là nền tảng định nghĩa các workflow và cung cấp cho người dùng các tools cần thiết để triển khai các dự án ML. Ở một số tài liệu khác MLOps platform có tên khác là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và tool tương ứng như sau:</p>
+<table>
+<thead>
+<tr>
+<th>Tên thành phần</th>
+<th>Ý nghĩa</th>
+<th>Tool lựa chọn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source control</td>
+<td>Data và code version control</td>
+<td>Git &amp; Github</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>Tự động hóa quá trình test và deploy</td>
+<td>Jenkins</td>
+</tr>
+<tr>
+<td>Orchestrator</td>
+<td>Xây dựng và quản lý các pipeline</td>
+<td>Airflow</td>
+</tr>
+<tr>
+<td>Model registry</td>
+<td>Lưu trữ và quản lý các model</td>
+<td>MLFlow</td>
+</tr>
+<tr>
+<td>Feature store</td>
+<td>Lưu trữ, quản lý và tương tác với các feature</td>
+<td>Feast (PostgreSQL &amp; Redis backend)</td>
+</tr>
+<tr>
+<td>Experiment tracking</td>
+<td>Lưu trữ thông tin và quản lý các experiment</td>
+<td>MLFlow</td>
+</tr>
+<tr>
+<td>ML Metadata Store</td>
+<td>Lưu trữ artifact của các pipeline</td>
+<td>MLFlow</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Theo dõi resource hệ thống, hiệu năng của model và chất lượng dữ liệu trên production</td>
+<td>Prometheus &amp; Grafana &amp; ELK</td>
+</tr>
+</tbody>
+</table>
+<p>Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.</p>
+<p>Kiến trúc MLOps platform của chúng ta sẽ trông như sau:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"/></a></p>
+<p>Các tương tác chính trong MLOps platform:</p>
+<ol>
+<li>
+<p>Airflow data pipeline đẩy feature vào feature store</p>
+</li>
+<li>
+<p>Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune</p>
+</li>
+<li>
+<p>DS lưu thông tin mỗi lần thử nghiệm vào MLFlow</p>
+</li>
+<li>
+<p>DS push code lên Github để trigger các CI/CD pipeline tương ứng:</p>
+<ul>
+<li><span style="color:red"><strong>Flow Đỏ</strong></span>: push code data pipeline để trigger CI/CD cho data pipeline</li>
+<li><span style="color:blue"><strong>Flow Xanh dương</strong></span>: push code model training để trigger CI/CD cho model training pipeline</li>
+<li><span style="color:green"><strong>Flow Xanh lá</strong></span>: push code model serving để trigger CI/CD cho model serving</li>
+</ul>
+</li>
+<li>
+<p>CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)</p>
+</li>
+<li>
+<p>Prometheus kéo metrics từ model serving API để hiển thị lên Grafana dashboard</p>
+</li>
+<li>
+<p>Đẩy log về Elastic Search (tương tự với 11, 12 và 13)</p>
+</li>
+<li>
+<p>Model training pipeline lưu trữ model đi kèm với metadata</p>
+</li>
+<li>
+<p>CI/CD cho model serving kéo model và metadata từ MLFlow để đóng gói trước khi deploy</p>
+</li>
+<li>
+<p>Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán</p>
+</li>
+<li>
+<p>Kéo features về để train model</p>
+</li>
+</ol>
+<p>Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa architecture và tool ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về problem mà chúng ta đang giải quyết. Dựa vào Timeline đã được định nghĩa, tiếp theo chúng ta sẽ thực hiện POC.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: MLOps Crash Course" class="md-footer__link md-footer__link--prev" href="../../" rel="prev">
+<a aria-label="Previous: Phân tích vấn đề" class="md-footer__link md-footer__link--prev" href="../phan-tich-van-de/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -366,17 +461,17 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              MLOps Crash Course
+              Phân tích vấn đề
             </div>
 </div>
 </a>
-<a aria-label="Next: Phân tích vấn đề" class="md-footer__link md-footer__link--next" href="../phan-tich-van-de/" rel="next">
+<a aria-label="Next: Contributing" class="md-footer__link md-footer__link--next" href="../../../CONTRIBUTING/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Phân tích vấn đề
+              Contributing
             </div>
 </div>
 <div class="md-footer__button md-icon">
