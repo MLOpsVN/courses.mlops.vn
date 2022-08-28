@@ -2,7 +2,9 @@
 
 Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.
 
-Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hiểu về ML, và quyết định chọn giải pháp sử dụng ML để giải quyết một vấn đề kinh doanh, đó là: _Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?_. Quá trình định nghĩa vấn đề kinh doanh này bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta trong khoá học này.
+Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống _Grab_, và vấn đề kinh doanh của công ty của bạn là: _Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?_. Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.
+
+Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta.
 
 | **Chủ đề**             | **Câu hỏi**                                                                              | **Trả lời**                                                                                                                                                                        |
 | ---------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,4 +49,4 @@ Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh 
 
 Ngoài ra, trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
 
-Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về architecture của hệ thống, các workflow và MLOps platform được dùng trong hệ thống.
+Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các workflow và MLOps platform được dùng trong hệ thống.
