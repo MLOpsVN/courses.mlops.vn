@@ -1,3 +1,5 @@
+<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg" loading="lazy"/>
+
 Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.
 
 Trong khoá học này, chúng ta giả sử rằng tổ chức của bạn hiểu về ML, và quyết định chọn giải pháp sử dụng ML để giải quyết một vấn đề kinh doanh, đó là: *Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?*. Quá trình định nghĩa vấn đề kinh doanh này bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta trong khoá học này.
