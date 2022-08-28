@@ -349,7 +349,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>MLOps platform</h1>
-<p>MLOps platform là nền tảng định nghĩa các workflow và cung cấp cho người dùng các tools cần thiết để triển khai các dự án ML. Ở một số tài liệu khác MLOps platform có tên khác là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và tool tương ứng như sau:</p>
+<p>MLOps platform là nền tảng cung cấp các tool cần thiết để quản lý và triển khai các dự án ML. Trong một số tài liệu khác MLOps platform có tên khác là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và tool tương ứng như sau:</p>
 <table>
 <thead>
 <tr>
@@ -402,50 +402,25 @@
 </tbody>
 </table>
 <p>Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.</p>
-<p>Kiến trúc MLOps platform của chúng ta sẽ trông như sau:</p>
+<p>Kiến trúc MLOps platform của chúng ta sẽ như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"/></a></p>
 <p>Các tương tác chính trong MLOps platform:</p>
-<ol>
-<li>
-<p>Airflow data pipeline đẩy feature vào feature store</p>
-</li>
-<li>
-<p>Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune</p>
-</li>
-<li>
-<p>DS lưu thông tin mỗi lần thử nghiệm vào MLFlow</p>
-</li>
-<li>
-<p>DS push code lên Github để trigger các CI/CD pipeline tương ứng:</p>
-<ul>
-<li><span style="color:red"><strong>Flow Đỏ</strong></span>: push code data pipeline để trigger CI/CD cho data pipeline</li>
-<li><span style="color:blue"><strong>Flow Xanh dương</strong></span>: push code model training để trigger CI/CD cho model training pipeline</li>
-<li><span style="color:green"><strong>Flow Xanh lá</strong></span>: push code model serving để trigger CI/CD cho model serving</li>
-</ul>
-</li>
-<li>
-<p>CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)</p>
-</li>
-<li>
-<p>Prometheus kéo metrics từ model serving API để hiển thị lên Grafana dashboard</p>
-</li>
-<li>
-<p>Đẩy log về Elastic Search (tương tự với 11, 12 và 13)</p>
-</li>
-<li>
-<p>Model training pipeline lưu trữ model đi kèm với metadata</p>
-</li>
-<li>
-<p>CI/CD cho model serving kéo model và metadata từ MLFlow để đóng gói trước khi deploy</p>
-</li>
-<li>
-<p>Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán</p>
-</li>
-<li>
-<p>Kéo features về để train model</p>
-</li>
-</ol>
-<p>Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa architecture và tool ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về problem mà chúng ta đang giải quyết. Dựa vào Timeline đã được định nghĩa, tiếp theo chúng ta sẽ thực hiện POC.</p>
+<p>1. Airflow data pipeline đẩy feature vào feature store</p>
+<p>2. Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune</p>
+<p>3. DS lưu thông tin mỗi lần thử nghiệm vào MLFlow</p>
+<p>4. DS push code lên Github để trigger các CI/CD pipeline tương ứng:</p>
+<pre><code>- &lt;span style="color:red"&gt;**Flow Đỏ**&lt;/span&gt;: push code data pipeline để trigger CI/CD cho data pipeline
+- &lt;span style="color:blue"&gt;**Flow Xanh dương**&lt;/span&gt;: push code model training để trigger CI/CD cho model training pipeline
+- &lt;span style="color:green"&gt;**Flow Xanh lá**&lt;/span&gt;: push code model serving để trigger CI/CD cho model serving
+</code></pre>
+<p>5. CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)</p>
+<p>9. Prometheus kéo metrics từ model serving API để hiển thị lên Grafana dashboard</p>
+<p>10. Đẩy log về Elastic Search (tương tự với 11, 12 và 13)</p>
+<p>14. Model training pipeline lưu trữ model đi kèm với metadata</p>
+<p>15. CI/CD cho model serving kéo model và metadata từ MLFlow để đóng gói trước khi deploy</p>
+<p>16. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán</p>
+<p>17. Kéo features về để train model</p>
+<p>Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về problem mà chúng ta đang giải quyết. Dựa vào Timeline đã được định nghĩa, tiếp theo chúng ta sẽ thực hiện POC.</p>
 </article>
 </div>
 </div>
