@@ -20,8 +20,8 @@ nav:
     - MLOps Crash Course:
           - mlops-crash-course/index.md
           - Tổng quan hệ thống:
-                - Giới thiệu: mlops-crash-course/tong-quan-he-thong/gioi-thieu.md
                 - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
+                - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
           - PoC:
                 - Định nghĩa PoC: mlops-crash-course/poc/dinh-nghia-poc.md
                 - Xây dựng PoC: mlops-crash-course/poc/thuc-hien-poc.md
