@@ -409,10 +409,11 @@
 <p>2. Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune</p>
 <p>3. DS lưu thông tin mỗi lần thử nghiệm vào MLFlow</p>
 <p>4. DS push code lên Github để trigger các CI/CD pipeline tương ứng:</p>
-<pre><code>- &lt;span style="color:red"&gt;**Flow Đỏ**&lt;/span&gt;: push code data pipeline để trigger CI/CD cho data pipeline
-- &lt;span style="color:blue"&gt;**Flow Xanh dương**&lt;/span&gt;: push code model training để trigger CI/CD cho model training pipeline
-- &lt;span style="color:green"&gt;**Flow Xanh lá**&lt;/span&gt;: push code model serving để trigger CI/CD cho model serving
-</code></pre>
+<ul>
+<li><span style="color:red"><strong>Flow Đỏ</strong></span>: push code data pipeline để trigger CI/CD cho data pipeline</li>
+<li><span style="color:blue"><strong>Flow Xanh dương</strong></span>: push code model training để trigger CI/CD cho model training pipeline</li>
+<li><span style="color:green"><strong>Flow Xanh lá</strong></span>: push code model serving để trigger CI/CD cho model serving</li>
+</ul>
 <p>5. CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)</p>
 <p>9. Prometheus kéo metrics từ model serving API để hiển thị lên Grafana dashboard</p>
 <p>10. Đẩy log về Elastic Search (tương tự với 11, 12 và 13)</p>
