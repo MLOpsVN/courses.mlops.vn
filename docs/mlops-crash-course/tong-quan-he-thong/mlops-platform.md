@@ -45,4 +45,10 @@ Các tương tác chính trong MLOps platform:
 
 17\. Kéo features về để train model
 
+18\. Materialize feature từ offline sang online store
+
+19.\ Stream dữ liệu vào online store
+
+20.\ Stream dữ liệu vào offline store
+
 Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về problem mà chúng ta đang giải quyết. Dựa vào Timeline đã được định nghĩa, tiếp theo chúng ta sẽ thực hiện POC.
