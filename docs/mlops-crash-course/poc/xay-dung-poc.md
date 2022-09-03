@@ -18,7 +18,14 @@ Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen 
 
 Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là `driver_stats.parquet` và `driver_orders.csv`. Hai file này chứa các cột với ý nghĩa tương ứng như sau:
 
-TODO: Vẽ bảng nói về ý nghĩa của các cột data.
+| **File**                 | **Cột**         | **Ý nghĩa**                              |
+| ------------------------ | --------------- | ---------------------------------------- |
+| **driver_stats.parquet** | driver_id       | ID của driver trong Database của công ty |
+|                          | conv_rate       | Một thông số nào đó                      |
+|                          | acc_rate        | Một thông số nào đó                      |
+|                          | avg_daily_trips | Số cuốc xe trung bình một ngày           |
+| **driver_orders.csv**    | driver_id       | ID của driver trong Database của công ty |
+|                          | trip_completed  | Cuốc xe có hoàn thành không              |
 
 Code dùng để load và clean data như sau.
 

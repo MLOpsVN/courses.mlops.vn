@@ -4,15 +4,15 @@ Trong bài này, chúng ta sẽ cùng nhau xây dựng một dự án POC. Dự 
 
 ## Định nghĩa POC
 
-Trong bài trước, chúng ta đã cùng phân tích vấn đề kinh doanh và đã trả lời được các câu hỏi sau:
+Trong quá trình phân tích vấn đề kinh doanh, chúng ta đã tổng hợp được thông tin về data và quá trình xây dựng ML model như sau.
 
--   Data được lấy từ đâu?
--   Data sẽ được transform, clean, và lưu trữ thế nào?
--   Các feature tiềm năng là gì?
--   Các ML model tiềm năng?
--   Dùng metrics nào để đánh giá model?
-
-TODO: vẽ bảng các câu hỏi và câu trả lời
+| Câu hỏi                                            | Trả lời                                                                                                           |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Data được lấy từ đâu?                              | Đã được tổng hợp bởi Data Engineer từ ứng dụng của công ty                                                        |
+| Data sẽ được transform, clean, và lưu trữ thế nào? | Data đã được Data Engineer xử lý để thực hiện POC trước, format là `parquet`, tạm thời lưu ở Database của công ty |
+| Các feature tiềm năng là gì?                       | conv_rate, acc_rate, avg_daily_trips                                                                              |
+| Các model architecture tiềm năng?                  | Linear Regression, Elastic Net                                                                                    |
+| Dùng metrics nào để đánh giá model?                | MSE, RMSE, R2                                                                                                     |
 
 Ở bước xây dựng dự án POC này, chúng ta cần trả lời thêm một câu hỏi nữa, đó là: _Thế nào là một dự án POC thành công?_
 
