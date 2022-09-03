@@ -1,0 +1,1 @@
+Airflow là một tool cung cấp SDK và UI để hỗ trợ xây dựng, quản lý, theo dõi các pipeline.

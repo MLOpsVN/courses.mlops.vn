@@ -45,6 +45,12 @@ Các tương tác chính trong MLOps platform:
 
 17\. Kéo features về để train model
 
+18\. Materialize feature từ offline sang online store
+
+19.\ Stream dữ liệu vào online store
+
+20.\ Stream dữ liệu vào offline store
+
 ## Infra layer
 
 <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png" loading="lazy" />
