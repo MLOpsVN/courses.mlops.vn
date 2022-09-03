@@ -89,11 +89,11 @@ loaded_model = joblib.load(model_path)
 predictions = loaded_model.predict(test_x)
 ```
 
-Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong các phần tiếp theo, chúng ta sẽ học cách tích hợp MLflow vào training code để ghi chép lại các thông tin trên của các lần thử nghiệm.
+Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài trước, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.
 
 ### Theo dõi các thử nghiệm
 
-MLflow là một open source tool để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.
+MLflow là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.
 
 Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone [mlops-crash-course-platform github project này](https://github.com/MLOpsVN/mlops-crash-course-platform) về máy của bạn, làm theo hướng dẫn trong README.md, và chạy câu lệnh sau.
 
