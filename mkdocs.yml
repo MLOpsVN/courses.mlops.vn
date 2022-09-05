@@ -24,7 +24,7 @@ nav:
                 - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
           - PoC:
                 - Định nghĩa PoC: mlops-crash-course/poc/dinh-nghia-poc.md
-                - Xây dựng PoC: mlops-crash-course/poc/thuc-hien-poc.md
+                - Xây dựng PoC: mlops-crash-course/poc/xay-dung-poc.md
           - Xây dựng data pipeline:
                 - Tổng quan pipeline: mlops-crash-course/xay-dung-data-pipeline/tong-quan-pipeline.md
                 - Data ingestion: mlops-crash-course/xay-dung-data-pipeline/data-ingestion.md
