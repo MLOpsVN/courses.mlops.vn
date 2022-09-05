@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/xay-dung-data-pipeline/tong-quan-data-pipeline/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/poc/dinh-nghia-poc/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Tong quan data pipeline - MLOpsVN Courses</title>
+<title>Định nghĩa PoC - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -22,6 +22,9 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#muc-tieu">
+          Skip to content
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -43,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Tong quan data pipeline
+              Định nghĩa PoC
             
           </span>
 </div>
@@ -70,8 +73,8 @@
         Home
       </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
 <a href="../../">MLOps Crash Course</a>
 <label for="__nav_2">
@@ -109,8 +112,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_2">
           PoC
           <span class="md-nav__icon md-icon"></span>
@@ -121,13 +124,36 @@
           PoC
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Định nghĩa PoC
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Định nghĩa PoC
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../poc/xay-dung-poc/">
+<a class="md-nav__link" href="#inh-nghia-poc">
+    Định nghĩa POC
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../xay-dung-poc/">
         Xây dựng PoC
       </a>
 </li>
@@ -147,22 +173,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../tong-quan-pipeline.md">
+<a class="md-nav__link" href="../../xay-dung-data-pipeline/tong-quan-pipeline.md">
         Tổng quan pipeline
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-ingestion.md">
+<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-ingestion.md">
         Data ingestion
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-cleaning.md">
+<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-cleaning.md">
         Data cleaning
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-exploration-validation.md">
+<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-exploration-validation.md">
         Data exploration &amp; validation
       </a>
 </li>
@@ -341,74 +367,105 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inh-nghia-poc">
+    Định nghĩa POC
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Tong quan data pipeline</h1>
-<p>Từ xưa một cụ giấu tên đã có câu <em>garbage in, garbage out</em>, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của <a href="https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says">Forbes</a>, các Data Scientists dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian. </p>
-<p>Thông thường một pipeline xử lý dữ liệu sẽ gồm các thành phần chính như sau:</p>
+<h1>Định nghĩa PoC</h1>
+<h2 id="muc-tieu">Mục tiêu</h2>
+<p>Trong bài này, chúng ta sẽ cùng nhau xây dựng một dự án POC. Dự án POC sẽ giúp chúng ta thử nghiệm các giải pháp nhanh chóng để chứng minh được rằng tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì chúng ta đang chọn ML làm giải pháp nên ở bước xây dựng dự án POC này, chúng ta sẽ đi chứng minh rằng giải pháp ML là khả thi.</p>
+<h2 id="inh-nghia-poc">Định nghĩa POC</h2>
+<p>Trong quá trình phân tích vấn đề kinh doanh, chúng ta đã tổng hợp được thông tin về data và quá trình xây dựng ML model như sau.</p>
 <table>
 <thead>
 <tr>
-<th>Thành phần chính</th>
-<th>Công việc cần làm</th>
+<th>Câu hỏi</th>
+<th>Trả lời</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Data ingestion</td>
-<td><strong>Data provenance:</strong> lưu trữ thông tin về các dữ liệu nguồn</td>
+<td>Data được lấy từ đâu?</td>
+<td>Đã được tổng hợp bởi Data Engineer từ ứng dụng của công ty</td>
 </tr>
 <tr>
-<td></td>
-<td><strong>Metadata catalog:</strong> lưu trữ thông tin về dữ liệu bao gồm: kích thước, định dạng, người sở hữu, người có quyền truy cập, thời gian sửa đổi gần nhất, .v.v.</td>
+<td>Data sẽ được transform, clean, và lưu trữ thế nào?</td>
+<td>Data đã được Data Engineer xử lý để thực hiện POC trước, format là <code>parquet</code>, tạm thời lưu ở Database của công ty</td>
 </tr>
 <tr>
-<td></td>
-<td><strong>Data formatting:</strong> chuyển dữ liệu sang format khác để dễ dàng xử lý</td>
+<td>Các feature tiềm năng là gì?</td>
+<td>conv_rate, acc_rate, avg_daily_trips</td>
 </tr>
 <tr>
-<td></td>
-<td><strong>Privacy Compliance:</strong> đảm bảo các dữ liệu nhạy cảm (PII), ví dụ thông tin họ tên khách hàng đi kèm CMND/CCCD, đã được ẩn đi</td>
+<td>Các model architecture tiềm năng?</td>
+<td>Linear Regression, Elastic Net</td>
 </tr>
 <tr>
-<td>Data cleaning</td>
-<td>Xử lý outlier/missing values</td>
-</tr>
-<tr>
-<td></td>
-<td>Loại bỏ các features không liên quan hoặc các sample bị lặp lại</td>
-</tr>
-<tr>
-<td></td>
-<td>Thay đổi thứ tự các cột</td>
-</tr>
-<tr>
-<td></td>
-<td>Thực hiện các phép biến đổi</td>
-</tr>
-<tr>
-<td>Data exploration &amp; validation</td>
-<td><strong>Data profiling:</strong> hiển thị thông tin cơ bản về các feature như kiểu dữ liệu, tỉ lệ missing value, phân bố dữ liệu, các con số thống kê như <em>min</em>, <em>max</em>, <em>mean</em>, .v.v.</td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Visualization:</strong> xây dựng các dashboard về phân bố hoặc độ skew của dữ liệu</td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Validation:</strong> sử dụng các user-defined rule (ví dụ như <em>tỉ lệ missing value &lt; 80%</em>), hoặc dựa vào thống kê để xác định độ lệch phân bố</td>
+<td>Dùng metrics nào để đánh giá model?</td>
+<td>MSE, RMSE, R2</td>
 </tr>
 </tbody>
 </table>
+<p>Ở bước xây dựng dự án POC này, chúng ta cần trả lời thêm một câu hỏi nữa, đó là: <em>Thế nào là một dự án POC thành công?</em></p>
+<p>Vì những dự án POC đầu tiên chưa thể đưa ML model ra môi trường production để trích xuất ra metric cuối cùng để đánh giá ML model được, nên chúng ta cần phải sử dụng metrics đã được định nghĩa ở trên để đánh giá ML model. Cụ thể, chúng ta cần phải đặt một threshold cho các metrics này. Trong khoá học này, chúng ta sử dụng metric RMSE, và threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn <strong>0.6</strong>.</p>
+<p>Lưu ý: dự án POC chỉ là một vòng lặp khi xây dựng hệ thống. Ở những dự án POC đầu tiên, cách đánh giá model có thể chỉ là dùng offline metric. Càng về các giai đoạn sau, khi hệ thống đã được triển khai ra production, các online metric sẽ được dùng để đánh giá giải pháp ở giai đoạn đó.</p>
+<p>Lưu ý: Một số metric khác được sử dụng như:</p>
+<ul>
+<li>Sử dụng cả metric Accuracy, F1, AUC để đánh giá model performance</li>
+<li>Sử dụng thời gian training và inference của ML model để so sánh chi phí và lợi ích</li>
+</ul>
+<p>Sau khi đã định nghĩa được thế nào là một dự án POC thành công, ở bước tiếp theo, chúng ta sẽ bắt tay vào thực hiện dự án POC.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: MLOps platform" class="md-footer__link md-footer__link--prev" href="../../tong-quan-he-thong/mlops-platform/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              MLOps platform
+            </div>
+</div>
+</a>
+<a aria-label="Next: Xây dựng PoC" class="md-footer__link md-footer__link--next" href="../xay-dung-poc/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Xây dựng PoC
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
