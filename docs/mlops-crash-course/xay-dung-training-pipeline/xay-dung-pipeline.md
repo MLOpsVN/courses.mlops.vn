@@ -2,7 +2,7 @@
 
 Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với 7 task như hình dưới.
 
-TODO: Chèn hình DAG
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
 Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [ở đây](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này đã được tải lên Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
@@ -52,7 +52,9 @@ bash run.sh feast up
 Sau đó, để cập nhập Feature Registry, trong repo `mlops-crash-course-code`, chúng ta chạy các lệnh sau.
 
 ```bash
-cd feature_repo && feast apply
+cd feature_repo
+feast apply
+cd ..
 ```
 
 Sau khi chạy xong, các bạn sẽ thấy file `training_pipeline/feature_repo/registry/local_registry.db` được sinh ra. Đây chính là Feature Registry của chúng ta.
@@ -100,7 +102,9 @@ to_parquet(training_df, AppPath.TRAINING_PQ)
 Hãy cùng chạy task này ở môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
-cd src && python data_extraction.py
+cd src
+python data_extraction.py
+cd ..
 ```
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `training.parquet`.
@@ -139,7 +143,7 @@ def check_expected_features(df: pd.DataFrame):
 Để đơn gian hoá code và tập trung vào MLOps, trong khoá học này chúng ta sẽ không kiểm tra các tính chất liên quan tới data distribution. Code của task này được lưu tại file `training_pipeline/src/data_validation.py`. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
-cd src && python data_validation.py
+cd src && python data_validation.py && cd ..
 ```
 
 ### Data preparation
@@ -173,7 +177,9 @@ to_parquet(test_y, AppPath.TEST_Y_PQ)
 Code của task này được lưu tại file `training_pipeline/src/data_preparation.py`. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
-cd src && python data_preparation.py
+cd src
+python data_preparation.py
+cd ..
 ```
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy các files `training.parquet`, `train_x.parquet`, `test_x.parquet`, `train_y.parquet`, và `test_y.parquet`.
@@ -199,7 +205,6 @@ model = ElasticNet(
 model.fit(train_x, train_y)
 
 # Log metadata
-mlflow.log_param("features", list(config.feature_dict.keys()))
 mlflow.log_param("alpha", config.alpha)
 mlflow.log_param("l1_ratio", config.l1_ratio)
 mlflow.sklearn.log_model(
@@ -212,7 +217,7 @@ run_info = RunInfo(run_id)
 run_info.save()
 ```
 
-Các bạn đã quen thuộc từ bước đầu cho tới bước `Log metadata`. Ở bước cuối, chúng ta cần lưu lại thông tin về lần chạy hiện tại vào disk, để các task tiếp theo biết được model nào vừa được train để có thể download model từ MLflow server và đánh giá model.
+Các bạn đã quen thuộc từ bước đầu cho tới bước `Log metadata`. Ở bước cuối, chúng ta cần lưu lại thông tin về lần chạy hiện tại vào disk, để các task tiếp theo biết được model nào vừa được train để có thể download model từ MLflow server và đánh giá model. Lưu ý thêm rằng ở bước Log metadata, chúng ta không cần phải log lại danh sách các feature được sử dụng nữa, vì bộ feature chúng ta sử dụng trong training đã được version trong code ở bước Data extraction, đồng thời DAG của chúng ta đã được version bởi `git`.
 
 Code của task này được lưu tại file `training_pipeline/src/model_training.py`. Trước khi chạy file code này, chúng ta cần chạy MLflow server. Để chạy Mlflow server, các bạn mở folder chứa code của Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform) và chạy lệnh sau.
 
@@ -223,12 +228,14 @@ bash run.sh mlflow up
 Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
-cd src && python model_training.py
+cd src
+python model_training.py
+cd ..
 ```
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `run_info.json`. Nếu mở MLflow server trên browser ra, các bạn cũng sẽ nhìn thấy một experiment đã được tạo ra.
 
-TODO: Thêm ảnh MLflow
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png" loading="lazy" />
 
 ### Model evaluation
 
@@ -253,7 +260,9 @@ eval_result.save()
 Kết quả của các offline metrics sẽ được lưu vào disk để phục vụ cho task Model validation. Code của task này được lưu tại file `training_pipeline/src/model_evaluation.py`. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
-cd src && python model_evaluation.py
+cd src
+python model_evaluation.py
+cd ..
 ```
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `evaluation.json`.
@@ -282,9 +291,21 @@ result = mlflow.register_model(
 dump_json(result.__dict__, AppPath.REGISTERED_MODEL_VERSION)
 ```
 
-Như các bạn thấy trong đoạn code trên, nếu như các offline metrics của model thoả mãn các yêu cầu đề ra, chúng ta sẽ tự động register model với Model Registry của MLflow. Thông tin của model được registered và version của nó sẽ được lưu lại vào disk để đối chiếu khi cần.
+Như các bạn thấy trong đoạn code trên, nếu như các offline metrics của model thoả mãn các yêu cầu đề ra, chúng ta sẽ tự động register model với Model Registry của MLflow. Thông tin của model được registered và version của nó sẽ được lưu lại vào disk để đối chiếu khi cần. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
-Sau khi chạy xong, nếu như model thoả mãn các yêu cầu đề ra, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `registered_model_version.json`.
+```bash
+cd src
+python model_validation.py
+cd ..
+```
+
+Sau khi chạy xong, nếu như model thoả mãn các yêu cầu đề ra, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `registered_model_version.json`. MLflow server cũng sẽ hiển thị model mà bạn đã registered.
+
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png" loading="lazy" />
+
+Các bạn có thể click vào model đã được register để xem thêm thông tin nó. Cụ thể như ở hình dưới, chúng ta có thể thấy MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model.
+
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png" loading="lazy" />
 
 ### Airflow DAG
 
@@ -374,11 +395,18 @@ Sau đó, quay lại folder `mlops-crash-course-code` và chạy lệnh sau đ�
 make deploy_dags
 ```
 
-Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là `TRAINING_PIPELINE_DIR`. Variable này sẽ chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/training_pipeline`. Chúng ta cần đường dẫn tuyệt đối vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable `TRAINING_PIPELINE_DIR` sẽ được dùng để tạo ra `Mount Source`. Các bạn có thể tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để set Airflow Variable.
+Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoảng và mật khẩu mặc định là `airflow`. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
 
-Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả.
+```bash
+bash run.sh airflow down
+bash run.sh airflow up
+```
 
-TODO: Thêm ảnh Airflow DAG
+Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là `MLOPS_CRASH_COURSE_CODE_DIR`. Variable này sẽ chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Chúng ta cần đường dẫn tuyệt đối vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable `MLOPS_CRASH_COURSE_CODE_DIR` sẽ được dùng để tạo ra `Mount Source`. Các bạn có thể tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để set Airflow Variable.
+
+Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.
+
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png" loading="lazy" />
 
 ## Tổng kết
 

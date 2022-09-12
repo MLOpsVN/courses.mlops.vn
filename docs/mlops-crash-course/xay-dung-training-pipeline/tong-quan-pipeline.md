@@ -16,7 +16,7 @@ Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động
 
 Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với 7 tasks như hình dưới:
 
-TODO: Vẽ hình DAG
+<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
 ### Cập nhật Feature Store
 
