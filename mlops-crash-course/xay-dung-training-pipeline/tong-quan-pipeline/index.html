@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/poc/xay-dung-poc/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Xây dựng PoC - MLOpsVN Courses</title>
+<title>Tổng quan pipeline - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#xay-dung-poc">
+<a class="md-skip" href="#muc-tieu">
           Skip to content
         </a>
 </div>
@@ -46,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Xây dựng PoC
+              Tổng quan pipeline
             
           </span>
 </div>
@@ -112,8 +112,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_2">
           PoC
           <span class="md-nav__icon md-icon"></span>
@@ -125,61 +125,14 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../dinh-nghia-poc/">
+<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
         Định nghĩa PoC
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Xây dựng PoC
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../poc/xay-dung-poc/">
         Xây dựng PoC
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-poc">
-    Xây dựng POC
-  </a>
-<nav aria-label="Xây dựng POC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#chuan-bi-data">
-    Chuẩn bị data
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-training-code">
-    Phân tích data và training code
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-thu-nghiem">
-    Theo dõi các thử nghiệm
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-feature">
-    Theo dõi các feature
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tong-ket">
-    Tổng kết
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -219,8 +172,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_4">
           Xây dựng training pipeline
           <span class="md-nav__icon md-icon"></span>
@@ -231,13 +184,80 @@
           Xây dựng training pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/tong-quan-pipeline/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Tổng quan pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Tổng quan pipeline
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/xay-dung-pipeline/">
+<a class="md-nav__link" href="#training-pipeline">
+    Training pipeline
+  </a>
+<nav aria-label="Training pipeline" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cap-nhat-feature-registry">
+    Cập nhật Feature Registry
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-validation">
+    Data validation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-preparation">
+    Data preparation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-training">
+    Model training
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-evaluation">
+    Model evaluation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-validation">
+    Model validation
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../xay-dung-pipeline/">
         Xây dựng pipeline
       </a>
 </li>
@@ -397,30 +417,53 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-poc">
-    Xây dựng POC
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
   </a>
-<nav aria-label="Xây dựng POC" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#training-pipeline">
+    Training pipeline
+  </a>
+<nav aria-label="Training pipeline" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#chuan-bi-data">
-    Chuẩn bị data
+<a class="md-nav__link" href="#cap-nhat-feature-registry">
+    Cập nhật Feature Registry
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-training-code">
-    Phân tích data và training code
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-thu-nghiem">
-    Theo dõi các thử nghiệm
+<a class="md-nav__link" href="#data-validation">
+    Data validation
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-feature">
-    Theo dõi các feature
+<a class="md-nav__link" href="#data-preparation">
+    Data preparation
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-training">
+    Model training
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-evaluation">
+    Model evaluation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-validation">
+    Model validation
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
@@ -429,179 +472,71 @@
 </li>
 </ul>
 </nav>
-</li>
-</ul>
-</nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Xây dựng PoC</h1>
-<h2 id="xay-dung-poc">Xây dựng POC</h2>
-<p>Bước tiếp theo, chúng ta sẽ tạo một Jupyter notebook quen thuộc và bắt đầu thử nghiệm xây dựng model. Lưu ý, vì nội dung của khoá học tập trung vào MLOps, quá trình thử nghiệm model sẽ được tối giản hoá.</p>
-<h3 id="chuan-bi-data">Chuẩn bị data</h3>
-<p>Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:</p>
+<h1>Tổng quan pipeline</h1>
+<h2 id="muc-tieu">Mục tiêu</h2>
+<p>Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã có được những thứ sau:</p>
+<ol>
+<li>Các rules để transform và clean data từ data source</li>
+<li>Các rules để sinh ra các features cho việc train model</li>
+<li>Code để chuẩn bị data cho việc train model</li>
+<li>Code để train model</li>
+<li>Code để đánh giá model</li>
+</ol>
+<p>Phần 1 và 2 là đã được sử dụng trong bài trước để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.</p>
+<p>Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.</p>
+<h2 id="training-pipeline">Training pipeline</h2>
+<p>Training pipeline mà chúng ta sẽ xây dựng được chia thành 7 tasks như hình dưới:</p>
+<p>TODO: Vẽ hình DAG</p>
+<h3 id="cap-nhat-feature-registry">Cập nhật Feature Registry</h3>
+<p>Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.</p>
+<h3 id="data-extraction">Data extraction</h3>
+<p>Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk hoặc memory.</p>
+<h3 id="data-validation">Data validation</h3>
+<p>Sau khi đã lấy được data chứa các feature chúng ta muốn ở task Data extraction, chúng ta cần đánh giá xem data có hợp lệ không trước khi train model, bằng cách kiểm tra những thứ sau.</p>
 <ul>
-<li>Phân tích data để định nghĩa các transformation rule cho data từ data source. Transformation rule này sẽ được dùng để xây dựng data pipeline</li>
-<li>Phân tích data, thử nghiệm các feature engineering rule cho data để định nghĩa các feature engineering rule cho data. Feature engineering rule này sẽ được dùng để xây dựng data pipeline</li>
-<li>Thử nghiệm các model architecture và hyperparameter để định nghĩa các bước trong training pipeline</li>
+<li>Data schema<ul>
+<li>Có nhận được feature không mong muốn nào không?</li>
+<li>Có nhận được các feature mong muốn không?</li>
+<li>Có nhận được các feature mong muốn với format và các giá trị mong muốn không?</li>
 </ul>
-<p>Trong khoá học này, giả sử rằng Data Engineering đã thu thập data cho chúng ta từ data source và chuyển giao cho chúng ta một file data duy nhất ở dạng <code>parquet</code>. Chúng ta sẽ sử dụng file data này để thực hiện công việc của một Data Scientist trong các bước tiếp theo.</p>
-<h3 id="phan-tich-data-va-training-code">Phân tích data và training code</h3>
-<p>Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code được lưu tại <a href="https://github.com/MLOpsVN/mlops-crash-course-code/tree/main/training/nbs">đây</a>.</p>
-<p>Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là <code>driver_stats.parquet</code> và <code>driver_orders.csv</code>. Hai file này chứa các cột với ý nghĩa tương ứng như sau:</p>
-<table>
-<thead>
-<tr>
-<th><strong>File</strong></th>
-<th><strong>Cột</strong></th>
-<th><strong>Ý nghĩa</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>driver_stats.parquet</strong></td>
-<td>driver_id</td>
-<td>ID của driver trong Database của công ty</td>
-</tr>
-<tr>
-<td></td>
-<td>conv_rate</td>
-<td>Một thông số nào đó</td>
-</tr>
-<tr>
-<td></td>
-<td>acc_rate</td>
-<td>Một thông số nào đó</td>
-</tr>
-<tr>
-<td></td>
-<td>avg_daily_trips</td>
-<td>Số cuốc xe trung bình một ngày</td>
-</tr>
-<tr>
-<td><strong>driver_orders.csv</strong></td>
-<td>driver_id</td>
-<td>ID của driver trong Database của công ty</td>
-</tr>
-<tr>
-<td></td>
-<td>trip_completed</td>
-<td>Cuốc xe có hoàn thành không</td>
-</tr>
-</tbody>
-</table>
-<p>Code dùng để load và clean data như sau.</p>
-<pre><code class="language-python">DATA_DIR = Path("./data")
-TMP_DIR = Path("./tmp")
-DATA_PATH = DATA_DIR / "driver_stats.parquet"
-LABEL_PATH = DATA_DIR / "driver_orders.csv"
-if not DATA_PATH.is_file():
-    raise Exception("DATA_PATH not found")
-if not LABEL_PATH.is_file():
-    raise Exception("LABEL_PATH not found")
-
-# Load data
-df_orig = pd.read_parquet(DATA_PATH, engine='fastparquet')
-label_orig = pd.read_csv(LABEL_PATH, sep="\t")
-
-# Clean data
-label_orig["event_timestamp"] = pd.to_datetime(label_orig["event_timestamp"])
-
-# Định nghĩa tên của cột chứa label
-target_col = "trip_completed"
-</code></pre>
-<p>Sau khi đã load và clean được data, Data Scientist sẽ phân tích data để hiểu về data. Quá trình này thông thường gồm những công việc sau.</p>
+</li>
+<li>Giá trị của data<ul>
+<li>Các tính chất liên quan tới data distribution có hợp lệ không?</li>
+<li>Các giả sử mà chúng ta đưa ra đối với data có hợp lệ không?</li>
+</ul>
+</li>
+</ul>
+<p>Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.</p>
+<h3 id="data-preparation">Data preparation</h3>
+<p>Đầu vào của task này là data đã được lấy từ task Data extraction. Task này là nơi chúng ta sẽ thực hiện các bước sau.</p>
 <ul>
-<li>Kiểm tra xem có feature nào chứa giá trị <code>null</code> không? Nên thay các giá trị <code>null</code> bằng giá trị nào?</li>
-<li>Kiểm tra xem có feature nào có data không đồng nhất không? Ví dụ: khác đơn vị (km/h, m/s), v.v</li>
-<li>Kiểm tra xem data có các outlier nào không? Nếu có thì có nên xoá bỏ không?</li>
-<li>Kiểm tra xem có feature nào hay label bị bias không? Nếu có thì là do quá trình sampling bị bias, hay do data bị quá cũ? Nên thử nghiệm các giải pháp để sửa bias thế nào?</li>
-<li>Kiểm tra xem các feature có bị tương quan với nhau không? Nếu có thì có cần loại bỏ feature nào không hay thử nghiệm các giải pháp thế nào?</li>
-<li>v.v</li>
+<li>Transform hoặc clean data nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật giá trị của các feature mà chúng ta mong muốn</li>
+<li>Thực hiện feature engineering nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật kịp thời bởi Data Engineer để sinh ra các feature chúng ta mong muốn</li>
+<li>Split data thành các tập training set, validation set, hay test set để phục vụ cho quá trình train model và đánh giá model</li>
 </ul>
-<p>Ở mỗi một vấn đề về data ở trên, sẽ tồn tại một hoặc nhiều các giải pháp để giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay rằng chúng có hiệu quả hay không. Do đó, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm training model. Các metrics trong quá trình đánh giá model sẽ giúp chúng ta đánh giá xem các giải pháp mà chúng ta thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, hãy tưởng tượng bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp đi lặp lại nhiều lần.</p>
-<p>Trong file notebook <code>training/nbs/01-poc-training-code.ipynb</code>, các bạn sẽ thấy rằng data của chúng ta không có feature nào chứa giá trị <code>null</code>. Để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model. Đoạn code ở dưới được dùng để chia data thành training set và test set, train model, đánh giá model, lưu model, load model lại và thực hiện inference.</p>
-<pre><code class="language-python"># Chọn các feature
-selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"]
-
-# Chia data thành training set và test set
-TEST_SIZE = 0.2
-train, test = train_test_split(data_df, test_size=TEST_SIZE, random_state=random_seed)
-train_x = train.drop([target_col], axis=1)[selected_ft]
-test_x = test.drop([target_col], axis=1)[selected_ft]
-train_y = train[[target_col]]
-test_y = test[[target_col]]
-
-# Train model
-ALPHA = 0.5
-L1_RATIO = 0.1
-model = ElasticNet(alpha=ALPHA, l1_ratio=L1_RATIO, random_state=random_seed)
-model.fit(train_x, train_y)
-
-# Đánh giá model
-predicted_qualities = model.predict(test_x)
-(rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-
-# Lưu model
-model_path = MODEL_DIR / "driver_model.bin"
-joblib.dump(model, model_path)
-
-# Load model
-loaded_model = joblib.load(model_path)
-
-# Inference
-predictions = loaded_model.predict(test_x)
-</code></pre>
-<p>Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài trước, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.</p>
-<h3 id="theo-doi-cac-thu-nghiem">Theo dõi các thử nghiệm</h3>
-<p>MLflow là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.</p>
-<p>Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform github project này</a> về máy của bạn, làm theo hướng dẫn trong README.md, và chạy câu lệnh sau.</p>
-<pre><code class="language-bash">bash run.sh mlflow up
-</code></pre>
-<p>Trên browser của bạn, đi tới URL <a href="http://localhost:5000/">http://localhost:5000/</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.</p>
-<p>Tiếp theo, mở file notebook <code>training/nbs/01-poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.</p>
-<pre><code class="language-python">MLFLOW_TRACKING_URI = "http://localhost:5000"
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.sklearn.autolog()
-</code></pre>
-<p>Lưu ý rằng vì chúng ta dùng <code>sklearn</code> để train model, dòng code <code>mlflow.sklearn.autolog()</code> sẽ giúp chúng ta tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm <a href="https://mlflow.org/docs/latest/tracking.html#automatic-logging">ở đây</a> để biết thêm thông tin về các training framework được MLflow hỗ trợ.</p>
-<p>Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.</p>
-<pre><code class="language-python"># Đặt tên cho lần chạy
-mlflow.set_tag("mlflow.runName", uuid.uuid1())
-
-# Log lại feature được dùng
-mlflow.log_param("features", selected_ft)
-
-# Log lại các hyperparameter
-mlflow.log_param("alpha", ALPHA)
-mlflow.log_param("l1_ratio", L1_RATIO)
-
-# Log lại các metric sau khi test trên test set
-mlflow.log_metric("testing_rmse", rmse)
-mlflow.log_metric("testing_r2", r2)
-mlflow.log_metric("testing_mae", mae)
-
-# Log lại model sau khi train
-mlflow.sklearn.log_model(model, "model")
-</code></pre>
-<p>Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"/></a></p>
-<p>Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột <code>Start time</code> của một lần chạy.</p>
-<h3 id="theo-doi-cac-feature">Theo dõi các feature</h3>
-<p>Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một parameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.</p>
-<p>Như các bạn đã biết, mục đích của việc theo dõi các feature này là để chúng ta có thể reproduce lại một lần thử nghiệm. Chỉ bằng việc lưu lại tên của các feature được sử dụng, chúng ta không thể đảm bảo được sẽ reproduce lại được một lần chạy. Bởi vì có thể feature tên như vậy đã bị đổi tên, hoặc tên vẫn giữ nguyên nhưng transformation rule để sinh ra các feature đó đã bị thay đổi. Như vậy, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.</p>
-<p>Ở dự án POC này, vì chúng ta chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ cho việc theo dõi các version của quy trình transform data và tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature từ bộ data thô mà Data Engineer chuyển giao cho chúng ta là đủ rồi. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi các version của quy trình transform các feature và tích hợp các version đó vào quá trình training.</p>
-<h3 id="tong-ket">Tổng kết</h3>
-<p>Qua nhiều vòng lặp thử nghiệm data và model trong dự án POC này, chúng ta sẽ định nghĩa ra được vấn đề, giải pháp tiềm năng để xử lý data và train model, và cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại định nghĩa của vấn đề kinh doanh, định nghĩa các data transformation rule để xây dựng data pipeline, định nghĩa training code để xây dựng training pipeline, và định nghĩa serving code để xây dựng serving pipeline.</p>
+<p>Đầu ra của task này là các tập dataset đã được lưu vào disk hoặc memory.</p>
+<h3 id="model-training">Model training</h3>
+<p>Trong task này, chúng ta sẽ train model sử dụng data đã được chuẩn bị ở task Data preparation. Task này cũng là nơi mà chúng ta sẽ thực hiện hyperparameter tuning để train được model tốt nhất. Đầu ra của bước này là model đã được train.</p>
+<h3 id="model-evaluation">Model evaluation</h3>
+<p>Đầu vào của task này là model đã được train ở task Model training. Trong task này, chúng ta thực hiện chạy prediction cho model trên test set lấy từ task Data preparation. Đầu ra của task này là nhóm các metrics dùng để đánh giá chất lượng của model.</p>
+<h3 id="model-validation">Model validation</h3>
+<p>Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a>. Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.</p>
+<p>Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.</p>
+<p>Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các bước đã được định nghĩa ở trên.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Định nghĩa PoC" class="md-footer__link md-footer__link--prev" href="../dinh-nghia-poc/" rel="prev">
+<a aria-label="Previous: Xây dựng PoC" class="md-footer__link md-footer__link--prev" href="../../poc/xay-dung-poc/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -610,17 +545,17 @@ mlflow.sklearn.log_model(model, "model")
 <span class="md-footer__direction">
                 Previous
               </span>
-              Định nghĩa PoC
+              Xây dựng PoC
             </div>
 </div>
 </a>
-<a aria-label="Next: Tổng quan pipeline" class="md-footer__link md-footer__link--next" href="../../xay-dung-training-pipeline/tong-quan-pipeline/" rel="next">
+<a aria-label="Next: Xây dựng pipeline" class="md-footer__link md-footer__link--next" href="../xay-dung-pipeline/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Tổng quan pipeline
+              Xây dựng pipeline
             </div>
 </div>
 <div class="md-footer__button md-icon">
