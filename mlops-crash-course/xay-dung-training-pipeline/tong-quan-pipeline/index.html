@@ -211,8 +211,8 @@
 <nav aria-label="Training pipeline" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cap-nhat-feature-registry">
-    Cập nhật Feature Registry
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
   </a>
 </li>
 <li class="md-nav__item">
@@ -428,8 +428,8 @@
 <nav aria-label="Training pipeline" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cap-nhat-feature-registry">
-    Cập nhật Feature Registry
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
   </a>
 </li>
 <li class="md-nav__item">
@@ -490,9 +490,9 @@
 <p>Phần 1 và 2 là đã được sử dụng trong bài trước để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.</p>
 <p>Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.</p>
 <h2 id="training-pipeline">Training pipeline</h2>
-<p>Training pipeline mà chúng ta sẽ xây dựng được chia thành 7 tasks như hình dưới:</p>
+<p>Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với 7 tasks như hình dưới:</p>
 <p>TODO: Vẽ hình DAG</p>
-<h3 id="cap-nhat-feature-registry">Cập nhật Feature Registry</h3>
+<h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
 <p>Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.</p>
 <h3 id="data-extraction">Data extraction</h3>
 <p>Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk hoặc memory.</p>
@@ -528,6 +528,7 @@
 <p>Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a>. Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.</p>
 <p>Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.</p>
 <p>Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.</p>
+<p>Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register model với Model Registry một cách tự động.</p>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các bước đã được định nghĩa ở trên.</p>
 </article>
