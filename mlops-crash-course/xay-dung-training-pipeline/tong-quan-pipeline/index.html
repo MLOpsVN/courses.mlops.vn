@@ -491,7 +491,7 @@
 <p>Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.</p>
 <h2 id="training-pipeline">Training pipeline</h2>
 <p>Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với 7 tasks như hình dưới:</p>
-<p>TODO: Vẽ hình DAG</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"/></a></p>
 <h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
 <p>Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.</p>
 <h3 id="data-extraction">Data extraction</h3>
