@@ -744,7 +744,7 @@ cd ..
 <li><code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>: vì chúng ta sử dụng một docker image duy nhất cho tất cả các task, mình sử dụng config chung cho các docker container được tạo ra ở mỗi task. Config chung này được lưu trong biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>. Biến này gồm các config như sau.</li>
 </ul>
 <pre><code class="language-python">DEFAULT_DOCKER_OPERATOR_ARGS = {
-    "image": "mlopsvn/mlops_crash_course/training_pipeline:latest",
+    "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/training_pipeline:latest",
     "network_mode": "host",
     "mounts": [
         # feature repo
@@ -776,11 +776,10 @@ cd ..
 <li><code>Mount target</code>: là folder nằm trong docker container của mỗi task</li>
 </ul>
 <p>Code của DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
-<p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/training_pipeline:latest</code>. Tuy nhiên, image này đã được build sẵn và push lên Docker Hub rồi, các bạn không cần làm gì thêm nữa. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa docker image mà các bạn muốn dùng và chạy lệnh sau.</p>
+<p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/training_pipeline:latest</code>. Tuy nhiên, image này đã được build sẵn và push lên Docker Hub rồi, các bạn không cần làm gì thêm nữa. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa <code>DOCKER_USER</code> env var tại file <code>training_pipeline/deployment/.env</code> thành docker user của các bạn và chạy lệnh sau.</p>
 <pre><code class="language-bash">make build_push_image
 </code></pre>
-<p>Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy file <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow.</p>
-<p>Trước khi copy DAG trên vào folder <code>dags</code> của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
+<p>Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy file <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow. Trước khi copy DAG trên vào folder <code>dags</code> của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
 <pre><code class="language-bash">bash run.sh airflow up
 </code></pre>
 <p>Sau đó, quay lại folder <code>mlops-crash-course-code</code> và chạy lệnh sau để copy <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow server.</p>
@@ -790,7 +789,7 @@ cd ..
 <pre><code class="language-bash">bash run.sh airflow down
 bash run.sh airflow up
 </code></pre>
-<p>Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là <code>MLOPS_CRASH_COURSE_CODE_DIR</code>. Variable này sẽ chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Chúng ta cần đường dẫn tuyệt đối vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> sẽ được dùng để tạo ra <code>Mount Source</code>. Các bạn có thể tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để set Airflow Variable.</p>
+<p>Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là <code>MLOPS_CRASH_COURSE_CODE_DIR</code>. Variable này sẽ chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Chúng ta cần đường dẫn tuyệt đối vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> sẽ được dùng để tạo ra <code>Mount Source</code>. Ngoài ra, nếu các bạn dùng docker image của riêng các bạn thì hãy set Airflow variable <code>DOCKER_USER</code> thành tên docker user của các bạn. Các bạn có thể tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để set Airflow Variable.</p>
 <p>Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"/></a></p>
 <h2 id="tong-ket">Tổng kết</h2>
