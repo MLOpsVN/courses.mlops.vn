@@ -14,11 +14,11 @@ Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động
 
 ## Training pipeline
 
-Training pipeline mà chúng ta sẽ xây dựng được chia thành 7 tasks như hình dưới:
+Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với 7 tasks như hình dưới:
 
 TODO: Vẽ hình DAG
 
-### Cập nhật Feature Registry
+### Cập nhật Feature Store
 
 Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.
 
@@ -65,6 +65,8 @@ Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ t
 Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.
 
 Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.
+
+Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register model với Model Registry một cách tự động.
 
 ## Tổng kết
 
