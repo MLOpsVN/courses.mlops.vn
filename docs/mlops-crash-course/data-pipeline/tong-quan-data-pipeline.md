@@ -1,8 +1,8 @@
-Từ xưa một cụ giấu tên đã có câu *garbage in, garbage out*, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientists dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian. 
+Từ xưa một ông nào đó giấu tên đã có câu *garbage in, garbage out*, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientists dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian. 
 
-Thông thường một pipeline xử lý dữ liệu sẽ gồm các thành phần chính như sau:
+Thông thường công việc xử lý dữ liệu bao gồm các công đoạn chính như sau:
 
-| Thành phần chính  | Công việc cần làm |
+| Công đoạn chính  | Công việc cụ thể |
 | --------------    | ------- |
 | Data ingestion    | **Data provenance:** lưu trữ thông tin về các dữ liệu nguồn |
 |    | **Metadata catalog:** lưu trữ thông tin về dữ liệu bao gồm: kích thước, định dạng, người sở hữu, người có quyền truy cập, thời gian sửa đổi gần nhất, .v.v.  |
