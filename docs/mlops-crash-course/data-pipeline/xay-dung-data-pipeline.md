@@ -100,6 +100,13 @@ Chúng ta có 6 tương tác chính với Feast như sau:
 
 ### Xây dựng các pipelines
 #### ETL pipeline
+Để tạo ra một Airflow pipeline, thông thường chúng ta sẽ làm theo trình tự sau:
+
+1. Định nghĩa *DAG* cho pipeline (line 1-8)
+2. Viết các task cho pipeline, ví dụ: *ingest_task*, *clean_task* và *explore_and_validate_task* (line 9-25)
+3. Viết thứ tự chạy các task (line 27)
+4. Copy file code dag sang folder *airflow/run_env/dags* của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
+
 ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
 with DAG(
     dag_id="db_to_offline_store", # (1)
@@ -137,6 +144,18 @@ with DAG(
 5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
 6.  Command chạy trong docker container cho bước này
 7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
+
+**Lưu ý:** Do chúng ta dùng DockerOperator để tạo *task* nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào default_args trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại *data-pipeline/deployment/Dockerfile*
+
+Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag_id *db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại của data pipeline đề cập ở bên dưới.
+
+<img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
+
+Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:
+
+<img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
+
+Tương tự như ETL pipeline, chúng ta sẽ code tiếp *Feast materialize pipeline* và *Stream to stores pipline* như bên dưới.
 
 #### Feast materialize pipeline
 ```py title="data_pipeline/dags/materialize_offline_to_online.py" linenums="1"

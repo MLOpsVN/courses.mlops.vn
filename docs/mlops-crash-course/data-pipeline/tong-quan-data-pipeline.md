@@ -2,7 +2,7 @@ Từ xưa một ông nào đó giấu tên đã có câu *garbage in, garbage ou
 
 Thông thường công việc xử lý dữ liệu bao gồm các công đoạn chính như sau:
 
-| Công đoạn chính  | Công việc cụ thể |
+| Tên công đoạn  | Công việc cụ thể |
 | --------------    | ------- |
 | Data ingestion    | **Data provenance:** lưu trữ thông tin về các dữ liệu nguồn |
 |    | **Metadata catalog:** lưu trữ thông tin về dữ liệu bao gồm: kích thước, định dạng, người sở hữu, người có quyền truy cập, thời gian sửa đổi gần nhất, .v.v.  |

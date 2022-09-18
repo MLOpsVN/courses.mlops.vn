@@ -121,8 +121,22 @@ driver_stats_stream_source = KafkaSource(
 
 1.  Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ
 
-Sau khi config feature store bằng cách thay đổi các file trong repo *feature_repo/*, chúng ta sẽ apply các thay đổi này bằng command sau:
+Sau khi config feature store bằng cách thay đổi các file trong repo *feature_repo/*, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
+- FileSource: đảm bảo đường dẫn tồn tại, file không bị lỗi
+- KafkaSource: đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục *stream_emitting* và chạy command:
+    ```console
+    bash deploy.sh start
+    ```
+    khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+
+, đảm bảo Redis sẵn sàng để làm online store cho Feast bằng cách truy cập vào repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform) và chạy command:
+    ```console
+    bash run.sh up feast
+    ```
+
+và cuối cùng chúng ta sẽ apply các thay đổi như sau:
 ```console
 cd feature_repo
 feast apply

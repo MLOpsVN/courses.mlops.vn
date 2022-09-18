@@ -13,5 +13,4 @@ Một số khái niệm cơ bản trong Airflow:
 - **MySQLOperator:** thực thi các MySQL query
 , ngoài ra còn rất nhiều *operator* khác được phát triển bởi cộng đồng, mọi người xem thêm tại [đây](https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html)
 
-Ở series này chúng ta sẽ sử dụng DockerOperator để chạy các Python script và BashOperator để thực thi các bash command. Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.
-
+Ở series này chúng ta sẽ chủ yếu sử dụng DockerOperator và BashOperator. Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.
