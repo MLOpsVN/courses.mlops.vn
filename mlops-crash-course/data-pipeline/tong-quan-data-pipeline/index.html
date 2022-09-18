@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/xay-dung-data-pipeline/tong-quan-data-pipeline/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/data-pipeline/tong-quan-data-pipeline/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Tong quan data pipeline - MLOpsVN Courses</title>
+<title>Tổng quan pipeline - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -43,7 +43,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Tong quan data pipeline
+              Tổng quan pipeline
             
           </span>
 </div>
@@ -70,8 +70,8 @@
         Home
       </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
 <a href="../../">MLOps Crash Course</a>
 <label for="__nav_2">
@@ -134,36 +134,37 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
-          Xây dựng data pipeline
+          Data pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Xây dựng data pipeline" class="md-nav" data-md-level="2">
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_3">
 <span class="md-nav__icon md-icon"></span>
-          Xây dựng data pipeline
+          Data pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../tong-quan-pipeline.md">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
         Tổng quan pipeline
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-ingestion.md">
-        Data ingestion
+<a class="md-nav__link" href="../airflow-co-ban/">
+        Airflow cơ bản
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-cleaning.md">
-        Data cleaning
+<a class="md-nav__link" href="../feature-store/">
+        Feature store
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-exploration-validation.md">
-        Data exploration &amp; validation
+<a class="md-nav__link" href="../xay-dung-data-pipeline/">
+        Xây dựng pipeline
       </a>
 </li>
 </ul>
@@ -347,14 +348,14 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Tong quan data pipeline</h1>
-<p>Từ xưa một cụ giấu tên đã có câu <em>garbage in, garbage out</em>, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của <a href="https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says">Forbes</a>, các Data Scientists dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian. </p>
-<p>Thông thường một pipeline xử lý dữ liệu sẽ gồm các thành phần chính như sau:</p>
+<h1>Tổng quan pipeline</h1>
+<p>Từ xưa một ông nào đó giấu tên đã có câu <em>garbage in, garbage out</em>, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của <a href="https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says">Forbes</a>, các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian. </p>
+<p>Thông thường công việc xử lý dữ liệu bao gồm các công đoạn chính như sau:</p>
 <table>
 <thead>
 <tr>
-<th>Thành phần chính</th>
-<th>Công việc cần làm</th>
+<th>Tên công đoạn</th>
+<th>Công việc cụ thể</th>
 </tr>
 </thead>
 <tbody>
@@ -409,6 +410,34 @@
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Xây dựng PoC" class="md-footer__link md-footer__link--prev" href="../../poc/xay-dung-poc/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Xây dựng PoC
+            </div>
+</div>
+</a>
+<a aria-label="Next: Airflow cơ bản" class="md-footer__link md-footer__link--next" href="../airflow-co-ban/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Airflow cơ bản
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -434,7 +463,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate"], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
 <script src="../../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
 <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
 </html>

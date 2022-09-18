@@ -140,33 +140,33 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
-          Xây dựng data pipeline
+          Data pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Xây dựng data pipeline" class="md-nav" data-md-level="2">
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_3">
 <span class="md-nav__icon md-icon"></span>
-          Xây dựng data pipeline
+          Data pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/tong-quan-pipeline.md">
+<a class="md-nav__link" href="../../data-pipeline/tong-quan-data-pipeline/">
         Tổng quan pipeline
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-ingestion.md">
-        Data ingestion
+<a class="md-nav__link" href="../../data-pipeline/airflow-co-ban/">
+        Airflow cơ bản
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-cleaning.md">
-        Data cleaning
+<a class="md-nav__link" href="../../data-pipeline/feature-store/">
+        Feature store
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-exploration-validation.md">
-        Data exploration &amp; validation
+<a class="md-nav__link" href="../../data-pipeline/xay-dung-data-pipeline/">
+        Xây dựng pipeline
       </a>
 </li>
 </ul>
@@ -518,224 +518,224 @@
 <p>Set env var <code>TRAINING_PIPELINE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>training_pipeline/src</code>.</p>
 </li>
 </ol>
-<pre><code class="language-bash">export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">TRAINING_PIPELINE_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/training_pipeline"</span>
+</code></pre></div>
 <h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
 <p>Trước khi cập nhật Feature Store, chúng ta cần đảm bảo rằng code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.</p>
 <p>Trong khoá học này, chúng ta để code của Feature Store tại <code>data_pipeline/feature_repo</code>. Như vậy, để triển khai code này sang training pipeline, chúng ta chỉ cần copy code từ <code>data_pipeline/feature_repo</code> sang <code>training_pipeline/feature_repo</code>. Để thuận tiện cho khoá học, các bạn chỉ cần chạy các lệnh sau.</p>
-<pre><code class="language-bash"># Làm theo hướng dẫn ở file data_pipeline/README.md trước
-
-# Sau đó chạy
-cd ../data_pipeline
-make deploy_feature_repo
-cd ../training_pipeline
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Làm theo hướng dẫn ở file data_pipeline/README.md trước</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1"># Sau đó chạy</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">cd</span> ../data_pipeline
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>make deploy_feature_repo
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nb">cd</span> ../training_pipeline
+</code></pre></div>
 <p>Sau khi code của Feature Store đã được triển khai sang folder <code>training_pipeline</code>, chúng ta cần cập nhật Feature Registry của Feast, hay chính là local database dưới dạng file, nơi lưu trữ định nghĩa về các feature và metadata của chúng.</p>
 <p>Trước khi cập nhật Feature Registry, chúng ta cần chạy Redis database dành riêng cho Feast. Để chạy Redis database này, các bạn clone Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>. Để thuận tiện cho quá trình phát triển, folder <code>mlops-crash-course-platform</code> và folder <code>mlops-crash-course-code</code> phải được đặt trong cùng một folder. Sau đó, các bạn hãy mở folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
-<pre><code class="language-bash">bash run.sh feast up
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>bash run.sh feast up
+</code></pre></div>
 <p>Sau đó, để cập nhập Feature Registry, trong repo <code>mlops-crash-course-code</code>, chúng ta chạy các lệnh sau.</p>
-<pre><code class="language-bash">cd feature_repo
-feast apply
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> feature_repo
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>feast apply
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, các bạn sẽ thấy file <code>training_pipeline/feature_repo/registry/local_registry.db</code> được sinh ra. Đây chính là Feature Registry của chúng ta.</p>
 <h3 id="data-extraction">Data extraction</h3>
 <p>Tiếp theo, chúng ta cần viết code để lấy data phục vụ cho quá trình train model từ Feature Store. Code của task này được lưu tại <code>training_pipeline/src/data_extraction.py</code>.</p>
 <p>Đầu tiên, để có thể lấy được data từ Feature Store, chúng ta cần khởi tạo kết nối tới Feature Store trước.</p>
-<pre><code class="language-python"># Khởi tạo kết nối tới Feature Store
-fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Khởi tạo kết nối tới Feature Store</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">fs</span> <span class="o">=</span> <span class="n">feast</span><span class="o">.</span><span class="n">FeatureStore</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="p">)</span>
+</code></pre></div>
 <p>Tiếp theo, chúng ta cần đọc file data chứa label tên là <code>driver_orders.csv</code>. File này chứa field <code>event_timestamp</code> và <code>driver_id</code> mà sẽ được dùng để match với data trong Feature Store.</p>
-<pre><code class="language-python"># Đọc file data chứa label
-orders = pd.read_csv(AppPath.DATA / "driver_orders.csv", sep="\t")
-    orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Đọc file data chứa label</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">orders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">DATA</span> <span class="o">/</span> <span class="s2">"driver_orders.csv"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
+</code></pre></div>
 <p>Các feature chúng ta muốn lấy bao gồm <code>conv_rate</code>, <code>acc_rate</code>, và <code>avg_daily_trips</code>. <code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code>.</p>
-<pre><code class="language-python"># Lấy các feature cần thiết từ Feature Store
-training_df = fs.get_historical_features(
-        entity_df=orders,
-        features=[
-            "driver_stats:conv_rate",
-            "driver_stats:acc_rate",
-            "driver_stats:avg_daily_trips",
-        ],
-    ).to_df()
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Lấy các feature cần thiết từ Feature Store</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="n">training_df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">get_historical_features</span><span class="p">(</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>        <span class="n">entity_df</span><span class="o">=</span><span class="n">orders</span><span class="p">,</span>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>        <span class="n">features</span><span class="o">=</span><span class="p">[</span>
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>            <span class="s2">"driver_stats:conv_rate"</span><span class="p">,</span>
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>            <span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span>
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>            <span class="s2">"driver_stats:avg_daily_trips"</span><span class="p">,</span>
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>        <span class="p">],</span>
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>    <span class="p">)</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+</code></pre></div>
 <p>Sau khi đã lấy được data và lưu vào <code>training_df</code>, chúng ta sẽ lưu <code>training_df</code> vào disk để tiện sử dụng trong các task tiếp theo.</p>
-<pre><code class="language-python"># Lưu data lấy được vào disk
-to_parquet(training_df, AppPath.TRAINING_PQ)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Lưu data lấy được vào disk</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">training_df</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAINING_PQ</span><span class="p">)</span>
+</code></pre></div>
 <p>Hãy cùng chạy task này ở môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src
-python data_extraction.py
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>python data_extraction.py
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>training.parquet</code>.</p>
 <h3 id="data-validation">Data validation</h3>
 <p>Ở task Data validation này, dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không.</p>
 <p>Đầu tiên, chúng ta sẽ kiểm tra xem data có chứa feature không mong muốn nào không.</p>
-<pre><code class="language-python">def check_unexpected_features(df: pd.DataFrame):
-    cols = set(df.columns)
-    for col in cols:
-        if not col in config.feature_dict:
-            # Báo lỗi feature 'col' không mong muốn
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">def</span> <span class="nf">check_unexpected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>            <span class="c1"># Báo lỗi feature 'col' không mong muốn</span>
+</code></pre></div>
 <p>Lưu ý rằng <code>config.feature_dict</code> là dictionary với key là tên các feature mong muốn và value là format mong muốn của các feature</p>
 <p>Tiếp theo, chúng ta sẽ kiểm tra xem data có chứa các feature mong muốn và ở định dạng mong muốn không.</p>
-<pre><code class="language-python">def check_expected_features(df: pd.DataFrame):
-    dtypes = dict(df.dtypes)
-    for feature in config.feature_dict:
-        if not feature in dtypes:
-            # Báo lỗi feature 'feature' không tìm thấy
-        else:
-            expected_type = config.feature_dict[feature]
-            real_type = dtypes[feature]
-            if expected_type != real_type:
-                # Báo lỗi feature 'feature' có định dạng không mong muốn
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">def</span> <span class="nf">check_expected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">dtypes</span><span class="p">:</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>            <span class="c1"># Báo lỗi feature 'feature' không tìm thấy</span>
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>        <span class="k">else</span><span class="p">:</span>
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a>            <span class="n">expected_type</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a>            <span class="n">real_type</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a>            <span class="k">if</span> <span class="n">expected_type</span> <span class="o">!=</span> <span class="n">real_type</span><span class="p">:</span>
+<a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a>                <span class="c1"># Báo lỗi feature 'feature' có định dạng không mong muốn</span>
+</code></pre></div>
 <p>Để đơn gian hoá code và tập trung vào MLOps, trong khoá học này chúng ta sẽ không kiểm tra các tính chất liên quan tới data distribution. Code của task này được lưu tại file <code>training_pipeline/src/data_validation.py</code>. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src &amp;&amp; python data_validation.py &amp;&amp; cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">cd</span> src <span class="o">&amp;&amp;</span> python data_validation.py <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ..
+</code></pre></div>
 <h3 id="data-preparation">Data preparation</h3>
 <p>Ở task Data preparation, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa.</p>
 <p>Đầu tiên, chúng ta sẽ chia data ra thành training set và test set. Đoạn code dưới đây đã được chúng ta viết trong khi làm dự án POC.</p>
-<pre><code class="language-python">target_col = 'tên cột label'
-
-train, test = train_test_split(
-    df, test_size=config.test_size, random_state=config.random_seed
-)
-target_col = config.target_col
-train_x = train.drop([target_col], axis=1)
-train_y = train[[target_col]]
-test_x = test.drop([target_col], axis=1)
-test_y = test[[target_col]]
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s1">'tên cột label'</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a>    <span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="p">)</span>
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="n">target_col</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">target_col</span>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+</code></pre></div>
 <p>Tiếp theo, chúng ta sẽ lưu lại các bộ dataset đã được định dạng thích hợp để sử dụng cho các task Model training và Model evaluation.</p>
-<pre><code class="language-python">to_parquet(train_x, AppPath.TRAIN_X_PQ)
-to_parquet(train_y, AppPath.TRAIN_Y_PQ)
-to_parquet(test_x, AppPath.TEST_X_PQ)
-to_parquet(test_y, AppPath.TEST_Y_PQ)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
+</code></pre></div>
 <p>Code của task này được lưu tại file <code>training_pipeline/src/data_preparation.py</code>. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src
-python data_preparation.py
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>python data_preparation.py
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy các files <code>training.parquet</code>, <code>train_x.parquet</code>, <code>test_x.parquet</code>, <code>train_y.parquet</code>, và <code>test_y.parquet</code>.</p>
 <h3 id="model-training">Model training</h3>
 <p>Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Mình sẽ tóm tắt các công việc trong đoạn code này như sau.</p>
-<pre><code class="language-python"># Cài đặt MLflow server
-mlflow.set_tracking_uri(config.mlflow_tracking_uri)
-
-# Load data
-train_x = load_df(AppPath.TRAIN_X_PQ)
-train_y = load_df(AppPath.TRAIN_Y_PQ)
-
-# Train model
-model = ElasticNet(
-    alpha=config.alpha,
-    l1_ratio=config.l1_ratio,
-    random_state=config.random_seed,
-)
-model.fit(train_x, train_y)
-
-# Log metadata
-mlflow.log_param("alpha", config.alpha)
-mlflow.log_param("l1_ratio", config.l1_ratio)
-mlflow.sklearn.log_model(
-    # model và nơi lưu model
-)
-
-# Lưu lại thông tin về lần chạy
-run_id = mlflow.last_active_run().info.run_id
-run_info = RunInfo(run_id)
-run_info.save()
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># Cài đặt MLflow server</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">mlflow_tracking_uri</span><span class="p">)</span>
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1"># Load data</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a>
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="c1"># Train model</span>
+<a href="#__codelineno-15-9" id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span>
+<a href="#__codelineno-15-10" id="__codelineno-15-10" name="__codelineno-15-10"></a>    <span class="n">alpha</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+<a href="#__codelineno-15-11" id="__codelineno-15-11" name="__codelineno-15-11"></a>    <span class="n">l1_ratio</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">,</span>
+<a href="#__codelineno-15-12" id="__codelineno-15-12" name="__codelineno-15-12"></a>    <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span><span class="p">,</span>
+<a href="#__codelineno-15-13" id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="p">)</span>
+<a href="#__codelineno-15-14" id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<a href="#__codelineno-15-15" id="__codelineno-15-15" name="__codelineno-15-15"></a>
+<a href="#__codelineno-15-16" id="__codelineno-15-16" name="__codelineno-15-16"></a><span class="c1"># Log metadata</span>
+<a href="#__codelineno-15-17" id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+<a href="#__codelineno-15-18" id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"l1_ratio"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">)</span>
+<a href="#__codelineno-15-19" id="__codelineno-15-19" name="__codelineno-15-19"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+<a href="#__codelineno-15-20" id="__codelineno-15-20" name="__codelineno-15-20"></a>    <span class="c1"># model và nơi lưu model</span>
+<a href="#__codelineno-15-21" id="__codelineno-15-21" name="__codelineno-15-21"></a><span class="p">)</span>
+<a href="#__codelineno-15-22" id="__codelineno-15-22" name="__codelineno-15-22"></a>
+<a href="#__codelineno-15-23" id="__codelineno-15-23" name="__codelineno-15-23"></a><span class="c1"># Lưu lại thông tin về lần chạy</span>
+<a href="#__codelineno-15-24" id="__codelineno-15-24" name="__codelineno-15-24"></a><span class="n">run_id</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">last_active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+<a href="#__codelineno-15-25" id="__codelineno-15-25" name="__codelineno-15-25"></a><span class="n">run_info</span> <span class="o">=</span> <span class="n">RunInfo</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+<a href="#__codelineno-15-26" id="__codelineno-15-26" name="__codelineno-15-26"></a><span class="n">run_info</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
 <p>Các bạn đã quen thuộc từ bước đầu cho tới bước <code>Log metadata</code>. Ở bước cuối, chúng ta cần lưu lại thông tin về lần chạy hiện tại vào disk, để các task tiếp theo biết được model nào vừa được train để có thể download model từ MLflow server và đánh giá model. Lưu ý thêm rằng ở bước Log metadata, chúng ta không cần phải log lại danh sách các feature được sử dụng nữa, vì bộ feature chúng ta sử dụng trong training đã được version trong code ở bước Data extraction, đồng thời DAG của chúng ta đã được version bởi <code>git</code>.</p>
 <p>Code của task này được lưu tại file <code>training_pipeline/src/model_training.py</code>. Trước khi chạy file code này, chúng ta cần chạy MLflow server. Để chạy Mlflow server, các bạn mở folder chứa code của Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a> và chạy lệnh sau.</p>
-<pre><code class="language-bash">bash run.sh mlflow up
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>bash run.sh mlflow up
+</code></pre></div>
 <p>Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src
-python model_training.py
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>python model_training.py
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>run_info.json</code>. Nếu mở MLflow server trên browser ra, các bạn cũng sẽ nhìn thấy một experiment đã được tạo ra.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png"/></a></p>
 <h3 id="model-evaluation">Model evaluation</h3>
 <p>Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Mình sẽ tóm tắt lại như sau.</p>
-<pre><code class="language-python">model = mlflow.pyfunc.load_model(
-    # nơi lưu model
-)
-
-# chạy inference trên test set
-test_x = load_df(AppPath.TEST_X_PQ)
-test_y = load_df(AppPath.TEST_Y_PQ)
-predicted_qualities = model.predict(test_x)
-(rmse, mae) = eval_metrics(test_y, predicted_qualities)
-
-# Lưu lại kết quả
-eval_result = EvaluationResult(rmse, mae)
-eval_result.save()
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>    <span class="c1"># nơi lưu model</span>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="p">)</span>
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a>
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="c1"># chạy inference trên test set</span>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span>
+<a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
+<a href="#__codelineno-18-8" id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="n">predicted_qualities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+<a href="#__codelineno-18-9" id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">predicted_qualities</span><span class="p">)</span>
+<a href="#__codelineno-18-10" id="__codelineno-18-10" name="__codelineno-18-10"></a>
+<a href="#__codelineno-18-11" id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="c1"># Lưu lại kết quả</span>
+<a href="#__codelineno-18-12" id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span>
+<a href="#__codelineno-18-13" id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="n">eval_result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
 <p>Kết quả của các offline metrics sẽ được lưu vào disk để phục vụ cho task Model validation. Code của task này được lưu tại file <code>training_pipeline/src/model_evaluation.py</code>. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src
-python model_evaluation.py
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>python model_evaluation.py
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>evaluation.json</code>.</p>
 <h3 id="model-validation">Model validation</h3>
 <p>Trong phần này, chúng ta cần đánh giá xem các offline metrics được tính toán ở task Model evaludation có thoả mãn một threshold đã được định nghĩa sẵn không, hay có thoả mãn một baseline đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a> không. Chúng ta cũng có thể cần phải kiểm tra xem model mới train được có tương thích với inference service ở production không.</p>
 <p>Để đơn giản hoá, mình sẽ chỉ viết code để so sánh offline metrics với các thresholds đã được định nghĩa sẵn trong file <code>training_pipeline/.env</code>.</p>
-<pre><code class="language-python">eval_result = EvaluationResult.load(AppPath.EVALUATION_RESULT)
-
-if eval_result.rmse &gt; config.rmse_threshold:
-    # RMSE không thoả mãn threshold
-
-if eval_result.mae &gt; config.mae_threshold:
-    # MAE không thoả mãn threshold
-
-# Nếu không thoả mãn thresholds -&gt; exit
-# Nếu thoả mãn thresholds, register model
-result = mlflow.register_model(
-    # thông tin về model
-)
-# Lưu lại thông tin về model đã được registered
-dump_json(result.__dict__, AppPath.REGISTERED_MODEL_VERSION)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">EVALUATION_RESULT</span><span class="p">)</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">rmse</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">rmse_threshold</span><span class="p">:</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>    <span class="c1"># RMSE không thoả mãn threshold</span>
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">mae</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">mae_threshold</span><span class="p">:</span>
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a>    <span class="c1"># MAE không thoả mãn threshold</span>
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a>
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="c1"># Nếu không thoả mãn thresholds -&gt; exit</span>
+<a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="c1"># Nếu thoả mãn thresholds, register model</span>
+<a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+<a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a>    <span class="c1"># thông tin về model</span>
+<a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="p">)</span>
+<a href="#__codelineno-20-14" id="__codelineno-20-14" name="__codelineno-20-14"></a><span class="c1"># Lưu lại thông tin về model đã được registered</span>
+<a href="#__codelineno-20-15" id="__codelineno-20-15" name="__codelineno-20-15"></a><span class="n">dump_json</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">REGISTERED_MODEL_VERSION</span><span class="p">)</span>
+</code></pre></div>
 <p>Như các bạn thấy trong đoạn code trên, nếu như các offline metrics của model thoả mãn các yêu cầu đề ra, chúng ta sẽ tự động register model với Model Registry của MLflow. Thông tin của model được registered và version của nó sẽ được lưu lại vào disk để đối chiếu khi cần. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
-<pre><code class="language-bash">cd src
-python model_validation.py
-cd ..
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a>python model_validation.py
+<a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
 <p>Sau khi chạy xong, nếu như model thoả mãn các yêu cầu đề ra, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>registered_model_version.json</code>. MLflow server cũng sẽ hiển thị model mà bạn đã registered.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png"/></a></p>
 <p>Các bạn có thể click vào model đã được register để xem thêm thông tin nó. Cụ thể như ở hình dưới, chúng ta có thể thấy MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"/></a></p>
 <h3 id="airflow-dag">Airflow DAG</h3>
 <p>Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được tóm tắt như dưới đây.</p>
-<pre><code class="language-python">with DAG(
-    dag_id="training_pipeline",
-    schedule_interval="@once",
-    # các argument khác
-) as dag:
-    # định nghĩa task Cập nhật Feature store
-    feature_store_init_task = DockerOperator(
-        task_id="feature_store_init_task",
-        command="bash -c 'cd feature_repo &amp;&amp; feast apply'",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-    )
-
-    # định nghĩa task Data extraction
-    data_extraction_task = DockerOperator(
-        task_id="data_extraction_task",
-        command="bash -c 'cd src &amp;&amp; python data_extraction.py'",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-    )
-
-    # các task khác
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"training_pipeline"</span><span class="p">,</span>
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a>    <span class="c1"># các argument khác</span>
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>    <span class="c1"># định nghĩa task Cập nhật Feature store</span>
+<a href="#__codelineno-22-7" id="__codelineno-22-7" name="__codelineno-22-7"></a>    <span class="n">feature_store_init_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a href="#__codelineno-22-8" id="__codelineno-22-8" name="__codelineno-22-8"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"feature_store_init_task"</span><span class="p">,</span>
+<a href="#__codelineno-22-9" id="__codelineno-22-9" name="__codelineno-22-9"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd feature_repo &amp;&amp; feast apply'"</span><span class="p">,</span>
+<a href="#__codelineno-22-10" id="__codelineno-22-10" name="__codelineno-22-10"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a href="#__codelineno-22-11" id="__codelineno-22-11" name="__codelineno-22-11"></a>    <span class="p">)</span>
+<a href="#__codelineno-22-12" id="__codelineno-22-12" name="__codelineno-22-12"></a>
+<a href="#__codelineno-22-13" id="__codelineno-22-13" name="__codelineno-22-13"></a>    <span class="c1"># định nghĩa task Data extraction</span>
+<a href="#__codelineno-22-14" id="__codelineno-22-14" name="__codelineno-22-14"></a>    <span class="n">data_extraction_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a href="#__codelineno-22-15" id="__codelineno-22-15" name="__codelineno-22-15"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"data_extraction_task"</span><span class="p">,</span>
+<a href="#__codelineno-22-16" id="__codelineno-22-16" name="__codelineno-22-16"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd src &amp;&amp; python data_extraction.py'"</span><span class="p">,</span>
+<a href="#__codelineno-22-17" id="__codelineno-22-17" name="__codelineno-22-17"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a href="#__codelineno-22-18" id="__codelineno-22-18" name="__codelineno-22-18"></a>    <span class="p">)</span>
+<a href="#__codelineno-22-19" id="__codelineno-22-19" name="__codelineno-22-19"></a>
+<a href="#__codelineno-22-20" id="__codelineno-22-20" name="__codelineno-22-20"></a>    <span class="c1"># các task khác</span>
+</code></pre></div>
 <p>Trong đoạn code trên, chúng ta cần lưu ý những điểm sau.</p>
 <ul>
 <li><code>schedule_interval="@once"</code>: DAG của chúng ta sẽ được trigger một lần khi được kích hoạt, sau đó sẽ cần trigger bằng tay</li>
@@ -743,26 +743,26 @@ cd ..
 <li><code>command="bash -c 'cd feature_repo &amp;&amp; feast apply'"</code>: command mà chúng ta sẽ chạy trong mỗi task. Command giống hệt với các command mà chúng ta đã chạy trong quá trình viết code ở trên</li>
 <li><code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>: vì chúng ta sử dụng một docker image duy nhất cho tất cả các task, mình sử dụng config chung cho các docker container được tạo ra ở mỗi task. Config chung này được lưu trong biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>. Biến này gồm các config như sau.</li>
 </ul>
-<pre><code class="language-python">DEFAULT_DOCKER_OPERATOR_ARGS = {
-    "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/training_pipeline:latest",
-    "network_mode": "host",
-    "mounts": [
-        # feature repo
-        Mount(
-            source=AppPath.FEATURE_REPO.absolute().as_posix(),
-            target="/training_pipeline/feature_repo",
-            type="bind",
-        ),
-        # artifacts
-        Mount(
-            source=AppPath.ARTIFACTS.absolute().as_posix(),
-            target="/training_pipeline/artifacts",
-            type="bind",
-        ),
-    ],
-    # các config khác
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span> <span class="o">=</span> <span class="p">{</span>
+<a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>    <span class="s2">"image"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">AppConst</span><span class="o">.</span><span class="n">DOCKER_USER</span><span class="si">}</span><span class="s2">/mlops_crash_course/training_pipeline:latest"</span><span class="p">,</span>
+<a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a>    <span class="s2">"network_mode"</span><span class="p">:</span> <span class="s2">"host"</span><span class="p">,</span>
+<a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a>    <span class="s2">"mounts"</span><span class="p">:</span> <span class="p">[</span>
+<a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a>        <span class="c1"># feature repo</span>
+<a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a>        <span class="n">Mount</span><span class="p">(</span>
+<a href="#__codelineno-23-7" id="__codelineno-23-7" name="__codelineno-23-7"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
+<a href="#__codelineno-23-8" id="__codelineno-23-8" name="__codelineno-23-8"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/feature_repo"</span><span class="p">,</span>
+<a href="#__codelineno-23-9" id="__codelineno-23-9" name="__codelineno-23-9"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span>
+<a href="#__codelineno-23-10" id="__codelineno-23-10" name="__codelineno-23-10"></a>        <span class="p">),</span>
+<a href="#__codelineno-23-11" id="__codelineno-23-11" name="__codelineno-23-11"></a>        <span class="c1"># artifacts</span>
+<a href="#__codelineno-23-12" id="__codelineno-23-12" name="__codelineno-23-12"></a>        <span class="n">Mount</span><span class="p">(</span>
+<a href="#__codelineno-23-13" id="__codelineno-23-13" name="__codelineno-23-13"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">ARTIFACTS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
+<a href="#__codelineno-23-14" id="__codelineno-23-14" name="__codelineno-23-14"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/artifacts"</span><span class="p">,</span>
+<a href="#__codelineno-23-15" id="__codelineno-23-15" name="__codelineno-23-15"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span>
+<a href="#__codelineno-23-16" id="__codelineno-23-16" name="__codelineno-23-16"></a>        <span class="p">),</span>
+<a href="#__codelineno-23-17" id="__codelineno-23-17" name="__codelineno-23-17"></a>    <span class="p">],</span>
+<a href="#__codelineno-23-18" id="__codelineno-23-18" name="__codelineno-23-18"></a>    <span class="c1"># các config khác</span>
+<a href="#__codelineno-23-19" id="__codelineno-23-19" name="__codelineno-23-19"></a><span class="p">}</span>
+</code></pre></div>
 <p>Các field của biến <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> được giải thích như sau.</p>
 <ul>
 <li><code>image</code>: docker image chúng ta sẽ sử dụng cho task</li>
@@ -777,18 +777,18 @@ cd ..
 </ul>
 <p>Code của DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
 <p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/training_pipeline:latest</code>. Tuy nhiên, image này đã được build sẵn và push lên Docker Hub rồi, các bạn không cần làm gì thêm nữa. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa <code>DOCKER_USER</code> env var tại file <code>training_pipeline/deployment/.env</code> thành docker user của các bạn và chạy lệnh sau.</p>
-<pre><code class="language-bash">make build_push_image
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a>make build_push_image
+</code></pre></div>
 <p>Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy file <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow. Trước khi copy DAG trên vào folder <code>dags</code> của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
-<pre><code class="language-bash">bash run.sh airflow up
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a>bash run.sh airflow up
+</code></pre></div>
 <p>Sau đó, quay lại folder <code>mlops-crash-course-code</code> và chạy lệnh sau để copy <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow server.</p>
-<pre><code class="language-bash">make deploy_dags
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a>make deploy_dags
+</code></pre></div>
 <p>Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoảng và mật khẩu mặc định là <code>airflow</code>. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server.</p>
-<pre><code class="language-bash">bash run.sh airflow down
-bash run.sh airflow up
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a>bash run.sh airflow down
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>bash run.sh airflow up
+</code></pre></div>
 <p>Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là <code>MLOPS_CRASH_COURSE_CODE_DIR</code>. Variable này sẽ chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Chúng ta cần đường dẫn tuyệt đối vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> sẽ được dùng để tạo ra <code>Mount Source</code>. Ngoài ra, nếu các bạn dùng docker image của riêng các bạn thì hãy set Airflow variable <code>DOCKER_USER</code> thành tên docker user của các bạn. Các bạn có thể tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để set Airflow Variable.</p>
 <p>Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"/></a></p>
@@ -853,7 +853,7 @@ bash run.sh airflow up
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate"], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
 <script src="../../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
 <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
 </html>

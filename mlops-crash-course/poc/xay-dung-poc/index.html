@@ -187,33 +187,33 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
-          Xây dựng data pipeline
+          Data pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Xây dựng data pipeline" class="md-nav" data-md-level="2">
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_3">
 <span class="md-nav__icon md-icon"></span>
-          Xây dựng data pipeline
+          Data pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/tong-quan-pipeline.md">
+<a class="md-nav__link" href="../../data-pipeline/tong-quan-data-pipeline/">
         Tổng quan pipeline
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-ingestion.md">
-        Data ingestion
+<a class="md-nav__link" href="../../data-pipeline/airflow-co-ban/">
+        Airflow cơ bản
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-cleaning.md">
-        Data cleaning
+<a class="md-nav__link" href="../../data-pipeline/feature-store/">
+        Feature store
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-data-pipeline/data-exploration-validation.md">
-        Data exploration &amp; validation
+<a class="md-nav__link" href="../../data-pipeline/xay-dung-data-pipeline/">
+        Xây dựng pipeline
       </a>
 </li>
 </ul>
@@ -493,25 +493,25 @@
 </tbody>
 </table>
 <p>Code dùng để load và clean data như sau.</p>
-<pre><code class="language-python">DATA_DIR = Path("./data")
-TMP_DIR = Path("./tmp")
-DATA_PATH = DATA_DIR / "driver_stats.parquet"
-LABEL_PATH = DATA_DIR / "driver_orders.csv"
-if not DATA_PATH.is_file():
-    raise Exception("DATA_PATH not found")
-if not LABEL_PATH.is_file():
-    raise Exception("LABEL_PATH not found")
-
-# Load data
-df_orig = pd.read_parquet(DATA_PATH, engine='fastparquet')
-label_orig = pd.read_csv(LABEL_PATH, sep="\t")
-
-# Clean data
-label_orig["event_timestamp"] = pd.to_datetime(label_orig["event_timestamp"])
-
-# Định nghĩa tên của cột chứa label
-target_col = "trip_completed"
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./data"</span><span class="p">)</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">TMP_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./tmp"</span><span class="p">)</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"driver_stats.parquet"</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">LABEL_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"driver_orders.csv"</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">DATA_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"DATA_PATH not found"</span><span class="p">)</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">LABEL_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"LABEL_PATH not found"</span><span class="p">)</span>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="c1"># Load data</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">df_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">label_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">LABEL_PATH</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="c1"># Clean data</span>
+<a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
+<a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="c1"># Định nghĩa tên của cột chứa label</span>
+<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s2">"trip_completed"</span>
+</code></pre></div>
 <p>Sau khi đã load và clean được data, Data Scientist sẽ phân tích data để hiểu về data. Quá trình này thông thường gồm những công việc sau.</p>
 <ul>
 <li>Kiểm tra xem có feature nào chứa giá trị <code>null</code> không? Nên thay các giá trị <code>null</code> bằng giá trị nào?</li>
@@ -523,69 +523,69 @@ target_col = "trip_completed"
 </ul>
 <p>Ở mỗi một vấn đề về data ở trên, sẽ tồn tại một hoặc nhiều các giải pháp để giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay rằng chúng có hiệu quả hay không. Do đó, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm training model. Các metrics trong quá trình đánh giá model sẽ giúp chúng ta đánh giá xem các giải pháp mà chúng ta thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, hãy tưởng tượng bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp đi lặp lại nhiều lần.</p>
 <p>Trong file notebook <code>training/nbs/01-poc-training-code.ipynb</code>, các bạn sẽ thấy rằng data của chúng ta không có feature nào chứa giá trị <code>null</code>. Để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model. Đoạn code ở dưới được dùng để chia data thành training set và test set, train model, đánh giá model, lưu model, load model lại và thực hiện inference.</p>
-<pre><code class="language-python"># Chọn các feature
-selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"]
-
-# Chia data thành training set và test set
-TEST_SIZE = 0.2
-train, test = train_test_split(data_df, test_size=TEST_SIZE, random_state=random_seed)
-train_x = train.drop([target_col], axis=1)[selected_ft]
-test_x = test.drop([target_col], axis=1)[selected_ft]
-train_y = train[[target_col]]
-test_y = test[[target_col]]
-
-# Train model
-ALPHA = 0.5
-L1_RATIO = 0.1
-model = ElasticNet(alpha=ALPHA, l1_ratio=L1_RATIO, random_state=random_seed)
-model.fit(train_x, train_y)
-
-# Đánh giá model
-predicted_qualities = model.predict(test_x)
-(rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-
-# Lưu model
-model_path = MODEL_DIR / "driver_model.bin"
-joblib.dump(model, model_path)
-
-# Load model
-loaded_model = joblib.load(model_path)
-
-# Inference
-predictions = loaded_model.predict(test_x)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Chọn các feature</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">selected_ft</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">,</span> <span class="s2">"avg_daily_trips"</span><span class="p">]</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Chia data thành training set và test set</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">TEST_SIZE</span> <span class="o">=</span> <span class="mf">0.2</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">TEST_SIZE</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">selected_ft</span><span class="p">]</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">selected_ft</span><span class="p">]</span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1"># Train model</span>
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="n">ALPHA</span> <span class="o">=</span> <span class="mf">0.5</span>
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="n">L1_RATIO</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">ALPHA</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="n">L1_RATIO</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="c1"># Đánh giá model</span>
+<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="n">predicted_qualities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">predicted_qualities</span><span class="p">)</span>
+<a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a>
+<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="c1"># Lưu model</span>
+<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="n">model_path</span> <span class="o">=</span> <span class="n">MODEL_DIR</span> <span class="o">/</span> <span class="s2">"driver_model.bin"</span>
+<a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a>
+<a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="c1"># Load model</span>
+<a href="#__codelineno-1-27" id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="n">loaded_model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+<a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a>
+<a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="c1"># Inference</span>
+<a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+</code></pre></div>
 <p>Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài trước, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.</p>
 <h3 id="theo-doi-cac-thu-nghiem">Theo dõi các thử nghiệm</h3>
 <p>MLflow là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.</p>
 <p>Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform github project này</a> về máy của bạn, làm theo hướng dẫn trong README.md, và chạy câu lệnh sau.</p>
-<pre><code class="language-bash">bash run.sh mlflow up
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>bash run.sh mlflow up
+</code></pre></div>
 <p>Trên browser của bạn, đi tới URL <a href="http://localhost:5000/">http://localhost:5000/</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.</p>
 <p>Tiếp theo, mở file notebook <code>training/nbs/01-poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.</p>
-<pre><code class="language-python">MLFLOW_TRACKING_URI = "http://localhost:5000"
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.sklearn.autolog()
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">"http://localhost:5000"</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">MLFLOW_TRACKING_URI</span><span class="p">)</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span>
+</code></pre></div>
 <p>Lưu ý rằng vì chúng ta dùng <code>sklearn</code> để train model, dòng code <code>mlflow.sklearn.autolog()</code> sẽ giúp chúng ta tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm <a href="https://mlflow.org/docs/latest/tracking.html#automatic-logging">ở đây</a> để biết thêm thông tin về các training framework được MLflow hỗ trợ.</p>
 <p>Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.</p>
-<pre><code class="language-python"># Đặt tên cho lần chạy
-mlflow.set_tag("mlflow.runName", uuid.uuid1())
-
-# Log lại feature được dùng
-mlflow.log_param("features", selected_ft)
-
-# Log lại các hyperparameter
-mlflow.log_param("alpha", ALPHA)
-mlflow.log_param("l1_ratio", L1_RATIO)
-
-# Log lại các metric sau khi test trên test set
-mlflow.log_metric("testing_rmse", rmse)
-mlflow.log_metric("testing_r2", r2)
-mlflow.log_metric("testing_mae", mae)
-
-# Log lại model sau khi train
-mlflow.sklearn.log_model(model, "model")
-</code></pre>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Đặt tên cho lần chạy</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="s2">"mlflow.runName"</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">())</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># Log lại feature được dùng</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"features"</span><span class="p">,</span> <span class="n">selected_ft</span><span class="p">)</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="c1"># Log lại các hyperparameter</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">ALPHA</span><span class="p">)</span>
+<a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"l1_ratio"</span><span class="p">,</span> <span class="n">L1_RATIO</span><span class="p">)</span>
+<a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>
+<a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="c1"># Log lại các metric sau khi test trên test set</span>
+<a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_rmse"</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+<a href="#__codelineno-4-13" id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_r2"</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<a href="#__codelineno-4-14" id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_mae"</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span>
+<a href="#__codelineno-4-15" id="__codelineno-4-15" name="__codelineno-4-15"></a>
+<a href="#__codelineno-4-16" id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="c1"># Log lại model sau khi train</span>
+<a href="#__codelineno-4-17" id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"model"</span><span class="p">)</span>
+</code></pre></div>
 <p>Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"/></a></p>
 <p>Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột <code>Start time</code> của một lần chạy.</p>
@@ -614,7 +614,7 @@ mlflow.sklearn.log_model(model, "model")
             </div>
 </div>
 </a>
-<a aria-label="Next: Tổng quan pipeline" class="md-footer__link md-footer__link--next" href="../../xay-dung-training-pipeline/tong-quan-pipeline/" rel="next">
+<a aria-label="Next: Tổng quan pipeline" class="md-footer__link md-footer__link--next" href="../../data-pipeline/tong-quan-data-pipeline/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
@@ -653,7 +653,7 @@ mlflow.sklearn.log_model(model, "model")
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate"], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
 <script src="../../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
 <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
 </html>

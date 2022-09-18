@@ -2,62 +2,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://courses.mlops.vn/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/CODE_OF_CONDUCT/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/CONTRIBUTING/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/data-pipeline/airflow-co-ban/</loc>
+         <lastmod>2022-09-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/data-pipeline/feature-store/</loc>
+         <lastmod>2022-09-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/data-pipeline/tong-quan-data-pipeline/</loc>
+         <lastmod>2022-09-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/data-pipeline/xay-dung-data-pipeline/</loc>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/poc/dinh-nghia-poc/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/poc/xay-dung-poc/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/mlops-platform/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/</loc>
-         <lastmod>2022-09-12</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://courses.mlops.vn/mlops-crash-course/xay-dung-data-pipeline/airflow-co-ban/</loc>
-         <lastmod>2022-09-12</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://courses.mlops.vn/mlops-crash-course/xay-dung-data-pipeline/tong-quan-data-pipeline/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/</loc>
-         <lastmod>2022-09-12</lastmod>
+         <lastmod>2022-09-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
