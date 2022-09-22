@@ -1,6 +1,6 @@
 ## Mục tiêu
 
-Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với 7 task như hình dưới.
+Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
@@ -8,7 +8,7 @@ Chi tiết về mục đích của từng bước, mời các bạn xem lại b�
 
 ## Xây dựng training pipeline
 
-Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder `training_pipeline`.
+Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder `training_pipeline`.
 
 ### Cài đặt môi trường phát triển
 
@@ -49,7 +49,7 @@ Trước khi cập nhật Feature Registry, chúng ta cần chạy Redis databas
 bash run.sh feast up
 ```
 
-Sau đó, để cập nhập Feature Registry, trong repo `mlops-crash-course-code`, chúng ta chạy các lệnh sau.
+Sau đó, để cập nhập Feature Registry, trong folder `mlops-crash-course-code/training_pipeline`, chúng ta chạy các lệnh sau.
 
 ```bash
 cd feature_repo
@@ -75,7 +75,7 @@ Tiếp theo, chúng ta cần đọc file data chứa label tên là `driver_orde
 ```python
 # Đọc file data chứa label
 orders = pd.read_csv(AppPath.DATA / "driver_orders.csv", sep="\t")
-    orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
+orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 ```
 
 Các feature chúng ta muốn lấy bao gồm `conv_rate`, `acc_rate`, và `avg_daily_trips`. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`.
@@ -309,7 +309,7 @@ Các bạn có thể click vào model đã được register để xem thêm th�
 
 ### Airflow DAG
 
-Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được tóm tắt như dưới đây.
+Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py` và được tóm tắt như dưới đây.
 
 ```python
 with DAG(
@@ -336,10 +336,10 @@ with DAG(
 
 Trong đoạn code trên, chúng ta cần lưu ý những điểm sau.
 
--   `schedule_interval="@once"`: DAG của chúng ta sẽ được trigger một lần khi được kích hoạt, sau đó sẽ cần trigger bằng tay
--   `DockerOperator`: chúng ta sử dụng `DockerOperator` để cách ly các task, cho chúng chạy độc lập trong các docker container khác nhau, vì các task khác nhau sẽ có môi trường để chạy kèm các dependencies khác nhau. Tuy nhiên, để đơn giản hoá, trong khoá học này chúng ta sẽ chỉ dùng một Docker image duy nhất cho tất cả các task
--   `command="bash -c 'cd feature_repo && feast apply'"`: command mà chúng ta sẽ chạy trong mỗi task. Command giống hệt với các command mà chúng ta đã chạy trong quá trình viết code ở trên
--   `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`: vì chúng ta sử dụng một docker image duy nhất cho tất cả các task, mình sử dụng config chung cho các docker container được tạo ra ở mỗi task. Config chung này được lưu trong biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`. Biến này gồm các config như sau.
+- `schedule_interval="@once"`: DAG của chúng ta sẽ được trigger một lần khi được kích hoạt, sau đó sẽ cần trigger bằng tay
+- `DockerOperator`: chúng ta sử dụng `DockerOperator` để cách ly các task, cho chúng chạy độc lập trong các docker container khác nhau, vì các task khác nhau sẽ có môi trường để chạy kèm các dependencies khác nhau. Tuy nhiên, để đơn giản hoá, trong khoá học này chúng ta sẽ chỉ dùng một Docker image duy nhất cho tất cả các task
+- `command="bash -c 'cd feature_repo && feast apply'"`: command mà chúng ta sẽ chạy trong mỗi task. Command giống hệt với các command mà chúng ta đã chạy trong quá trình viết code ở trên
+- `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`: vì chúng ta sử dụng một docker image duy nhất cho tất cả các task, mình sử dụng config chung cho các docker container được tạo ra ở mỗi task. Config chung này được lưu trong biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`. Biến này gồm các config như sau.
 
 ```python
 DEFAULT_DOCKER_OPERATOR_ARGS = {
@@ -365,15 +365,13 @@ DEFAULT_DOCKER_OPERATOR_ARGS = {
 
 Các field của biến `DEFAULT_DOCKER_OPERATOR_ARGS` được giải thích như sau.
 
--   `image`: docker image chúng ta sẽ sử dụng cho task
--   `network_mode`: `network_mode` của docker container cần được set thành `host`, để container đó sử dụng cùng một network với máy local. Các bạn có thể đọc thêm ở [đây](https://docs.docker.com/network/host/). Mục đích là để docker container của chúng ta có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local.
--   `mounts`: có hai folders chúng ta cần mount vào trong docker container của mỗi task. Folder `training_pipeline/feature_repo` và folder `training_pipeline/artifacts`
-    -   `training_pipeline/feature_repo`: folder này cần được mount vào để chạy task Cập nhật Feature Store
-    -   `training_pipeline/artifacts`: folder này cần được mount vào để làm nơi lưu trữ các file trong quá trình chạy các task trên. Ví dụ: training data, kết quả đánh giá model, v.v.
--   `Mount source`: là folder nằm tại máy local của chúng ta, bắt buộc là đường dẫn tuyệt đối.
--   `Mount target`: là folder nằm trong docker container của mỗi task
-
-Code của DAG được lưu tại `training_pipeline/dags/training_dag.py`.
+- `image`: docker image chúng ta sẽ sử dụng cho task
+- `network_mode`: `network_mode` của docker container cần được set thành `host`, để container đó sử dụng cùng một network với máy local. Các bạn có thể đọc thêm ở [đây](https://docs.docker.com/network/host/). Mục đích là để docker container của chúng ta có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local.
+- `mounts`: có hai folders chúng ta cần mount vào trong docker container của mỗi task. Folder `training_pipeline/feature_repo` và folder `training_pipeline/artifacts`
+  - `training_pipeline/feature_repo`: folder này cần được mount vào để chạy task Cập nhật Feature Store
+  - `training_pipeline/artifacts`: folder này cần được mount vào để làm nơi lưu trữ các file trong quá trình chạy các task trên. Ví dụ: training data, kết quả đánh giá model, v.v.
+- `Mount source`: là folder nằm tại máy local của chúng ta, bắt buộc là đường dẫn tuyệt đối.
+- `Mount target`: là folder nằm trong docker container của mỗi task
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/training_pipeline:latest`. Tuy nhiên, image này đã được build sẵn và push lên Docker Hub rồi, các bạn không cần làm gì thêm nữa. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa `DOCKER_USER` env var tại file `training_pipeline/deployment/.env` thành docker user của các bạn và chạy lệnh sau.
 
@@ -381,23 +379,22 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 make build_push_image
 ```
 
-Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy file `training_pipeline/dags/training_dag.py` vào folder `dags` của Airflow. Trước khi copy DAG trên vào folder `dags` của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder `mlops-crash-course-platform` và chạy lệnh sau.
+Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy `training_pipeline/dags/*` vào folder `dags` của Airflow. Trước khi copy DAG trên vào folder `dags` của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder `mlops-crash-course-platform` và chạy lệnh sau.
 
 ```bash
 bash run.sh airflow up
 ```
 
-Sau đó, quay lại folder `mlops-crash-course-code` và chạy lệnh sau để copy `training_pipeline/dags/training_dag.py` vào folder `dags` của Airflow server.
+Sau đó, quay lại folder `mlops-crash-course-code` và chạy lệnh sau để copy `training_pipeline/dags/*` vào folder `dags` của Airflow server.
 
 ```bash
 make deploy_dags
 ```
 
-Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoảng và mật khẩu mặc định là `airflow`. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
+Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoản và mật khẩu mặc định là `airflow`. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
 
 ```bash
-bash run.sh airflow down
-bash run.sh airflow up
+bash run.sh airflow restart
 ```
 
 Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là `MLOPS_CRASH_COURSE_CODE_DIR`. Variable này sẽ chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Chúng ta cần đường dẫn tuyệt đối vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable `MLOPS_CRASH_COURSE_CODE_DIR` sẽ được dùng để tạo ra `Mount Source`. Ngoài ra, nếu các bạn dùng docker image của riêng các bạn thì hãy set Airflow variable `DOCKER_USER` thành tên docker user của các bạn. Các bạn có thể tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để set Airflow Variable.

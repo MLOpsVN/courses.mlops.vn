@@ -34,8 +34,8 @@ nav:
           - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline.md
           - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline.md
       - Triển khai model serving:
-          - Tổng quan: mlops-crash-course/trien-khai-model-serving/tong-quan.md
-          - Thực hiện: mlops-crash-course/trien-khai-model-serving/thuc-hien.md
+          - Tổng quan model serving: mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving.md
+          - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
       - Theo dõi hệ thống:
           - Tổng quan: mlops-crash-course/theo-doi-he-thong/tong-quan.md
           - Theo dõi hệ thống: mlops-crash-course/theo-doi-he-thong/theo-doi-he-thong.md

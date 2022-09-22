@@ -14,7 +14,7 @@ Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động
 
 ## Training pipeline
 
-Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với 7 tasks như hình dưới:
+Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với các tasks như hình dưới:
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
@@ -24,19 +24,19 @@ Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để ver
 
 ### Data extraction
 
-Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk hoặc memory.
+Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk.
 
 ### Data validation
 
 Sau khi đã lấy được data chứa các feature chúng ta muốn ở task Data extraction, chúng ta cần đánh giá xem data có hợp lệ không trước khi train model, bằng cách kiểm tra những thứ sau.
 
--   Data schema
-    -   Có nhận được feature không mong muốn nào không?
-    -   Có nhận được các feature mong muốn không?
-    -   Có nhận được các feature mong muốn với format và các giá trị mong muốn không?
--   Giá trị của data
-    -   Các tính chất liên quan tới data distribution có hợp lệ không?
-    -   Các giả sử mà chúng ta đưa ra đối với data có hợp lệ không?
+- Data schema
+  - Có nhận được feature không mong muốn nào không?
+  - Có nhận được các feature mong muốn không?
+  - Có nhận được các feature mong muốn với format và các giá trị mong muốn không?
+- Giá trị của data
+  - Các tính chất liên quan tới data distribution có hợp lệ không?
+  - Các giả sử mà chúng ta đưa ra đối với data có hợp lệ không?
 
 Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.
 
@@ -44,11 +44,11 @@ Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết đị
 
 Đầu vào của task này là data đã được lấy từ task Data extraction. Task này là nơi chúng ta sẽ thực hiện các bước sau.
 
--   Transform hoặc clean data nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật giá trị của các feature mà chúng ta mong muốn
--   Thực hiện feature engineering nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật kịp thời bởi Data Engineer để sinh ra các feature chúng ta mong muốn
--   Split data thành các tập training set, validation set, hay test set để phục vụ cho quá trình train model và đánh giá model
+- Transform hoặc clean data nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật giá trị của các feature mà chúng ta mong muốn
+- Thực hiện feature engineering nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật kịp thời bởi Data Engineer để sinh ra các feature chúng ta mong muốn
+- Split data thành các tập training set, validation set, hay test set để phục vụ cho quá trình train model và đánh giá model
 
-Đầu ra của task này là các tập dataset đã được lưu vào disk hoặc memory.
+Đầu ra của task này là các tập dataset đã được lưu vào disk.
 
 ### Model training
 
