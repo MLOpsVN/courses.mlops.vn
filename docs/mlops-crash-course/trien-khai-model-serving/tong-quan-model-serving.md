@@ -34,8 +34,6 @@ Lưu ý, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật
 
 Về cơ bản, quá trình triển khai online serving chính là xây dựng một hoặc nhiều RESTful APIs, và triển khai các APIs này lên một server, cho phép người dùng có thể gọi tới qua internet.
 
-Trong khoá học này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API). API này nhận vào input ở dạng _Numpy Array_, thực hiện prediction trên input nhận được, và trả về output cũng ở dạng _Numpy Array_.
-
 Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _Bentoml_.
 
 ## Tổng kết

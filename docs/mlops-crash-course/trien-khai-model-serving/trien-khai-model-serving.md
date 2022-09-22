@@ -154,16 +154,12 @@ Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, các bạ
 
 ### Airflow DAG
 
-Ở các phần trên, chúng ta đã phát triển xong các đoạn code cần thiết cho batch serving pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline. Đoạn code để định nghĩa Airflow DAG được lưu tại `model_serving/dags/batch_serving_dag.py` và được tóm tắt như dưới đây.
+Ở các phần trên, chúng ta đã phát triển xong các đoạn code cần thiết cho batch serving pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline. Đoạn code để định nghĩa Airflow DAG được lưu tại `.pmodel_serving/dags/batch_serving_dagy` và được tóm tắt như dưới đây.
 
 ```python
 with DAG(
     dag_id="batch_serving_pipeline",
-    default_args=DefaultConfig.DEFAULT_DAG_ARGS,
-    schedule_interval="@once",
-    start_date=pendulum.datetime(2022, 1, 1, tz="UTC"),
-    catchup=False,
-    tags=["batch_serving_pipeline"],
+    # các argument khác
 ) as dag:
     # định nghĩa task Cập nhật Feature store
     feature_store_init_task = DockerOperator(
@@ -214,4 +210,104 @@ TODO: Chèn ảnh
 
 ## Online serving
 
+Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API) để thực hiện online serving. Để quá trình xây dựng API này thuận tiện, chúng ta sẽ sử dụng Bentoml, một library chuyên được sử dụng cho việc tạo online serving API. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`. Để xây dựng API này, chúng ta cần thực hiện các bước chính sau:
+
+1. Download model mà chúng ta muốn triển khai từ MLflow server
+1. Lưu model download được về [dạng mà Bentoml yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
+1. Khởi tạo [một _Bentoml Runner_ và một _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner)
+1. Viết inference code cho API
+
+Đầu tiên, chúng ta sẽ download model từ MLflow server giống như ở task Batch prediction của Batch serving pipeline.
+
+```python
+# Lấy thông tin về model từ file registered_model_version.json
+# Lưu model path ở MLflow server vào model_uri
+
+# Download model từ MLflow server
+mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri)
+```
+
+Sau đó, chúng ta cần lưu model về dạng mà Bentoml yêu cầu.
+
+```python
+bentoml_model = bentoml.sklearn.save_model(
+    model_name,
+    model,
+    # định nghĩa model signatures
+    signatures={
+        "predict": {
+            "batchable": False,
+        },
+    },
+)
+```
+
+Trong đoạn code trên, các bạn cần lưu ý `signatures` của model với key `predict`. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures). Thông tin thêm về key `batchable`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
+
+Tiếp theo, chúng ta sẽ sử dụng model đã lưu ở trên để tạo Bentoml Runner và Bentoml Service.
+
+```python
+# Tạo Bentoml Runner
+bentoml_runner = bentoml.sklearn.get(bentoml_model.tag).to_runner()
+# Tạo Bentoml Service
+svc = bentoml.Service(bentoml_model.tag.name, runners=[bentoml_runner])
+```
+
+Trong Bentoml, quá trình chạy model inference sẽ thông qua một Bentoml Runner, hay tức là Bentoml Runner là một wrapper của Bentoml model. Bentoml Service sẽ chứa object Bentoml Runner, và đồng thời giúp chúng ta định nghĩa API một cách thuận tiện, như đoạn code dưới đây.
+
+```python
+@svc.api(input=NumpyNdarray(), output=NumpyNdarray())
+def classify(input_series: np.ndarray) -> np.ndarray:
+    result = bentoml_runner.predict.run(input_series)
+    return result
+```
+
+API mà chúng ta định nghĩa ở trên có input và output format như sau:
+
+- Input format: _2D Numpy Array_, với mỗi hàng là một request
+- Output format: _1D Numpy Array_, với mỗi phần tử là prediction của một request
+
+Và như vậy là chúng ta đã viết xong Online serving code! Hãy thử chạy API này bằng cách chạy lệnh sau:
+
+```bash
+make compose_up
+```
+
+Lệnh trên sẽ chạy docker compose được định nghĩa tại `model_serving/deployment/docker-compose.yml`. Trong file docker compose này, chúng ta định nghĩa một service tên là `bentoml_service`, với tên container là `online_serving`, và command sau:
+
+```bash
+/bin/bash scripts/bentoml_helper.sh serve
+```
+
+Nếu bạn kiểm tra file `scripts/bentoml_helper.sh`, các bạn sẽ thấy command trên thực chất là gọi đến command sau:
+
+```bash
+bentoml serve bentoml_service:svc
+```
+
+Sau khi docker compose đã chạy, bạn hãy mở browser và truy cập tới `http://localhost:8172/`. Các bạn sẽ nhìn thấy một trang web như sau.
+
+TODO: Chèn ảnh
+
+Lưu ý, port `8172` được định nghĩa tại `model_serving/deployment/.env`.
+
+Hãy mở API `/classify` ra, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
+
+```json
+[
+  [0.5, 0.9, 500],
+  [0.1, 0.2, 900]
+]
+```
+
+Kết quả của response trả về sẽ nhìn giống như sau.
+
+TODO: Chèn ảnh
+
+Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Trong thực tế, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để người dùng có thể gọi tới API được expose tại port `8172` trên server này.
+
 ## Tổng kết
+
+Như vậy, chúng ta vừa thực hiện quy trình triển khai batch serving và online serving điển hình. Lưu ý rằng, code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó.
+
+Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này là cực kì quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.
