@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Phân tích vấn đề - MLOpsVN Courses</title>
+<title>Tổng quan model serving - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -22,6 +22,9 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#muc-tieu">
+          Skip to content
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -43,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Phân tích vấn đề
+              Tổng quan model serving
             
           </span>
 </div>
@@ -84,8 +87,8 @@
           MLOps Crash Course
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_1">
           Tổng quan hệ thống
           <span class="md-nav__icon md-icon"></span>
@@ -96,14 +99,13 @@
           Tổng quan hệ thống
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-quan-he-thong/phan-tich-van-de/">
         Phân tích vấn đề
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../mlops-platform/">
+<a class="md-nav__link" href="../../tong-quan-he-thong/mlops-platform/">
         MLOps platform
       </a>
 </li>
@@ -195,8 +197,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_5">
           Triển khai model serving
           <span class="md-nav__icon md-icon"></span>
@@ -207,13 +209,65 @@
           Triển khai model serving
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/tong-quan-model-serving/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Tổng quan model serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Tổng quan model serving
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/trien-khai-model-serving/">
+<a class="md-nav__link" href="#batch-serving">
+    Batch serving
+  </a>
+<nav aria-label="Batch serving" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-prediction">
+    Batch prediction
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-serving">
+    Online serving
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../trien-khai-model-serving/">
         Triển khai model serving
       </a>
 </li>
@@ -342,200 +396,86 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#muc-tieu">
+    Mục tiêu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-serving">
+    Batch serving
+  </a>
+<nav aria-label="Batch serving" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-prediction">
+    Batch prediction
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-serving">
+    Online serving
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Phân tích vấn đề</h1>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg"/></a></p>
-<p>Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.</p>
-<p>Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống <em>Grab</em>, và vấn đề kinh doanh của công ty của bạn là: <em>Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?</em>. Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.</p>
-<p>Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta.</p>
-<table>
-<thead>
-<tr>
-<th><strong>Chủ đề</strong></th>
-<th><strong>Câu hỏi</strong></th>
-<th><strong>Trả lời</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Mục tiêu</strong></td>
-<td>Các mục tiêu kinh doanh?</td>
-<td>Tăng số lượng các cuốc xe được hoàn thành trong 1 tháng lên 10%</td>
-</tr>
-<tr>
-<td></td>
-<td>Các chức năng chính của hệ thống?</td>
-<td>Rank xác suất hoàn thành cuốc xe của driver được chọn</td>
-</tr>
-<tr>
-<td><strong>Các bên liên quan</strong></td>
-<td>Ai là người tham gia? Vai trò và trách nhiệm?</td>
-<td>Product owner, Product manager, Solution Architect, Data Scientist, Data engineer, ML engineer</td>
-</tr>
-<tr>
-<td></td>
-<td>Ai cần được thông báo về dự án?</td>
-<td>Head of Engineering, CTO, CEO</td>
-</tr>
-<tr>
-<td></td>
-<td>Ai là người dùng cuối?</td>
-<td>Khách hàng</td>
-</tr>
-<tr>
-<td><strong>Data</strong></td>
-<td>Có thể lấy ở các nguồn nào?</td>
-<td>Static data và streaming data từ app của công ty</td>
-</tr>
-<tr>
-<td></td>
-<td>Định nghĩa quy trình để transform data sang format có thể dùng được?</td>
-<td>Giả sử quy trình để transform và clean data, feature engineering đã được định nghĩa</td>
-</tr>
-<tr>
-<td><strong>Phát triển models</strong></td>
-<td>Có những giải pháp nào đã được thực hiện để so sánh và đối chiếu?</td>
-<td>Giả sử đã tìm hiểu các giải pháp trên internet và của các đối thủ cạnh tranh</td>
-</tr>
-<tr>
-<td></td>
-<td>Có những thresholds nào được sử dụng để khiến giải pháp trở nên hữu ích?</td>
-<td>Quá trình inference không được chạy quá 500ms</td>
-</tr>
-<tr>
-<td></td>
-<td>Cân nhắc các tradeoffs</td>
-<td>False positives (false alarm) có ảnh hưởng nghiêm trọng hơn</td>
-</tr>
-<tr>
-<td></td>
-<td>Giải pháp ML của chúng ta có cần được interpretable không? Nếu có thì giải thích cho ai?</td>
-<td>Giải pháp này có yêu cầu interpretable, để có thể giúp các bộ phận khác của công ty đưa ra giải pháp để tối ưu các features</td>
-</tr>
-<tr>
-<td></td>
-<td>Giải pháp ML này có cần confidence score không? Nếu có thì dùng threshold nào?</td>
-<td>Sử dụng threshold 0.5. Thông qua các POC sau đó mà chúng ta sẽ tối ưu threshold này sau</td>
-</tr>
-<tr>
-<td></td>
-<td>Làm gì với các predictions thoả mãn và không thoả mãn threshold?</td>
-<td>Các predictions dù thoả mãn threshold hay không thì đều được log lại và gán label sau</td>
-</tr>
-<tr>
-<td><strong>Đánh giá models</strong></td>
-<td>Dùng metrics nào để đánh giá trong giai đoạn development và production?</td>
-<td>Dùng metrics RMSE</td>
-</tr>
-<tr>
-<td></td>
-<td>Làm sao để liên kết model performance với mục tiêu kinh doanh?</td>
-<td>Ở production, ngoài RMSE để đánh giá model performance, chúng ta cần tính cả tỉ lệ hoàn thành các cuốc xe trong 1 tháng gần nhất, để đánh giá mục tiêu kinh doanh</td>
-</tr>
-<tr>
-<td><strong>Triển khai models</strong></td>
-<td>Data của quá trình inference sẽ được lấy từ đâu? Được format và lưu trữ thế nào?</td>
-<td>Data đầu vào của quá trình inference sẽ được lấy từ static DB và streaming DB</td>
-</tr>
-<tr>
-<td></td>
-<td>Model được deploy lên đâu?</td>
-<td>Model được deploy lên hệ thống on-premise của công ty</td>
-</tr>
-<tr>
-<td></td>
-<td>Khi nào chạy batch prediction? Khi nào chạy online prediction?</td>
-<td>Model sẽ được đóng gói để có thể serve được cả batch và online</td>
-</tr>
-<tr>
-<td></td>
-<td>Tốc độ thay đổi của data thế nào?</td>
-<td>Vài features sẽ thay đổi không thường xuyên, có thể schedule để chạy và update hàng ngày. Vài features cần lấy từ streaming data, cần data pipeline riêng để preprocess và lưu trữ</td>
-</tr>
-<tr>
-<td></td>
-<td>Bao lâu thì cần train lại model?</td>
-<td>Dựa vào tốc độ thay đổi của data hoặc feature drift</td>
-</tr>
-<tr>
-<td></td>
-<td>Labels ở production được thu thập như thế nào?</td>
-<td>Sau khi tài xế được chọn, trải qua một vài quy trình khác, chúng ta thu thập được kết quả xem cuốc xe có hoàn thành không</td>
-</tr>
-<tr>
-<td><strong>Quyền riêng tư</strong></td>
-<td>Có những yêu cầu nào về quyền riêng tư của data, labels, v.v</td>
-<td>Data và labels chỉ được dùng trong nội bộ công ty</td>
-</tr>
-<tr>
-<td></td>
-<td>Hệ thống có thể được kết nối với internet không?</td>
-<td>Có</td>
-</tr>
-<tr>
-<td></td>
-<td>Chúng ta có thể giữ data của users trong bao lâu?</td>
-<td>Không giới hạn</td>
-</tr>
-<tr>
-<td><strong>Chi phí và lợi ích</strong></td>
-<td>Ngân sách ban đầu</td>
-<td>500k$</td>
-</tr>
-<tr>
-<td></td>
-<td>So sánh chi phí và lợi ích</td>
-<td>Lợi ích lớn hơn chi phí nhiều, vì hệ thống có thể tái sử dụng, chi phí để optimize không lớn</td>
-</tr>
-<tr>
-<td></td>
-<td>Cần đạt được các yêu cầu nào để tăng budget?</td>
-<td>Hoàn thành các mốc thời gian tiếp theo, triển khai model ra production và chứng minh lợi ích lớn hơn chi phí</td>
-</tr>
-<tr>
-<td><strong>Rủi ro</strong></td>
-<td>Phân tích các rủi ro đi kèm khi thực hiện mỗi chức năng</td>
-<td>Có thể model được đánh giá offline là tốt, nhưng khi ra production, lại không thể chứng minh là mang lại hiệu quả</td>
-</tr>
-<tr>
-<td></td>
-<td>Phân tích các rủi ro kinh doanh khác</td>
-<td>Hết tiền trước khi hoàn thiện POC</td>
-</tr>
-<tr>
-<td><strong>Ràng buộc kĩ thuật</strong></td>
-<td>Có hệ thống nào trong công ty chúng ta cần tích hợp với không?</td>
-<td>Không</td>
-</tr>
-<tr>
-<td></td>
-<td>Architecture và tool sẽ dùng?</td>
-<td>Architecture và tool sẽ được định nghĩa ở bài tiếp theo tools</td>
-</tr>
-<tr>
-<td><strong>Các mốc thời gian</strong></td>
-<td>Thời gian được phân bổ như thế nào cho từng chức năng?</td>
-<td>Timeline ở hình dưới</td>
-</tr>
-</tbody>
-</table>
-<p>Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"/></a></p>
-<p>Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm <a href="https://ml-ops.org/content/phase-zero">ở đây</a> về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.</p>
-<p>Ngoài ra, trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về bốn tính chất này.</p>
-<p>Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các workflow và MLOps platform được dùng trong hệ thống.</p>
+<h1>Tổng quan model serving</h1>
+<h2 id="muc-tieu">Mục tiêu</h2>
+<p>Sau khi train được một model tốt, chúng ta cần triển khai model. Có hai hình thức triển khai model phổ biến, đó là <em>batch serving</em> và <em>online serving</em>.</p>
+<p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Tuy nhiên, batch serving được tối ưu để xử lý số lượng lớn các requests và thường để chạy các model phức tạp, trong khi online serving thì được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và được xử lý offline. Online serving thì được triển khai lên một server nào đó dưới dạng RESTful APIs để người dùng có thể gọi tới qua internet.</p>
+<p>Trong bài này, chúng ta sẽ tìm hiểu cách để triển khai model ở cả hai hình thức batch serving và online serving.</p>
+<h2 id="batch-serving">Batch serving</h2>
+<p>Trong khoá học này, chúng ta sẽ thiết kế batch serving với input là data file ở local. Chúng ta có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving.</p>
+<p>Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"/></a></p>
+<h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
+<p>Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.</p>
+<p>Task này giống hệt như task <strong>Cập nhật Feature Store</strong> ở training pipeline. Các bạn có thể xem lại bài <a href="../../xay-dung-training-pipeline/tong-quan-pipeline/#cap-nhat-feature-store">Tổng quan training pipeline</a>.</p>
+<h3 id="data-extraction">Data extraction</h3>
+<p>Trong task này, chúng ta cần đọc vào data mà chúng ta muốn chạy prediction. Khi đọc vào data, chúng ta cũng cần xử lý data này về input format mà model yêu cầu để tiện cho task <strong>Batch prediction</strong> tiếp theo, bằng cách lấy ra các features từ Feast và định dạng lại data mà chúng ta sẽ chạy prediction. Đầu ra của task này là data đã được xử lý về đúng input format của model và được lưu vào disk.</p>
+<h3 id="batch-prediction">Batch prediction</h3>
+<p>Ở task này, chúng ta sẽ load model sẽ được dùng từ một config file, và chạy prediction trên data đã được xử lý ở task trước. Đầu ra của task này là kết quả predictions và sẽ được lưu vào disk.</p>
+<p>Lưu ý, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.</p>
+<h2 id="online-serving">Online serving</h2>
+<p>Về cơ bản, quá trình triển khai online serving chính là xây dựng một hoặc nhiều RESTful APIs, và triển khai các APIs này lên một server, cho phép người dùng có thể gọi tới qua internet.</p>
+<p>Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>Bentoml</em>.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Trong bài tiếp theo, chúng ta sẽ cùng nhau viết code cho batch serving pipeline và xây dựng API cho online serving.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: MLOps Crash Course" class="md-footer__link md-footer__link--prev" href="../../" rel="prev">
+<a aria-label="Previous: Xây dựng pipeline" class="md-footer__link md-footer__link--prev" href="../../xay-dung-training-pipeline/xay-dung-pipeline/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -544,17 +484,17 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              MLOps Crash Course
+              Xây dựng pipeline
             </div>
 </div>
 </a>
-<a aria-label="Next: MLOps platform" class="md-footer__link md-footer__link--next" href="../mlops-platform/" rel="next">
+<a aria-label="Next: Triển khai model serving" class="md-footer__link md-footer__link--next" href="../trien-khai-model-serving/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              MLOps platform
+              Triển khai model serving
             </div>
 </div>
 <div class="md-footer__button md-icon">

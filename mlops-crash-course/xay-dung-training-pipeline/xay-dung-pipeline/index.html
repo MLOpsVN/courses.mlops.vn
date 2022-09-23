@@ -287,13 +287,13 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/tong-quan.md">
-        Tổng quan
+<a class="md-nav__link" href="../../trien-khai-model-serving/tong-quan-model-serving/">
+        Tổng quan model serving
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/thuc-hien.md">
-        Thực hiện
+<a class="md-nav__link" href="../../trien-khai-model-serving/trien-khai-model-serving/">
+        Triển khai model serving
       </a>
 </li>
 </ul>
@@ -499,11 +499,11 @@
 <article class="md-content__inner md-typeset">
 <h1>Xây dựng pipeline</h1>
 <h2 id="muc-tieu">Mục tiêu</h2>
-<p>Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với 7 task như hình dưới.</p>
+<p>Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"/></a></p>
 <p>Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước <a href="../../xay-dung-training-pipeline/tong-quan-pipeline">ở đây</a>. Source code của bài này đã được tải lên Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
 <h2 id="xay-dung-training-pipeline">Xây dựng training pipeline</h2>
-<p>Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>training_pipeline</code>.</p>
+<p>Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>training_pipeline</code>.</p>
 <h3 id="cai-at-moi-truong-phat-trien">Cài đặt môi trường phát triển</h3>
 <p>Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Các bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt môi trường phát triển.</p>
 <p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.</p>
@@ -534,7 +534,7 @@
 <p>Trước khi cập nhật Feature Registry, chúng ta cần chạy Redis database dành riêng cho Feast. Để chạy Redis database này, các bạn clone Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>. Để thuận tiện cho quá trình phát triển, folder <code>mlops-crash-course-platform</code> và folder <code>mlops-crash-course-code</code> phải được đặt trong cùng một folder. Sau đó, các bạn hãy mở folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>bash run.sh feast up
 </code></pre></div>
-<p>Sau đó, để cập nhập Feature Registry, trong repo <code>mlops-crash-course-code</code>, chúng ta chạy các lệnh sau.</p>
+<p>Sau đó, để cập nhập Feature Registry, trong folder <code>mlops-crash-course-code/training_pipeline</code>, chúng ta chạy các lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> feature_repo
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>feast apply
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
@@ -549,7 +549,7 @@
 <p>Tiếp theo, chúng ta cần đọc file data chứa label tên là <code>driver_orders.csv</code>. File này chứa field <code>event_timestamp</code> và <code>driver_id</code> mà sẽ được dùng để match với data trong Feature Store.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Đọc file data chứa label</span>
 <a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">orders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">DATA</span> <span class="o">/</span> <span class="s2">"driver_orders.csv"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
-<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
 </code></pre></div>
 <p>Các feature chúng ta muốn lấy bao gồm <code>conv_rate</code>, <code>acc_rate</code>, và <code>avg_daily_trips</code>. <code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code>.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Lấy các feature cần thiết từ Feature Store</span>
@@ -714,7 +714,7 @@
 <p>Các bạn có thể click vào model đã được register để xem thêm thông tin nó. Cụ thể như ở hình dưới, chúng ta có thể thấy MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"/></a></p>
 <h3 id="airflow-dag">Airflow DAG</h3>
-<p>Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được tóm tắt như dưới đây.</p>
+<p>Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code> và được tóm tắt như dưới đây.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
 <a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"training_pipeline"</span><span class="p">,</span>
 <a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>
@@ -767,27 +767,23 @@
 <ul>
 <li><code>image</code>: docker image chúng ta sẽ sử dụng cho task</li>
 <li><code>network_mode</code>: <code>network_mode</code> của docker container cần được set thành <code>host</code>, để container đó sử dụng cùng một network với máy local. Các bạn có thể đọc thêm ở <a href="https://docs.docker.com/network/host/">đây</a>. Mục đích là để docker container của chúng ta có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local.</li>
-<li><code>mounts</code>: có hai folders chúng ta cần mount vào trong docker container của mỗi task. Folder <code>training_pipeline/feature_repo</code> và folder <code>training_pipeline/artifacts</code><ul>
+<li><code>mounts</code>: có hai folders chúng ta cần mount vào trong docker container của mỗi task. Folder <code>training_pipeline/feature_repo</code> và folder <code>training_pipeline/artifacts</code></li>
 <li><code>training_pipeline/feature_repo</code>: folder này cần được mount vào để chạy task Cập nhật Feature Store</li>
 <li><code>training_pipeline/artifacts</code>: folder này cần được mount vào để làm nơi lưu trữ các file trong quá trình chạy các task trên. Ví dụ: training data, kết quả đánh giá model, v.v.</li>
-</ul>
-</li>
 <li><code>Mount source</code>: là folder nằm tại máy local của chúng ta, bắt buộc là đường dẫn tuyệt đối.</li>
 <li><code>Mount target</code>: là folder nằm trong docker container của mỗi task</li>
 </ul>
-<p>Code của DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
 <p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/training_pipeline:latest</code>. Tuy nhiên, image này đã được build sẵn và push lên Docker Hub rồi, các bạn không cần làm gì thêm nữa. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa <code>DOCKER_USER</code> env var tại file <code>training_pipeline/deployment/.env</code> thành docker user của các bạn và chạy lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a>make build_push_image
 </code></pre></div>
-<p>Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy file <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow. Trước khi copy DAG trên vào folder <code>dags</code> của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
+<p>Sau khi đã có docker image, để triển khai DAG trên, chúng ta sẽ copy <code>training_pipeline/dags/*</code> vào folder <code>dags</code> của Airflow. Trước khi copy DAG trên vào folder <code>dags</code> của Airflow, chúng ta cần chạy Airflow server. Các bạn vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a>bash run.sh airflow up
 </code></pre></div>
-<p>Sau đó, quay lại folder <code>mlops-crash-course-code</code> và chạy lệnh sau để copy <code>training_pipeline/dags/training_dag.py</code> vào folder <code>dags</code> của Airflow server.</p>
+<p>Sau đó, quay lại folder <code>mlops-crash-course-code</code> và chạy lệnh sau để copy <code>training_pipeline/dags/*</code> vào folder <code>dags</code> của Airflow server.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a>make deploy_dags
 </code></pre></div>
-<p>Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoảng và mật khẩu mặc định là <code>airflow</code>. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a>bash run.sh airflow down
-<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>bash run.sh airflow up
+<p>Tiếp theo, đăng nhập vào Airflow UI trên browser với tài khoản và mật khẩu mặc định là <code>airflow</code>. Nếu các bạn đã refresh Airflow UI mà vẫn không thấy training pipeline, thì các bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a>bash run.sh airflow restart
 </code></pre></div>
 <p>Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là <code>MLOPS_CRASH_COURSE_CODE_DIR</code>. Variable này sẽ chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Chúng ta cần đường dẫn tuyệt đối vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối. Giá trị lấy từ Airflow variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> sẽ được dùng để tạo ra <code>Mount Source</code>. Ngoài ra, nếu các bạn dùng docker image của riêng các bạn thì hãy set Airflow variable <code>DOCKER_USER</code> thành tên docker user của các bạn. Các bạn có thể tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để set Airflow Variable.</p>
 <p>Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.</p>
@@ -814,13 +810,13 @@
             </div>
 </div>
 </a>
-<a aria-label="Next: Contributing" class="md-footer__link md-footer__link--next" href="../../../CONTRIBUTING/" rel="next">
+<a aria-label="Next: Tổng quan model serving" class="md-footer__link md-footer__link--next" href="../../trien-khai-model-serving/tong-quan-model-serving/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Contributing
+              Tổng quan model serving
             </div>
 </div>
 <div class="md-footer__button md-icon">
