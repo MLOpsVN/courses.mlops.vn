@@ -47,9 +47,9 @@ Các tương tác chính trong MLOps platform:
 
 18\. Materialize feature từ offline sang online store
 
-19.\ Stream dữ liệu vào online store
+19\. Stream dữ liệu vào online store
 
-20.\ Stream dữ liệu vào offline store
+20\. Stream dữ liệu vào offline store
 
 ## Infra layer
 
