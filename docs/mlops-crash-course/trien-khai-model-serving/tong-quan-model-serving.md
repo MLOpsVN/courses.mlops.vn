@@ -12,7 +12,7 @@ Trong khoá học này, chúng ta sẽ thiết kế batch serving với input l�
 
 Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:
 
-TODO: Vẽ hình
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
 
 ### Cập nhật Feature Store
 

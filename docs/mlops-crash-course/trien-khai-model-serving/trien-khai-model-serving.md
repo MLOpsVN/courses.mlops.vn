@@ -6,7 +6,7 @@ Trong bài này, chúng ta sẽ viết code để triển khai batch serving pip
 
 Batch serving sẽ được triển khai dưới dạng một Airflow DAG với các task như hình dưới:
 
-TODO: Vẽ ảnh
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
 
 Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `model_serving`.
 
@@ -206,7 +206,7 @@ Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là `MLO
 
 Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt batch serving pipeline và chờ đợi kết quả.
 
-TODO: Chèn ảnh
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
 
 ## Online serving
 
@@ -287,7 +287,7 @@ bentoml serve bentoml_service:svc
 
 Sau khi docker compose đã chạy, bạn hãy mở browser và truy cập tới `http://localhost:8172/`. Các bạn sẽ nhìn thấy một trang web như sau.
 
-TODO: Chèn ảnh
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-swagger-ui.png" loading="lazy" />
 
 Lưu ý, port `8172` được định nghĩa tại `model_serving/deployment/.env`.
 
@@ -302,7 +302,7 @@ Hãy mở API `/classify` ra, và ấn nút `Try it out`. Ở phần `Request bo
 
 Kết quả của response trả về sẽ nhìn giống như sau.
 
-TODO: Chèn ảnh
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-swagger-response.png" loading="lazy" />
 
 Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Trong thực tế, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để người dùng có thể gọi tới API được expose tại port `8172` trên server này.
 
