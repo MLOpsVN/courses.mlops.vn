@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#muc-tieu">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -225,8 +225,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
 <li class="md-nav__item">
@@ -402,8 +402,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
 <li class="md-nav__item">
@@ -448,8 +448,8 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Tổng quan model serving</h1>
-<h2 id="muc-tieu">Mục tiêu</h2>
-<p>Sau khi train được một model tốt, chúng ta cần triển khai model. Có hai hình thức triển khai model phổ biến, đó là <em>batch serving</em> và <em>online serving</em>.</p>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Sau khi train được một model tốt sử dụng training pipeline trong bài trước, chúng ta cần triển khai model tốt đó để thực hiện inference. Có hai hình thức triển khai model phổ biến, đó là <em>batch serving</em> và <em>online serving</em>.</p>
 <p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Tuy nhiên, batch serving được tối ưu để xử lý số lượng lớn các requests và thường để chạy các model phức tạp, trong khi online serving thì được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và được xử lý offline. Online serving thì được triển khai lên một server nào đó dưới dạng RESTful APIs để người dùng có thể gọi tới qua internet.</p>
 <p>Trong bài này, chúng ta sẽ tìm hiểu cách để triển khai model ở cả hai hình thức batch serving và online serving.</p>
 <h2 id="batch-serving">Batch serving</h2>
@@ -466,7 +466,7 @@
 <p>Lưu ý, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.</p>
 <h2 id="online-serving">Online serving</h2>
 <p>Về cơ bản, quá trình triển khai online serving chính là xây dựng một hoặc nhiều RESTful APIs, và triển khai các APIs này lên một server, cho phép người dùng có thể gọi tới qua internet.</p>
-<p>Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>Bentoml</em>.</p>
+<p>Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask trong Python. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>Bentoml</em>.</p>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Trong bài tiếp theo, chúng ta sẽ cùng nhau viết code cho batch serving pipeline và xây dựng API cho online serving.</p>
 </article>

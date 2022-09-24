@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#muc-tieu">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -230,8 +230,13 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
+    Cài đặt môi trường phát triển
   </a>
 </li>
 <li class="md-nav__item">
@@ -240,11 +245,6 @@
   </a>
 <nav aria-label="Batch serving" class="md-nav">
 <ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
-    Cài đặt môi trường phát triển
-  </a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#cap-nhat-feature-store">
     Cập nhật Feature Store
@@ -412,8 +412,13 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
+    Cài đặt môi trường phát triển
   </a>
 </li>
 <li class="md-nav__item">
@@ -422,11 +427,6 @@
   </a>
 <nav aria-label="Batch serving" class="md-nav">
 <ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
-    Cài đặt môi trường phát triển
-  </a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#cap-nhat-feature-store">
     Cập nhật Feature Store
@@ -468,28 +468,28 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Triển khai model serving</h1>
-<h2 id="muc-tieu">Mục tiêu</h2>
-<p>Trong bài này, chúng ta sẽ viết code để triển khai batch serving pipeline và xây dựng RESTful API cho online serving. Chi tiết về hai loại serving này, mời các bạn xem lại bài trước <a href="../../trien-khai-model-serving/tong-quan-model-serving">ở đây</a>. Source code của bài này đã được tải lên Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
-<h2 id="batch-serving">Batch serving</h2>
-<p>Batch serving sẽ được triển khai dưới dạng một Airflow DAG với các task như hình dưới:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"/></a></p>
-<p>Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>model_serving</code>.</p>
-<h3 id="cai-at-moi-truong-phat-trien">Cài đặt môi trường phát triển</h3>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Ở bài trước, <a href="../../trien-khai-model-serving/tong-quan-model-serving">Tổng quan model serving</a>, chúng ta đã phân tích về hai hình thức phổ biến khi triển khai model serving, đó chính là <em>batch serving</em> và <em>online serving</em>. Source code của bài này được đặt tại Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
+<h2 id="cai-at-moi-truong-phat-trien">Cài đặt môi trường phát triển</h2>
 <p>Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>model_serving/dev_requirements.txt</code>. Các bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt môi trường phát triển.</p>
 <p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.</p>
 <ol>
 <li>
-<p>Copy file <code>model_serving/.env-example</code>, đổi tên thành <code>model_serving/.env</code>. File này chứa các config cần thiết cho việc triển khai model serving. Các bạn có thể sửa nếu cần.</p>
+<p>Copy file <code>model_serving/.env-example</code>, đổi tên thành <code>model_serving/.env</code>. File này chứa các config cần thiết cho việc triển khai model serving.</p>
 </li>
 <li>
-<p>Copy file <code>model_serving/deployment/.env-example</code>, đổi tên thành <code>model_serving/deployment/.env</code>. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving. Các bạn có thể sửa nếu cần.</p>
+<p>Copy file <code>model_serving/deployment/.env-example</code>, đổi tên thành <code>model_serving/deployment/.env</code>. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.</p>
 </li>
 <li>
-<p>Set env var <code>MODEL_SERVING_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>model_serving</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>model_serving/src</code>.</p>
+<p>Set env var <code>MODEL_SERVING_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>model_serving</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>model_serving/src</code> trong quá trình phát triển.</p>
 </li>
 </ol>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">MODEL_SERVING_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/model_serving"</span>
 </code></pre></div>
+<h2 id="batch-serving">Batch serving</h2>
+<p>Batch serving sẽ được triển khai dưới dạng một Airflow DAG với các task như hình dưới:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png"/></a></p>
+<p>Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>model_serving</code>.</p>
 <h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
 <p>Task này được thực hiện giống như task <strong>Cập nhật Feature Store</strong> ở bài <a href="../../xay-dung-training-pipeline/xay-dung-pipeline/#cap-nhat-feature-store">Xây dựng training pipeline</a>. Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này.</p>
 <p>Đầu tiên, các bạn cần triển khai code của Feature Store từ <code>data_pipeline/feature_repo</code> sang <code>model_serving/feature_repo</code>, bằng cách chạy các lệnh sau.</p>
@@ -563,14 +563,21 @@
 <a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="c1"># Load data từ file ở task trước</span>
 <a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="n">batch_df</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_INPUT_PQ</span><span class="p">)</span>
 <a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a>
-<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="c1"># Chạy prediction</span>
-<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">batch_df</span><span class="p">)</span>
-<a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="n">batch_df</span><span class="p">[</span><span class="s2">"pred"</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span>
-<a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a>
-<a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="c1"># Lưu lại kết quả</span>
-<a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">batch_df</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_OUTPUT_PQ</span><span class="p">)</span>
+<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="c1"># Sắp xếp lại features</span>
+<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="n">model_signature</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">signature</span>
+<a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="n">feature_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">model_signature</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_names</span><span class="p">():</span>
+<a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a>    <span class="n">feature_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="n">batch_df</span> <span class="o">=</span> <span class="n">batch_df</span><span class="p">[</span><span class="n">feature_list</span><span class="p">]</span>
+<a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a>
+<a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="c1"># Chạy prediction</span>
+<a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">batch_df</span><span class="p">)</span>
+<a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="n">batch_df</span><span class="p">[</span><span class="s2">"pred"</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span>
+<a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a>
+<a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="c1"># Lưu lại kết quả</span>
+<a href="#__codelineno-9-22" id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">batch_df</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_OUTPUT_PQ</span><span class="p">)</span>
 </code></pre></div>
-<p>Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
+<p>Vì batch data mà chúng ta đọc từ file vào có thể sẽ chứa các features không theo đúng thứ tự mà model yêu cầu, nên ở đoạn code trên, chúng ta có thêm vào đoạn code để sắp xếp lại features cho input data. Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">cd</span> src
 <a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>python batch_prediction.py
 <a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nb">cd</span> ..
@@ -724,7 +731,7 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-inference-response.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-inference-response.png"/></a></p>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Như vậy, chúng ta vừa thực hiện quy trình triển khai batch serving và online serving điển hình. Lưu ý rằng, code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó.</p>
-<p>Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này là cực kì quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.</p>
+<p>Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này rất quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.</p>
 </article>
 </div>
 </div>

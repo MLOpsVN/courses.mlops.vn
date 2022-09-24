@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#xay-dung-poc">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -145,19 +145,23 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-poc">
-    Xây dựng POC
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
-<nav aria-label="Xây dựng POC" class="md-nav">
-<ul class="md-nav__list">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#chuan-bi-data">
     Chuẩn bị data
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-training-code">
-    Phân tích data và training code
+<a class="md-nav__link" href="#phan-tich-data-va-viet-training-code">
+    Phân tích data và viết training code
   </a>
 </li>
 <li class="md-nav__item">
@@ -174,9 +178,6 @@
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
   </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -397,19 +398,23 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-poc">
-    Xây dựng POC
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
-<nav aria-label="Xây dựng POC" class="md-nav">
-<ul class="md-nav__list">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#chuan-bi-data">
     Chuẩn bị data
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-training-code">
-    Phân tích data và training code
+<a class="md-nav__link" href="#phan-tich-data-va-viet-training-code">
+    Phân tích data và viết training code
   </a>
 </li>
 <li class="md-nav__item">
@@ -429,18 +434,17 @@
 </li>
 </ul>
 </nav>
-</li>
-</ul>
-</nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Xây dựng PoC</h1>
-<h2 id="xay-dung-poc">Xây dựng POC</h2>
-<p>Bước tiếp theo, chúng ta sẽ tạo một Jupyter notebook quen thuộc và bắt đầu thử nghiệm xây dựng model. Lưu ý, vì nội dung của khoá học tập trung vào MLOps, quá trình thử nghiệm model sẽ được tối giản hoá.</p>
-<h3 id="chuan-bi-data">Chuẩn bị data</h3>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Ở bài trước, chúng ta đã định nghĩa thế nào là một dự án POC thành công. Trong bài này, chúng ta sẽ thử nghiệm việc xây dựng model chứng minh rằng giải pháp sử dụng ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài <a href="../../tong-quan-he-thong/mlops-platform.md">MLOps Platform</a>.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Đầu tiên, chúng ta cần xây dựng môi trường phát triển ở local. Các bạn hãy clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code/">mlops-crash-course-code</a> về máy. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Các bạn có thể dùng <code>virtualenv</code>, <code>conda</code>, <code>pipenv</code>, hoặc bất kì tool nào để cài đặt môi trường phát triển.</p>
+<h2 id="chuan-bi-data">Chuẩn bị data</h2>
 <p>Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:</p>
 <ul>
 <li>Phân tích data để định nghĩa các transformation rule cho data từ data source. Transformation rule này sẽ được dùng để xây dựng data pipeline</li>
@@ -448,9 +452,9 @@
 <li>Thử nghiệm các model architecture và hyperparameter để định nghĩa các bước trong training pipeline</li>
 </ul>
 <p>Trong khoá học này, giả sử rằng Data Engineering đã thu thập data cho chúng ta từ data source và chuyển giao cho chúng ta một file data duy nhất ở dạng <code>parquet</code>. Chúng ta sẽ sử dụng file data này để thực hiện công việc của một Data Scientist trong các bước tiếp theo.</p>
-<h3 id="phan-tich-data-va-training-code">Phân tích data và training code</h3>
-<p>Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code được lưu tại <a href="https://github.com/MLOpsVN/mlops-crash-course-code/tree/main/training/nbs">đây</a>.</p>
-<p>Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là <code>driver_stats.parquet</code> và <code>driver_orders.csv</code>. Hai file này chứa các cột với ý nghĩa tương ứng như sau:</p>
+<h2 id="phan-tich-data-va-viet-training-code">Phân tích data và viết training code</h2>
+<p>Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại <code>training_pipeline/nbs/01-poc-training-code.ipynb</code>.</p>
+<p>Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là <code>training_pipeline/nbs/data/exp_driver_stats.parquet</code> và <code>training_pipeline/nbs/data/exp_driver_orders.csv</code>. Hai file này chứa các cột với ý nghĩa tương ứng như sau:</p>
 <table>
 <thead>
 <tr>
@@ -461,7 +465,7 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>driver_stats.parquet</strong></td>
+<td><strong>exp_driver_stats.parquet</strong></td>
 <td>driver_id</td>
 <td>ID của driver trong Database của công ty</td>
 </tr>
@@ -478,10 +482,10 @@
 <tr>
 <td></td>
 <td>avg_daily_trips</td>
-<td>Số cuốc xe trung bình một ngày</td>
+<td>Một thông số nào đó</td>
 </tr>
 <tr>
-<td><strong>driver_orders.csv</strong></td>
+<td><strong>exp_driver_orders.csv</strong></td>
 <td>driver_id</td>
 <td>ID của driver trong Database của công ty</td>
 </tr>
@@ -494,23 +498,18 @@
 </table>
 <p>Code dùng để load và clean data như sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./data"</span><span class="p">)</span>
-<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">TMP_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./tmp"</span><span class="p">)</span>
-<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"driver_stats.parquet"</span>
-<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">LABEL_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"driver_orders.csv"</span>
-<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">DATA_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"DATA_PATH not found"</span><span class="p">)</span>
-<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">LABEL_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"LABEL_PATH not found"</span><span class="p">)</span>
-<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>
-<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="c1"># Load data</span>
-<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">df_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span>
-<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">label_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">LABEL_PATH</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
-<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="c1"># Clean data</span>
-<a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
-<a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>
-<a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="c1"># Định nghĩa tên của cột chứa label</span>
-<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s2">"trip_completed"</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"exp_driver_stats.parquet"</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">LABEL_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"exp_driver_orders.csv"</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># Load data</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">df_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">label_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">LABEL_PATH</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="c1"># Clean data</span>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="c1"># Định nghĩa tên của cột chứa label</span>
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s2">"trip_completed"</span>
 </code></pre></div>
 <p>Sau khi đã load và clean được data, Data Scientist sẽ phân tích data để hiểu về data. Quá trình này thông thường gồm những công việc sau.</p>
 <ul>
@@ -522,7 +521,7 @@
 <li>v.v</li>
 </ul>
 <p>Ở mỗi một vấn đề về data ở trên, sẽ tồn tại một hoặc nhiều các giải pháp để giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay rằng chúng có hiệu quả hay không. Do đó, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm training model. Các metrics trong quá trình đánh giá model sẽ giúp chúng ta đánh giá xem các giải pháp mà chúng ta thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, hãy tưởng tượng bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp đi lặp lại nhiều lần.</p>
-<p>Trong file notebook <code>training/nbs/01-poc-training-code.ipynb</code>, các bạn sẽ thấy rằng data của chúng ta không có feature nào chứa giá trị <code>null</code>. Để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model. Đoạn code ở dưới được dùng để chia data thành training set và test set, train model, đánh giá model, lưu model, load model lại và thực hiện inference.</p>
+<p>May mắn rằng các file data của chúng ta không có feature nào chứa giá trị <code>null</code>. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model. Đoạn code ở dưới được dùng để chia data thành training set và test set, train model, đánh giá model, lưu model, load model đã lưu và thực hiện inference.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Chọn các feature</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">selected_ft</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">,</span> <span class="s2">"avg_daily_trips"</span><span class="p">]</span>
 <a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>
@@ -554,14 +553,14 @@
 <a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="c1"># Inference</span>
 <a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
 </code></pre></div>
-<p>Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài trước, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.</p>
-<h3 id="theo-doi-cac-thu-nghiem">Theo dõi các thử nghiệm</h3>
-<p>MLflow là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.</p>
-<p>Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform github project này</a> về máy của bạn, làm theo hướng dẫn trong README.md, và chạy câu lệnh sau.</p>
+<p>Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài <a href="../../tong-quan-he-thong/mlops-platform.md">MLOps Platform</a>, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.</p>
+<h2 id="theo-doi-cac-thu-nghiem">Theo dõi các thử nghiệm</h2>
+<p><a href="https://mlflow.org/">MLflow</a> là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.</p>
+<p>Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a> về máy của bạn, và chạy câu lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>bash run.sh mlflow up
 </code></pre></div>
 <p>Trên browser của bạn, đi tới URL <a href="http://localhost:5000/">http://localhost:5000/</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.</p>
-<p>Tiếp theo, mở file notebook <code>training/nbs/01-poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.</p>
+<p>Tiếp theo, mở file notebook <code>training_pipeline/nbs/01-poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">"http://localhost:5000"</span>
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">MLFLOW_TRACKING_URI</span><span class="p">)</span>
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span>
@@ -589,12 +588,12 @@
 <p>Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"/></a></p>
 <p>Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột <code>Start time</code> của một lần chạy.</p>
-<h3 id="theo-doi-cac-feature">Theo dõi các feature</h3>
+<h2 id="theo-doi-cac-feature">Theo dõi các feature</h2>
 <p>Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một parameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.</p>
 <p>Như các bạn đã biết, mục đích của việc theo dõi các feature này là để chúng ta có thể reproduce lại một lần thử nghiệm. Chỉ bằng việc lưu lại tên của các feature được sử dụng, chúng ta không thể đảm bảo được sẽ reproduce lại được một lần chạy. Bởi vì có thể feature tên như vậy đã bị đổi tên, hoặc tên vẫn giữ nguyên nhưng transformation rule để sinh ra các feature đó đã bị thay đổi. Như vậy, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.</p>
-<p>Ở dự án POC này, vì chúng ta chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ cho việc theo dõi các version của quy trình transform data và tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature từ bộ data thô mà Data Engineer chuyển giao cho chúng ta là đủ rồi. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi các version của quy trình transform các feature và tích hợp các version đó vào quá trình training.</p>
-<h3 id="tong-ket">Tổng kết</h3>
-<p>Qua nhiều vòng lặp thử nghiệm data và model trong dự án POC này, chúng ta sẽ định nghĩa ra được vấn đề, giải pháp tiềm năng để xử lý data và train model, và cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại định nghĩa của vấn đề kinh doanh, định nghĩa các data transformation rule để xây dựng data pipeline, định nghĩa training code để xây dựng training pipeline, và định nghĩa serving code để xây dựng serving pipeline.</p>
+<p>Ở giai đoạn POC này, vì chúng ta chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ cho việc theo dõi các version của quy trình transform data và tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature từ bộ data thô mà Data Engineer chuyển giao cho chúng ta là đủ rồi. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi các version của quy trình transform các feature và tích hợp các version đó vào quá trình training.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Như vậy là chúng ta đã thực hiện xong dự án POC. Qua nhiều vòng lặp thử nghiệm data và model trong dự án POC, ngoài việc chứng minh rằng giải pháp ML là khả thi, chúng ta sẽ hiểu rõ ràng hơn về vấn đề kinh doanh, về giải pháp tiềm năng để xử lý data và train model, và về cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại định nghĩa của vấn đề kinh doanh, định nghĩa các data transformation rule để xây dựng data pipeline, định nghĩa training code để xây dựng training pipeline, và định nghĩa serving code để xây dựng model serving. Trong bài tiếp theo, chúng ta sẽ đi xây dựng data pipeline, một trong những pipeline phức tạp nhất của hệ thống.</p>
 </article>
 </div>
 </div>

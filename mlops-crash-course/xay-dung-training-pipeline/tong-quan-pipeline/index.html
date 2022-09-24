@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#muc-tieu">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -200,16 +200,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#training-pipeline">
-    Training pipeline
-  </a>
-<nav aria-label="Training pipeline" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#cap-nhat-feature-store">
     Cập nhật Feature Store
@@ -244,9 +238,6 @@
 <a class="md-nav__link" href="#model-validation">
     Model validation
   </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
@@ -417,16 +408,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#training-pipeline">
-    Training pipeline
-  </a>
-<nav aria-label="Training pipeline" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#cap-nhat-feature-store">
     Cập nhật Feature Store
@@ -462,9 +447,6 @@
     Model validation
   </a>
 </li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
@@ -478,7 +460,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Tổng quan pipeline</h1>
-<h2 id="muc-tieu">Mục tiêu</h2>
+<h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã có được những thứ sau:</p>
 <ol>
 <li>Các rules để transform và clean data từ data source</li>
@@ -487,16 +469,15 @@
 <li>Code để train model</li>
 <li>Code để đánh giá model</li>
 </ol>
-<p>Phần 1 và 2 là đã được sử dụng trong bài trước để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.</p>
+<p>Phần 1 và 2 là đã được sử dụng trong bài <a href="../../data-pipeline/tong-quan-data-pipeline">Tổng quan data pipeline</a> để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.</p>
 <p>Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.</p>
-<h2 id="training-pipeline">Training pipeline</h2>
-<p>Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với các tasks như hình dưới:</p>
+<p>Training pipeline của chúng ta bao gồm các tasks như hình dưới:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"/></a></p>
-<h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
+<h2 id="cap-nhat-feature-store">Cập nhật Feature Store</h2>
 <p>Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.</p>
-<h3 id="data-extraction">Data extraction</h3>
+<h2 id="data-extraction">Data extraction</h2>
 <p>Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk.</p>
-<h3 id="data-validation">Data validation</h3>
+<h2 id="data-validation">Data validation</h2>
 <p>Sau khi đã lấy được data chứa các feature chúng ta muốn ở task Data extraction, chúng ta cần đánh giá xem data có hợp lệ không trước khi train model, bằng cách kiểm tra những thứ sau.</p>
 <ul>
 <li>Data schema</li>
@@ -508,7 +489,7 @@
 <li>Các giả sử mà chúng ta đưa ra đối với data có hợp lệ không?</li>
 </ul>
 <p>Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.</p>
-<h3 id="data-preparation">Data preparation</h3>
+<h2 id="data-preparation">Data preparation</h2>
 <p>Đầu vào của task này là data đã được lấy từ task Data extraction. Task này là nơi chúng ta sẽ thực hiện các bước sau.</p>
 <ul>
 <li>Transform hoặc clean data nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật giá trị của các feature mà chúng ta mong muốn</li>
@@ -516,17 +497,18 @@
 <li>Split data thành các tập training set, validation set, hay test set để phục vụ cho quá trình train model và đánh giá model</li>
 </ul>
 <p>Đầu ra của task này là các tập dataset đã được lưu vào disk.</p>
-<h3 id="model-training">Model training</h3>
+<h2 id="model-training">Model training</h2>
 <p>Trong task này, chúng ta sẽ train model sử dụng data đã được chuẩn bị ở task Data preparation. Task này cũng là nơi mà chúng ta sẽ thực hiện hyperparameter tuning để train được model tốt nhất. Đầu ra của bước này là model đã được train.</p>
-<h3 id="model-evaluation">Model evaluation</h3>
+<h2 id="model-evaluation">Model evaluation</h2>
 <p>Đầu vào của task này là model đã được train ở task Model training. Trong task này, chúng ta thực hiện chạy prediction cho model trên test set lấy từ task Data preparation. Đầu ra của task này là nhóm các metrics dùng để đánh giá chất lượng của model.</p>
-<h3 id="model-validation">Model validation</h3>
+<h2 id="model-validation">Model validation</h2>
 <p>Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a>. Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.</p>
 <p>Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.</p>
 <p>Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.</p>
 <p>Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register model với Model Registry một cách tự động.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các bước đã được định nghĩa ở trên.</p>
+<p>Các task mà chúng ta vừa phân tích ở trên là các task điển hình trong một training pipeline. Tuy nhiên, tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà chúng ta có thể bỏ bớt hoặc thêm vào các task khác. Chúng ta cũng có thể chia nhỏ các task thực hiện các công việc đòi hỏi tính toán nặng ra, để tránh việc chạy lại nhiều lần.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các task đã được định nghĩa ở trên.</p>
 </article>
 </div>
 </div>

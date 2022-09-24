@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#muc-tieu">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -205,19 +205,13 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-training-pipeline">
-    Xây dựng training pipeline
-  </a>
-<nav aria-label="Xây dựng training pipeline" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
-    Cài đặt môi trường phát triển
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
   </a>
 </li>
 <li class="md-nav__item">
@@ -259,9 +253,6 @@
 <a class="md-nav__link" href="#airflow-dag">
     Airflow DAG
   </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
@@ -427,19 +418,13 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#muc-tieu">
-    Mục tiêu
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#xay-dung-training-pipeline">
-    Xây dựng training pipeline
-  </a>
-<nav aria-label="Xây dựng training pipeline" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cai-at-moi-truong-phat-trien">
-    Cài đặt môi trường phát triển
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
   </a>
 </li>
 <li class="md-nav__item">
@@ -482,9 +467,6 @@
     Airflow DAG
   </a>
 </li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
@@ -498,29 +480,28 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Xây dựng pipeline</h1>
-<h2 id="muc-tieu">Mục tiêu</h2>
-<p>Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.</p>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png"/></a></p>
-<p>Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước <a href="../../xay-dung-training-pipeline/tong-quan-pipeline">ở đây</a>. Source code của bài này đã được tải lên Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
-<h2 id="xay-dung-training-pipeline">Xây dựng training pipeline</h2>
-<p>Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>training_pipeline</code>.</p>
-<h3 id="cai-at-moi-truong-phat-trien">Cài đặt môi trường phát triển</h3>
-<p>Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Các bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt môi trường phát triển.</p>
-<p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.</p>
+<p>Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước <a href="../../xay-dung-training-pipeline/tong-quan-pipeline">Tổng quan training pipeline</a>. Source code của bài này được đặt tại Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code> (giống môi trường phát triển của bài <a href="../../poc/xay-dung-poc/#moi-truong-phat-trien">POC</a>).</p>
+<p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.</p>
 <ol>
 <li>
-<p>Copy file <code>training_pipeline/.env-example</code>, đổi tên thành <code>training_pipeline/.env</code>. File này chứa các config cần thiết cho training pipeline. Các bạn có thể sửa nếu cần.</p>
+<p>Copy file <code>training_pipeline/.env-example</code>, đổi tên thành <code>training_pipeline/.env</code>. File này chứa các config cần thiết cho training pipeline.</p>
 </li>
 <li>
-<p>Copy file <code>training_pipeline/deployment/.env-example</code>, đổi tên thành <code>training_pipeline/deployment/.env</code>. File này chứa các config cần thiết cho việc triển khai training pipeline. Các bạn có thể sửa nếu cần.</p>
+<p>Copy file <code>training_pipeline/deployment/.env-example</code>, đổi tên thành <code>training_pipeline/deployment/.env</code>. File này chứa các config cần thiết cho việc triển khai training pipeline.</p>
 </li>
 <li>
-<p>Set env var <code>TRAINING_PIPELINE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>training_pipeline/src</code>.</p>
+<p>Set env var <code>TRAINING_PIPELINE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
 </li>
 </ol>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">TRAINING_PIPELINE_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/training_pipeline"</span>
 </code></pre></div>
-<h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
+<p>Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>training_pipeline</code>.</p>
+<h2 id="cap-nhat-feature-store">Cập nhật Feature Store</h2>
 <p>Trước khi cập nhật Feature Store, chúng ta cần đảm bảo rằng code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.</p>
 <p>Trong khoá học này, chúng ta để code của Feature Store tại <code>data_pipeline/feature_repo</code>. Như vậy, để triển khai code này sang training pipeline, chúng ta chỉ cần copy code từ <code>data_pipeline/feature_repo</code> sang <code>training_pipeline/feature_repo</code>. Để thuận tiện cho khoá học, các bạn chỉ cần chạy các lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Làm theo hướng dẫn ở file data_pipeline/README.md trước</span>
@@ -540,7 +521,7 @@
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 <p>Sau khi chạy xong, các bạn sẽ thấy file <code>training_pipeline/feature_repo/registry/local_registry.db</code> được sinh ra. Đây chính là Feature Registry của chúng ta.</p>
-<h3 id="data-extraction">Data extraction</h3>
+<h2 id="data-extraction">Data extraction</h2>
 <p>Tiếp theo, chúng ta cần viết code để lấy data phục vụ cho quá trình train model từ Feature Store. Code của task này được lưu tại <code>training_pipeline/src/data_extraction.py</code>.</p>
 <p>Đầu tiên, để có thể lấy được data từ Feature Store, chúng ta cần khởi tạo kết nối tới Feature Store trước.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Khởi tạo kết nối tới Feature Store</span>
@@ -572,7 +553,7 @@
 <a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>training.parquet</code>.</p>
-<h3 id="data-validation">Data validation</h3>
+<h2 id="data-validation">Data validation</h2>
 <p>Ở task Data validation này, dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không.</p>
 <p>Đầu tiên, chúng ta sẽ kiểm tra xem data có chứa feature không mong muốn nào không.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">def</span> <span class="nf">check_unexpected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
@@ -597,7 +578,7 @@
 <p>Để đơn gian hoá code và tập trung vào MLOps, trong khoá học này chúng ta sẽ không kiểm tra các tính chất liên quan tới data distribution. Code của task này được lưu tại file <code>training_pipeline/src/data_validation.py</code>. Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">cd</span> src <span class="o">&amp;&amp;</span> python data_validation.py <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ..
 </code></pre></div>
-<h3 id="data-preparation">Data preparation</h3>
+<h2 id="data-preparation">Data preparation</h2>
 <p>Ở task Data preparation, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa.</p>
 <p>Đầu tiên, chúng ta sẽ chia data ra thành training set và test set. Đoạn code dưới đây đã được chúng ta viết trong khi làm dự án POC.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s1">'tên cột label'</span>
@@ -623,7 +604,7 @@
 <a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy các files <code>training.parquet</code>, <code>train_x.parquet</code>, <code>test_x.parquet</code>, <code>train_y.parquet</code>, và <code>test_y.parquet</code>.</p>
-<h3 id="model-training">Model training</h3>
+<h2 id="model-training">Model training</h2>
 <p>Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Mình sẽ tóm tắt các công việc trong đoạn code này như sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># Cài đặt MLflow server</span>
 <a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">mlflow_tracking_uri</span><span class="p">)</span>
@@ -663,7 +644,7 @@
 </code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>run_info.json</code>. Nếu mở MLflow server trên browser ra, các bạn cũng sẽ nhìn thấy một experiment đã được tạo ra.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png"/></a></p>
-<h3 id="model-evaluation">Model evaluation</h3>
+<h2 id="model-evaluation">Model evaluation</h2>
 <p>Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Mình sẽ tóm tắt lại như sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
 <a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>    <span class="c1"># nơi lưu model</span>
@@ -685,7 +666,7 @@
 <a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 <p>Sau khi chạy xong, hãy kiểm tra folder <code>training_pipeline/artifacts</code>, các bạn sẽ nhìn thấy file <code>evaluation.json</code>.</p>
-<h3 id="model-validation">Model validation</h3>
+<h2 id="model-validation">Model validation</h2>
 <p>Trong phần này, chúng ta cần đánh giá xem các offline metrics được tính toán ở task Model evaludation có thoả mãn một threshold đã được định nghĩa sẵn không, hay có thoả mãn một baseline đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a> không. Chúng ta cũng có thể cần phải kiểm tra xem model mới train được có tương thích với inference service ở production không.</p>
 <p>Để đơn giản hoá, mình sẽ chỉ viết code để so sánh offline metrics với các thresholds đã được định nghĩa sẵn trong file <code>training_pipeline/.env</code>.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">EVALUATION_RESULT</span><span class="p">)</span>
@@ -713,7 +694,7 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png"/></a></p>
 <p>Các bạn có thể click vào model đã được register để xem thêm thông tin nó. Cụ thể như ở hình dưới, chúng ta có thể thấy MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png"/></a></p>
-<h3 id="airflow-dag">Airflow DAG</h3>
+<h2 id="airflow-dag">Airflow DAG</h2>
 <p>Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code> và được tóm tắt như dưới đây.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
 <a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"training_pipeline"</span><span class="p">,</span>
@@ -789,7 +770,7 @@
 <p>Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png"/></a></p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Như vậy, chúng ta vừa cùng nhau trải qua quy trình phát triển điển hình cho training pipeline. Lưu ý rằng, vì code của training pipeline sẽ được cập nhật liên tục dựa theo các yêu cầu đến từ Data Scientist, nên chúng ta không hy vọng quá trình phát triển training pipeline sẽ chỉ cần thực hiện một lần rồi xong.</p>
+<p>Như vậy là chúng ta vừa trải qua quy trình phát triển điển hình cho training pipeline. Lưu ý rằng, vì code của training pipeline sẽ được cập nhật liên tục dựa theo các yêu cầu đến từ Data Scientist, nên chúng ta không hy vọng quá trình phát triển training pipeline sẽ chỉ cần thực hiện một lần rồi xong, mà nó sẽ được thực hiện trong nhiều vòng lặp.</p>
 <p>Sau khi tự động hoá được training pipeline, trong bài tiếp theo, chúng ta sẽ cùng nhau xây dựng và tự động hoá model serving pipeline.</p>
 </article>
 </div>
