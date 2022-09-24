@@ -256,21 +256,24 @@ svc = bentoml.Service(bentoml_model.tag.name, runners=[bentoml_runner])
 Trong Bentoml, quá trình chạy model inference sẽ thông qua một Bentoml Runner, hay tức là Bentoml Runner là một wrapper của Bentoml model. Bentoml Service sẽ chứa object Bentoml Runner, và đồng thời giúp chúng ta định nghĩa API một cách thuận tiện, như đoạn code dưới đây.
 
 ```python
+bentoml_runner = bentoml.sklearn.get(bentoml_model.tag).to_runner()
+svc = bentoml.Service(bentoml_model.tag.name, runners=[bentoml_runner])
+
 @svc.api(input=NumpyNdarray(), output=NumpyNdarray())
-def classify(input_series: np.ndarray) -> np.ndarray:
-    result = bentoml_runner.predict.run(input_series)
+def predict(request: np.ndarray) -> np.ndarray:
+    result = bentoml_runner.predict.run(request)
     return result
 ```
 
-API mà chúng ta định nghĩa ở trên có input và output format như sau:
+API `predict` mà chúng ta định nghĩa ở trên có input và output format như sau:
 
 - Input format: _2D Numpy Array_, với mỗi hàng là một request
 - Output format: _1D Numpy Array_, với mỗi phần tử là prediction của một request
 
-Và như vậy là chúng ta đã viết xong Online serving code! Hãy thử chạy API này bằng cách chạy lệnh sau:
+Hãy thử chạy API này bằng cách chạy lệnh sau:
 
 ```bash
-make compose_up
+make build_image && make compose_up
 ```
 
 Lệnh trên sẽ chạy docker compose được định nghĩa tại `model_serving/deployment/docker-compose.yml`. Trong file docker compose này, chúng ta định nghĩa một service tên là `bentoml_service`, với tên container là `online_serving`, và command sau:
@@ -291,7 +294,7 @@ Sau khi docker compose đã chạy, bạn hãy mở browser và truy cập tới
 
 Lưu ý, port `8172` được định nghĩa tại `model_serving/deployment/.env`.
 
-Hãy mở API `/classify` ra, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
+Hãy mở API `/predict` ra, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
 
 ```json
 [
@@ -302,9 +305,59 @@ Hãy mở API `/classify` ra, và ấn nút `Try it out`. Ở phần `Request bo
 
 Kết quả của response trả về sẽ nhìn giống như sau.
 
-<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-swagger-response.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-predict-response.png" loading="lazy" />
 
-Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Trong thực tế, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để người dùng có thể gọi tới API được expose tại port `8172` trên server này.
+Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Ngoài ra, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để các services khác có thể gọi tới API đã được expose tại port `8172` trên server này.
+
+Trong thực tế, request của chúng ta sẽ không chứa features được sắp xếp đúng thứ tự như trên, mà nó sẽ chứa data giúp chúng ta lấy ra các features từ Feature Store. Ví dụ, trong khoá học này, request được gửi đến Online serving service sẽ chứa danh sách ID của các tài xế. Dựa vào danh sách ID này, chúng ta sẽ lấy ra các features liên quan từ Online Store của Feast để biến đổi thành request chứa các features được sắp xếp đúng thứ tự. Đoạn code sau định nghĩa API `inference` sẽ làm các công việc này.
+
+```python
+feature_list = bentoml_model.custom_objects["feature_list"]
+fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO)
+
+@svc.api(
+    # Định nghĩa input, output của API
+)
+def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]:
+    try:
+        driver_ids = request.driver_ids
+        online_features = fs.get_online_features(
+            entity_rows=[{"driver_id": driver_id} for driver_id in driver_ids],
+            features=[f"driver_stats:{name}" for name in feature_list],
+        )
+        df = pd.DataFrame.from_dict(online_features.to_dict())
+
+        input_features = df.drop(["driver_id"], axis=1)
+        input_features = input_features[feature_list]
+        result = predict(input_features[sorted(input_features)])
+        # Handle response
+
+    except Exception as e:
+        # Handle error
+```
+
+Như các bạn thấy, sau khi lấy được các features cần thiết từ Online Feature Store, qua vài bước xử lý features này, chúng ta sẽ gọi tới function `predict` để thực hiện prediction. Trong thực tế, server chứa API `inference` sẽ là một server khác với API `predict`. Server chứa API `inference` sẽ được tối ưu về Network throughput để thực hiện việc nhận request và trả về response cho nhiều client. Server chứa API `predict` sẽ được tối ưu về khả năng tính toán để thực hiện model inference nhanh hơn.
+
+Hãy cùng thử chạy API `inference` bằng cách thực hiện các bước sau.
+
+```bash
+# Đảm bảo rằng bạn đã chạy Airflow DAG ở bài Data Pipeline để cập nhật Online Feature Store
+
+# Build lại docker image và chạy lại docker compose
+make build_image && make compose_up
+```
+
+Bạn hãy mở browser, truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
+
+```json
+{
+  "driver_ids": [1001, 1002, 1003, 1004, 1005]
+}
+```
+
+Kết quả của response trả về sẽ nhìn giống như sau.
+
+<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-inference-response.png" loading="lazy" />
 
 ## Tổng kết
 
