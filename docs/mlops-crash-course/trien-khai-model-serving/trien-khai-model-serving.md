@@ -18,13 +18,15 @@ Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc 
 export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
 ```
 
+!!! note
+
+    Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `model_serving`.
+
 ## Batch serving
 
 Batch serving sẽ được triển khai dưới dạng một Airflow DAG với các task như hình dưới:
 
 <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
-
-Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `model_serving`.
 
 ### Cập nhật Feature Store
 
@@ -61,42 +63,36 @@ Tiếp theo, chúng ta sẽ viết code để đọc data mà chúng ta muốn c
 
 Đầu tiên, để có thể lấy được data từ Feature Store, chúng ta cần khởi tạo kết nối tới Feature Store trước.
 
-```python
-# Khởi tạo kết nối tới Feature Store
+```python linenums="1" title="model_serving/src/data_extraction.py"
 fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO)
 ```
 
 Tiếp theo, chúng ta cần đọc file data mà chúng ta muốn chạy prediction. File này sẽ nằm tại `model_serving/data/batch_request.csv`. File này chứa field `event_timestamp` và `driver_id` mà sẽ được dùng để match với data trong Feature Store.
 
-```python
-# Đọc file data muốn chạy prediction tại batch_input_file
+```python linenums="1" title="model_serving/src/data_extraction.py"
 orders = pd.read_csv(batch_input_file, sep="\t")
 orders["event_timestamp"] = pd.to_datetime(orders["event_timestamp"])
 ```
 
 Các feature chúng ta muốn lấy bao gồm `conv_rate`, `acc_rate`, và `avg_daily_trips`. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`. Data lấy được sau đó sẽ được xử lý để tương thích với input format mà model yêu cầu.
 
-```python
-# Lấy các feature cần thiết từ Feature Store
+```python linenums="1" title="model_serving/src/data_extraction.py"
 batch_input_df = fs.get_historical_features(
-        entity_df=orders,
-        features=[
-            "driver_stats:conv_rate",
-            "driver_stats:acc_rate",
-            "driver_stats:avg_daily_trips",
-        ],
-    ).to_df()
+    entity_df=orders,
+    features=[
+        "driver_stats:conv_rate",
+        "driver_stats:acc_rate",
+        "driver_stats:avg_daily_trips",
+    ],
+).to_df()
 
-# Xử lý data cho match với input format của model
-batch_input_df = batch_input_df.drop(["event_timestamp", "driver_id"], axis=1)
+batch_input_df = batch_input_df.drop(["event_timestamp", "driver_id"], axis=1) # (1)
+
+to_parquet(batch_input_df, AppPath.BATCH_INPUT_PQ) # (2)
 ```
 
-Sau khi đã lấy được data và lưu vào `batch_input_df`, chúng ta sẽ lưu `batch_input_df` vào disk để tiện sử dụng cho task tiếp theo.
-
-```python
-# Lưu vào disk
-to_parquet(batch_input_df, AppPath.BATCH_INPUT_PQ)
-```
+1. Bỏ các cột không cần thiết
+2. Lưu `batch_input_df` vào disk để tiện sử dụng cho task tiếp theo.
 
 Hãy cùng chạy task này ở môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
@@ -124,32 +120,31 @@ cd ../model_serving
 
 Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Để đơn giản hoá quá trình batch prediction, đoạn code cho task batch prediction này giống như ở task **Model evaluation** mà chúng ta đã viết trong bài [Xây dựng training pipeline](../../xay-dung-training-pipeline/xay-dung-pipeline/#model-evaluation). Code của task này được lưu tại file `model_serving/src/batch_prediction.py`. Mình sẽ tóm tắt lại như sau.
 
-```python
-# Lấy thông tin về model từ file registered_model_version.json
-# Lưu model path ở MLflow server vào model_uri
+```python linenums="1" title="model_serving/src/batch_prediction.py"
+mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
 
-# Download model từ MLflow server
-mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri)
+batch_df = load_df(AppPath.BATCH_INPUT_PQ) # (2)
 
-# Load data từ file ở task trước
-batch_df = load_df(AppPath.BATCH_INPUT_PQ)
-
-# Sắp xếp lại features
-model_signature = mlflow_model.metadata.signature
+model_signature = mlflow_model.metadata.signature # (3)
 feature_list = []
 for name in model_signature.inputs.input_names():
     feature_list.append(name)
-batch_df = batch_df[feature_list]
+batch_df = batch_df[feature_list] # (4)
 
-# Chạy prediction
-preds = mlflow_model.predict(batch_df)
+preds = mlflow_model.predict(batch_df) # (5)
 batch_df["pred"] = preds
 
-# Lưu lại kết quả
-to_parquet(batch_df, AppPath.BATCH_OUTPUT_PQ)
+to_parquet(batch_df, AppPath.BATCH_OUTPUT_PQ) # (6)
 ```
 
-Vì batch data mà chúng ta đọc từ file vào có thể sẽ chứa các features không theo đúng thứ tự mà model yêu cầu, nên ở đoạn code trên, chúng ta có thêm vào đoạn code để sắp xếp lại features cho input data. Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
+1. model_uri chứa model path lấy từ file `model_serving/artifacts/registered_model_version.json`
+2. Load batch input được lưu ở task trước
+3. Load model signature từ MLflow model
+4. Vì batch data mà chúng ta đọc từ file vào có thể sẽ chứa các features không theo đúng thứ tự mà model yêu cầu, nên chúng ta cần sắp xếp các features theo đúng thứ tự
+5. Chạy prediction
+6. Lưu output vào disk
+
+Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
 cd src
@@ -161,21 +156,19 @@ Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, các bạ
 
 ### Airflow DAG
 
-Ở các phần trên, chúng ta đã phát triển xong các đoạn code cần thiết cho batch serving pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline. Đoạn code để định nghĩa Airflow DAG được lưu tại `.pmodel_serving/dags/batch_serving_dagy` và được tóm tắt như dưới đây.
+Ở các phần trên, chúng ta đã phát triển xong các đoạn code cần thiết cho batch serving pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline. Đoạn code để định nghĩa Airflow DAG được lưu tại `model_serving/dags/batch_serving_dag.py` và được tóm tắt như dưới đây.
 
-```python
+```python linenums="1" title="model_serving/dags/batch_serving_dag.py"
 with DAG(
     dag_id="batch_serving_pipeline",
     # các argument khác
 ) as dag:
-    # định nghĩa task Cập nhật Feature store
     feature_store_init_task = DockerOperator(
         task_id="feature_store_init_task",
         command="bash -c 'cd feature_repo && feast apply'",
         **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
     )
 
-    # định nghĩa task Data extraction
     data_extraction_task = DockerOperator(
         task_id="data_extraction_task",
         command="bash -c 'cd src && python data_extraction.py'",
@@ -224,58 +217,60 @@ Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là
 1. Khởi tạo [một _Bentoml Runner_ và một _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner)
 1. Viết inference code cho API
 
-Đầu tiên, chúng ta sẽ download model từ MLflow server giống như ở task Batch prediction của Batch serving pipeline.
+Đầu tiên, chúng ta sẽ download model từ MLflow server giống như ở task Batch prediction của Batch serving pipeline. Sau đó, chúng ta cần lưu model về dạng mà Bentoml yêu cầu, như đoạn code dưới đây.
 
-```python
-# Lấy thông tin về model từ file registered_model_version.json
-# Lưu model path ở MLflow server vào model_uri
+```python linenums="1" title="model_serving/src/bentoml_service.py"
+mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
+model = mlflow_model._model_impl # (2)
 
-# Download model từ MLflow server
-mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri)
-```
-
-Sau đó, chúng ta cần lưu model về dạng mà Bentoml yêu cầu.
-
-```python
-bentoml_model = bentoml.sklearn.save_model(
-    model_name,
+bentoml_model = bentoml.sklearn.save_model( # (3)
+    model_name, # (4)
     model,
-    # định nghĩa model signatures
-    signatures={
-        "predict": {
-            "batchable": False,
+    signatures={ # (5)
+        "predict": { # (6)
+            "batchable": False, # (7)
         },
+    },
+    custom_objects={ # (8)
+        "feature_list": feature_list, # (9)
     },
 )
 ```
 
-Trong đoạn code trên, các bạn cần lưu ý `signatures` của model với key `predict`. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures). Thông tin thêm về key `batchable`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
+1. model_uri chứa model path lấy từ file `model_serving/artifacts/registered_model_version.json`
+2. Đọc ra sklearn model được wrap trong MLflow model `mlflow_model`
+3. Lưu model về dạng Bentoml model
+4. `model_name` được lấy từ file `model_serving/artifacts/registered_model_version.json`
+5. Signature của model
+6. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures)
+7. Thông tin thêm về key `batchable`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
+8. Lưu bất kì Python object nào đi kèm với model. Đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
+9. Lưu lại thứ tự các features mà model yêu cầu
 
 Tiếp theo, chúng ta sẽ sử dụng model đã lưu ở trên để tạo Bentoml Runner và Bentoml Service.
 
-```python
-# Tạo Bentoml Runner
+```python linenums="1" title="model_serving/src/bentoml_service.py"
 bentoml_runner = bentoml.sklearn.get(bentoml_model.tag).to_runner()
-# Tạo Bentoml Service
 svc = bentoml.Service(bentoml_model.tag.name, runners=[bentoml_runner])
 ```
 
 Trong Bentoml, quá trình chạy model inference sẽ thông qua một Bentoml Runner, hay tức là Bentoml Runner là một wrapper của Bentoml model. Bentoml Service sẽ chứa object Bentoml Runner, và đồng thời giúp chúng ta định nghĩa API một cách thuận tiện, như đoạn code dưới đây.
 
-```python
+```python linenums="1" title="model_serving/src/bentoml_service.py"
 bentoml_runner = bentoml.sklearn.get(bentoml_model.tag).to_runner()
 svc = bentoml.Service(bentoml_model.tag.name, runners=[bentoml_runner])
 
-@svc.api(input=NumpyNdarray(), output=NumpyNdarray())
+@svc.api(
+    input=NumpyNdarray(), # (1)
+    output=NumpyNdarray() # (2)
+)
 def predict(request: np.ndarray) -> np.ndarray:
     result = bentoml_runner.predict.run(request)
     return result
 ```
 
-API `predict` mà chúng ta định nghĩa ở trên có input và output format như sau:
-
-- Input format: _2D Numpy Array_, với mỗi hàng là một request
-- Output format: _1D Numpy Array_, với mỗi phần tử là prediction của một request
+1. Input format: _2D Numpy Array_, với mỗi hàng là một request
+2. Output format: _1D Numpy Array_, với mỗi phần tử là prediction của một request
 
 Hãy thử chạy API này bằng cách chạy lệnh sau:
 
@@ -299,7 +294,9 @@ Sau khi docker compose đã chạy, bạn hãy mở browser và truy cập tới
 
 <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/bentoml-swagger-ui.png" loading="lazy" />
 
-Lưu ý, port `8172` được định nghĩa tại `model_serving/deployment/.env`.
+??? info
+
+    Port `8172` được định nghĩa tại `model_serving/deployment/.env`.
 
 Hãy mở API `/predict` ra, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
 
@@ -318,38 +315,57 @@ Trong phần này, chúng ta sử dụng docker compose nhằm mục đích ti�
 
 Trong thực tế, request của chúng ta sẽ không chứa features được sắp xếp đúng thứ tự như trên, mà nó sẽ chứa data giúp chúng ta lấy ra các features từ Feature Store. Ví dụ, trong khoá học này, request được gửi đến Online serving service sẽ chứa danh sách ID của các tài xế. Dựa vào danh sách ID này, chúng ta sẽ lấy ra các features liên quan từ Online Store của Feast để biến đổi thành request chứa các features được sắp xếp đúng thứ tự. Đoạn code sau định nghĩa API `inference` sẽ làm các công việc này.
 
-```python
-feature_list = bentoml_model.custom_objects["feature_list"]
-fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO)
+```python linenums="1" title="model_serving/src/bentoml_service.py"
+feature_list = bentoml_model.custom_objects["feature_list"] # (1)
+fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO) # (2)
+
+class InferenceRequest(BaseModel): # (3)
+    driver_ids: List[int]
+
+class InferenceResponse(BaseModel): # (4)
+    prediction: Optional[float]
+    error: Optional[str]
 
 @svc.api(
-    # Định nghĩa input, output của API
+    input=JSON(pydantic_model=InferenceRequest), # (5)
+    output=JSON(pydantic_model=InferenceResponse),
 )
 def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]:
     try:
         driver_ids = request.driver_ids
-        online_features = fs.get_online_features(
+        online_features = fs.get_online_features( # (6)
             entity_rows=[{"driver_id": driver_id} for driver_id in driver_ids],
             features=[f"driver_stats:{name}" for name in feature_list],
         )
         df = pd.DataFrame.from_dict(online_features.to_dict())
 
-        input_features = df.drop(["driver_id"], axis=1)
-        input_features = input_features[feature_list]
-        result = predict(input_features[sorted(input_features)])
+        input_features = df.drop(["driver_id"], axis=1) # (7)
+        input_features = input_features[feature_list] # (8)
+        result = predict(input_features[sorted(input_features)]) # (9)
         # Handle response
 
     except Exception as e:
         # Handle error
 ```
 
+1. Lấy ra danh sách chứa thứ tự các features mà model yêu cầu
+2. Khởi tạo Feast object
+3. Định nghĩa input class cho API
+4. Định nghĩa output class cho API
+5. Định nghĩa input ở dạng json cho API
+6. Định nghĩa output ở dạng json cho API
+7. Loại bỏ cột không cần thiết
+8. Sắp xếp lại thứ tự features
+9. Gọi function `predict` để thực hiện prediction
+
 Như các bạn thấy, sau khi lấy được các features cần thiết từ Online Feature Store, qua vài bước xử lý features này, chúng ta sẽ gọi tới function `predict` để thực hiện prediction. Trong thực tế, server chứa API `inference` sẽ là một server khác với API `predict`. Server chứa API `inference` sẽ được tối ưu về Network throughput để thực hiện việc nhận request và trả về response cho nhiều client. Server chứa API `predict` sẽ được tối ưu về khả năng tính toán để thực hiện model inference nhanh hơn.
 
 Hãy cùng thử chạy API `inference` bằng cách thực hiện các bước sau.
 
-```bash
-# Đảm bảo rằng bạn đã chạy Airflow DAG ở bài Data Pipeline để cập nhật Online Feature Store
+1. Chạy [Feast materialize pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline) ở bài Data Pipeline để cập nhật Online Feature Store
+2. Chạy lệnh sau
 
+```bash
 # Build lại docker image và chạy lại docker compose
 make build_image && make compose_up
 ```

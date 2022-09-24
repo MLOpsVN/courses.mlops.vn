@@ -26,9 +26,7 @@ Trong task này, chúng ta cần đọc vào data mà chúng ta muốn chạy pr
 
 ### Batch prediction
 
-Ở task này, chúng ta sẽ load model sẽ được dùng từ một config file, và chạy prediction trên data đã được xử lý ở task trước. Đầu ra của task này là kết quả predictions và sẽ được lưu vào disk.
-
-Lưu ý, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.
+Ở task này, chúng ta sẽ load model sẽ được dùng từ một config file, và chạy prediction trên data đã được xử lý ở task trước. Đầu ra của task này là kết quả predictions và sẽ được lưu vào disk. Để đơn giản hoá, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.
 
 ## Online serving
 

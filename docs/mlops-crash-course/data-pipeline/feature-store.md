@@ -1,4 +1,5 @@
-### Tổng quan về feature store
+## Tổng quan về feature store
+
 Feature store là một hệ thống giúp lưu trữ, tương tác và quản lý feature. Công cụ này sinh ra để giải quyết vấn đề về:
 
 - **Feature reuse:** lưu trữ các feature đã được tạo ra để tái sử dụng khi cần thiết
@@ -12,10 +13,12 @@ Có rất nhiều feature store ở thời điểm hiện tại, có thể kể 
 - **Open-source:** Feast, Hopsworks
 - **Trả phí:** Tecton (Feast phiên bản enterprise), Hopworks (phiên bản enterprise), Amazon SageMaker Feature Store, Vertex AI Feature Store
 
-### Feast
+## Feast
+
 Ở series này chúng ta sẽ tìm hiểu về feature store thông qua [Feast](https://feast.dev/).
 
 Để sử dụng Feast, trước hết mọi người activate vào conda hoặc virtualenv và cài đặt sử dụng pip
+
 ```console
 conda activate my_env
 pip install feast
@@ -40,7 +43,7 @@ feature_repo
 Các bảng feature chúng ta sẽ sử dụng bao gồm:
 
 - **driver_stats_view:** feature view với data source dạng file
-- **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với *driver_stats_view*.
+- **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với _driver_stats_view_.
 
 ```py title="features.py" linenums="1"
 driver_stats_view = FeatureView(
@@ -87,7 +90,7 @@ def driver_stats_stream(df: DataFrame):
 
 1.  Định nghĩa entity cho bảng feature
 2.  **Time-to-live:** Thời gian sử dụng của feature trước khi bị stale
-3.  Định nghĩa feature và kiểu dữ liệu  
+3.  Định nghĩa feature và kiểu dữ liệu
 4.  Cho phép online serving
 5.  Định nghĩa data source cho bảng feature
 6.  Sử dụng Spark để xử lý dữ liệu stream
@@ -107,7 +110,7 @@ driver_stats_batch_source = FileSource(
 
 driver_stats_stream_source = KafkaSource(
     name="driver_stats_stream",
-    kafka_bootstrap_servers="localhost:29092", 
+    kafka_bootstrap_servers="localhost:29092",
     topic="drivers",
     timestamp_field="datetime",
     batch_source=driver_stats_batch_source,
@@ -121,22 +124,21 @@ driver_stats_stream_source = KafkaSource(
 
 1.  Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ
 
-Sau khi config feature store bằng cách thay đổi các file trong repo *feature_repo/*, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
+Sau khi config feature store bằng cách thay đổi các file trong repo _feature_repo/_, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
 - FileSource: đảm bảo đường dẫn tồn tại, file không bị lỗi
-- KafkaSource: đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục *stream_emitting* và chạy command:
-    ```console
-    bash deploy.sh start
-    ```
-    khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+- KafkaSource: đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục _stream_emitting_ và chạy command:
+  ```console
+  bash deploy.sh start
+  ```
+  khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
+  <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
 
 , đảm bảo Redis sẵn sàng để làm online store cho Feast bằng cách truy cập vào repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform) và chạy command:
-    ```console
-    bash run.sh up feast
-    ```
+`console bash run.sh up feast `
 
 và cuối cùng chúng ta sẽ apply các thay đổi như sau:
+
 ```console
 cd feature_repo
 feast apply

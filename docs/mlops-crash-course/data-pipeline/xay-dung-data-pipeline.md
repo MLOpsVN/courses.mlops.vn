@@ -5,89 +5,94 @@ from feast import FeatureStore
 store = FeatureStore(repo_path="../feature_repo")  # (1)
 ```
 
-1.  Khởi tạo client *store* để giao tiếp với feature store
+1.  Khởi tạo client _store_ để giao tiếp với feature store
 
 Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm **1**, **2**, **3**, **4**, **5** như hình dưới đây:
 
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
 
-### Các tương tác chính với Feast
+## Các tương tác chính với Feast
 
 Chúng ta có 6 tương tác chính với Feast như sau:
 
 1\. Materialize feature từ offline sang online store để đảm bảo online store lưu trữ feature mới nhất
-    ```py title="data_pipeline/scripts/feast_helper.sh" linenums="1"
-    cd feature_repo
-    feast materialize-incremental $(date +%Y-%m-%d)
-    ```
+
+```py title="data_pipeline/scripts/feast_helper.sh" linenums="1"
+cd feature_repo
+feast materialize-incremental $(date +%Y-%m-%d)
+```
 
 2\. Data scientist, training pipeline hoặc offline batch serving pipeline kéo features về để train model
-    ```py title="data_pipeline/examples/get_historical_features.py" linenums="1"
-    entity_df = pd.DataFrame.from_dict(
-        {
-            "driver_id": [1001, 1002, 1003, 1004, 1001],
-            "datetime": [
-                datetime(2022, 4, 12, 10, 59, 42),
-                datetime(2022, 4, 12, 8, 12, 10),
-                datetime(2022, 4, 12, 16, 40, 26),
-                datetime(2022, 4, 12, 15, 1, 12),
-                datetime.now(),
-            ],
-        }
-    )
-    training_df = store.get_historical_features(
-        entity_df=entity_df,
-        features=["driver_stats:acc_rate", "driver_stats:conv_rate"],
-    ).to_df()
-    print(training_df.head())
-    ```
+
+```py title="data_pipeline/examples/get_historical_features.py" linenums="1"
+entity_df = pd.DataFrame.from_dict(
+    {
+        "driver_id": [1001, 1002, 1003, 1004, 1001],
+        "datetime": [
+            datetime(2022, 4, 12, 10, 59, 42),
+            datetime(2022, 4, 12, 8, 12, 10),
+            datetime(2022, 4, 12, 16, 40, 26),
+            datetime(2022, 4, 12, 15, 1, 12),
+            datetime.now(),
+        ],
+    }
+)
+training_df = store.get_historical_features(
+    entity_df=entity_df,
+    features=["driver_stats:acc_rate", "driver_stats:conv_rate"],
+).to_df()
+print(training_df.head())
+```
 
 3\. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán
-    ```py title="data_pipeline/examples/get_online_features.py" linenums="1"
-    features = store.get_online_features(
-        features=[
-            "driver_stats:acc_rate",
-            "driver_stats:conv_rate"
-        ],
-        entity_rows=[
-            {
-                "driver_id": 1001,
-            }
-        ],
-    ).to_dict(include_event_timestamps=True)
 
-    def print_online_features(features):
-        for key, value in sorted(features.items()):
-            print(key, " : ", value)
+```py title="data_pipeline/examples/get_online_features.py" linenums="1"
+features = store.get_online_features(
+    features=[
+        "driver_stats:acc_rate",
+        "driver_stats:conv_rate"
+    ],
+    entity_rows=[
+        {
+            "driver_id": 1001,
+        }
+    ],
+).to_dict(include_event_timestamps=True)
 
-    print_online_features(features)
-    ```
+def print_online_features(features):
+    for key, value in sorted(features.items()):
+        print(key, " : ", value)
+
+print_online_features(features)
+```
 
 4\. Đẩy stream feature vào offline store
-    ```py title="data_pipeline/src/stream_to_stores/processor.py" linenums="1"
-    def preprocess_fn(rows: pd.DataFrame):
-        print(f"df columns: {rows.columns}")
-        print(f"df size: {rows.size}")
-        print(f"df preview:\n{rows.head()}")
-        return rows
 
-    ingestion_config = SparkProcessorConfig(mode="spark", source="kafka", spark_session=spark, processing_time="30 seconds", query_timeout=15)
-    sfv = store.get_stream_feature_view("driver_stats_stream")
+```py title="data_pipeline/src/stream_to_stores/processor.py" linenums="1"
+def preprocess_fn(rows: pd.DataFrame):
+    print(f"df columns: {rows.columns}")
+    print(f"df size: {rows.size}")
+    print(f"df preview:\n{rows.head()}")
+    return rows
 
-    processor = get_stream_processor_object(
-        config=ingestion_config,
-        fs=store,
-        sfv=sfv,
-        preprocess_fn=preprocess_fn,
-    )
+ingestion_config = SparkProcessorConfig(mode="spark", source="kafka", spark_session=spark, processing_time="30 seconds", query_timeout=15)
+sfv = store.get_stream_feature_view("driver_stats_stream")
 
-    processor.ingest_stream_feature_view(PushMode.OFFLINE)
-    ```
+processor = get_stream_processor_object(
+    config=ingestion_config,
+    fs=store,
+    sfv=sfv,
+    preprocess_fn=preprocess_fn,
+)
+
+processor.ingest_stream_feature_view(PushMode.OFFLINE)
+```
 
 5\. Đẩy stream feature vào online store
-    ```py linenums="1"
-    processor.ingest_stream_feature_view()
-    ```
+
+```py linenums="1"
+processor.ingest_stream_feature_view()
+```
 
 7\. ETL pipeline cập nhật dữ liệu của offline store
 
@@ -98,14 +103,16 @@ Chúng ta có 6 tương tác chính với Feast như sau:
 
 Ở công đoạn xây dựng data pipeline, chúng ta sẽ xây dựng pipeline cho các tương tác 1., 4., 5., 7.
 
-### Xây dựng các pipelines
-#### ETL pipeline
+## Xây dựng các pipelines
+
+### ETL pipeline
+
 Để tạo ra một Airflow pipeline, thông thường chúng ta sẽ làm theo trình tự sau:
 
-1. Định nghĩa *DAG* cho pipeline (line 1-8)
-2. Viết các task cho pipeline, ví dụ: *ingest_task*, *clean_task* và *explore_and_validate_task* (line 9-25)
+1. Định nghĩa _DAG_ cho pipeline (line 1-8)
+2. Viết các task cho pipeline, ví dụ: _ingest_task_, _clean_task_ và _explore_and_validate_task_ (line 9-25)
 3. Viết thứ tự chạy các task (line 27)
-4. Copy file code dag sang folder *airflow/run_env/dags* của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
+4. Copy file code dag sang folder _airflow/run_env/dags_ của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
 
 ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
 with DAG(
@@ -139,15 +146,15 @@ with DAG(
 
 1.  Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard
 2.  Định nghĩa image cho các **DockerOperator**, số lần retry pipeline, và khoảng thời gian giữa các lần retry
-3.  Lịch chạy pipeline, ở đây *@once* là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *
+3.  Lịch chạy pipeline, ở đây _@once_ là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
 4.  Ngày bắt đầu chạy pipeline theo múi giờ UTC
 5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
 6.  Command chạy trong docker container cho bước này
 7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
 
-**Lưu ý:** Do chúng ta dùng DockerOperator để tạo *task* nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào default_args trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại *data-pipeline/deployment/Dockerfile*
+**Lưu ý:** Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào default*args trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại \_data-pipeline/deployment/Dockerfile*
 
-Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag_id *db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại của data pipeline đề cập ở bên dưới.
+Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag*id \_db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại của data pipeline đề cập ở bên dưới.
 
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
@@ -155,9 +162,10 @@ Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:
 
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
 
-Tương tự như ETL pipeline, chúng ta sẽ code tiếp *Feast materialize pipeline* và *Stream to stores pipline* như bên dưới.
+Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipline_ như bên dưới.
 
-#### Feast materialize pipeline
+### Feast materialize pipeline
+
 ```py title="data_pipeline/dags/materialize_offline_to_online.py" linenums="1"
 with DAG(
     dag_id="materlize_offline_to_online",
@@ -173,7 +181,9 @@ with DAG(
         command="/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' && ./scripts/feast_helper.sh",
     )
 ```
-#### Stream to stores pipline
+
+### Stream to stores pipline
+
 ```py title="data_pipeline/dags/stream_to_stores.py" linenums="1"
 with DAG(
     dag_id="stream_to_stores",

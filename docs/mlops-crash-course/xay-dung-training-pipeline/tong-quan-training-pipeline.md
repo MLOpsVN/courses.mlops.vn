@@ -64,7 +64,7 @@ Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model
 
 Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.
 
-Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register model với Model Registry một cách tự động.
+Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể tự động register model với Model Registry.
 
 ## Tổng kết
 
