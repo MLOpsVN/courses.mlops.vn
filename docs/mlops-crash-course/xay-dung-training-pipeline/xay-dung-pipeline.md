@@ -1,32 +1,30 @@
-## Mục tiêu
+## Giới thiệu
 
-Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
+Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
-Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [ở đây](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này đã được tải lên Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
-## Xây dựng training pipeline
+## Môi trường phát triển
 
-Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder `training_pipeline`.
+Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt` (giống môi trường phát triển của bài [POC](../../poc/xay-dung-poc/#moi-truong-phat-trien)).
 
-### Cài đặt môi trường phát triển
+Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.
 
-Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
+1. Copy file `training_pipeline/.env-example`, đổi tên thành `training_pipeline/.env`. File này chứa các config cần thiết cho training pipeline.
 
-Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.
+1. Copy file `training_pipeline/deployment/.env-example`, đổi tên thành `training_pipeline/deployment/.env`. File này chứa các config cần thiết cho việc triển khai training pipeline.
 
-1. Copy file `training_pipeline/.env-example`, đổi tên thành `training_pipeline/.env`. File này chứa các config cần thiết cho training pipeline. Các bạn có thể sửa nếu cần.
-
-1. Copy file `training_pipeline/deployment/.env-example`, đổi tên thành `training_pipeline/deployment/.env`. File này chứa các config cần thiết cho việc triển khai training pipeline. Các bạn có thể sửa nếu cần.
-
-1. Set env var `TRAINING_PIPELINE_DIR` bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này là để hỗ trợ việc chạy python code trong folder `training_pipeline/src`.
+1. Set env var `TRAINING_PIPELINE_DIR` bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này là để hỗ trợ việc chạy python code trong folder `training_pipeline/src` trong quá trình phát triển.
 
 ```bash
 export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
 ```
 
-### Cập nhật Feature Store
+Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder `training_pipeline`.
+
+## Cập nhật Feature Store
 
 Trước khi cập nhật Feature Store, chúng ta cần đảm bảo rằng code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.
 
@@ -59,7 +57,7 @@ cd ..
 
 Sau khi chạy xong, các bạn sẽ thấy file `training_pipeline/feature_repo/registry/local_registry.db` được sinh ra. Đây chính là Feature Registry của chúng ta.
 
-### Data extraction
+## Data extraction
 
 Tiếp theo, chúng ta cần viết code để lấy data phục vụ cho quá trình train model từ Feature Store. Code của task này được lưu tại `training_pipeline/src/data_extraction.py`.
 
@@ -109,7 +107,7 @@ cd ..
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `training.parquet`.
 
-### Data validation
+## Data validation
 
 Ở task Data validation này, dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không.
 
@@ -146,7 +144,7 @@ def check_expected_features(df: pd.DataFrame):
 cd src && python data_validation.py && cd ..
 ```
 
-### Data preparation
+## Data preparation
 
 Ở task Data preparation, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa.
 
@@ -184,7 +182,7 @@ cd ..
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy các files `training.parquet`, `train_x.parquet`, `test_x.parquet`, `train_y.parquet`, và `test_y.parquet`.
 
-### Model training
+## Model training
 
 Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Mình sẽ tóm tắt các công việc trong đoạn code này như sau.
 
@@ -237,7 +235,7 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png" loading="lazy" />
 
-### Model evaluation
+## Model evaluation
 
 Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Mình sẽ tóm tắt lại như sau.
 
@@ -267,7 +265,7 @@ cd ..
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `evaluation.json`.
 
-### Model validation
+## Model validation
 
 Trong phần này, chúng ta cần đánh giá xem các offline metrics được tính toán ở task Model evaludation có thoả mãn một threshold đã được định nghĩa sẵn không, hay có thoả mãn một baseline đã được định nghĩa ở bước [Phân tích vấn đề](../../tong-quan-he-thong/phan-tich-van-de) không. Chúng ta cũng có thể cần phải kiểm tra xem model mới train được có tương thích với inference service ở production không.
 
@@ -307,7 +305,7 @@ Các bạn có thể click vào model đã được register để xem thêm th�
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png" loading="lazy" />
 
-### Airflow DAG
+## Airflow DAG
 
 Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py` và được tóm tắt như dưới đây.
 
@@ -405,6 +403,6 @@ Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt train
 
 ## Tổng kết
 
-Như vậy, chúng ta vừa cùng nhau trải qua quy trình phát triển điển hình cho training pipeline. Lưu ý rằng, vì code của training pipeline sẽ được cập nhật liên tục dựa theo các yêu cầu đến từ Data Scientist, nên chúng ta không hy vọng quá trình phát triển training pipeline sẽ chỉ cần thực hiện một lần rồi xong.
+Như vậy là chúng ta vừa trải qua quy trình phát triển điển hình cho training pipeline. Lưu ý rằng, vì code của training pipeline sẽ được cập nhật liên tục dựa theo các yêu cầu đến từ Data Scientist, nên chúng ta không hy vọng quá trình phát triển training pipeline sẽ chỉ cần thực hiện một lần rồi xong, mà nó sẽ được thực hiện trong nhiều vòng lặp.
 
 Sau khi tự động hoá được training pipeline, trong bài tiếp theo, chúng ta sẽ cùng nhau xây dựng và tự động hoá model serving pipeline.

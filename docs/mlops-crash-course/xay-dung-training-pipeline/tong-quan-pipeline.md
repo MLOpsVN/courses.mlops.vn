@@ -1,4 +1,4 @@
-## Mục tiêu
+## Giới thiệu
 
 Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã có được những thứ sau:
 
@@ -8,25 +8,23 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 4. Code để train model
 5. Code để đánh giá model
 
-Phần 1 và 2 là đã được sử dụng trong bài trước để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.
+Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeline](../../data-pipeline/tong-quan-data-pipeline) để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.
 
 Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.
 
-## Training pipeline
-
-Chúng ta sẽ sử dụng Airflow để quản lý và triển khai training pipeline, với các tasks như hình dưới:
+Training pipeline của chúng ta bao gồm các tasks như hình dưới:
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
-### Cập nhật Feature Store
+## Cập nhật Feature Store
 
 Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.
 
-### Data extraction
+## Data extraction
 
 Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk.
 
-### Data validation
+## Data validation
 
 Sau khi đã lấy được data chứa các feature chúng ta muốn ở task Data extraction, chúng ta cần đánh giá xem data có hợp lệ không trước khi train model, bằng cách kiểm tra những thứ sau.
 
@@ -40,7 +38,7 @@ Sau khi đã lấy được data chứa các feature chúng ta muốn ở task D
 
 Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.
 
-### Data preparation
+## Data preparation
 
 Đầu vào của task này là data đã được lấy từ task Data extraction. Task này là nơi chúng ta sẽ thực hiện các bước sau.
 
@@ -50,15 +48,15 @@ Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết đị
 
 Đầu ra của task này là các tập dataset đã được lưu vào disk.
 
-### Model training
+## Model training
 
 Trong task này, chúng ta sẽ train model sử dụng data đã được chuẩn bị ở task Data preparation. Task này cũng là nơi mà chúng ta sẽ thực hiện hyperparameter tuning để train được model tốt nhất. Đầu ra của bước này là model đã được train.
 
-### Model evaluation
+## Model evaluation
 
 Đầu vào của task này là model đã được train ở task Model training. Trong task này, chúng ta thực hiện chạy prediction cho model trên test set lấy từ task Data preparation. Đầu ra của task này là nhóm các metrics dùng để đánh giá chất lượng của model.
 
-### Model validation
+## Model validation
 
 Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước [Phân tích vấn đề](../../tong-quan-he-thong/phan-tich-van-de). Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.
 
@@ -70,4 +68,6 @@ Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register m
 
 ## Tổng kết
 
-Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các bước đã được định nghĩa ở trên.
+Các task mà chúng ta vừa phân tích ở trên là các task điển hình trong một training pipeline. Tuy nhiên, tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà chúng ta có thể bỏ bớt hoặc thêm vào các task khác. Chúng ta cũng có thể chia nhỏ các task thực hiện các công việc đòi hỏi tính toán nặng ra, để tránh việc chạy lại nhiều lần.
+
+Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các task đã được định nghĩa ở trên.
