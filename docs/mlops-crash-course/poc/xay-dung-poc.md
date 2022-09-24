@@ -18,36 +18,40 @@ Trong khoá học này, giả sử rằng Data Engineering đã thu thập data 
 
 ## Phân tích data và viết training code
 
-Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại `training_pipeline/nbs/01-poc-training-code.ipynb`.
+Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại `training_pipeline/nbs/poc-training-code.ipynb`.
 
-Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là `training_pipeline/nbs/data/exp_driver_stats.parquet` và `training_pipeline/nbs/data/exp_driver_orders.csv`. Hai file này chứa các cột với ý nghĩa tương ứng như sau:
+Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là `training_pipeline/nbs/data/exp_driver_stats.parquet` và `training_pipeline/nbs/data/exp_driver_orders.csv`. File `exp_driver_stats.parquet` chứa data của các tài xế, được ghi lại ở nhiều thời điểm, một tài xế sẽ có nhiều records vì được ghi lại các thời điểm khác nhau. File `exp_driver_orders.csv` chứa thông tin về cuốc xe có hoàn thành hay không của các tài xế, một tài xế sẽ có nhiều records vì nhiều cuốc xe xảy ra ở các thời điểm khác nhau. Hai file này chứa các cột với ý nghĩa tương ứng như sau:
 
 | **File**                     | **Cột**         | **Ý nghĩa**                              |
 | ---------------------------- | --------------- | ---------------------------------------- |
-| **exp_driver_stats.parquet** | driver_id       | ID của driver trong Database của công ty |
+| **exp_driver_stats.parquet** | datetime        | Thời gian mà record được ghi lại         |
+|                              | driver_id       | ID của driver trong Database của công ty |
 |                              | conv_rate       | Một thông số nào đó                      |
 |                              | acc_rate        | Một thông số nào đó                      |
 |                              | avg_daily_trips | Một thông số nào đó                      |
-| **exp_driver_orders.csv**    | driver_id       | ID của driver trong Database của công ty |
+| **exp_driver_orders.csv**    | event_timestamp | Thời gian mà record được ghi lại         |
+|                              | driver_id       | ID của driver trong Database của công ty |
 |                              | trip_completed  | Cuốc xe có hoàn thành không              |
 
 Code dùng để load và clean data như sau.
 
-```python
-DATA_DIR = Path("./data")
+```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
+DATA_DIR = Path("./data") # (1)
 DATA_PATH = DATA_DIR / "exp_driver_stats.parquet"
 LABEL_PATH = DATA_DIR / "exp_driver_orders.csv"
 
-# Load data
-df_orig = pd.read_parquet(DATA_PATH, engine='fastparquet')
+df_orig = pd.read_parquet(DATA_PATH, engine='fastparquet') # (2)
 label_orig = pd.read_csv(LABEL_PATH, sep="\t")
 
-# Clean data
-label_orig["event_timestamp"] = pd.to_datetime(label_orig["event_timestamp"])
+label_orig["event_timestamp"] = pd.to_datetime(label_orig["event_timestamp"]) # (3)
 
-# Định nghĩa tên của cột chứa label
-target_col = "trip_completed"
+target_col = "trip_completed" # (4)
 ```
+
+1. Định nghĩa path tới data files
+2. Load data
+3. Clean data
+4. Định nghĩa tên của cột chứa label
 
 Sau khi đã load và clean được data, Data Scientist sẽ phân tích data để hiểu về data. Quá trình này thông thường gồm những công việc sau.
 
@@ -60,40 +64,73 @@ Sau khi đã load và clean được data, Data Scientist sẽ phân tích data 
 
 Ở mỗi một vấn đề về data ở trên, sẽ tồn tại một hoặc nhiều các giải pháp để giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay rằng chúng có hiệu quả hay không. Do đó, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm training model. Các metrics trong quá trình đánh giá model sẽ giúp chúng ta đánh giá xem các giải pháp mà chúng ta thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, hãy tưởng tượng bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp đi lặp lại nhiều lần.
 
-May mắn rằng các file data của chúng ta không có feature nào chứa giá trị `null`. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model. Đoạn code ở dưới được dùng để chia data thành training set và test set, train model, đánh giá model, lưu model, load model đã lưu và thực hiện inference.
+May mắn rằng các file data của chúng ta không có feature nào chứa giá trị `null`. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model.
 
-```python
-# Chọn các feature
-selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"]
+Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi hàng trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Code để tổng hợp features và labels như dưới đây.
 
-# Chia data thành training set và test set
+```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
+groups = df_orig.groupby('driver_id') # (1)
+
+def proc_row(row): # (2)
+    global data_df
+    end_time = row['event_timestamp']
+    driver_id = row['driver_id']
+
+    grp_rows = groups.get_group(driver_id) # (3)
+    grp_rows = grp_rows[grp_rows['datetime'] <= end_time] # (4)
+    grp_rows = grp_rows.sort_values('datetime') # (5)
+    grp_rows = grp_rows.iloc[-1] # (6)
+
+    grp_rows['event_timestamp'] = end_time # (7)
+    grp_rows['trip_completed'] = row['trip_completed']
+
+    return grp_rows.squeeze(axis=0) # (8)
+
+data_df = label_orig.apply(proc_row, axis=1)
+
+data_df = data_df[data_df.columns. \ # (9)
+    drop("datetime"). \
+    drop("driver_id"). \
+    drop("created"). \
+    drop("event_timestamp")]
+```
+
+1. Nhóm features lại vào các nhóm theo `driver_id`
+2. Function để xử lý mỗi hàng trong `label_orig`
+3. Lấy ra các hàng trong `df_orig` của một tài xế
+4. Lấy ra các hàng trong `df_orig` có `datetime` <= `event_timestamp` của hàng hiện tại trong `label_orig`
+5. Sắp xếp các hàng theo cột `datetime`
+6. Lấy ra hàng ở thời gian gần nhất
+7. Thêm các cột cần thiết vào
+8. Biến thành Series (một hàng)
+9. Loại bỏ các cột không cần thiết
+
+Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.
+
+```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
+selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"] # (1)
+TARGET_COL = "trip_completed"
 TEST_SIZE = 0.2
-train, test = train_test_split(data_df, test_size=TEST_SIZE, random_state=random_seed)
-train_x = train.drop([target_col], axis=1)[selected_ft]
-test_x = test.drop([target_col], axis=1)[selected_ft]
-train_y = train[[target_col]]
-test_y = test[[target_col]]
 
-# Train model
+train, test = train_test_split(data_df, test_size=TEST_SIZE, random_state=random_seed) # (2)
+train_x = train.drop([TARGET_COL], axis=1)[selected_ft]
+test_x = test.drop([TARGET_COL], axis=1)[selected_ft]
+train_y = train[[TARGET_COL]]
+test_y = test[[TARGET_COL]]
+
 ALPHA = 0.5
 L1_RATIO = 0.1
-model = ElasticNet(alpha=ALPHA, l1_ratio=L1_RATIO, random_state=random_seed)
+model = ElasticNet(alpha=ALPHA, l1_ratio=L1_RATIO, random_state=random_seed) # (3)
 model.fit(train_x, train_y)
 
-# Đánh giá model
-predicted_qualities = model.predict(test_x)
+predicted_qualities = model.predict(test_x) # (4)
 (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-
-# Lưu model
-model_path = MODEL_DIR / "driver_model.bin"
-joblib.dump(model, model_path)
-
-# Load model
-loaded_model = joblib.load(model_path)
-
-# Inference
-predictions = loaded_model.predict(test_x)
 ```
+
+1. Chọn các features để train
+2. Chia data thành training set và test set
+3. Train model
+4. Đánh giá model
 
 Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform.md), và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.
 
@@ -101,7 +138,7 @@ Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghi
 
 [MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.
 
-Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên localhost. Hãy clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform) về máy của bạn, và chạy câu lệnh sau.
+Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên môi trường local. Hãy clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform) về máy của bạn, và chạy câu lệnh sau.
 
 ```bash
 bash run.sh mlflow up
@@ -109,37 +146,38 @@ bash run.sh mlflow up
 
 Trên browser của bạn, đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.
 
-Tiếp theo, mở file notebook `training_pipeline/nbs/01-poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.
+Tiếp theo, mở file notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.
 
-```python
+```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
 MLFLOW_TRACKING_URI = "http://localhost:5000"
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.sklearn.autolog()
+mlflow.sklearn.autolog() # (1)
 ```
 
-Lưu ý rằng vì chúng ta dùng `sklearn` để train model, dòng code `mlflow.sklearn.autolog()` sẽ giúp chúng ta tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
+1. Vì chúng ta dùng `sklearn` để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
 
 Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.
 
-```python
-# Đặt tên cho lần chạy
-mlflow.set_tag("mlflow.runName", uuid.uuid1())
+```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
+mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
 
-# Log lại feature được dùng
-mlflow.log_param("features", selected_ft)
+mlflow.log_param("features", selected_ft) # (2)
 
-# Log lại các hyperparameter
-mlflow.log_param("alpha", ALPHA)
+mlflow.log_param("alpha", ALPHA) # (3)
 mlflow.log_param("l1_ratio", L1_RATIO)
 
-# Log lại các metric sau khi test trên test set
-mlflow.log_metric("testing_rmse", rmse)
+mlflow.log_metric("testing_rmse", rmse) # (4)
 mlflow.log_metric("testing_r2", r2)
 mlflow.log_metric("testing_mae", mae)
 
-# Log lại model sau khi train
-mlflow.sklearn.log_model(model, "model")
+mlflow.sklearn.log_model(model, "model") # (5)
 ```
+
+1. Đặt tên cho lần chạy
+2. Log lại feature được dùng
+3. Log lại các hyperparameter
+4. Log lại các metric sau khi test trên test set
+5. Log lại model sau khi train
 
 Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.
 

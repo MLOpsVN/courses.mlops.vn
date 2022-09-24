@@ -17,11 +17,13 @@ plugins:
       draggable: true
   - section-index
 markdown_extensions:
+  - admonition
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.details
 nav:
   - Home: index.md
   - MLOps Crash Course:
@@ -38,8 +40,8 @@ nav:
           - Feature store: mlops-crash-course/data-pipeline/feature-store.md
           - Xây dựng pipeline: mlops-crash-course/data-pipeline/xay-dung-data-pipeline.md
       - Xây dựng training pipeline:
-          - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline.md
-          - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline.md
+          - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-training-pipeline.md
+          - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-training-pipeline.md
       - Triển khai model serving:
           - Tổng quan model serving: mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving.md
           - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
