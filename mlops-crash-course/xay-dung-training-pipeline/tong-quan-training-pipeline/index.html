@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/xay-dung-training-pipeline/tong-quan-training-pipeline/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
 <title>Tổng quan pipeline - MLOpsVN Courses</title>
@@ -248,7 +248,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../xay-dung-pipeline/">
+<a class="md-nav__link" href="../xay-dung-training-pipeline/">
         Xây dựng pipeline
       </a>
 </li>
@@ -505,7 +505,7 @@
 <p>Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước <a href="../../tong-quan-he-thong/phan-tich-van-de">Phân tích vấn đề</a>. Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.</p>
 <p>Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.</p>
 <p>Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không.</p>
-<p>Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể register model với Model Registry một cách tự động.</p>
+<p>Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể tự động register model với Model Registry.</p>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Các task mà chúng ta vừa phân tích ở trên là các task điển hình trong một training pipeline. Tuy nhiên, tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà chúng ta có thể bỏ bớt hoặc thêm vào các task khác. Chúng ta cũng có thể chia nhỏ các task thực hiện các công việc đòi hỏi tính toán nặng ra, để tránh việc chạy lại nhiều lần.</p>
 <p>Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các task đã được định nghĩa ở trên.</p>
@@ -528,7 +528,7 @@
             </div>
 </div>
 </a>
-<a aria-label="Next: Xây dựng pipeline" class="md-footer__link md-footer__link--next" href="../xay-dung-pipeline/" rel="next">
+<a aria-label="Next: Xây dựng pipeline" class="md-footer__link md-footer__link--next" href="../xay-dung-training-pipeline/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
