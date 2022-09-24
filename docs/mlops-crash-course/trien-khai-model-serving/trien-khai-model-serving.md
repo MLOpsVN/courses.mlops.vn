@@ -1,6 +1,22 @@
-## Mục tiêu
+## Giới thiệu
 
-Trong bài này, chúng ta sẽ viết code để triển khai batch serving pipeline và xây dựng RESTful API cho online serving. Chi tiết về hai loại serving này, mời các bạn xem lại bài trước [ở đây](../../trien-khai-model-serving/tong-quan-model-serving). Source code của bài này đã được tải lên Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+Ở bài trước, [Tổng quan model serving](../../trien-khai-model-serving/tong-quan-model-serving), chúng ta đã phân tích về hai hình thức phổ biến khi triển khai model serving, đó chính là _batch serving_ và _online serving_. Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+
+## Cài đặt môi trường phát triển
+
+Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại `model_serving/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
+
+Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.
+
+1. Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving.
+
+1. Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
+
+1. Set env var `MODEL_SERVING_DIR` bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này là để hỗ trợ việc chạy python code trong folder `model_serving/src` trong quá trình phát triển.
+
+```bash
+export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
+```
 
 ## Batch serving
 
@@ -9,22 +25,6 @@ Batch serving sẽ được triển khai dưới dạng một Airflow DAG với 
 <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
 
 Lưu ý, trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `model_serving`.
-
-### Cài đặt môi trường phát triển
-
-Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại `model_serving/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
-
-Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.
-
-1. Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving. Các bạn có thể sửa nếu cần.
-
-1. Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving. Các bạn có thể sửa nếu cần.
-
-1. Set env var `MODEL_SERVING_DIR` bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này là để hỗ trợ việc chạy python code trong folder `model_serving/src`.
-
-```bash
-export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
-```
 
 ### Cập nhật Feature Store
 
@@ -134,6 +134,13 @@ mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri)
 # Load data từ file ở task trước
 batch_df = load_df(AppPath.BATCH_INPUT_PQ)
 
+# Sắp xếp lại features
+model_signature = mlflow_model.metadata.signature
+feature_list = []
+for name in model_signature.inputs.input_names():
+    feature_list.append(name)
+batch_df = batch_df[feature_list]
+
 # Chạy prediction
 preds = mlflow_model.predict(batch_df)
 batch_df["pred"] = preds
@@ -142,7 +149,7 @@ batch_df["pred"] = preds
 to_parquet(batch_df, AppPath.BATCH_OUTPUT_PQ)
 ```
 
-Hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
+Vì batch data mà chúng ta đọc từ file vào có thể sẽ chứa các features không theo đúng thứ tự mà model yêu cầu, nên ở đoạn code trên, chúng ta có thêm vào đoạn code để sắp xếp lại features cho input data. Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.
 
 ```bash
 cd src
@@ -363,4 +370,4 @@ Kết quả của response trả về sẽ nhìn giống như sau.
 
 Như vậy, chúng ta vừa thực hiện quy trình triển khai batch serving và online serving điển hình. Lưu ý rằng, code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó.
 
-Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này là cực kì quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.
+Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này rất quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.

@@ -27,9 +27,9 @@ Các tương tác chính trong MLOps platform:
 
 4\. DS push code lên Github để trigger các CI/CD pipeline tương ứng:
 
--   <span style="color:red">**Flow Đỏ**</span>: push code data pipeline để trigger CI/CD cho data pipeline
--   <span style="color:blue">**Flow Xanh dương**</span>: push code model training để trigger CI/CD cho model training pipeline
--   <span style="color:green">**Flow Xanh lá**</span>: push code model serving để trigger CI/CD cho model serving
+- <span style="color:red">**Flow Đỏ**</span>: push code data pipeline để trigger CI/CD cho data pipeline
+- <span style="color:blue">**Flow Xanh dương**</span>: push code model training để trigger CI/CD cho model training pipeline
+- <span style="color:green">**Flow Xanh lá**</span>: push code model serving để trigger CI/CD cho model serving
 
 5\. CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)
 
