@@ -1,5 +1,9 @@
-Từ xưa một ông nào đó giấu tên đã có câu _garbage in, garbage out_, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.
+## Giới thiệu
+Trong khoa học máy tính có khái niệm _garbage in, garbage out_, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.  
 
+Ở bài học này, chúng ta sẽ cùng nhau tìm hiểu các công việc phổ biến trong xử lý dữ liệu, khái niệm về pipeline dữ liệu, để từ đó mọi người có thể rút ra được những việc cần làm cho bài toán của mình và lên kế hoạch triển khai cho phù hợp.
+
+## Các công đoạn chính trong xử lý dữ liệu
 Thông thường công việc xử lý dữ liệu bao gồm các công đoạn chính như sau:
 
 | Tên công đoạn                 | Công việc cụ thể                                                                                                                                                         |
@@ -14,4 +18,20 @@ Thông thường công việc xử lý dữ liệu bao gồm các công đoạn 
 |                               | Thực hiện các phép biến đổi                                                                                                                                              |
 | Data exploration & validation | **Data profiling:** hiển thị thông tin cơ bản về các feature như kiểu dữ liệu, tỉ lệ missing value, phân bố dữ liệu, các con số thống kê như _min_, _max_, _mean_, .v.v. |
 |                               | **Visualization:** xây dựng các dashboard về phân bố hoặc độ skew của dữ liệu                                                                                            |
-|                               | **Validation:** sử dụng các user-defined rule (ví dụ như _tỉ lệ missing value < 80%_), hoặc dựa vào thống kê để xác định độ lệch phân bố                                 |
+|                               | **Validation:** sử dụng các user-defined rule (ví dụ như _tỉ lệ missing value < 80%_), hoặc dựa vào thống kê để xác định độ lệch phân bố                          |
+
+## Pipeline xử lý dữ liệu
+Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: _data ingestion_, _data cleaning_, và _data exploration & validation_, hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.
+
+Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipeline xử lý dữ liệu, ví dụ bên dưới:
+<img src="../../../assets/images/mlops-crash-course/data-pipeline/data_pipeline_example.png" loading="lazy" />
+
+???+ warning
+    Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
+    
+    - Pipeline trở nên cực kỳ phức tạp và khó debug
+    - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
+    - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
+
+## Tổng kết
+Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tỉm hiểu về Airflow, một tool giúp xây dựng pipeline.

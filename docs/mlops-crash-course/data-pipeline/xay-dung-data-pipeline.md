@@ -1,4 +1,6 @@
-Sau khi chạy `feast apply` để tạo ra feature definition ở đường dẫn `registry/local_registry.db`, chúng ta sẽ sử dụng folder này để config client `store` giao tiếp với feature store như sau:
+## Giới thiệu
+
+Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command `feast apply` để tạo ra feature definition ở đường dẫn `data_pipeline/feature_repo/registry/local_registry.db`. Trong bài học này chúng ta sẽ sử dụng folder này để config client `store` giao tiếp với feature store như sau:
 
 ```py linenums="1"
 from feast import FeatureStore
@@ -10,6 +12,12 @@ store = FeatureStore(repo_path="../feature_repo")  # (1)
 Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm **1**, **2**, **3**, **4**, **5** như hình dưới đây:
 
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
+
+## Môi trường phát triển
+Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo `mlops-crash-course-platform/` và start  service này như sau:
+```bash
+bash run.sh airflow up
+```
 
 ## Các tương tác chính với Feast
 
@@ -96,10 +104,11 @@ processor.ingest_stream_feature_view()
 
 7\. ETL pipeline cập nhật dữ liệu của offline store
 
-**Lưu ý:** Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
+???+ tip
+    Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
 
-- thực hiện POC
-- thử nghiệm với các feature khác nhằm mục đích cải thiện model
+    - thực hiện POC
+    - thử nghiệm với các feature khác nhằm mục đích cải thiện model
 
 Ở công đoạn xây dựng data pipeline, chúng ta sẽ xây dựng pipeline cho các tương tác 1., 4., 5., 7.
 
@@ -152,9 +161,10 @@ with DAG(
 6.  Command chạy trong docker container cho bước này
 7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
 
-**Lưu ý:** Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào default*args trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại \_data-pipeline/deployment/Dockerfile*
+???+ info
+    Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào _DEFAULT_DAG_ARGS_ trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
 
-Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag*id \_db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại của data pipeline đề cập ở bên dưới.
+Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag_id: _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
@@ -205,3 +215,10 @@ with DAG(
         command="/bin/bash -c 'cd src/stream_to_stores && python ingest.py --store offline'",
     )
 ```
+
+## Tổng kết
+Trong bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Bên cạnh đó, chùng ta cũng đồng thời xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store, giúp cho feature luôn ở trạng thái mới nhất có thể.
+
+## Tài liệu tham khảo
+- <https://feast.dev/>
+- <https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html>
