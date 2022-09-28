@@ -6,7 +6,7 @@
 
 Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại `model_serving/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
 
-Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc sau.
+Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.
 
 1. Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving.
 
@@ -17,6 +17,13 @@ Sau khi cài đặt môi trường phát triển, chúng ta cần làm 2 việc 
 ```bash
 export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
 ```
+
+Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
+
+1. Feast để truy xuất Feature Store
+1. MLflow để làm ML Metadata Store
+1. Airflow để quản lý batch serving pipeline
+1. Bentoml để triển khai online serving
 
 !!! note
 

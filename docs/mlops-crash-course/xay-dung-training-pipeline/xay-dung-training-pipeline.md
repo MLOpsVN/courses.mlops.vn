@@ -1,10 +1,10 @@
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
+Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+
+Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
 <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
-
-Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
 ## Môi trường phát triển
 
@@ -21,6 +21,12 @@ Sau khi cài đặt môi trường phát triển, chúng ta cần làm các vi�
 ```bash
 export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
 ```
+
+Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
+
+1. Feast để truy xuất Feature Store
+1. MLflow để làm ML Metadata Store
+1. Airflow để quản lý training pipeline
 
 !!! note
 

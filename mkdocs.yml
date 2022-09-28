@@ -45,11 +45,8 @@ nav:
       - Triển khai model serving:
           - Tổng quan model serving: mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving.md
           - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
-      - Theo dõi hệ thống:
-          - Tổng quan: mlops-crash-course/theo-doi-he-thong/tong-quan.md
-          - Theo dõi hệ thống: mlops-crash-course/theo-doi-he-thong/theo-doi-he-thong.md
-          - Theo dõi model: mlops-crash-course/theo-doi-he-thong/theo-doi-model.md
-          - Theo dõi data: mlops-crash-course/theo-doi-he-thong/theo-doi-data.md
+      - Monitoring:
+          - Tổng quan: mlops-crash-course/monitoring/tong-quan.md
       - CI/CD:
           - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
           - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md

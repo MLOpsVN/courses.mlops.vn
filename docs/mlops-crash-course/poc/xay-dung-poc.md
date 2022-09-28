@@ -6,6 +6,11 @@
 
 Đầu tiên, chúng ta cần xây dựng môi trường phát triển ở local. Các bạn hãy clone github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code/) về máy. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt môi trường phát triển.
 
+Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
+
+1. Jupyter notebook để thử nghiệm data, model
+1. MLflow để làm ML Metadata Store
+
 ## Chuẩn bị data
 
 Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:
