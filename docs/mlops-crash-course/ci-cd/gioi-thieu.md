@@ -1,0 +1,2 @@
+## Giới thiệu
+Công việc mà cần nhiều sức người và ít tự động hóa thường dễ xảy ra sai sót. Công vỉệc lặp lại càng nhiều thì sai sót càng nhiều, và hậu quả càng nghiêm trọng. Bài học này chúng ta sẽ cùng đi sâu về vấn đề này, bao gồm các nội dung chính sau:
