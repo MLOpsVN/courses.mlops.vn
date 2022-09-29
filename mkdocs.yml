@@ -39,10 +39,10 @@ nav:
           - Airflow cơ bản: mlops-crash-course/data-pipeline/airflow-co-ban.md
           - Feature store: mlops-crash-course/data-pipeline/feature-store.md
           - Xây dựng pipeline: mlops-crash-course/data-pipeline/xay-dung-data-pipeline.md
-      - Xây dựng training pipeline:
+      - Training pipeline:
           - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-training-pipeline.md
           - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-training-pipeline.md
-      - Triển khai model serving:
+      - Model serving:
           - Tổng quan model serving: mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving.md
           - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
       - Theo dõi hệ thống:

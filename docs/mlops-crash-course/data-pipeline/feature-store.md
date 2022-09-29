@@ -1,4 +1,15 @@
-## Tổng quan về feature store
+## Giới thiệu
+Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời. 
+
+Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời mọi người đến với nội dung bài học hôm nay.
+
+## Môi trường phát triển
+Bài học này sẽ sử dụng Feast, mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
+```bash
+bash run.sh feast up
+```
+
+## Feature store
 
 Feature store là một hệ thống giúp lưu trữ, tương tác và quản lý feature. Công cụ này sinh ra để giải quyết vấn đề về:
 
@@ -24,7 +35,7 @@ conda activate my_env
 pip install feast
 ```
 
-Feast có 2 loại stores là:
+Feast có 2 khái niệm stores là:
 
 - **Offline store:** lưu trữ dữ liệu lịch sử để phục vụ mục đích training hoặc offline batch serving. Hiện tại Feast hỗ trợ chọn một trong loại data source sau để làm offline store: File, Snowflake, Bigquery và Redshift. Ngoài ra còn các loại khác được contribute bởi cộng đồng ví dụ như PostgreSQL, Spark, Trino, .v.v.., tuy nhiên nên hạn chế dùng vì chưa đạt full test coverage.
 
@@ -33,18 +44,19 @@ Feast có 2 loại stores là:
 Tất cả các config cho Feast bao gồm data source cho mỗi loại store, định nghĩa các feature và entity (ID) nằm trong folder sau:
 
 ```
-feature_repo
+data_pipeline/feature_repo
 ├── data_sources.py: định nghĩa các data source
 ├── entities.py: định nghĩa entity
 ├── features.py: định nghĩa các bảng feature, và các feature cùng kiểu dữ liệu trong từng bảng
 └── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
 ```
 
-Các bảng feature chúng ta sẽ sử dụng bao gồm:
+Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao gồm:
 
 - **driver_stats_view:** feature view với data source dạng file
-- **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với _driver_stats_view_.
+- **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với _driver_stats_view_
 
+, được định nghĩa như sau:
 ```py title="features.py" linenums="1"
 driver_stats_view = FeatureView(
     name="driver_stats",
@@ -59,7 +71,7 @@ driver_stats_view = FeatureView(
     online=True,  # (4)
     source=driver_stats_batch_source,  # (5)
     tags={},
-    owner="mlopsvn@gmail.com",
+    owner="batch_source_owner@gmail.com",
 )
 
 @stream_feature_view(
@@ -124,18 +136,15 @@ driver_stats_stream_source = KafkaSource(
 
 1.  Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ
 
-Sau khi config feature store bằng cách thay đổi các file trong repo _feature_repo/_, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
+Sau khi config feature store bằng cách thay đổi các file trong repo `feature_repo/`, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
-- FileSource: đảm bảo đường dẫn tồn tại, file không bị lỗi
-- KafkaSource: đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục _stream_emitting_ và chạy command:
+- **FileSource:** đảm bảo đường dẫn tồn tại, file không bị lỗi
+- **KafkaSource:** đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục `stream_emitting/` và chạy command:
   ```console
   bash deploy.sh start
   ```
   khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
   <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
-
-, đảm bảo Redis sẵn sàng để làm online store cho Feast bằng cách truy cập vào repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform) và chạy command:
-`console bash run.sh up feast `
 
 và cuối cùng chúng ta sẽ apply các thay đổi như sau:
 
@@ -144,4 +153,9 @@ cd feature_repo
 feast apply
 ```
 
-Ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+## Tổng kết
+
+Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+
+## Tài liệu tham khảo
+- <https://feast.dev/>
