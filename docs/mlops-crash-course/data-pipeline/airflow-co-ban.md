@@ -41,3 +41,6 @@ with DAG(
 
 ## Tổng kết
 Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng _task_ và _DAG_. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.
+
+## Tài liệu tham khảo
+- <https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html>

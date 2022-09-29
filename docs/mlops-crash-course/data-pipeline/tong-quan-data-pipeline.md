@@ -35,3 +35,7 @@ Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipe
 
 ## Tổng kết
 Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tỉm hiểu về Airflow, một tool giúp xây dựng pipeline.
+
+## Tài liệu tham khảo
+- <https://ml-ops.org/content/three-levels-of-ml-software>
+- <https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning>

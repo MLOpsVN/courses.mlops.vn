@@ -175,6 +175,7 @@ Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:
 Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipline_ như bên dưới.
 
 ### Feast materialize pipeline
+Materialize dữ liệu từ _offline_ qua _online_ giúp làm mới dữ liệu ở _online store_
 
 ```py title="data_pipeline/dags/materialize_offline_to_online.py" linenums="1"
 with DAG(
@@ -193,6 +194,7 @@ with DAG(
 ```
 
 ### Stream to stores pipline
+Mọi người thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
 
 ```py title="data_pipeline/dags/stream_to_stores.py" linenums="1"
 with DAG(
@@ -217,7 +219,9 @@ with DAG(
 ```
 
 ## Tổng kết
-Trong bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Bên cạnh đó, chùng ta cũng đồng thời xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store, giúp cho feature luôn ở trạng thái mới nhất có thể.
+Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store. 
+
+Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình. 
 
 ## Tài liệu tham khảo
 - <https://feast.dev/>

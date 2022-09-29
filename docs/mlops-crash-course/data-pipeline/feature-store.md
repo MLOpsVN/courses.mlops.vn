@@ -156,3 +156,6 @@ feast apply
 ## Tổng kết
 
 Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+
+## Tài liệu tham khảo
+- <https://feast.dev/>
