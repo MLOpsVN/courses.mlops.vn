@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#cac-tuong-tac-chinh-voi-feast">
+<a class="md-skip" href="#gioi-thieu">
           Skip to content
         </a>
 </div>
@@ -180,6 +180,16 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#cac-tuong-tac-chinh-voi-feast">
     Các tương tác chính với Feast
   </a>
@@ -208,6 +218,16 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -217,13 +237,13 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_4">
-          Xây dựng training pipeline
+          Training pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Xây dựng training pipeline" class="md-nav" data-md-level="2">
+<nav aria-label="Training pipeline" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_4">
 <span class="md-nav__icon md-icon"></span>
-          Xây dựng training pipeline
+          Training pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -242,13 +262,13 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_5">
-          Triển khai model serving
+          Model serving
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Triển khai model serving" class="md-nav" data-md-level="2">
+<nav aria-label="Model serving" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_5">
 <span class="md-nav__icon md-icon"></span>
-          Triển khai model serving
+          Model serving
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -392,6 +412,16 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#cac-tuong-tac-chinh-voi-feast">
     Các tương tác chính với Feast
   </a>
@@ -420,6 +450,16 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -428,7 +468,8 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Xây dựng pipeline</h1>
-<p>Sau khi chạy <code>feast apply</code> để tạo ra feature definition ở đường dẫn <code>registry/local_registry.db</code>, chúng ta sẽ sử dụng folder này để config client <code>store</code> giao tiếp với feature store như sau:</p>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command <code>feast apply</code> để tạo ra feature definition ở đường dẫn <code>data_pipeline/feature_repo/registry/local_registry.db</code>. Trong bài học này chúng ta sẽ sử dụng folder này để config client <code>store</code> giao tiếp với feature store như sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">feast</span> <span class="kn">import</span> <span class="n">FeatureStore</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">store</span> <span class="o">=</span> <span class="n">FeatureStore</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="s2">"../feature_repo"</span><span class="p">)</span>  <span class="c1"># (1)</span>
@@ -438,50 +479,19 @@
 </ol>
 <p>Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm <strong>1</strong>, <strong>2</strong>, <strong>3</strong>, <strong>4</strong>, <strong>5</strong> như hình dưới đây:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png"/></a></p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo <code>mlops-crash-course-platform/</code> và start  service này như sau:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>bash run.sh airflow up
+</code></pre></div></p>
 <h2 id="cac-tuong-tac-chinh-voi-feast">Các tương tác chính với Feast</h2>
 <p>Chúng ta có 6 tương tác chính với Feast như sau:</p>
 <p>1. Materialize feature từ offline sang online store để đảm bảo online store lưu trữ feature mới nhất</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/scripts/feast_helper.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">cd</span> <span class="n">feature_repo</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">feast</span> <span class="n">materialize</span><span class="o">-</span><span class="n">incremental</span> <span class="err">$</span><span class="p">(</span><span class="n">date</span> <span class="o">+%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">d</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/scripts/feast_helper.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">cd</span> <span class="n">feature_repo</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">feast</span> <span class="n">materialize</span><span class="o">-</span><span class="n">incremental</span> <span class="err">$</span><span class="p">(</span><span class="n">date</span> <span class="o">+%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">d</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>2. Data scientist, training pipeline hoặc offline batch serving pipeline kéo features về để train model</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/examples/get_historical_features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">entity_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="p">{</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>        <span class="s2">"driver_id"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1001</span><span class="p">],</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>        <span class="s2">"datetime"</span><span class="p">:</span> <span class="p">[</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">42</span><span class="p">),</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a>            <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="p">],</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="p">}</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="p">)</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">training_df</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_historical_features</span><span class="p">(</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">entity_df</span><span class="o">=</span><span class="n">entity_df</span><span class="p">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span> <span class="s2">"driver_stats:conv_rate"</span><span class="p">],</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="p">)</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">training_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</code></pre></div></td></tr></table></div>
-<p>3. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/examples/get_online_features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/examples/get_historical_features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -497,26 +507,26 @@
 <span class="normal"><a href="#__codelineno-3-14">14</a></span>
 <span class="normal"><a href="#__codelineno-3-15">15</a></span>
 <span class="normal"><a href="#__codelineno-3-16">16</a></span>
-<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">features</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_online_features</span><span class="p">(</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="n">features</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>        <span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>        <span class="s2">"driver_stats:conv_rate"</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="p">],</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">entity_rows</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>        <span class="p">{</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>            <span class="s2">"driver_id"</span><span class="p">:</span> <span class="mi">1001</span><span class="p">,</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="p">}</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="p">],</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">include_event_timestamps</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="k">def</span> <span class="nf">print_online_features</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">" : "</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="n">print_online_features</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">entity_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>        <span class="s2">"driver_id"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1001</span><span class="p">],</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>        <span class="s2">"datetime"</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">42</span><span class="p">),</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>            <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>            <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="p">],</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="p">}</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">training_df</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_historical_features</span><span class="p">(</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="n">entity_df</span><span class="o">=</span><span class="n">entity_df</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span> <span class="s2">"driver_stats:conv_rate"</span><span class="p">],</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="p">)</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">training_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div></td></tr></table></div>
-<p>4. Đẩy stream feature vào offline store</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/src/stream_to_stores/processor.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<p>3. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/examples/get_online_features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
@@ -532,33 +542,71 @@
 <span class="normal"><a href="#__codelineno-4-14">14</a></span>
 <span class="normal"><a href="#__codelineno-4-15">15</a></span>
 <span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">def</span> <span class="nf">preprocess_fn</span><span class="p">(</span><span class="n">rows</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df columns: </span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df size: </span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df preview:</span><span class="se">\n</span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="k">return</span> <span class="n">rows</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="n">ingestion_config</span> <span class="o">=</span> <span class="n">SparkProcessorConfig</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"spark"</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"kafka"</span><span class="p">,</span> <span class="n">spark_session</span><span class="o">=</span><span class="n">spark</span><span class="p">,</span> <span class="n">processing_time</span><span class="o">=</span><span class="s2">"30 seconds"</span><span class="p">,</span> <span class="n">query_timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="n">sfv</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_stream_feature_view</span><span class="p">(</span><span class="s2">"driver_stats_stream"</span><span class="p">)</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="n">processor</span> <span class="o">=</span> <span class="n">get_stream_processor_object</span><span class="p">(</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="n">config</span><span class="o">=</span><span class="n">ingestion_config</span><span class="p">,</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="n">fs</span><span class="o">=</span><span class="n">store</span><span class="p">,</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="n">sfv</span><span class="o">=</span><span class="n">sfv</span><span class="p">,</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a>    <span class="n">preprocess_fn</span><span class="o">=</span><span class="n">preprocess_fn</span><span class="p">,</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">features</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_online_features</span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="n">features</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>        <span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>        <span class="s2">"driver_stats:conv_rate"</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="p">],</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="n">entity_rows</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>        <span class="p">{</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>            <span class="s2">"driver_id"</span><span class="p">:</span> <span class="mi">1001</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>        <span class="p">}</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="p">],</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">include_event_timestamps</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="k">def</span> <span class="nf">print_online_features</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">" : "</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 <a id="__codelineno-4-16" name="__codelineno-4-16"></a>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="n">processor</span><span class="o">.</span><span class="n">ingest_stream_feature_view</span><span class="p">(</span><span class="n">PushMode</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="n">print_online_features</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>4. Đẩy stream feature vào offline store</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/src/stream_to_stores/processor.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">def</span> <span class="nf">preprocess_fn</span><span class="p">(</span><span class="n">rows</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df columns: </span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df size: </span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"df preview:</span><span class="se">\n</span><span class="si">{</span><span class="n">rows</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="k">return</span> <span class="n">rows</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="n">ingestion_config</span> <span class="o">=</span> <span class="n">SparkProcessorConfig</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"spark"</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"kafka"</span><span class="p">,</span> <span class="n">spark_session</span><span class="o">=</span><span class="n">spark</span><span class="p">,</span> <span class="n">processing_time</span><span class="o">=</span><span class="s2">"30 seconds"</span><span class="p">,</span> <span class="n">query_timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="n">sfv</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_stream_feature_view</span><span class="p">(</span><span class="s2">"driver_stats_stream"</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="n">processor</span> <span class="o">=</span> <span class="n">get_stream_processor_object</span><span class="p">(</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="n">config</span><span class="o">=</span><span class="n">ingestion_config</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>    <span class="n">fs</span><span class="o">=</span><span class="n">store</span><span class="p">,</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>    <span class="n">sfv</span><span class="o">=</span><span class="n">sfv</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="n">preprocess_fn</span><span class="o">=</span><span class="n">preprocess_fn</span><span class="p">,</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="n">processor</span><span class="o">.</span><span class="n">ingest_stream_feature_view</span><span class="p">(</span><span class="n">PushMode</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>5. Đẩy stream feature vào online store</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">processor</span><span class="o">.</span><span class="n">ingest_stream_feature_view</span><span class="p">()</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">processor</span><span class="o">.</span><span class="n">ingest_stream_feature_view</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 <p>7. ETL pipeline cập nhật dữ liệu của offline store</p>
-<p><strong>Lưu ý:</strong> Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:</p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:</p>
 <ul>
 <li>thực hiện POC</li>
 <li>thử nghiệm với các feature khác nhằm mục đích cải thiện model</li>
 </ul>
+</details>
 <p>Ở công đoạn xây dựng data pipeline, chúng ta sẽ xây dựng pipeline cho các tương tác 1., 4., 5., 7.</p>
 <h2 id="xay-dung-cac-pipelines">Xây dựng các pipelines</h2>
 <h3 id="etl-pipeline">ETL pipeline</h3>
@@ -569,77 +617,7 @@
 <li>Viết thứ tự chạy các task (line 27)</li>
 <li>Copy file code dag sang folder <em>airflow/run_env/dags</em> của repo clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">MLOps Crash course platform</a></li>
 </ol>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/db_to_offline_store.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-6-10">10</a></span>
-<span class="normal"><a href="#__codelineno-6-11">11</a></span>
-<span class="normal"><a href="#__codelineno-6-12">12</a></span>
-<span class="normal"><a href="#__codelineno-6-13">13</a></span>
-<span class="normal"><a href="#__codelineno-6-14">14</a></span>
-<span class="normal"><a href="#__codelineno-6-15">15</a></span>
-<span class="normal"><a href="#__codelineno-6-16">16</a></span>
-<span class="normal"><a href="#__codelineno-6-17">17</a></span>
-<span class="normal"><a href="#__codelineno-6-18">18</a></span>
-<span class="normal"><a href="#__codelineno-6-19">19</a></span>
-<span class="normal"><a href="#__codelineno-6-20">20</a></span>
-<span class="normal"><a href="#__codelineno-6-21">21</a></span>
-<span class="normal"><a href="#__codelineno-6-22">22</a></span>
-<span class="normal"><a href="#__codelineno-6-23">23</a></span>
-<span class="normal"><a href="#__codelineno-6-24">24</a></span>
-<span class="normal"><a href="#__codelineno-6-25">25</a></span>
-<span class="normal"><a href="#__codelineno-6-26">26</a></span>
-<span class="normal"><a href="#__codelineno-6-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"db_to_offline_store"</span><span class="p">,</span> <span class="c1"># (1)</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DAG_ARGS</span><span class="p">,</span> <span class="c1"># (2)</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>  <span class="c1"># (3)</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a>    <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span> <span class="c1"># (4)</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># (5)</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">"data_pipeline"</span><span class="p">],</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"ingest_task"</span><span class="p">,</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python ingest.py'"</span><span class="p">,</span>  <span class="c1"># (6)</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a>    <span class="p">)</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"clean_task"</span><span class="p">,</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python clean.py'"</span><span class="p">,</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19"></a>    <span class="p">)</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20"></a>
-<a id="__codelineno-6-21" name="__codelineno-6-21"></a>    <span class="n">explore_and_validate_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"explore_and_validate_task"</span><span class="p">,</span>
-<a id="__codelineno-6-23" name="__codelineno-6-23"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-6-24" name="__codelineno-6-24"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python explore_and_validate.py'"</span><span class="p">,</span>
-<a id="__codelineno-6-25" name="__codelineno-6-25"></a>    <span class="p">)</span>
-<a id="__codelineno-6-26" name="__codelineno-6-26"></a>
-<a id="__codelineno-6-27" name="__codelineno-6-27"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="n">explore_and_validate_task</span>  <span class="c1"># (7)</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard</li>
-<li>Định nghĩa image cho các <strong>DockerOperator</strong>, số lần retry pipeline, và khoảng thời gian giữa các lần retry</li>
-<li>Lịch chạy pipeline, ở đây <em>@once</em> là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
-<li>Ngày bắt đầu chạy pipeline theo múi giờ UTC</li>
-<li>Nếu <strong>start_date</strong> là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và <strong>schedule_interval</strong> là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa</li>
-<li>Command chạy trong docker container cho bước này</li>
-<li>Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là <strong>ingest</strong> sau đó tới <strong>clean</strong> và cuối cùng là <strong>explore_and_validate</strong></li>
-</ol>
-<p><strong>Lưu ý:</strong> Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào default<em>args trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại _data-pipeline/deployment/Dockerfile</em></p>
-<p>Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag<em>id _db_to_offline_store</em>, 2 DAG bên dưới chính là những pipeline còn lại của data pipeline đề cập ở bên dưới.</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"/></a></p>
-<p>Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"/></a></p>
-<p>Tương tự như ETL pipeline, chúng ta sẽ code tiếp <em>Feast materialize pipeline</em> và <em>Stream to stores pipline</em> như bên dưới.</p>
-<h3 id="feast-materialize-pipeline">Feast materialize pipeline</h3>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/materialize_offline_to_online.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/db_to_offline_store.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
@@ -651,22 +629,69 @@
 <span class="normal"><a href="#__codelineno-7-10">10</a></span>
 <span class="normal"><a href="#__codelineno-7-11">11</a></span>
 <span class="normal"><a href="#__codelineno-7-12">12</a></span>
-<span class="normal"><a href="#__codelineno-7-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"materlize_offline_to_online"</span><span class="p">,</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DAG_ARGS</span><span class="p">,</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"db_to_offline_store"</span><span class="p">,</span> <span class="c1"># (1)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DAG_ARGS</span><span class="p">,</span> <span class="c1"># (2)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>  <span class="c1"># (3)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span> <span class="c1"># (4)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># (5)</span>
 <a id="__codelineno-7-7" name="__codelineno-7-7"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">"data_pipeline"</span><span class="p">],</span>
 <a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a>    <span class="n">materialize_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"materialize_task"</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"ingest_task"</span><span class="p">,</span>
 <a id="__codelineno-7-11" name="__codelineno-7-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' &amp;&amp; ./scripts/feast_helper.sh"</span><span class="p">,</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python ingest.py'"</span><span class="p">,</span>  <span class="c1"># (6)</span>
 <a id="__codelineno-7-13" name="__codelineno-7-13"></a>    <span class="p">)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"clean_task"</span><span class="p">,</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python clean.py'"</span><span class="p">,</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>    <span class="p">)</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a>    <span class="n">explore_and_validate_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"explore_and_validate_task"</span><span class="p">,</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python explore_and_validate.py'"</span><span class="p">,</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>    <span class="p">)</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="n">explore_and_validate_task</span>  <span class="c1"># (7)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="stream-to-stores-pipline">Stream to stores pipline</h3>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/stream_to_stores.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<ol>
+<li>Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard</li>
+<li>Định nghĩa image cho các <strong>DockerOperator</strong>, số lần retry pipeline, và khoảng thời gian giữa các lần retry</li>
+<li>Lịch chạy pipeline, ở đây <em>@once</em> là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
+<li>Ngày bắt đầu chạy pipeline theo múi giờ UTC</li>
+<li>Nếu <strong>start_date</strong> là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và <strong>schedule_interval</strong> là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa</li>
+<li>Command chạy trong docker container cho bước này</li>
+<li>Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là <strong>ingest</strong> sau đó tới <strong>clean</strong> và cuối cùng là <strong>explore_and_validate</strong></li>
+</ol>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <em>DEFAULT_DAG_ARGS</em> trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại <code>data-pipeline/deployment/Dockerfile</code></p>
+</details>
+<p>Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag_id: <em>db_to_offline_store</em>, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"/></a></p>
+<p>Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"/></a></p>
+<p>Tương tự như ETL pipeline, chúng ta sẽ code tiếp <em>Feast materialize pipeline</em> và <em>Stream to stores pipline</em> như bên dưới.</p>
+<h3 id="feast-materialize-pipeline">Feast materialize pipeline</h3>
+<p>Materialize dữ liệu từ <em>offline</em> qua <em>online</em> giúp làm mới dữ liệu ở <em>online store</em></p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/materialize_offline_to_online.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
@@ -678,32 +703,68 @@
 <span class="normal"><a href="#__codelineno-8-10">10</a></span>
 <span class="normal"><a href="#__codelineno-8-11">11</a></span>
 <span class="normal"><a href="#__codelineno-8-12">12</a></span>
-<span class="normal"><a href="#__codelineno-8-13">13</a></span>
-<span class="normal"><a href="#__codelineno-8-14">14</a></span>
-<span class="normal"><a href="#__codelineno-8-15">15</a></span>
-<span class="normal"><a href="#__codelineno-8-16">16</a></span>
-<span class="normal"><a href="#__codelineno-8-17">17</a></span>
-<span class="normal"><a href="#__codelineno-8-18">18</a></span>
-<span class="normal"><a href="#__codelineno-8-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"stream_to_stores"</span><span class="p">,</span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"materlize_offline_to_online"</span><span class="p">,</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DAG_ARGS</span><span class="p">,</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <a id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">"data_pipeline"</span><span class="p">],</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">stream_to_online_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"stream_to_online_task"</span><span class="p">,</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/stream_to_stores &amp;&amp; python ingest.py --store online'"</span><span class="p">,</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">materialize_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"materialize_task"</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' &amp;&amp; ./scripts/feast_helper.sh"</span><span class="p">,</span>
 <a id="__codelineno-8-13" name="__codelineno-8-13"></a>    <span class="p">)</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14"></a>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a>    <span class="n">stream_to_offline_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"stream_to_offline_task"</span><span class="p">,</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/stream_to_stores &amp;&amp; python ingest.py --store offline'"</span><span class="p">,</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<h3 id="stream-to-stores-pipline">Stream to stores pipline</h3>
+<p>Mọi người thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào <em>offline</em> và <em>online store</em></p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/stream_to_stores.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"stream_to_stores"</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DAG_ARGS</span><span class="p">,</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">"data_pipeline"</span><span class="p">],</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="n">stream_to_online_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"stream_to_online_task"</span><span class="p">,</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/stream_to_stores &amp;&amp; python ingest.py --store online'"</span><span class="p">,</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>    <span class="p">)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a>    <span class="n">stream_to_offline_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"stream_to_offline_task"</span><span class="p">,</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/stream_to_stores &amp;&amp; python ingest.py --store offline'"</span><span class="p">,</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store. </p>
+<p>Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình. </p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://feast.dev/">https://feast.dev/</a></li>
+<li><a href="https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html">https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html</a></li>
+</ul>
 </article>
 </div>
 </div>

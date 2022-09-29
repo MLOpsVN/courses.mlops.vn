@@ -22,6 +22,9 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -153,9 +156,55 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Airflow cơ bản
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
         Airflow cơ bản
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-khai-niem-co-ban">
+    Các khái niệm cơ bản
+  </a>
+<nav aria-label="Các khái niệm cơ bản" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task">
+    Task
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dag">
+    DAG
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../feature-store/">
@@ -173,13 +222,13 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_4">
-          Xây dựng training pipeline
+          Training pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Xây dựng training pipeline" class="md-nav" data-md-level="2">
+<nav aria-label="Training pipeline" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_4">
 <span class="md-nav__icon md-icon"></span>
-          Xây dựng training pipeline
+          Training pipeline
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -198,13 +247,13 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_5">
-          Triển khai model serving
+          Model serving
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Triển khai model serving" class="md-nav" data-md-level="2">
+<nav aria-label="Model serving" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_5">
 <span class="md-nav__icon md-icon"></span>
-          Triển khai model serving
+          Model serving
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -342,6 +391,46 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-khai-niem-co-ban">
+    Các khái niệm cơ bản
+  </a>
+<nav aria-label="Các khái niệm cơ bản" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#task">
+    Task
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dag">
+    DAG
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -349,12 +438,16 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Airflow cơ bản</h1>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.</p>
+<h2 id="cac-khai-niem-co-ban">Các khái niệm cơ bản</h2>
 <p>Airflow là một nền tảng cung cấp SDK và UI để hỗ trợ xây dựng, đặt lịch thực thi và theo dõi các pipeline.
 Một số khái niệm cơ bản trong Airflow:</p>
 <ul>
 <li><strong>task:</strong> một thành phần (hoặc một bước) trong pipeline</li>
 <li><strong>DAG:</strong> định nghĩa thứ tự thực thi, lịch chạy và số lượng lần retry.v.v. cho các <em>task</em></li>
 </ul>
+<h3 id="task">Task</h3>
 <p>Để tạo ra <em>task</em>, chúng ta sẽ dùng các <em>operators</em> cung cấp bởi Airflow SDK. Một số loại <em>operator</em> phổ biến bao gồm:</p>
 <ul>
 <li><strong>BashOperator:</strong> thực thi các bash command</li>
@@ -363,7 +456,40 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <li><strong>DockerOperator:</strong> thực hiện các command bên trong docker container</li>
 <li><strong>MySQLOperator:</strong> thực thi các MySQL query, ngoài ra còn rất nhiều <em>operator</em> khác được phát triển bởi cộng đồng, mọi người xem thêm tại <a href="https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html">đây</a></li>
 </ul>
-<p>Ở series này chúng ta sẽ chủ yếu sử dụng DockerOperator và BashOperator. Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.</p>
+<p>Ở series này chúng ta sẽ chủ yếu sử dụng 2 loại operators là <em>DockerOperator</em> và <em>BashOperator</em>.</p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.</p>
+</details>
+<h3 id="dag">DAG</h3>
+<p>Sau khi đã code xong các <em>task</em>, chúng ta sẽ đưa các <em>task</em> này vào trong DAG như ví dụ sau:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="s2">"my_dag_name"</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>  <span class="c1"># (1)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">schedule</span><span class="o">=</span><span class="s2">"@daily"</span><span class="p">,</span> <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">validate_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">explore_task</span><span class="p">,</span> <span class="n">validate_task</span><span class="p">]</span> <span class="c1"># (3)</span>
+</code></pre></div></td></tr></table></div></p>
+<ol>
+<li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
+<li>Định nghĩa <em>task</em> bằng PythonOperator. Mọi người tự truyền các config vào <code>(...)</code></li>
+<li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, và cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
+</ol>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng <em>task</em> và <em>DAG</em>. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html">https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html</a></li>
+</ul>
 </article>
 </div>
 </div>
