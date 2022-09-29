@@ -47,6 +47,8 @@ nav:
           - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
       - Monitoring:
           - Tổng quan: mlops-crash-course/monitoring/tong-quan.md
+          - Metrics hệ thống: mlops-crash-course/monitoring/metrics-he-thong.md
+          - Monitoring service: mlops-crash-course/monitoring/monitoring-service.md
       - CI/CD:
           - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
           - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md
