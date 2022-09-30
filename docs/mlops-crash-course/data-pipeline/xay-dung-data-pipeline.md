@@ -14,7 +14,7 @@ Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm *
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
 
 ## Môi trường phát triển
-Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo `mlops-crash-course-platform/` và start  service này như sau:
+Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
 ```bash
 bash run.sh airflow up
 ```
