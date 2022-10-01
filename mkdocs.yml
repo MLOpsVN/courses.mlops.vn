@@ -54,9 +54,8 @@ nav:
           - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
           - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md
           - Jenkins cơ bản: mlops-crash-course/ci-cd/jenkins-co-ban.md
-          - CI/CD cho data pipeline: mlops-crash-course/ci-cd/data-pipeline.md
-          - CI/CD cho training pipeline: mlops-crash-course/ci-cd/training-pipeline.md
-          - CI/CD cho model serving: mlops-crash-course/ci-cd/model-serving.md
+          - CI/CD cho pipeline: mlops-crash-course/ci-cd/pipeline.md
+          - CI/CD cho model serving API: mlops-crash-course/ci-cd/model-serving.md
       - Tổng kết:
           - Tóm tắt nội dung: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
           - Một số vấn đề khác: mlops-crash-course/tong-ket/mot-so-van-de-khac.md

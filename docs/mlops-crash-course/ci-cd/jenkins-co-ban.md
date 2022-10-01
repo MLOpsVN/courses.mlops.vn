@@ -91,4 +91,116 @@ Mọi người lưu ý phần `Which events would you like to trigger this webho
 và chúng ta ấn `Add webhook` để hoàn tất.
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png" loading="lazy" />
 
+### Thêm Github repo vào Jenkins
+Đầu tiên, chúng ta trở lại mà hình home của Jenkins
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
+, và ấn vào phần `+ New Item`. 
+
+Ở trang mới này, chúng ta điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline`, và ấn `OK`
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
+
+Tiếp theo, chúng ta tìm đến phần `Branch Sources`, ấn `Add source` và chọn `GitHub`
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
+
+Sau đó, chúng ta sẽ thấy màn hình như sau:
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-14.png" loading="lazy" />
+
+Chúng ta sẽ thêm Github repo bằng cách chọn `Add repository`, và điền vào phần `Repository URL` theo dạng `https://github.com/MLOpsVN/mlops-crash-course-code` như bên dưới.
+
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png" loading="lazy" />
+
+Cuối cùng, chúng ta kéo xuống phần cuối cùng, ấn `Apply` để hoàn tất.
+
+## Smoke test luồng push code để trigger Jenkins pipeline
+
+Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có project `mlops-demo` như bên dưới
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png" loading="lazy" />
+
+Nếu chúng ta ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
+
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
+
+Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file `Jenkinsfile` đơn giản ở trong folder
+
+```bash
+.
+├── data_pipeline
+├── Jenkinsfile
+├── LICENSE
+├── model_deployment
+├── README.md
+├── stream_emitting
+└── training_pipeline
+```
+
+với nội dung như sau:
+```javascript
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building something..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing something..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying something..'
+            }
+        }
+    }
+}
+```
+
+Sau khi đã thêm file này vào folder, chúng ta sẽ thực hiện push commit lên branch bất kỳ
+
+```bash
+git init
+git add Jenkinsfile
+git push origin your_branch
+```
+
+Lúc này chúng ta sẽ thấy có thêm `#2` ở `Build History`, với 3 bước `Build`, `Test` và `Deploy`, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png" loading="lazy" />
+
+Nếu chúng ta ấn vào `#2`, chọn `Console Output`, chúng ta sẽ thấy hiển thị như sau:
+<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png" loading="lazy" />
+
+```bash
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Building something..
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing something..
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploying something..
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+```
+
 ## Tổng kết
