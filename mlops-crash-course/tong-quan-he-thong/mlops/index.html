@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/data-pipeline/airflow-co-ban/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/mlops/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Airflow cơ bản - MLOpsVN Courses</title>
+<title>MLOps - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -46,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Airflow cơ bản
+              MLOps
             
           </span>
 </div>
@@ -87,8 +87,8 @@
           MLOps Crash Course
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_1">
           Tổng quan hệ thống
           <span class="md-nav__icon md-icon"></span>
@@ -99,18 +99,61 @@
           Tổng quan hệ thống
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/mlops/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          MLOps
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         MLOps
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/phan-tich-van-de/">
+<a class="md-nav__link" href="#inh-nghia-mlops">
+    Định nghĩa MLOps
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-nguyen-tac-trong-mlops">
+    Các nguyên tắc trong MLOps
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-components-trong-mlops">
+    Các components trong MLOps
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-workflows-trong-mlops">
+    Các workflows trong MLOps
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phan-tich-van-de/">
         Phân tích vấn đề
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/mlops-platform/">
+<a class="md-nav__link" href="../mlops-platform/">
         MLOps platform
       </a>
 </li>
@@ -142,8 +185,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
           Data pipeline
           <span class="md-nav__icon md-icon"></span>
@@ -155,69 +198,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../tong-quan-data-pipeline/">
+<a class="md-nav__link" href="../../data-pipeline/tong-quan-data-pipeline/">
         Tổng quan pipeline
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Airflow cơ bản
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/airflow-co-ban/">
         Airflow cơ bản
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#gioi-thieu">
-    Giới thiệu
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cac-khai-niem-co-ban">
-    Các khái niệm cơ bản
-  </a>
-<nav aria-label="Các khái niệm cơ bản" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#task">
-    Task
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#dag">
-    DAG
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tong-ket">
-    Tổng kết
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tai-lieu-tham-khao">
-    Tài liệu tham khảo
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../feature-store/">
+<a class="md-nav__link" href="../../data-pipeline/feature-store/">
         Feature store
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../xay-dung-data-pipeline/">
+<a class="md-nav__link" href="../../data-pipeline/xay-dung-data-pipeline/">
         Xây dựng pipeline
       </a>
 </li>
@@ -402,32 +398,28 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cac-khai-niem-co-ban">
-    Các khái niệm cơ bản
-  </a>
-<nav aria-label="Các khái niệm cơ bản" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#task">
-    Task
+<a class="md-nav__link" href="#inh-nghia-mlops">
+    Định nghĩa MLOps
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#dag">
-    DAG
+<a class="md-nav__link" href="#cac-nguyen-tac-trong-mlops">
+    Các nguyên tắc trong MLOps
   </a>
 </li>
-</ul>
-</nav>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-components-trong-mlops">
+    Các components trong MLOps
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-workflows-trong-mlops">
+    Các workflows trong MLOps
+  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tai-lieu-tham-khao">
-    Tài liệu tham khảo
   </a>
 </li>
 </ul>
@@ -437,66 +429,111 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Airflow cơ bản</h1>
+<h1>MLOps</h1>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.</p>
-<h2 id="cac-khai-niem-co-ban">Các khái niệm cơ bản</h2>
-<p>Airflow là một nền tảng cung cấp SDK và UI để hỗ trợ xây dựng, đặt lịch thực thi và theo dõi các pipeline.
-Một số khái niệm cơ bản trong Airflow:</p>
-<ul>
-<li><strong>task:</strong> một thành phần (hoặc một bước) trong pipeline</li>
-<li><strong>DAG:</strong> định nghĩa thứ tự thực thi, lịch chạy và số lượng lần retry.v.v. cho các <em>task</em></li>
-</ul>
-<h3 id="task">Task</h3>
-<p>Để tạo ra <em>task</em>, chúng ta sẽ dùng các <em>operators</em> cung cấp bởi Airflow SDK. Một số loại <em>operator</em> phổ biến bao gồm:</p>
-<ul>
-<li><strong>BashOperator:</strong> thực thi các bash command</li>
-<li><strong>PythonOperator:</strong> thực thi các Python script</li>
-<li><strong>EmailOperator:</strong> gửi email</li>
-<li><strong>DockerOperator:</strong> thực hiện các command bên trong docker container</li>
-<li><strong>MySQLOperator:</strong> thực thi các MySQL query, ngoài ra còn rất nhiều <em>operator</em> khác được phát triển bởi cộng đồng, mọi người xem thêm tại <a href="https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html">đây</a></li>
-</ul>
-<p>Ở series này chúng ta sẽ chủ yếu sử dụng 2 loại operators là <em>DockerOperator</em> và <em>BashOperator</em>.</p>
-<details class="tip" open="open">
-<summary>Tip</summary>
-<p>Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.</p>
-</details>
-<h3 id="dag">DAG</h3>
-<p>Sau khi đã code xong các <em>task</em>, chúng ta sẽ đưa các <em>task</em> này vào trong DAG như ví dụ sau:
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span>
-<span class="normal"><a href="#__codelineno-0-7">7</a></span>
-<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="s2">"my_dag_name"</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>  <span class="c1"># (1)</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">schedule</span><span class="o">=</span><span class="s2">"@daily"</span><span class="p">,</span> <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># (2)</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">validate_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">explore_task</span><span class="p">,</span> <span class="n">validate_task</span><span class="p">]</span> <span class="c1"># (3)</span>
-</code></pre></div></td></tr></table></div></p>
+<p>Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Tuy nhiên, ở thời điểm hiện tại, có rất nhiều thách thức mà các kĩ sư đang gặp phải để có thể tự động hoá các quy trình trong quá trình phát triển và triển khai các hệ thống ML. MLOps ra đời như một thuật ngữ chung để mô tả các vấn đề mà các kĩ sư gặp phải trong một dự án ML.</p>
+<p>Trong bài này, dựa trên các kiến thức được trình bài trong bài báo <a href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a>, chúng ta sẽ tìm hiểu một chút lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Khái niệm về MLOps và các lý thuyết liên quan được nhiều nguồn khác nhau định nghĩa khác nhau. Các bạn nên giữ một thái độ cởi mở với các lý thuyết này.</p>
+</div>
+<h2 id="inh-nghia-mlops">Định nghĩa MLOps</h2>
+<p>Theo bài báo trên, định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:</p>
 <ol>
-<li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
-<li>Định nghĩa <em>task</em> bằng PythonOperator. Mọi người tự truyền các config vào <code>(...)</code></li>
-<li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, và cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
+<li>MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML</li>
+<li>MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering</li>
+<li>MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production một cách hiệu quả hơn, thông qua một vài nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.</li>
 </ol>
+<h2 id="cac-nguyen-tac-trong-mlops">Các nguyên tắc trong MLOps</h2>
+<p>Một nguyên tắc được xem như là một best practice, hay một sự hướng dẫn cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các nguyên tắc trong MLOps bao gồm:</p>
+<p><strong>CI/CD automation</strong></p>
+<p>Nguyên tắc này đảm bảo việc tích hợp và triển khai code được diễn ra tự động, với các bước build, test, triển khai.</p>
+<p><strong>Workflow orchestration</strong></p>
+<p>Trong quá trình phát triển một hệ thống ML, sẽ có rất nhiều các pipeline cần được chạy vào những khoảng thời gian nhất định, với các bước trong một pipeline phụ thuộc lẫn nhau, đồng thời có các thư viện và môi trường chạy khác nhau. Nguyên tắc này đảm bảo việc tự động hoá điều phối các pipeline này chạy đúng thứ tự, và đúng thời gian được chỉ định.</p>
+<p><strong>Reproducibility</strong></p>
+<p>Khả năng tái lập lại một kết quả hay một lần thử nghiệm model là một trong những yêu cầu thường thấy khi phát triển một hệ thống ML. Yêu cầu này đảm bảo việc chạy inference được ổn định, và để debug quá trình phát triển model nhanh và hiệu quả.</p>
+<p><strong>Versioning of code, data, model</strong></p>
+<p>Nguyên tắc này đảm bảo cả code, data, và model được version, để có thể tra soát lại xem một phiên bản model được train với data ở phiên bản nào, và sử dụng code ở phiên bản nào để train.</p>
+<p><strong>Collaboration</strong></p>
+<p>Trong quá trình phát triển một hệ thống ML, nhiều kĩ sư với chuyên môn khác nhau sẽ cùng tham gia vào phát triển hệ thống. Nguyên tắc này đảm bảo việc thiết lập một bộ các quy tắc, các công cụ, và cả văn hoá trong quá trình làm việc giữa các cá nhân ở các vai trò khác nhau với các trách nhiệm khác nhau.</p>
+<p><strong>Continuous ML training &amp; evaluation</strong></p>
+<p>Trong nhiều ML problems, ở môi trường production, việc data bị thay đổi liên tục khiến cho hiệu quả hoạt động của model giảm đi nhanh chóng. Nguyên tắc này đảm bảo việc thiết lập một hệ thống train và đánh giá model được chạy tự động ngay khi cần thiết.</p>
+<p><strong>ML metadata tracking</strong></p>
+<p>Mỗi bước ở mỗi pipeline trong quá trình phát triển một hệ thống ML yêu cầu các cấu hình hay data làm đầu vào, và data ở phía đầu ra. Nguyên tắc này được đề ra dựa trên yêu cầu về việc theo dõi và ghi lại các đầu vào và đầu ra này, kèm theo các thông tin về các lần chạy của các pipeline đó, ví dụ như: ngày tháng, thời gian chạy, phiên bản của data đang chạy, hyperparameter được dùng để train model, model train xong được lưu ở đâu, v.v.</p>
+<p><strong>Continuous monitoring</strong></p>
+<p>Nguyên tắc này đảm bảo việc theo dõi hệ thống ML liên tục các thông số liên quan tới code, data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một số thông số như: sự thay đổi về phân phối của các features của data ở production, model performance, lượng request được gửi đến server trên một giây, thời gian xử lý một request trung bình, v.v.</p>
+<p><strong>Feedback loops</strong></p>
+<p>Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh giá ngược về phần phát triển thường xuyên xảy ra, ví dụ như: phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data từ các nguồn data, hay phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model, v.v.</p>
+<p>Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở bài báo trên.</p>
+<h2 id="cac-components-trong-mlops">Các components trong MLOps</h2>
+<p>Các components trong MLOps là các thành phần ở mức system design trong một hệ thống ML. Các components được liệt kê như sau.</p>
+<ol>
+<li>CI/CD component</li>
+<li>Source code repository</li>
+<li>Workflow orchestration</li>
+<li>Feature store</li>
+<li>Model training infrastructure</li>
+<li>Model registry</li>
+<li>ML metadata store</li>
+<li>Model serving component</li>
+<li>Monitoring component</li>
+</ol>
+<p>Tên của các components trên đã phần lớn giải thích ý nghĩa và công việc của các components đó, và đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều nguyên tắc ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Hình dưới đây thể hiện mối quan hệ của các components với các nguyên tắc trong MLOps.</p>
+<p>TODO: Thêm hình</p>
+<p>Để hiểu rõ hơn, các bạn có thể đọc kĩ hơn ở bài báo trên.</p>
+<h2 id="cac-workflows-trong-mlops">Các workflows trong MLOps</h2>
+<p>Trong phần này, chúng ta sẽ tìm hiểu về các workflows điển hình trong quá trình phát triển một hệ thống ML. Các workflows này được mô tả ở bảng dưới đây.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Workflow</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Phân tích vấn đề</td>
+<td>Phân tích vấn đề kinh doanh, thiết kế hệ thống phần mềm, quyết định giải pháp về công nghệ sẽ dùng, định nghĩa vấn đề ML cần giải quyết, tìm kiếm data có thể sử dụng, thu thập data và phân tích data</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Định nghĩa quy luật biến đổi data</td>
+<td>Sau khi phân tích và hiểu data, định nghĩa các quy luật để biến đổi data thành dạng có thể sử dụng được để thử nghiệm</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Xây dựng data pipeline</td>
+<td>Quy luật biến đổi data sẽ được sử dụng để xây dựng data pipeline</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Thử nghiệm model</td>
+<td>Thử nghiệm data và model, train model tốt nhất</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Tự động hoá training pipeline</td>
+<td>Code từ quá trình thử nghiệm data và model sẽ được tự động vào training pipeline. Model sau khi train xong sẽ được triển khai tự động lên Model serving component và tích hợp với Monitoring component</td>
+</tr>
+</tbody>
+</table>
+<p>Lưu ý rằng, các workflows trên không phải là thứ tự chính xác về các công việc mà chúng ta sẽ làm khi xây dựng một hệ thống ML. Hình dưới đây là một ví dụ về các mốc thời gian và các công việc chúng ta cần làm khi trong một dự án ML.</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"/></a></p>
+<p>Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ các yêu cầu về các chức năng của hệ thống ML mà chúng ta sẽ xây dựng. Sau đó, chúng ta sẽ thực hiện một dự án PoC( Proof Of Concept) để chứng minh rằng giải pháp của chúng ta đề ra là khả thi, trước khi bắt tay vào thực hiện xây dựng chi tiết các chức năng phức tạp của hệ thống.</p>
+<p>Có thể có nhiều dự án PoC ở các mức độ khác nhau. Trong quá trình thực hiện dự án PoC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó.</p>
+<p>Trong khoá học này, chúng ta sẽ có các bài học lần lượt thực hiện các bước liên quan tới <strong>Phân tích vấn đề</strong>, <strong>Xây dựng PoC</strong>, <strong>Data pipeline</strong>, <strong>Training pipeline</strong>, <strong>Model serving</strong>, <strong>Monitoring</strong>, và <strong>CI/CD</strong>. Các bạn cần lưu ý rằng thứ tự các bài học không phản ánh thứ tự các công việc cần làm trong một dự án thực tế, mà nó sẽ như mình vừa miêu tả ở trên. Ngoài ra, các vòng lặp phản hồi sẽ xảy ra ở nhiều bước trong quá trình phát triển hệ thống và cộng tác cùng làm việc giữa các bộ phận và vị trí khác nhau.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng <em>task</em> và <em>DAG</em>. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.</p>
-<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
-<ul>
-<li><a href="https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html">https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html</a></li>
-</ul>
+<p>Trong bài này, chúng ta đã tìm hiểu khá nhiều thử thách về MLOps khi xây dựng một hệ thống ML. Tuy nhiên, MLOps vẫn còn là một mảng mới mẻ trên thế giới, và còn tồn tại khá nhiều thử thách dành cho các kĩ sư. Hy vọng rằng khoá học <strong>MLOps Crash Course</strong> sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ bắt đầu bước đầu tiên khi xây dựng một dự án ML, đó là bước <strong>Phân tích vấn đề</strong>.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Tổng quan pipeline" class="md-footer__link md-footer__link--prev" href="../tong-quan-data-pipeline/" rel="prev">
+<a aria-label="Previous: MLOps Crash Course" class="md-footer__link md-footer__link--prev" href="../../" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -505,17 +542,17 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <span class="md-footer__direction">
                 Previous
               </span>
-              Tổng quan pipeline
+              MLOps Crash Course
             </div>
 </div>
 </a>
-<a aria-label="Next: Feature store" class="md-footer__link md-footer__link--next" href="../feature-store/" rel="next">
+<a aria-label="Next: Phân tích vấn đề" class="md-footer__link md-footer__link--next" href="../phan-tich-van-de/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Feature store
+              Phân tích vấn đề
             </div>
 </div>
 <div class="md-footer__button md-icon">

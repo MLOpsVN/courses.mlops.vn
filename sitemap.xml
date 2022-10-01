@@ -71,6 +71,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/mlops/</loc>
+         <lastmod>2022-10-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/</loc>
          <lastmod>2022-10-01</lastmod>
          <changefreq>daily</changefreq>
