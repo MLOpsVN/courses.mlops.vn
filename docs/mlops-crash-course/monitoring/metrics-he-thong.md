@@ -24,7 +24,7 @@ Việc sử dụng công nghệ container mang đến rất nhiều ưu điểm,
 
 Hình dưới là một pipeline điển hình cho việc thu thập và xử lý logs tập trung sử dụng ELK Stack.
 
-TODO: Lấy hình có caption bản quyền từ https://logz.io/blog/docker-logging/
+<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png" loading="lazy" />
 
 Đầu tiên, Logstash thu thập logs từ các containers, xử lý bằng cách filter logs đó. Các cách để filter logs sẽ được người dùng tự định nghĩa. Sau đó, Logstash sẽ đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana sẽ lấy logs ra, phân tích và hiển thị data lên Kibana dashboard.
 
@@ -152,9 +152,32 @@ Tiếp theo, chúng ta cũng cần kiểm tra xem Grafana server đã được t
 
 Việc đăng nhập thành công chứng tỏ Grafana server đã được triển khai thành công.
 
-### Thiết lập dashboards
+### Thiết lập Note Exporter Full dashboard
 
-TODO: thiết lập Node exported full dashboard ở đây https://grafana.com/docs/grafana-cloud/quickstart/docker-compose-linux/#step-4-configure-a-dashboard
+Ở phần này, chúng ta sẽ sử dụng một Grafana dashboard tên là [Node Exporter Full](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) được xây dựng sẵn bởi cộng đồng sử dụng Prometheus và Grafana. Dashboard này sẽ hiển thị các thông tin quan trọng của hệ thống về máy local mà chúng ta đang chạy. Để đảm bảo dashboard này chạy đúng chức năng, các bạn hãy chắc chắn rằng config file `prom-graf/prometheus/config/prometheus.yml` của Prometheus server chứa config sau:
+
+```yaml
+- job_name: "node"
+  static_configs:
+    - targets:
+        - "localhost:9100"
+```
+
+Tiếp theo, các bạn làm các bước sau:
+
+1. Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Manage`
+1. Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_
+1. Chọn Prometheus datasource, và click `Import`
+
+Các bạn sẽ nhìn thấy dashboard giống như sau.
+
+<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
+
+Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose `prom-graf/prom-graf-docker-compose.yml` mà một vài phần của dashboard sẽ không được hiển thị đúng. Các bạn có thể xem thêm [tại đây](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.
+
+### Thêm Bentoml metrics
+
+TODO: thêm panel để show Bentoml metrics
 
 ## Tổng kết
 
