@@ -8,9 +8,7 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 4. Code để train model
 5. Code để đánh giá model
 
-Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeline](../../data-pipeline/tong-quan-data-pipeline) để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline.
-
-Trong bài này, chúng ta sẽ xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model. Lưu ý rằng, ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.
+Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeline](../../data-pipeline/tong-quan-data-pipeline) để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline. Trong bài này, chúng ta sẽ phân tích các bước cần làm khi xây dựng training pipeline để tự động hoá quá trình train model, đánh giá model và register model.
 
 Training pipeline của chúng ta bao gồm các tasks như hình dưới:
 
@@ -69,5 +67,7 @@ Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể tự độ
 ## Tổng kết
 
 Các task mà chúng ta vừa phân tích ở trên là các task điển hình trong một training pipeline. Tuy nhiên, tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà chúng ta có thể bỏ bớt hoặc thêm vào các task khác. Chúng ta cũng có thể chia nhỏ các task thực hiện các công việc đòi hỏi tính toán nặng ra, để tránh việc chạy lại nhiều lần.
+
+Ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.
 
 Trong bài tiếp theo, chúng ta sẽ bắt tay vào viết code cho training pipeline với các task đã được định nghĩa ở trên.
