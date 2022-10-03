@@ -134,14 +134,14 @@ Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file `Jenkinsfile` đơ
 ```
 
 với nội dung như sau:
-```javascript
+```py title="Jenkinsfile" linenums="1"
 pipeline {
-    agent any
+    agent any # (1)
 
     stages {
-        stage('Build') {
+        stage('Build') {  # (2)
             steps {
-                echo 'Building something..'
+                echo 'Building something..'  # (3)
             }
         }
         stage('Test') {
@@ -157,6 +157,10 @@ pipeline {
     }
 }
 ```
+
+1. Định nghĩa _executor_ chạy pipeline, ở đây `any` được hiểu là một _executor_ bất kỳ
+2. Khai báo một bước trong pipeline
+3. Chạy câu lệnh `echo ...` trong bước này
 
 Sau khi đã thêm file này vào folder, chúng ta sẽ thực hiện push commit lên branch bất kỳ
 
@@ -202,5 +206,27 @@ Deploying something..
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
+
+???+ tip
+    Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
+    ```py title="Jenkinsfile" linenums="1"
+    pipeline {
+            ...
+
+            stage('test data pipeline') {
+                when {changeset "data_pipeline/*.*" }
+
+                steps {
+                    echo 'Testing data pipeline..'
+                }
+            }
+
+            ...
+        }
+    }
+    ```
+
+???+ tip
+    Kiểu viết `Jenkinsfile` như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là _Declarative Pipeline_. Ngoài ra còn một cách viết khác dùng `Groovy script`gọi là _Scripted Pipeline_, cách này thông thường sử dụng cho những logic phức tạp.
 
 ## Tổng kết
