@@ -2,7 +2,7 @@
 
 Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Tuy nhiên, ở thời điểm hiện tại, có rất nhiều thách thức mà các kĩ sư đang gặp phải để có thể tự động hoá các quy trình trong quá trình phát triển và triển khai các hệ thống ML. MLOps ra đời như một thuật ngữ chung để mô tả các vấn đề mà các kĩ sư gặp phải trong một dự án ML.
 
-Trong bài này, dựa trên các kiến thức được trình bài trong bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture](https://arxiv.org/abs/2205.02302), chúng ta sẽ tìm hiểu một chút lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.
+Trong bài này, dựa trên các kiến thức được trình bài trong bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu một chút lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.
 
 !!! note
 
@@ -56,7 +56,7 @@ Nguyên tắc này đảm bảo việc theo dõi hệ thống ML liên tục cá
 
 Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh giá ngược về phần phát triển thường xuyên xảy ra, ví dụ như: phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data từ các nguồn data, hay phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model, v.v.
 
-Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở bài báo trên.
+Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
 ## Các components trong MLOps
 
@@ -74,9 +74,12 @@ Các components trong MLOps là các thành phần ở mức system design trong
 
 Tên của các components trên đã phần lớn giải thích ý nghĩa và công việc của các components đó, và đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều nguyên tắc ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Hình dưới đây thể hiện mối quan hệ của các components với các nguyên tắc trong MLOps.
 
-TODO: Thêm hình
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops/mlops-principles-and-components.png" loading="lazy"/>
+    <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
+</figure>
 
-Để hiểu rõ hơn, các bạn có thể đọc kĩ hơn ở bài báo trên.
+Để hiểu rõ hơn về các components này, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
 ## Các workflows trong MLOps
 
@@ -105,3 +108,7 @@ Trong khoá học này, chúng ta sẽ có các bài học lần lượt thực 
 Trong bài này, chúng ta đã tìm hiểu khá nhiều thử thách về MLOps khi xây dựng một hệ thống ML. Tuy nhiên, MLOps vẫn còn là một mảng mới mẻ trên thế giới, và còn tồn tại khá nhiều thử thách dành cho các kĩ sư. Hy vọng rằng khoá học **MLOps Crash Course** sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.
 
 Trong bài tiếp theo, chúng ta sẽ bắt đầu bước đầu tiên khi xây dựng một dự án ML, đó là bước **Phân tích vấn đề**.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[mlops-paper]: https://arxiv.org/abs/2205.02302
