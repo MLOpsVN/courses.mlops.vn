@@ -355,9 +355,9 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
         df["prediction"] = result
         best_idx = df["prediction"].argmax()
         best_driver_id = df["driver_id"].iloc[best_idx] # (10)
-        ...
 
-    except Exception as e: # (11)
+        ... # (11)
+    except Exception as e:
         ...
 ```
 
@@ -371,7 +371,7 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 8. Sắp xếp lại thứ tự features
 9. Gọi function `predict` để thực hiện prediction
 10. Lấy ra driver id có khả năng cao nhất sẽ hoàn thành cuốc xe. Driver id này sẽ được trả về trong response
-11. Xử lý lỗi
+11. Đoạn code liên quan tới monitoring sẽ được giải thích trong bài monitoring. Chúng ta hãy tạm thời bỏ qua đoạn code này
 
 Như các bạn thấy, sau khi lấy được các features cần thiết từ Online Feature Store, qua vài bước xử lý features này, chúng ta sẽ gọi tới function `predict` để thực hiện prediction. Trong thực tế, server chứa API `inference` sẽ là một server khác với API `predict`. Server chứa API `inference` sẽ được tối ưu về Network throughput để thực hiện việc nhận request và trả về response cho nhiều client. Server chứa API `predict` sẽ được tối ưu về khả năng tính toán để thực hiện model inference nhanh hơn.
 

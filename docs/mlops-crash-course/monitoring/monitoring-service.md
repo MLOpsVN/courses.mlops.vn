@@ -346,12 +346,253 @@ classification_performance:class_quality | 0.0 | {'dataset': 'reference', 'class
 
 ## Monitoring service
 
-### Phát triển
+Trong phần này, chúng ta sẽ phát triển monitoring service. Hình dưới đây thể hiện input và output của monitoring service.
 
-### Tích hợp với Online serving
+TODO: Vẽ input và output của monitoring service
+
+Như hình trên, quá trình phát triển monitoring service bao gồm các bước chính sau.
+
+1. Viết code để gửi request và response data từ Online serving API sang _Monitoring API_ của monitoring service
+2. Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance
+3. Thiết lập Grafana dashboards để hiển thị các metrics liên quan tới data drift và model performance
+
+### Monitoring API
+
+Đầu tiên, chúng ta sẽ viết Monitoring API ở monitoring service trước. Code của monitoring service được đặt tại `monitoring_service/src/monitoring_service.py`. Các bạn hãy để ý tới hàm `iterate` của class `MonitoringService` với luồng xử lý data như sau.
+
+```python linenums="1" title="monitoring_service/src/monitoring_service.py"
+def iterate(self, new_rows: pd.DataFrame): # (1)
+    if not self._process_curr_data(new_rows): # (2)
+        return
+    if not self._process_next_run(): # (3)
+        return
+    self._execute_monitoring() # (4)
+    self._process_metrics(self.features_and_target_monitor.metrics()) # (5)
+    self._process_metrics(self.model_performance_monitor.metrics()) # (6)
+```
+
+1. Hàm `iterate` nhận vào `new_rows`, chính là data được Online serving API gửi tới
+2. Xử lý data nhận được
+3. Kiểm tra xem đã đến thời điểm chạy quá trình đánh giá data drift và model performance chưa
+4. Bắt đầu phân tích đánh giá data drift và model performance
+5. Gửi metrics của data drift tới Prometheus server
+6. Gửi metrics của model performance tới Prometheus server
+
+Data nhận được từ Online serving API bao gồm các cột chính như sau.
+
+| Cột               | Ý nghĩa                            |
+| ----------------- | ---------------------------------- |
+| `request_id`      | Request ID                         |
+| `conv_rate`       | Feature                            |
+| `acc_rate`        | Feature                            |
+| `avg_daily_trips` | Feature                            |
+| `best_driver_id`  | Driver ID được chọn                |
+| `prediction`      | Prediction cho driver ID được chọn |
+
+Bây giờ, hãy cùng xem hàm `_process_curr_data` làm công việc gì.
+
+```python linenums="1" title="monitoring_service/src/monitoring_service.py"
+def _process_curr_data(self, new_rows: pd.DataFrame): # (1)
+    label_data = read_label_data() # (2)
+    if label_data is None:
+        return False
+
+    merged_data = merge_request_with_label(new_rows, label_data) # (3)
+    if not self.current_data is None: # (4)
+        curr_data: pd.DataFrame = pd.concat([self.current_data, merged_data])
+    else:
+        curr_data = merged_data
+
+    curr_size = curr_data.shape[0]
+    if curr_size > self.WINDOW_SIZE: # (5)
+        curr_data.drop(
+            index=list(range(0, curr_size - self.WINDOW_SIZE)), inplace=True
+        )
+        curr_data.reset_index(drop=True, inplace=True)
+
+    self.current_data = curr_data # (6)
+
+    if curr_size < self.WINDOW_SIZE: # (7)
+        Log().log.info(
+            f"Not enough data for measurement: {curr_size}/{self.WINDOW_SIZE} rows. Waiting for more data"
+        )
+        return False
+    return True
+```
+
+1. Hàm `_process_curr_data` nhận vào `DataFrame` được gửi từ Online serving API sang
+2. Đọc label data, hay chính là `request_data` mà chúng ta đã tạo ra ở trên
+3. Kết hợp data mới nhận được với label data theo `request_id`
+4. Tích luỹ data mới với data hiện tại
+5. Bỏ bớt data nếu như số records vượt quá `WINDOW_SIZE`, được định nghĩa là số lượng các records chúng ta muốn tích luỹ để thực hiện monitoring
+6. Lưu lại data mới đã được xử lý vào làm data hiện tại
+7. Kiểm tra xem đã đủ số records cần thiết chưa
+
+!!! question
+
+    Tại sao chúng ta cần đọc `request_data` tức label data mỗi khi có records mới được gửi đến từ Online serving API?
+
+Thực ra chúng ta không cần phải đọc lại `request_data` mỗi khi có records mới. Sở dĩ mình viết code như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.
+
+Sau khi kết hợp data mới nhận được với label data theo `request_id`, chúng ta sẽ có một record chứa các cột sau:
+
+- Các cột features: dùng để theo dõi data drift
+- Cột `prediction` và cột label `trip_completed`: dùng để theo dõi model performance. Lưu ý rằng cột `prediction` luôn có giá trị là `1`
+
+Tiếp đến, hãy cùng xem hàm `_process_next_run` và hàm `_execute_monitoring`.
+
+```python linenums="1" title="monitoring_service/src/monitoring_service.py"
+def _process_next_run(self):
+    if not self.next_run is None and self.next_run > datetime.now(): # (1)
+        return False
+    self.next_run = datetime.now() + timedelta(seconds=self.RUN_PERIOD_SEC) # (2)
+    return True
+
+def _execute_monitoring(self):
+    self.features_and_target_monitor.execute( # (3)
+        self.reference_data,
+        self.current_data,
+        self.column_mapping,
+    )
+    self.model_performance_monitor.execute( # (4)
+        self.current_data,
+        self.current_data,
+        self.column_mapping,
+    )
+```
+
+1. Kiểm tra xem thời điểm hiện tại có chạy monitoring không
+2. Tính thời điểm tiếp theo sẽ chạy monitoring
+3. Thực hiện đánh giá data drift, giống như chúng ta đã thực hiện ở file notebook `monitoring_service/nbs/test_datasets.ipynb`
+4. Thực hiện đánh giá model performance
+
+Cuối cùng, đoạn code dưới đây của hàm `_process_metrics` sẽ gửi metrics của data drift và model performance tới Prometheus server.
+
+```python linenums="1" title="monitoring_service/src/monitoring_service.py"
+def _process_metrics(self, evidently_metrics):
+    for metric, value, labels in evidently_metrics:
+        metric_key = f"evidently:{metric.name}" # (1)
+
+        if not labels:
+            labels = {}
+        labels["dataset_name"] = MonitoringService.DATASET_NAME # (2)
+
+        if isinstance(value, str):
+            continue
+
+        found = self.metrics.get(metric_key) # (3)
+        if found is None:
+            found = prometheus_client.Gauge(
+                metric_key, "", list(sorted(labels.keys()))
+            )
+            self.metrics[metric_key] = found
+
+        try:
+            found.labels(**labels).set(value) # (4)
+        except ValueError as error:
+            ...
+```
+
+1. Tạo tên metric. Tên metric này phải giống với các metric mà chúng ta sẽ hiển thị trên Grafana dashboards
+2. `labels` là một `dict` với key và value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ `{'dataset': 'reference', 'metric': 'accuracy'}`. `labels` này tương đương với [Prometheus labels](https://prometheus.io/docs/practices/naming/#labels)
+3. `self.metrics` lưu các object `Gauge` của Prometheus. `Gauge` giúp chúng ta gửi metrics tới Prometheus server. Biến `found` là một object `Gauge`, tương ứng với mỗi metric lấy ra từ Evidently
+4. Gán Prometheus labels và giá trị cho `Gauge` object. Dòng code này sẽ gửi labels và giá trị của các metrics lên Prometheus server
+
+Như vậy là chúng ta vừa tìm hiểu các đoạn code quan trọng nhất của monitoring service. Các đoạn code còn lại khác mà các bạn cần lưu ý như dưới đây.
+
+```python linenums="1" title="monitoring_service/src/monitoring_service.py"
+app = Flask(AppConst.MONITORING_SERVICE) # (1)
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": prometheus_client.make_wsgi_app()}) # (2)
+
+SERVICE = MonitoringService() # (3)
+
+@app.route("/iterate", methods=["POST"]) # (4)
+def iterate():
+    item = flask.request.json
+    df = pd.DataFrame.from_dict(item) # (5)
+    SERVICE.iterate(new_rows=df) # (6)
+    return "ok"
+
+app.run(host="0.0.0.0", port=8309, debug=True) # (7)
+```
+
+1. Tạo Flask app. Flask là một công cụ phổ biến được dùng để viết RESTful API cho Python
+2. Tự động tạo endpoint `/metrics` để Prometheus thu thập metrics
+3. Khởi tạo `MonitoringService` class
+4. Tạo endpoint `/iterate` để Online serving API gửi data tới
+5. Biến đổi data nhận vào thành `DataFrame`
+6. Gọi hàm `iterate` để thực hiện đánh giá data drift và model performance
+7. Chạy Flask app ở port `8309` ở máy local
+
+Để Prometheus có thể thu thập metrics được gửi qua endpoint `/metrics`, chúng ta cần phải tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform` như dưới đây.
+
+```yaml linenums="1" title="prom-graf/prometheus/config/prometheus.yml"
+- job_name: "monitoring_service"
+  scrape_interval: 5s
+  static_configs:
+    - targets:
+        - "localhost:8309"
+```
+
+Sau khi code xong monitoring service, chúng ta sẽ viết thêm code cho Online serving API để nó gửi data sau khi thực hiện prediction sang Monitoring API.
+
+### Tích hợp Online serving
+
+Các bạn hãy mở file code của Online serving API tại `model_serving/src/bentoml_service.py` trong repo `mlops-crash-course-code`. Hãy chú ý tới đoạn code trong hàm `inference` như dưới đây.
+
+```python linenums="1" title="model_serving/src/bentoml_service.py"
+@svc.api(
+    ...
+)
+def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]:
+    try:
+        ...
+        result = predict(input_features[sorted(input_features)])
+        df["prediction"] = result
+        best_idx = df["prediction"].argmax() # (1)
+        best_driver_id = df["driver_id"].iloc[best_idx] # (2)
+
+        # monitor
+        monitor_df = df.iloc[[best_idx]] # (3)
+        monitor_df = monitor_df.assign(request_id=[request.request_id]) # (4)
+        monitor_df = monitor_df.assign(best_driver_id=[best_driver_id]) # (5)
+        monitor_request(monitor_df) # (6)
+
+    except Exception as e:
+        ...
+```
+
+1. Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe
+2. Lấy ra ID của tài xế được chọn
+3. Lấy ra hàng trong `DataFrame` gốc của tài xế được chọn
+4. Thêm cột `request_id` vào `monitor_df`, với giá trị là `request_id` được gửi tới trong request
+5. Thêm cột `best_driver_id` vào. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc thu thập data và debug ở production dễ dàng hơn
+6. Gọi tới hàm `monitor_request` để gửi data tới Monitoring API. Data được gửi bao gồm các chính sau: `request_id`, các features, `prediction`, và `best_driver_id`
+
+Hàm `monitor_request` làm nhiệm vụ gửi data tới Monitoring API có code như sau.
+
+```python linenums="1" title="model_serving/src/bentoml_service.py"
+def monitor_request(df: pd.DataFrame):
+    try:
+        data = json.dumps(df.to_dict(), cls=NumpyEncoder) # (1)
+        response = requests.post( # (2)
+            MONITORING_SERVICE_API,
+            data=data,
+            headers={"content-type": "application/json"},
+        )
+        ...
+    except Exception as error:
+        ...
+```
+
+1. Biến đổi `DataFrame` thành dạng JSON với sự hỗ trợ của `NumpyEncoder` class, giúp cho việc biến đổi JSON trở lại thành `DataFrame` ở phía Monitoring API dễ dàng hơn
+2. Gửi POST request tới Monitoring API với data vừa biến đổi ở trên
+
+Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện prediction ở Online serving API, data được tổng hợp từ request gửi đến và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics đánh giá được ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics này qua endpoint `/metrics`. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ triển khai Grafana dashboards để hiển thị các metrics này.
 
 ### Triển khai Grafana dashboards
 
-## Thử nghiệm
+### Thử nghiệm
 
 ## Tổng kết
