@@ -93,12 +93,13 @@ training_df = fs.get_historical_features(
         "driver_stats:acc_rate",
         "driver_stats:avg_daily_trips",
     ],
-).to_df()
+).to_df() # (1)
 
-to_parquet(training_df, AppPath.TRAINING_PQ) # (1)
+to_parquet(training_df, AppPath.TRAINING_PQ) # (2)
 ```
 
-1. Lưu `training_df` vào disk để sử dụng trong các task tiếp theo.
+1. Cách mà Feast lấy ra features giống như cách chúng ta chuẩn bị data ở dự án POC. Các bạn có thể xem lại [tại đây](../../poc/xay-dung-poc/#chuan-bi-data).
+2. Lưu `training_df` vào disk để sử dụng trong các task tiếp theo.
 
 Hãy cùng chạy task này ở môi trường phát triển của bạn bằng cách chạy lệnh sau.
 

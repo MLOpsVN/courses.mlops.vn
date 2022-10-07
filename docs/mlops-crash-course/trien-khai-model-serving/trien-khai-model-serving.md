@@ -320,7 +320,9 @@ Kết quả của response trả về sẽ nhìn giống như sau.
 
 Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Ngoài ra, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để các services khác có thể gọi tới API đã được expose tại port `8172` trên server này.
 
-Trong thực tế, request của chúng ta sẽ không chứa features được sắp xếp đúng thứ tự như trên, mà nó sẽ chứa data giúp chúng ta lấy ra các features từ Feature Store. Ví dụ, trong khoá học này, request được gửi đến Online serving service sẽ chứa danh sách ID của các tài xế. Dựa vào danh sách ID này, chúng ta sẽ lấy ra các features liên quan từ Online Store của Feast để biến đổi thành request chứa các features được sắp xếp đúng thứ tự. Đoạn code sau định nghĩa API `inference` sẽ làm các công việc này.
+Trong thực tế, request của chúng ta sẽ không chứa features được sắp xếp đúng thứ tự như trên, mà nó sẽ chứa data giúp chúng ta lấy ra các features từ Feature Store. Ví dụ, trong khoá học này, request được gửi đến Online serving service sẽ chứa danh sách ID của các tài xế. Dựa vào danh sách ID này, chúng ta sẽ lấy ra các features liên quan từ Online Store của Feast để biến đổi thành request chứa các features được sắp xếp đúng thứ tự.
+
+Đoạn code sau định nghĩa API `inference` sẽ làm các công việc này.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 feature_list = bentoml_model.custom_objects["feature_list"] # (1)
@@ -348,11 +350,15 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 
         input_features = df.drop(["driver_id"], axis=1) # (7)
         input_features = input_features[feature_list] # (8)
-        result = predict(input_features[sorted(input_features)]) # (9)
-        # Handle response
 
-    except Exception as e:
-        # Handle error
+        result = predict(input_features[sorted(input_features)]) # (9)
+        df["prediction"] = result
+        best_idx = df["prediction"].argmax()
+        best_driver_id = df["driver_id"].iloc[best_idx] # (10)
+        ...
+
+    except Exception as e: # (11)
+        ...
 ```
 
 1. Lấy ra danh sách chứa thứ tự các features mà model yêu cầu
@@ -364,12 +370,14 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 7. Loại bỏ cột không cần thiết
 8. Sắp xếp lại thứ tự features
 9. Gọi function `predict` để thực hiện prediction
+10. Lấy ra driver id có khả năng cao nhất sẽ hoàn thành cuốc xe. Driver id này sẽ được trả về trong response
+11. Xử lý lỗi
 
 Như các bạn thấy, sau khi lấy được các features cần thiết từ Online Feature Store, qua vài bước xử lý features này, chúng ta sẽ gọi tới function `predict` để thực hiện prediction. Trong thực tế, server chứa API `inference` sẽ là một server khác với API `predict`. Server chứa API `inference` sẽ được tối ưu về Network throughput để thực hiện việc nhận request và trả về response cho nhiều client. Server chứa API `predict` sẽ được tối ưu về khả năng tính toán để thực hiện model inference nhanh hơn.
 
 Hãy cùng thử chạy API `inference` bằng cách thực hiện các bước sau.
 
-1. Chạy [Feast materialize pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline) ở bài Data Pipeline để cập nhật Online Feature Store
+1. Chạy [Feast materialize pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline) ở bài Data Pipeline để cập nhật Online Feature Store.
 2. Chạy lệnh sau
 
 ```bash
@@ -381,6 +389,7 @@ Bạn hãy mở browser, truy cập tới `http://localhost:8172/`, mở API `/i
 
 ```json
 {
+  "request_id": "uuid-1",
   "driver_ids": [1001, 1002, 1003, 1004, 1005]
 }
 ```

@@ -95,7 +95,7 @@ Sau khi đã triển khai ELK Stack thành công, hãy cùng thử truy vấn lo
 
 ```json
 {
-  "request_id": "1234",
+  "request_id": "uuid-1",
   "driver_ids": [1001, 1002, 1003, 1004, 1005]
 }
 ```
@@ -274,4 +274,4 @@ Như vậy, chúng ta vừa thực hiện quá trình triển khai ELK Stack đ�
 
 Trong thực tế, với ELK Stack, chúng ta sẽ cần thiết lập các bộ filter để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus và Grafana, chúng ta sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung _PromQL_ để có thể chọn lọc và tổng hợp metrics data hiệu quả. Các bạn có thể đọc thêm tại [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
-Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service. Service này sẽ có chức năng theo dõi các ML metrics liên quan tới chất lượng data và model.
+Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service, và của server mà chúng ta chạy các service, là chưa đủ trong một hệ thống ML. Ngoài các metrics đó ra, chúng ta cũng quan tâm tới các metrics về data và model, ví dụ như kiểm tra chất lượng data ở production xem có features nào bị drift hay không, model performance hiện tại là tốt hay xấu như thế nào, v.v. Việc theo dõi các metrics liên quan tới data và model sẽ giúp chúng ta kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service. Service này sẽ có chức năng theo dõi các ML metrics liên quan tới chất lượng data và model.

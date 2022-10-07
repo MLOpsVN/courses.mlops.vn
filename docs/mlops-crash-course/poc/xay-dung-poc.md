@@ -11,7 +11,7 @@ Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 1. Jupyter notebook để thử nghiệm data, model
 1. MLflow để làm ML Metadata Store
 
-## Chuẩn bị data
+## Thu thập data
 
 Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:
 
@@ -21,7 +21,7 @@ Thông thường ở POC, do data pipeline chưa thể được xây dựng hoà
 
 Trong khoá học này, giả sử rằng Data Engineering đã thu thập data cho chúng ta từ data source và chuyển giao cho chúng ta một file data duy nhất ở dạng `parquet`. Chúng ta sẽ sử dụng file data này để thực hiện công việc của một Data Scientist trong các bước tiếp theo.
 
-## Phân tích data và viết training code
+## Phân tích data
 
 Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại `training_pipeline/nbs/poc-training-code.ipynb`.
 
@@ -71,7 +71,39 @@ Sau khi đã load và clean được data, Data Scientist sẽ phân tích data 
 
 May mắn rằng các file data của chúng ta không có feature nào chứa giá trị `null`. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model.
 
-Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi hàng trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Code để tổng hợp features và labels như dưới đây.
+## Chuẩn bị data
+
+Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi record trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Ví dụ:
+
+- `df_orig` chứa 2 records như sau
+
+| index | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips |
+| ----- | ---------- | --------- | --------- | -------- | --------------- |
+| 1     | 2022-12-01 | 1001      | 0.1       | 0.1      | 100             |
+| 2     | 2022-11-01 | 1001      | 0.2       | 0.2      | 200             |
+| 3     | 2022-10-01 | 1001      | 0.3       | 0.3      | 300             |
+| 4     | 2022-09-01 | 1001      | 0.4       | 0.4      | 400             |
+
+- `label_orig` chứa 2 records như sau
+
+| index | event_timestamp | driver_id | trip_completed |
+| ----- | --------------- | --------- | -------------- |
+| 1     | 2022-12-15      | 1001      | 1              |
+| 2     | 2022-09-15      | 1001      | 0              |
+
+- Data mà chúng ta muốn tổng hợp gồm 2 records như sau
+
+| index | event_timestamp | driver_id | trip_completed | conv_rate | acc_rate | avg_daily_trips |
+| ----- | --------------- | --------- | -------------- | --------- | -------- | --------------- |
+| 1     | 2022-12-15      | 1001      | 1              | 0.1       | 0.1      | 100             |
+| 2     | 2022-09-15      | 1001      | 0              | 0.4       | 0.4      | 400             |
+
+- Giải thích
+
+      - Features từ index 1 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất so với `event_timestamp` của record ở index 1 trong `label_orig`
+      - Tương tự, features từ index 4 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất và xảy ra trước so với `event_timestamp` của record ở index 1 trong `label_orig`
+
+Code để tổng hợp features và labels như dưới đây.
 
 ```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
 groups = df_orig.groupby('driver_id') # (1)
@@ -109,6 +141,8 @@ data_df = data_df[data_df.columns. \ # (9)
 7. Thêm các cột cần thiết vào
 8. Biến thành Series (một hàng)
 9. Loại bỏ các cột không cần thiết
+
+## Viết training code
 
 Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.
 
