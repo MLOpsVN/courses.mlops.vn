@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/monitoring/tong-quan/cat-observe.jpg" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/tong-quan-monitoring/cat-observe.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@milada_vigerova?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Milada Vigerova</a> on <a href="https://unsplash.com/s/photos/observe?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 

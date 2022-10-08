@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/pipeline.jpg" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/training-pipeline/tong-quan-training-pipeline/pipeline.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@mbenna?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mike Benna</a> on <a href="https://unsplash.com/s/photos/pipeline?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -17,7 +17,7 @@ Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeli
 
 Training pipeline của chúng ta bao gồm các tasks như hình dưới:
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/tong-quan-training-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
 ## Cập nhật Feature Store
 

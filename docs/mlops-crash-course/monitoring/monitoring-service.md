@@ -115,7 +115,7 @@ Bảng dưới đây là một ví dụ của `drift_data`.
 
 Để test chức năng theo dõi model performance của monitoring service, chúng ta cần có label của mỗi request được gửi tới Online serving API, thì mới biết được prediction tạo bởi model là đúng hay sai.
 
-Như chúng ta đã biết ở [phần Online serving của bài Triển khai model serving](../../trien-khai-model-serving/trien-khai-model-serving/#online-serving), request và response được gửi tới Online serving API có dạng như sau.
+Như chúng ta đã biết ở [phần Online serving của bài Triển khai model serving](../../model-serving/trien-khai-model-serving/#online-serving), request và response được gửi tới Online serving API có dạng như sau.
 
 ```json
 // Request
@@ -693,7 +693,7 @@ def main(data_type: str, n_request: int = 1): # (3)
 
 Để tiến hành thử nghiệm, các bạn hãy làm theo các bước sau.
 
-1.  Đảm bảo rằng [Online serving service](../../trien-khai-model-serving/trien-khai-model-serving/#online-serving) đã chạy
+1.  Đảm bảo rằng [Online serving service](../../model-serving/trien-khai-model-serving/#online-serving) đã chạy
 1.  Build docker image và chạy docker compose cho monitoring service
 
     ```bash

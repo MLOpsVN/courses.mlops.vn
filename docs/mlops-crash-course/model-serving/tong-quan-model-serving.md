@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/prepare.jpg" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/model-serving/tong-quan-model-serving/prepare.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@fabmag?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Fabrizio Magoni</a> on <a href="https://unsplash.com/s/photos/serve?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -17,13 +17,13 @@ Trong khoá học này, chúng ta sẽ thiết kế batch serving với input l�
 
 Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:
 
-<img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
 
 ### Cập nhật Feature Store
 
 Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.
 
-Task này giống hệt như task **Cập nhật Feature Store** ở training pipeline. Các bạn có thể xem lại bài [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline/#cap-nhat-feature-store).
+Task này giống hệt như task **Cập nhật Feature Store** ở training pipeline. Các bạn có thể xem lại bài [Tổng quan training pipeline](../../training-pipeline/tong-quan-training-pipeline/#cap-nhat-feature-store).
 
 ### Data extraction
 

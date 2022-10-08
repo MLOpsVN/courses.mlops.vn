@@ -1,15 +1,15 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/build-pipeline.jpg" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/build-pipeline.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@selimarda?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">SELİM ARDA ERYILMAZ</a> on <a href="https://unsplash.com/s/photos/pipeline?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../training-pipeline/tong-quan-training-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
 Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
 ## Môi trường phát triển
 
@@ -104,7 +104,7 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 ## Data validation
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/validation.jpg" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/validation.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@amelune?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Diane Serik</a> on <a href="https://unsplash.com/s/photos/test?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -229,7 +229,7 @@ cd ..
 
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `run_info.json`. Nếu mở MLflow server trên browser ra, các bạn cũng sẽ nhìn thấy một experiment đã được tạo ra.
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-training.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-training.png" loading="lazy" />
 
 ## Model evaluation
 
@@ -297,11 +297,11 @@ cd ..
 
 Sau khi chạy xong, nếu như model thoả mãn các yêu cầu đề ra, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `registered_model_version.json`. MLflow server cũng sẽ hiển thị model mà bạn đã registered.
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-register.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-register.png" loading="lazy" />
 
 Các bạn có thể click vào model đã được register để xem thêm thông tin nó. Cụ thể như ở hình dưới, chúng ta có thể thấy MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model.
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/mlflow-model-version.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-model-version.png" loading="lazy" />
 
 ## Airflow DAG
 
@@ -387,7 +387,7 @@ Airflow DAG của chúng ta có sử dụng một Airflow Variable tên là `MLO
 
 Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt training pipeline và chờ đợi kết quả. Sau khi Airflow DAG hoàn thành, các bạn cũng có thể kiểm tra MLflow server và sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại.
 
-<img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/training-pipeline-airflow.png" loading="lazy" />
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
 
 ## Tổng kết
 
