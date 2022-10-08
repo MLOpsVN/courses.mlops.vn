@@ -185,54 +185,54 @@ Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghi
 
 ## Theo dõi các thử nghiệm
 
-[MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.
+[MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm. Các bạn hãy làm theo các bước sau.
 
-Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên môi trường local. Hãy clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform) về máy của bạn, và chạy câu lệnh sau.
+1.  Clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform), và chạy câu lệnh sau để chạy MLflow server trên môi trường local
 
-```bash
-bash run.sh mlflow up
-```
+    ```bash
+    bash run.sh mlflow up
+    ```
 
-Trên browser của bạn, đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.
+1.  Đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa
 
-Tiếp theo, mở file notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.
+1.  Mở notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta
 
-```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
-MLFLOW_TRACKING_URI = "http://localhost:5000"
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.sklearn.autolog() # (1)
-```
+    ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
+    MLFLOW_TRACKING_URI = "http://localhost:5000"
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    mlflow.sklearn.autolog() # (1)
+    ```
 
-1. Vì chúng ta dùng `sklearn` để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
+    1.  Vì chúng ta dùng `sklearn` để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
 
-Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.
+1.  Thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.
 
-```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
-mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
+    ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
+    mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
 
-mlflow.log_param("features", selected_ft) # (2)
+    mlflow.log_param("features", selected_ft) # (2)
 
-mlflow.log_param("alpha", ALPHA) # (3)
-mlflow.log_param("l1_ratio", L1_RATIO)
+    mlflow.log_param("alpha", ALPHA) # (3)
+    mlflow.log_param("l1_ratio", L1_RATIO)
 
-mlflow.log_metric("testing_rmse", rmse) # (4)
-mlflow.log_metric("testing_r2", r2)
-mlflow.log_metric("testing_mae", mae)
+    mlflow.log_metric("testing_rmse", rmse) # (4)
+    mlflow.log_metric("testing_r2", r2)
+    mlflow.log_metric("testing_mae", mae)
 
-mlflow.sklearn.log_model(model, "model") # (5)
-```
+    mlflow.sklearn.log_model(model, "model") # (5)
+    ```
 
-1. Đặt tên cho lần chạy
-2. Log lại feature được dùng
-3. Log lại các hyperparameter
-4. Log lại các metric sau khi test trên test set
-5. Log lại model sau khi train
+    1. Đặt tên cho lần chạy
+    2. Log lại feature được dùng
+    3. Log lại các hyperparameter
+    4. Log lại các metric sau khi test trên test set
+    5. Log lại model sau khi train
 
-Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.
+1.  Mở MLflow trên browser, các bạn sẽ thấy một giao diện trông như sau.
 
-<img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
 
-Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của một lần chạy.
+    Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của một lần chạy.
 
 ## Theo dõi các feature
 

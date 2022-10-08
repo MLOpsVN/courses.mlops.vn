@@ -115,18 +115,15 @@ Bảng dưới đây là một ví dụ của `drift_data`.
 
 Để test chức năng theo dõi model performance của monitoring service, chúng ta cần có label của mỗi request được gửi tới Online serving API, thì mới biết được prediction tạo bởi model là đúng hay sai.
 
-Như chúng ta đã biết ở [phần Online serving của bài Triển khai model serving](../../trien-khai-model-serving/trien-khai-model-serving/#online-serving), request được gửi tới Online serving API có dạng như sau.
+Như chúng ta đã biết ở [phần Online serving của bài Triển khai model serving](../../trien-khai-model-serving/trien-khai-model-serving/#online-serving), request và response được gửi tới Online serving API có dạng như sau.
 
 ```json
+// Request
 {
   "request_id": "uuid-1",
   "driver_ids": [1001, 1002, 1003, 1004, 1005]
 }
-```
-
-Và response trả về có dạng như sau.
-
-```json
+// Response
 {
   "prediction": 1001,
   "error": null
@@ -190,54 +187,46 @@ X = scaler.fit_transform(X) # (3)
 
 scaler = MinMaxScaler(feature_range=(0.75, 0.95))
 X_shift = scaler.fit_transform(X) # (4)
+
+def create_dataset(generated_X):
+    df = pd.DataFrame()
+    df['conv_rate'] = generated_X[:, 0] # (5)
+    df['acc_rate'] = generated_X[:, 1]
+    df['avg_daily_trips'] = np.array((generated_X[:, 2] * 1000), dtype=int) # (6)
+    return df
+
+# Tạo normal_data và drift_data
+normal_df = create_dataset(X)
+drift_df = create_dataset(X)
+
+# Tạo request_data
+request_id_list = [] # (7)
+driver_ids_list = []
+
+for i in range(N_SAMPLES):
+    request_id = f"uuid-{i}"
+    request_id_list.append(request_id)
+    driver_id = driver_ids[i % len(driver_ids)] # (8)
+    driver_ids_list.append([driver_id])
+
+y = np.random.choice([0, 1], size=N_SAMPLES, p=[0.3, 0.7]) # (9)
+
+request_df = pd.DataFrame() # (10)
+request_df['request_id'] = request_id_list
+request_df['driver_ids'] = driver_ids_list
+request_df['trip_completed'] = y
 ```
 
 1. Lấy ra các driver ids từ dataset gốc
 2. Tạo ra 1 dataset theo phân phối chuẩn
 3. Biến đổi `X` về đoạn [0.05, 0.25]. `X` sẽ được dùng để tạo `normal_data`
 4. Biến đổi `X` về đoạn [0.75, 0.95], lưu vào `X_shift`. `X_shift` sẽ được dùng để tạo `drift_data`
-
-Tiếp theo, chúng ta sẽ sử dụng 3 cột đầu tiên của `X` và `X_shift` để làm features cho `normal_data` và `drift_data`. Đoạn code dưới đây sẽ tạo ra 2 datasets này.
-
-```python linenums="1" title="monitoring_service/nbs/prepare_datasets.ipynb"
-def create_dataset(generated_X):
-    df = pd.DataFrame()
-    df['conv_rate'] = generated_X[:, 0]
-    df['acc_rate'] = generated_X[:, 1]
-    df['avg_daily_trips'] = np.array((generated_X[:, 2] * 1000), dtype=int) # (1)
-    return df
-
-normal_df = create_dataset(X)
-drift_df = create_dataset(X)
-```
-
-1. Để ý rằng feature `avg_daily_trips` nằm trong khoảng từ 0 tới 1000
-
-Như vậy là chúng ta vừa tạo ra dataset `normal_data` và `drift_data`. Bây giờ, chúng ta sẽ tạo ra `request_data` như đã phân tích ở phần trước.
-
-```python linenums="1" title="monitoring_service/nbs/prepare_datasets.ipynb"
-request_id_list = [] # (1)
-driver_ids_list = [] # (2)
-
-for i in range(N_SAMPLES):
-    request_id = f"uuid-{i}"
-    request_id_list.append(request_id)
-    driver_id = driver_ids[i % len(driver_ids)] # (3)
-    driver_ids_list.append([driver_id])
-
-y = np.random.choice([0, 1], size=N_SAMPLES, p=[0.3, 0.7]) # (4)
-
-request_df = pd.DataFrame() # (5)
-request_df['request_id'] = request_id_list
-request_df['driver_ids'] = driver_ids_list
-request_df['trip_completed'] = y
-```
-
-1. Khởi tạo list chứa request ids
-2. Khởi tạo list chứa driver ids cho mỗi request
-3. Lần lượt lấy ra các driver id trong list `driver_ids` chứa các driver ids từ dataset gốc
-4. Sinh ra label cho mỗi request với xác suất 0.3 cho label `0` và 0.7 cho label `1`. 2 con số này có thể là bất kì
-5. Tạo `DataFrame` chứa `request_data`
+5. Sử dụng 3 cột đầu tiên của `X` và `X_shift` để làm features cho `normal_data` và `drift_data`
+6. Feature `avg_daily_trips` nằm trong khoảng từ 0 tới 1000
+7. Khởi tạo list chứa request ids và list chứa driver ids cho mỗi request
+8. Lần lượt lấy ra các driver id trong list `driver_ids` chứa các driver ids từ dataset gốc
+9. Sinh ra label cho mỗi request với xác suất 0.3 cho label `0` và 0.7 cho label `1`. 2 con số này có thể là bất kì
+10. Tạo `DataFrame` chứa `request_data`
 
 Như vậy là chúng ta vừa tạo xong `request_data` chứa thông tin về request sẽ được gửi tới Online serving API và label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được sinh ra và cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.
 
@@ -249,61 +238,52 @@ Code dùng để test các datasets và cách dùng Evidently được đặt t�
 
 ```python linenums="1" title="monitoring_service/nbs/test_datasets.ipynb"
 normal_df = pd.read_parquet(ORIG_DATA_PATH, engine='fastparquet') # (1)
-drift_df = pd.read_parquet(DRIFT_DATA_PATH, engine='fastparquet') # (2)
-request_df = pd.read_csv(REQUEST_DATA_PATH) # (3)
+drift_df = pd.read_parquet(DRIFT_DATA_PATH, engine='fastparquet')
+request_df = pd.read_csv(REQUEST_DATA_PATH)
 
-column_mapping = ColumnMapping( # (4)
-    target="trip_completed", # (5)
-    prediction="prediction", # (6)
-    numerical_features=["conv_rate", "acc_rate", "avg_daily_trips"], # (7)
-    categorical_features=[], # (8)
+column_mapping = ColumnMapping( # (2)
+    target="trip_completed", # (3)
+    prediction="prediction", # (4)
+    numerical_features=["conv_rate", "acc_rate", "avg_daily_trips"], # (5)
+    categorical_features=[], # (6)
 )
 
-features_and_target_monitor = ModelMonitoring(monitors=[DataDriftMonitor()]) # (9)
-model_performance_monitor = ModelMonitoring(monitors=[ClassificationPerformanceMonitor()]) # (10)
-```
+features_and_target_monitor = ModelMonitoring(monitors=[DataDriftMonitor()]) # (7)
+model_performance_monitor = ModelMonitoring(monitors=[ClassificationPerformanceMonitor()]) # (8)
 
-1. Đọc `normal_data`
-2. Đọc `drift_data`
-3. Đọc `request_data`
-4. `ColumnMapping` là 1 class trong Evidently dùng để định nghĩa loại data của các cột của data
-5. Định nghĩa cột `target`, hay chính là label
-6. Định nghĩa cột `prediction`, hay chính là dự đoán của model
-7. Định nghĩa các cột là features ở dạng số
-8. Định nghĩa các cột là features ở dạng categorical
-9. Định nghĩa 1 object `ModelMonitoring` để theo dõi data drift
-10. Định nghĩa 1 object `ModelMonitoring` để theo dõi model performance
-
-`ModelMonitoring` là 1 class trong Evidently. Class này định nghĩa các loại monitoring mà chúng ta muốn chạy. Có nhiều loại monitoring như `DataDriftMonitor`, `CatTargetDriftMonitor`, `NumTargetDriftMonitor`, v.v.
-
-Khi chạy monitoring, chúng ta cần truyền vào 2 bộ datasets sẽ dùng để so sánh. Nếu 2 bộ data dùng để so sánh là giống nhau cho cùng một loại monitoring, thì chúng ta có thể định nghĩa nhiều loại monitoring trong cùng 1 object `ModelMonitoring`. Tuy nhiên, 2 datasets mà chúng ta sử dụng để theo dõi data drift và model performance là khác nhau, nên chúng ta cần tạo ra 2 objects `ModelMonitoring`. 2 datasets này sẽ được giải thích kĩ hơn ngay sau đây.
-
-Tiếp theo, chúng ta sẽ chạy kiểm tra data drift và model performance.
-
-```python linenums="1" title="monitoring_service/nbs/test_datasets.ipynb"
-features_and_target_monitor.execute( # (1)
-    reference_data=normal_df, # (2)
-    current_data=drift_df, # (3)
+# Chạy kiểm tra data drift
+features_and_target_monitor.execute( # (9)
+    reference_data=normal_df, # (10)
+    current_data=drift_df, # (11)
     column_mapping=column_mapping,
 )
 
+# Chạy kiểm tra model performance
 predictions = [1] * drift_df.shape[0]
-drift_df = drift_df.assign(prediction=predictions) # (4)
-drift_df = drift_df.assign(trip_completed=request_df["trip_completed"]) # (5)
+drift_df = drift_df.assign(prediction=predictions) # (12)
+drift_df = drift_df.assign(trip_completed=request_df["trip_completed"]) # (13)
 
-model_performance_monitor.execute( # (6)
+model_performance_monitor.execute( # (14)
     reference_data=drift_df,
     current_data=drift_df,
     column_mapping=column_mapping,
 )
 ```
 
-1. Chạy kiểm tra data drift, so sánh `drift_data` với `normal_data`
-2. Dùng `normal_data` làm `reference_data`, mang ý nghĩa là training data
-3. Dùng `drift_data` làm `current_data`, mang ý nghĩa là data ở production, để so sánh với training data
-4. Thêm cột `prediction` vào `drift_data`, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là `1`
-5. Thêm cột `trip_completed` vào `drift_data`, hay chính là label của mỗi record
-6. Chạy kiểm tra model performance, so sánh `drift_data` với chính nó
+1. Đọc `normal_data`, `drift_data`, và `request_data`
+2. `ColumnMapping` là 1 class trong Evidently dùng để định nghĩa loại data của các cột của data
+3. Định nghĩa cột `target`, hay chính là label
+4. Định nghĩa cột `prediction`, hay chính là dự đoán của model
+5. Định nghĩa các cột là features ở dạng số
+6. Định nghĩa các cột là features ở dạng categorical
+7. Định nghĩa 1 object `ModelMonitoring` để theo dõi data drift. `ModelMonitoring` là 1 class trong Evidently. Class này định nghĩa các loại monitoring mà chúng ta muốn chạy. Có nhiều loại monitoring như `DataDriftMonitor`, `CatTargetDriftMonitor`, `NumTargetDriftMonitor`, v.v.
+8. Định nghĩa 1 object `ModelMonitoring` để theo dõi model performance
+9. Chạy kiểm tra data drift, so sánh `drift_data` với `normal_data`
+10. Dùng `normal_data` làm `reference_data`, mang ý nghĩa là training data
+11. Dùng `drift_data` làm `current_data`, mang ý nghĩa là data ở production, để so sánh với training data
+12. Thêm cột `prediction` vào `drift_data`, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là `1`
+13. Thêm cột `trip_completed` vào `drift_data`, hay chính là label của mỗi record
+14. Chạy kiểm tra model performance, so sánh `drift_data` với chính nó
 
 !!! question
 
@@ -547,22 +527,11 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 
     except Exception as e:
         ...
-```
 
-1. Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe
-2. Lấy ra ID của tài xế được chọn
-3. Lấy ra hàng trong `DataFrame` gốc của tài xế được chọn
-4. Thêm cột `request_id` vào `monitor_df`, với giá trị là `request_id` được gửi tới trong request
-5. Thêm cột `best_driver_id` vào. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc thu thập data và debug ở production dễ dàng hơn
-6. Gọi tới hàm `monitor_request` để gửi data tới Monitoring API. Data được gửi bao gồm các chính sau: `request_id`, các features, `prediction`, và `best_driver_id`
-
-Hàm `monitor_request` làm nhiệm vụ gửi data tới Monitoring API có code như sau.
-
-```python linenums="1" title="model_serving/src/bentoml_service.py"
-def monitor_request(df: pd.DataFrame):
+def monitor_request(df: pd.DataFrame): # (7)
     try:
-        data = json.dumps(df.to_dict(), cls=NumpyEncoder) # (1)
-        response = requests.post( # (2)
+        data = json.dumps(df.to_dict(), cls=NumpyEncoder) # (8)
+        response = requests.post( # (9)
             MONITORING_SERVICE_API,
             data=data,
             headers={"content-type": "application/json"},
@@ -572,8 +541,15 @@ def monitor_request(df: pd.DataFrame):
         ...
 ```
 
-1. Biến đổi `DataFrame` thành dạng JSON với sự hỗ trợ của `NumpyEncoder` class, giúp cho việc biến đổi JSON trở lại thành `DataFrame` ở phía Monitoring API dễ dàng hơn
-2. Gửi POST request tới Monitoring API với data vừa biến đổi ở trên
+1. Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe
+2. Lấy ra ID của tài xế được chọn
+3. Lấy ra hàng trong `DataFrame` gốc của tài xế được chọn
+4. Thêm cột `request_id` vào `monitor_df`, với giá trị là `request_id` được gửi tới trong request
+5. Thêm cột `best_driver_id` vào. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc thu thập data và debug ở production dễ dàng hơn
+6. Gọi tới hàm `monitor_request` để gửi data tới Monitoring API. Data được gửi bao gồm các chính sau: `request_id`, các features, `prediction`, và `best_driver_id`
+7. Hàm `monitor_request` làm nhiệm vụ gửi data tới Monitoring API
+8. Biến đổi `DataFrame` thành dạng JSON với sự hỗ trợ của `NumpyEncoder` class, giúp cho việc biến đổi JSON trở lại thành `DataFrame` ở phía Monitoring API dễ dàng hơn
+9. Gửi POST request tới Monitoring API với data vừa biến đổi ở trên
 
 Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện prediction ở Online serving API, data được tổng hợp từ request gửi đến và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics đánh giá được ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics này qua endpoint `/metrics`. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics này.
 
@@ -598,13 +574,13 @@ Dashboard **Evidently Data Drift Dashboard** sẽ giống như hình dưới đ�
 
 Dashboard này chứa các panels về data drift bao gồm.
 
-1. `General information`
-   1. `Dataset drift`: Dataset có bị drift hay không
-   1. `Share of drifted features`: Tỉ lệ số features bị drift trên tổng số features
-   1. `# of drifted features`: Số features bị drift
-   1. `# of features`: Tổng số features
-1. `Detailed information`
-   1. `P-value of features`: [p-value](https://en.wikipedia.org/wiki/P-value) của các features
+- `General information`
+  - `Dataset drift`: Dataset có bị drift hay không
+  - `Share of drifted features`: Tỉ lệ số features bị drift trên tổng số features
+  - `# of drifted features`: Số features bị drift
+  - `# of features`: Tổng số features
+- `Detailed information`
+  - `P-value of features`: [p-value](https://en.wikipedia.org/wiki/P-value) của các features
 
 ### Classification Performance Dashboard
 
@@ -614,16 +590,16 @@ Dashboard **Evidently Classification Performance Dashboard** sẽ giống như h
 
 Dashboard này chứa các panels về model performance bao gồm.
 
-1. `Reference dataset data`
-   1. `Quality`: Tổng hợp các model performance metrics theo thời gian
-   1. `accuracy`, `f1`, `precision`, `recall`: Các model performance metrics
-   1. `Prediction class representation`: Số lượng các prediction theo class
-   1. `Target class representation`: Số lượng các label theo class
-1. `Class 0 information`: Thông tin về class 0
-   1. `Confusion 0`: Confusion matrix cho class 0
-   1. `Confusion in time`: Các giá trị của confusion matrix theo thời gian
-   1. `Quality`: Tổng hợp các model performance metrics cho class 0 theo thời gian
-1. `Class 1 information`: Tương tự class 0
+- `Reference dataset data`
+  - `Quality`: Tổng hợp các model performance metrics theo thời gian
+  - `accuracy`, `f1`, `precision`, `recall`: Các model performance metrics
+  - `Prediction class representation`: Số lượng các prediction theo class
+  - `Target class representation`: Số lượng các label theo class
+- `Class 0 information`: Thông tin về class 0
+  - `Confusion 0`: Confusion matrix cho class 0
+  - `Confusion in time`: Các giá trị của confusion matrix theo thời gian
+  - `Quality`: Tổng hợp các model performance metrics cho class 0 theo thời gian
+- `Class 1 information`: Tương tự class 0
 
 ### Alerts
 
@@ -655,7 +631,9 @@ Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi mộ
 
 ## Thử nghiệm
 
-Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py`. Mình sẽ tóm tắt chức năng của đoạn code như dưới đây.
+### Gửi `drift_data`
+
+Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="monitoring_service/src/mock_request.py"
 def construct_request(row: pd.Series) -> dict: # (1)
@@ -749,6 +727,8 @@ Các bạn có thể click vào nút `Show state history` để xem thời đi�
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png" loading="lazy"/>
 
+### Gửi `normal_data`
+
 Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
 
 ```bash
@@ -767,7 +747,7 @@ Sau khi gửi xong, các bạn hãy kiểm tra **Evidently Data Drift Dashboard*
     <figcaption>Alert Data drift detection ở trạng thái Normal</figcaption>
 </figure>
 
-??? note
+!!! tip
 
     Nếu các bạn mở Kibana ra, các bạn cũng sẽ thấy logs của Monitoring service được tự động thu thập nhờ chức năng tự động thu thập logs từ các containers của Filebeat
 
