@@ -1,6 +1,6 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/mlops-loop-en.jpg" loading="lazy"/>
-    <figcaption>Source: ml-ops.org</figcaption>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/ml-system-in-production.png" loading="lazy"/>
+    <figcaption><i>Sculley, et al. 2015. Hidden technical debt in machine learning systems. Proceedings of the 28th International Conference on Neural Information Processing Systems, Volume 2 (NIPS 2015)</i></figcaption>
 </figure>
 
 ## Giới thiệu
