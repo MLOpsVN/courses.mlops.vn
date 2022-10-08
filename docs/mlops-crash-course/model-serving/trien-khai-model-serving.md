@@ -17,15 +17,15 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.
 
-1. Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving.
+1.  Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving.
 
-1. Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
+1.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
 
-1. Set env var `MODEL_SERVING_DIR` bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này là để hỗ trợ việc chạy python code trong folder `model_serving/src` trong quá trình phát triển.
+1.  Set env var `MODEL_SERVING_DIR` bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này là để hỗ trợ việc chạy python code trong folder `model_serving/src` trong quá trình phát triển.
 
-```bash
-export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
-```
+    ```bash
+    export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
+    ```
 
 Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 
@@ -73,7 +73,7 @@ Task này được thực hiện giống như task **Cập nhật Feature Store*
 
 Trong task này, chúng ta cần đọc vào data mà chúng ta muốn chạy prediction. Khi đọc vào data, chúng ta cũng cần xử lý data này về input format mà model yêu cầu để tiện cho task **Batch prediction** tiếp theo, bằng cách lấy ra các features từ Feast và định dạng lại data mà chúng ta sẽ chạy prediction. Đầu ra của task này là data đã được xử lý về đúng input format của model và được lưu vào disk.
 
-Chúng ta sẽ viết code để đọc data mà chúng ta muốn chạy batch prediction. Code của task này được lưu tại `model_serving/src/data_extraction.py` và được giải thích như dưới đây.
+Chúng ta sẽ viết code để đọc data mà chúng ta muốn chạy batch prediction. Code của task này được lưu tại `model_serving/src/data_extraction.py`.
 
 ```python linenums="1" title="model_serving/src/data_extraction.py"
 fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO) # (1)
@@ -210,14 +210,7 @@ Về cơ bản, quá trình triển khai online serving chính là xây dựng m
 
 Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask trong Python. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _Bentoml_.
 
-Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API) để thực hiện online serving. Để quá trình xây dựng API này thuận tiện, chúng ta sẽ sử dụng Bentoml, một library chuyên được sử dụng cho việc tạo online serving API. Để xây dựng API này, chúng ta cần thực hiện các bước chính sau:
-
-1. Download model mà chúng ta muốn triển khai từ MLflow server
-1. Lưu model download được về [dạng mà Bentoml yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
-1. Khởi tạo [một _Bentoml Runner_ và một _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner)
-1. Viết code cho API
-
-Code của online serving được lưu tại `model_serving/src/bentoml_service.py` và được giải thích như dưới đây.
+Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API) để thực hiện online serving. Để quá trình xây dựng API này thuận tiện, chúng ta sẽ sử dụng Bentoml, một library chuyên được sử dụng cho việc tạo online serving API. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
@@ -280,14 +273,14 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 
 1. Download model từ MLflow server giống như ở task Batch prediction của Batch serving pipeline. `model_uri` chứa model path lấy từ file `model_serving/artifacts/registered_model_version.json`
 2. Đọc ra sklearn model được wrap trong MLflow model `mlflow_model`
-3. Lưu model về dạng Bentoml model
+3. Lưu model về [dạng mà Bentoml yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 4. `model_name` được lấy từ file `model_serving/artifacts/registered_model_version.json`
-5. Signature của model
+5. [Signature của model](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures), thể hiện hàm mà model object sẽ gọi
 6. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures)
 7. Thông tin thêm về key `batchable`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
 8. Lưu bất kì Python object nào đi kèm với model. Đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 9. Lưu lại thứ tự các features mà model yêu cầu. `feature_list` được lấy ra từ thông tin của model mà chúng ta đã lưu ở MLflow
-10. Tạo Bentoml Runner và Bentoml Service. Quá trình chạy model inference sẽ thông qua một Bentoml Runner. Bentoml Service chứa object Bentoml Runner, giúp chúng ta định nghĩa API một cách thuận tiện
+10. Tạo [_Bentoml Runner_ và _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner). Quá trình chạy model inference sẽ thông qua một Bentoml Runner. Bentoml Service chứa object Bentoml Runner, giúp chúng ta định nghĩa API một cách thuận tiện
 11. Khởi tạo kết nối tới Feature Store
 12. Hàm `predict` để thực hiện dự đoán
 13. Định nghĩa input class cho API

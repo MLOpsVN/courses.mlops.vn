@@ -37,7 +37,7 @@ Có khá nhiều các biến thể của pipeline trên, ví dụ như chúng ta
 
 Trong bài này, chúng ta sẽ thay thế Logstash bằng Filebeat để thu thập logs từ các containers và gửi tới Elasticsearch.
 
-!!! note
+!!! info
 
     ELK Stack được sử dụng làm tên chung cho giải pháp, mặc dù chúng ta sẽ sử dụng Filebeat thay thế cho Logstash.
 
@@ -52,14 +52,19 @@ bash run.sh elk up
 Câu lệnh trên sẽ chạy các servers sau:
 
 - Filebeat server
-  - File docker-compose để chạy Filebeat server được đặt tại `elk/extensions/filebeat/filebeat-compose.yml`
-  - Config của Filebeat server được đặt tại `elk/extensions/filebeat/config/filebeat.yml`
+
+      - `elk/extensions/filebeat/filebeat-compose.yml`: File docker-compose để chạy Filebeat server
+      - `elk/extensions/filebeat/config/filebeat.yml`: Config của Filebeat server
+
 - Elasticsearch server
-  - File docker-compose để chạy Elasticsearch server được đặt tại `elk/elk-docker-compose.yml`
-  - Config của Elasticsearch server được đặt tại `elk/elasticsearch/config/elasticsearch.yml`
+
+      - `elk/elk-docker-compose.yml`: File docker-compose để chạy Elasticsearch server
+      - `elk/elasticsearch/config/elasticsearch.yml`: Config của Elasticsearch server
+
 - Kibana server
-  - File docker-compose để chạy Kibana server được đặt tại `elk/elk-docker-compose.yml`
-  - Config của Kibana server được đặt tại `elk/kibana/config/kibana.yml`
+
+      - `elk/elk-docker-compose.yml`: File docker-compose để chạy Kibana server
+      - `elk/kibana/config/kibana.yml`: Config của Kibana server
 
 Hãy đợi khoảng 10 giây để cho việc khởi tạo các servers hoàn thành. Tiếp theo, chúng ta cần kiểm tra xem Elasticsearch server trên đã được triển khai thành công chưa, bằng cách chạy lệnh sau:
 
@@ -96,38 +101,38 @@ Việc đăng nhập thành công chứng tỏ Kibana server đã được tri�
 
 Sau khi đã triển khai ELK Stack thành công, hãy cùng thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving API hay chưa.
 
-Đầu tiên, các bạn hãy gửi một vài requests tới Online serving API bằng cách mở browser, truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
+1.  Gửi một vài requests tới Online serving API bằng cách mở browser, truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
 
-```json
-{
-  "request_id": "uuid-1",
-  "driver_ids": [1001, 1002, 1003, 1004, 1005]
-}
-```
+    ```json
+    {
+      "request_id": "uuid-1",
+      "driver_ids": [1001, 1002, 1003, 1004, 1005]
+    }
+    ```
 
-Sau đó, hãy đăng nhập vào Kibana server [http://localhost:5601](http://localhost:5601) trên browser của bạn như hướng dẫn ở phần trước. Ở sidebar bên phải, các bạn chọn **Discover**.
+1.  Đăng nhập vào Kibana server [http://localhost:5601](http://localhost:5601). Ở sidebar bên phải, chọn **Discover**.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png" loading="lazy" />
 
-Trên UI của page **Discover**, trong phần gõ câu truy vấn, các bạn gõ câu lệnh truy vấn như sau:
+1.  Trên UI của page **Discover**, trong phần gõ câu truy vấn, gõ truy vấn sau:
 
-```
-container.name:"online_serving"
-```
+    ```
+    container.name:"online_serving"
+    ```
 
-!!! note
+    !!! info
 
-    Câu truy vấn trên sử dụng ngôn ngữ truy vấn KQL. Các bạn có thể tham khảo thêm [tại đây](https://www.elastic.co/guide/en/kibana/current/kuery-query.html).
+        Câu truy vấn trên sử dụng ngôn ngữ truy vấn KQL. Các bạn có thể tham khảo thêm [tại đây](https://www.elastic.co/guide/en/kibana/current/kuery-query.html).
 
-Sau đó, các bạn sẽ nhìn thấy bảng hiển thị logs của Online Serving service như hình dưới đây.
+    Bảng hiển thị logs của Online Serving service sẽ giống như sau
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png" loading="lazy" />
 
-Các bạn có thể lưu lại lần _discover_ này để lần sau có thể xem lại mà không cần gõ lại câu lệnh truy vấn trên bằng cách click vào nút Save ở góc trên bên phải.
+    Các bạn có thể lưu lại lần _discover_ này để lần sau có thể xem lại mà không cần gõ lại câu lệnh truy vấn trên bằng cách click vào nút Save ở góc trên bên phải.
 
 !!! question
 
-    Nhưng làm thế nào mà ELK stack có thể biết được nên thu thập logs từ containers nào?
+    Làm thế nào mà ELK stack có thể biết được nên thu thập logs từ containers nào?
 
 Nếu bạn nào đã đọc file config của Filebeat tại `elk/extensions/filebeat/config/filebeat.yml`, thì các bạn sẽ để ý thấy một đoạn config như sau:
 
@@ -157,28 +162,33 @@ bash run.sh prom-graf up
 Câu lệnh trên sẽ chạy các servers sau:
 
 - Prometheus server
-  - File docker-compose để chạy Prometheus server được đặt tại `prom-graf/prom-graf-docker-compose.yml`
-  - Config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml`
+
+      - `prom-graf/prom-graf-docker-compose.yml`: File docker-compose để chạy Prometheus server
+      - `prom-graf/prometheus/config/prometheus.yml`: Config của Prometheus server
+
 - Grafana server
-  - File docker-compose để chạy Grafana server được đặt tại `prom-graf/prom-graf-docker-compose.yml`
-  - Grafana _dashboard_ config được đặt tại `prom-graf/grafana/config/dashboards.yaml`
-  - Grafana _datasource_ config được đặt tại `prom-graf/grafana/config/datasources.yaml`. File này định nghĩa sẵn datasource là Prometheus server được triển khai ở trên.
+
+      - `prom-graf/prom-graf-docker-compose.yml`: File docker-compose để chạy Grafana server
+      - `prom-graf/grafana/config/dashboards.yaml`: Grafana _dashboard_ config
+      - `prom-graf/grafana/config/datasources.yaml`. Grafana _datasource_ config. File này định nghĩa sẵn datasource là Prometheus server được triển khai ở trên
+
 - Node exporter server
-  - File docker-compose để chạy Node exporter server được đặt tại `prom-graf/prom-graf-docker-compose.yml`
+
+      - `prom-graf/prom-graf-docker-compose.yml`: File docker-compose để chạy Node exporter server
 
 Node exporter server là một server được cài đặt thêm vào để thu thập các metrics liên quan tới node (hay chính là máy tính hiện tại của chúng ta), ví dụ như các metrics liên quan tới CPU, memory, v.v. Các bạn có thể đọc thêm ở Github repo này [prometheus/node_exporter](https://github.com/prometheus/node_exporter).
 
 Để kiểm tra xem Prometheus server đã được triển khai thành công chưa, các bạn hãy làm những bước sau.
 
-1. Mở browser, truy cập vào Prometheus server tại [http://localhost:9090](http://localhost:9090)
-1. Trên Navbar, click **Status**, chọn **Targets**
-1. Kiểm tra xem các endpoints của các job **prometheus**, **node**, **online_serving** có đạt trạng thái **UP** không. Các bạn có thể cần đợi 30s cho tới khi các endpoints đạt trạng thái này. Hình dưới đây cho thấy endpoints của các targets trên đã đạt trạng thái **UP**.
+1.  Mở browser, truy cập vào Prometheus server tại [http://localhost:9090](http://localhost:9090)
+2.  Trên Navbar, click **Status**, chọn **Targets**
+3.  Kiểm tra xem các endpoints của các job **prometheus**, **node**, **online_serving** có đạt trạng thái **UP** không. Các bạn có thể cần đợi 30s cho tới khi các endpoints đạt trạng thái này. Hình dưới đây cho thấy endpoints của các targets trên đã đạt trạng thái **UP**.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png" loading="lazy" />
 
-!!! note
+    !!! info
 
-    Một *endpoint*, hoặc một *instance*, trong Prometheus được hiểu là địa chỉ của service mà chúng ta muốn Prometheus thu thập metrics. Một *job* là một process làm nhiệm vụ thu thập metrics từ một tập hợp của các *instance* có chung mục đích. Các bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/concepts/jobs_instances/).
+        Một *endpoint*, hoặc một *instance*, trong Prometheus được hiểu là địa chỉ của service mà chúng ta muốn Prometheus thu thập metrics. Một *job* là một process làm nhiệm vụ thu thập metrics từ một tập hợp của các *instance* có chung mục đích. Các bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/concepts/jobs_instances/).
 
 !!! question
 
@@ -200,12 +210,10 @@ Thiết lập này để báo cho Prometheus biết rằng, mỗi 5 giây, nó c
 
 Tiếp theo, chúng ta cũng cần kiểm tra xem Grafana server đã được triển khai thành công chưa, các bạn hãy làm những bước sau.
 
-1. Mở browser, truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
-2. Đăng nhập với tên user là `admin`, và mật khẩu là `admin`
+1.  Mở browser, truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
+2.  Đăng nhập với tên user là `admin`, và mật khẩu là `admin`. Việc đăng nhập thành công chứng tỏ Grafana server đã được triển khai thành công.
 
-Việc đăng nhập thành công chứng tỏ Grafana server đã được triển khai thành công.
-
-!!! note
+!!! info
 
     Grafana cần một datasource để có thể lấy metrics về và hiển thị. Prometheus đã được cấu hình làm datasource mặc định của Grafana. Cấu hình này được đặt tại `prom-graf/grafana/config/datasources.yaml`.
 
@@ -222,13 +230,11 @@ Việc đăng nhập thành công chứng tỏ Grafana server đã được tri�
 
 Tiếp theo, các bạn làm các bước sau:
 
-1. Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Manage`
-1. Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_
-1. Chọn Prometheus datasource, và click `Import`
+1.  Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Manage`
+1.  Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_
+1.  Chọn Prometheus datasource, và click `Import`. Các bạn sẽ nhìn thấy dashboard giống như sau
 
-Các bạn sẽ nhìn thấy dashboard giống như sau.
-
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
 
 Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose `prom-graf/prom-graf-docker-compose.yml` mà một vài phần của dashboard sẽ không được hiển thị hết. Các bạn có thể xem thêm [tại đây](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.
 
@@ -236,31 +242,31 @@ Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-com
 
 Bentoml dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-code/monitoring_service/dashboards/bentoml_dashboard.json`. Chúng ta cần làm các bước sau để hiển thị Bentoml dashboard trên Grafana.
 
-1. Copy file dashboard trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
-1. Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
-1. Ở sidebar bên phải, chọn **Dashboards**
-1. Ở giao diện của trang Dashboards, các bạn sẽ nhìn thấy một dashboard tên là _Bentoml Dashboard_, click chọn để mở dashboard. Bentoml dashboard sẽ nhìn như sau.
+1.  Copy file dashboard trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
+1.  Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
+1.  Ở sidebar bên phải, chọn **Dashboards**
+1.  Ở giao diện của trang Dashboards, các bạn sẽ nhìn thấy một dashboard tên là _Bentoml Dashboard_, click chọn để mở dashboard. Bentoml dashboard sẽ nhìn như sau.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
 
-Dashboard này bao gồm 2 panel:
+    Dashboard này bao gồm 2 panel:
 
-1. `request_in_progress`: Hiển thị số lượng request đang được xử lý
-1. `request_total`: Hiển thị số lượng request trong 1 giây, được đo trong thời gian mỗi 5 phút
+    - `request_in_progress`: Hiển thị số lượng request đang được xử lý
+    - `request_total`: Hiển thị số lượng request trong 1 giây, được đo trong thời gian mỗi 5 phút
 
-Các bạn có thể click vào tên của panel, chọn **Explore** để xem câu truy vấn _PromQL_ được sử dụng để đọc data từ Prometheus.
+1.  Click vào tên của panel, chọn **Explore** để xem câu truy vấn _PromQL_ được sử dụng để đọc data từ Prometheus.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png" loading="lazy" />
 
-!!! note
+    !!! info
 
-    PromQL là ngôn ngữ truy vấn được dùng trong Prometheus để tổng hợp data dạng time-series trong thời gian thực. Các bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+        PromQL là ngôn ngữ truy vấn được dùng trong Prometheus để tổng hợp data dạng time-series trong thời gian thực. Các bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
 !!! question
 
     Làm thế nào mà Grafana tự động đọc được file `bentoml_dashboard.json`?
 
-Config của Grafana dashboard được đặt tại `prom-graf/grafana/config/dashboards.yaml`. Trong đó, các bạn sẽ thấy có một số config như sau.
+Config `prom-graf/grafana/config/dashboards.yaml`. Trong đó, các bạn sẽ thấy có một số config như sau.: của Grafana dashboard
 
 ```yaml linenums="1" title="prom-graf/grafana/config/dashboards.yaml"
 updateIntervalSeconds: 10 # (1)
@@ -271,7 +277,7 @@ options:
 1. Chu kì mà Grafana đọc và cập nhật dashboard nằm trong folder chứa dashboard
 2. Folder chứa Grafana dashboard
 
-Cấu hình này cho phép Grafana tự động đọc dashboards được đặt tại đường dẫn được chỉ định. Thêm nữa, trong file docker-compose của Grafana server, chúng ta đã mount folder `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards` ở máy local vào folder `/opt/grafana/dashboards` ở trong docker container. Điều này cho phép chúng ta có thể copy file `bentoml_dashboard.json` vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`, và Grafana sẽ tự động đọc file dashboard này.
+Cấu đường dẫn được chỉ định. Thêm nữa, trong file docker-compose của Grafana server, chúng ta đã mount folder : hình này cho phép Grafana tự động đọc dashboards`mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards` ở máy local vào folder `/opt/grafana/dashboards` ở trong docker container. Điều này cho phép chúng ta có thể copy file `bentoml_dashboard.json` vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`, và Grafana sẽ tự động đọc file dashboard này.
 
 ## Tổng kết
 

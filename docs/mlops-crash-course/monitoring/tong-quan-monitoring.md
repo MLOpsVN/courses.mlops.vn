@@ -34,7 +34,7 @@ Thông thường, có ba mảng sau chúng ta cần theo dõi trong một hệ t
 1. Tài nguyên tính toán
 1. Ứng dụng
 
-Một số ví dụ về metrics trong các mảng trên như là: độ trễ, thông lượng, số requests trên một phút, tỉ lệ số requests có status code là 200, mức độ sử dụng CPU, GPU, và memory, v.v. Những metrics này được gọi là _operational metrics_.
+Một số ví dụ về metrics trong các mảng trên như là: độ trễ, thông lượng, số requests trên một phút, tỉ lệ số requests có status code là 200, mức độ sử dụng CPU, GPU, và memory, v.v. Những metrics này được gọi là _operational metrics_, tạm dịch là _metrics hệ thống_.
 
 Trong bài sau, chúng ta sẽ sử dụng Prometheus để thu thập các metrics trên từ máy tính mà chúng ta đang sử dụng để thực hành khoá học này. Chúng ta cũng sẽ sử dụng Bentoml để thu thập các metrics liên quan tới số requests gửi tới inference API.
 

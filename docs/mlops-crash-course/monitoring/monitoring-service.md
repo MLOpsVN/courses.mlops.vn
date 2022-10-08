@@ -15,13 +15,13 @@ Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, the
 
 Các library bạn cần cài đặt cho môi trường phát triển được đặt tại `monitoring_service/dev_requirements.txt`. Sau khi cài đặt môi trường phát triển, bạn cần làm tiếp các việc sau.
 
-1. Copy file `monitoring_service/deployment/.env-example`, đổi tên thành `monitoring_service/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
+1.  Copy file `monitoring_service/deployment/.env-example`, đổi tên thành `monitoring_service/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
 
-1. Set env var `MONITORING_SERVICE_DIR` bằng đường dẫn tuyệt đối tới folder `monitoring_service`. Env var này là để hỗ trợ việc chạy python code trong folder `monitoring_service/src` trong quá trình phát triển.
+1.  Set env var `MONITORING_SERVICE_DIR` bằng đường dẫn tuyệt đối tới folder `monitoring_service`. Env var này là để hỗ trợ việc chạy python code trong folder `monitoring_service/src` trong quá trình phát triển.
 
-```bash
-export MONITORING_SERVICE_DIR="path/to/mlops-crash-course-code/monitoring_service"
-```
+    ```bash
+    export MONITORING_SERVICE_DIR="path/to/mlops-crash-course-code/monitoring_service"
+    ```
 
 Các tools sẽ được sử dụng trong bài này bao gồm:
 
@@ -35,57 +35,57 @@ Các tools sẽ được sử dụng trong bài này bao gồm:
 
 ## Thiết kế
 
-Theo dõi các metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng chính là yêu cầu đầu ra của monitoring service.
-
-Thông thường, để biết được data thay đổi như thế nào, chúng ta sẽ so sánh data ở production với data mà chúng ta sử dụng để train model dựa trên một thuật toán so sánh nào đó, cho phép chúng ta biết được data có bị drift hay không, hay nói cách khác, xem các thuộc tính về thống kê của data bị thay đổi nhiều hay ít như thế nào.
-
-Để biết được model performance thay đổi thế nào, chúng ta sẽ thu thập label ở production, so sánh với prediction mà model sinh ra, và theo dõi model performance metrics theo thời gian. Model performance ở production cũng có thể được so sánh với model performance ở bước training. Tuy nhiên, để đơn giản, chúng ta sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của monitoring service là dự đoán của model và label ở production.
-
-Dựa vào các phân tích về đầu vào, đầu ra như trên, chúng ta có các chức năng chính của monitoring service như sau.
+Theo dõi các metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng chính là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/design.png" loading="lazy" />
 
-Monitoring service có 3 chức năng chính:
+Thông thường, để biết được data thay đổi như thế nào, chúng ta sẽ so sánh training data với production data dựa trên một thuật toán so sánh nào đó, cho phép chúng ta biết được data có bị drift hay không, hay nói cách khác, xem các thuộc tính về thống kê của data bị thay đổi nhiều hay ít như thế nào. Như vậy, đầu vào của chức năng **Phát hiện data drift** là features ở bước training và features ở production.
 
-1.  Phát hiện data drift
-
-    - Input: training data, data ở production
-    - Output: Các metrics về chất lượng data
-
-2.  Theo dõi model performance
-
-    - Input: dự đoán của model, labels ở production
-    - Output: Model performance metrics
+Để biết được model performance thay đổi thế nào, chúng ta sẽ thu thập label ở production, so sánh với prediction mà model sinh ra, và theo dõi model performance metrics theo thời gian. Model performance ở production cũng có thể được so sánh với model performance ở bước training. Tuy nhiên, để đơn giản, chúng ta sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của chức năng **Theo dõi model performance** là dự đoán của model và label ở production.
 
 Trong bài này, chúng ta sẽ sử dụng thư viện Evidently để phát hiện data drift và model performance. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra, và giám sát data và model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như **PSI**, **K-L divergence**, **Jensen-Shannon distance**, **Wasserstein distance**, và các metrics phổ biến của model performance như **Accuracy**, **F1 score**, **RMSE**, **MAE**, v.v. Các bạn có thể đọc thêm ở [document của Evidently](https://docs.evidentlyai.com/reference/data-drift-algorithm) để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động để phát hiện data drift tuỳ thuộc vào kích thước của dataset.
 
 ## Cách test
 
-> Before you start anything, learn how to finish it.
+Trong phần này, trước khi bắt tay vào code, chúng ta sẽ cùng phân tích xem làm thế nào để test các chức năng của monitoring service.
 
-Trong phần này, trước khi bắt tay vào code, chúng ta sẽ cùng phân tích xem làm thế nào để test 2 chức năng kể trên của monitoring service.
+!!! quote
+
+    Before you start anything, learn how to finish it.
 
 ### Phát hiện data drift
 
-Để test chức năng phát hiện data drift của monitoring service, chúng ta cần sắp đặt 2 tình huống như sau:
+Để test chức năng phát hiện data drift của monitoring service, chúng ta cần sinh ra 2 bộ datasets như sau:
 
-1.  Data ở production không bị drift
+| #   | Dataset       | Giá trị                                                                 |
+| --- | ------------- | ----------------------------------------------------------------------- |
+| 1   | `normal_data` | Trong khoảng `[A, B]`                                                   |
+| 2   | `drift_data`  | Trong khoảng `[C, D]`; `C`, `D` nằm đủ xa `A`, `B` để gây ra data drift |
 
-    - Sinh ra dataset 1, gọi là `normal_data`, có giá trị nằm trong khoảng [A, B]. Giả sử `normal_data` vừa là training data, vừa là data ở production, và được lưu vào Feature Store
-    - Data được lấy ra ở Feature Store để dự đoán chính là training data, tức là sẽ không xảy ra data drift giữa training data và data ở production
+Chúng ta cũng cần sắp đặt 2 tình huống như bảng dưới đây.
 
-2.  Data ở production bị drift
+| #   | Tình huống                     | Loại data       | Dataset được dùng |
+| --- | ------------------------------ | --------------- | ----------------- |
+| 1   | Production data không bị drift | Training data   | `normal_data`     |
+|     |                                | Production data | `normal_data`     |
+| 2   | Production data bị drift       | Training data   | `normal_data`     |
+|     |                                | Production data | `drift_data`      |
 
-    - Sinh ra dataset 2, gọi là `drift_data`, có giá trị nằm trong khoảng [C, D] với C và D nằm đủ xa A và B. `normal_data` ở trên vẫn là training data, còn `drift_data` là data ở production. `drift_data` được lưu vào Feature Store
-    - Data được lấy ra ở Feature Store (`drift_data`) để dự đoán có giá trị nằm xa training data (`normal_data`), tức là sẽ xảy ra data drift giữa training data và data ở production
+Ở tình huống 1, production data không bị drift, `normal_data` vừa là training data, vừa là production data, và được lưu vào Feature Store. Data được lấy ra ở Feature Store chính là training data, tức là sẽ không xảy ra data drift giữa training data và production data.
+
+Ở tình huống 2, production data bị drift, `normal_data` ở trên vẫn là training data, còn `drift_data` là production data. `drift_data` được lưu vào Feature Store. Data được lấy ra ở Feature Store (`drift_data`) để dự đoán có giá trị nằm xa training data (`normal_data`), tức là sẽ xảy ra data drift giữa training data và production data.
 
 !!! question
 
-    Để phát hiện data drift, chúng ta sẽ so sánh training data với data ở production. Vậy chúng ta cần lấy ra bao nhiêu records trong training data và tích luỹ bao nhiêu records của data ở production thì mới bắt đầu thực hiện quá trình so sánh?
+    Để phát hiện data drift, chúng ta sẽ so sánh training data với production data. Vậy chúng ta cần lấy ra bao nhiêu records trong training data và tích luỹ bao nhiêu records của production data thì mới bắt đầu thực hiện quá trình so sánh?
 
-Khi training dataset quá lớn, chúng ta không thể lấy hết các records ra để so sánh được (nếu thuật toán so sánh không cho phép tính toán các metrics để so sánh trước). Thông thường, chúng ta sẽ cố gắng dùng một con số đủ nhỏ để việc theo dõi data được diễn ra liên tục và gần với thời gian thực nhất (near real-time), để phát hiện kịp thời các vấn đề về data. Đồng thời, con số này cũng phải đủ lớn, để các tính chất thống kê của data không bị quá khác biệt ở các phần của dataset. Phương pháp lựa chọn và con số cần lựa chọn cho số các records tuỳ thuộc vào nhu cầu và tần suất theo dõi data ở production của mỗi dự án.
+Khi training dataset quá lớn, chúng ta không thể lấy hết các records ra để so sánh được (nếu thuật toán so sánh không cho phép tính toán các metrics để so sánh trước). Thông thường, chúng ta sẽ cố gắng dùng một con số đủ nhỏ để việc theo dõi data được diễn ra liên tục và gần với thời gian thực nhất (near real-time), để phát hiện kịp thời các vấn đề về data. Đồng thời, con số này cũng phải đủ lớn, để các tính chất thống kê của data không bị quá khác biệt ở các phần của dataset. Phương pháp lựa chọn và con số cần lựa chọn cho số các records tuỳ thuộc vào nhu cầu và tần suất theo dõi production data của mỗi dự án.
 
-Để đơn giản, chúng ta sẽ sinh ra 5 records cho mỗi dataset, và chỉ tích luỹ 5 records của data ở production để thực hiện việc so sánh data.
+!!! tip
+
+    Thuật ngữ **_reference window_** chỉ tập hợp các records để so sánh với production data. Thuật ngữ **_test window_** chỉ tập hợp các records để so sánh với **_reference window_**
+
+Để đơn giản, chúng ta sẽ sinh ra 5 records cho mỗi dataset, và chỉ tích luỹ 5 records của production data để thực hiện việc so sánh data.
 
 Một lý do nữa cho con số 5 là vì ở Online serving API, features được lấy ra sẽ là features mới nhất trong dataset. Do đó, việc sinh ra nhiều records ở nhiều thời điểm là không cần thiết, chỉ cần đảm bảo rằng tồn tại ít nhất 1 record trong Feature Store cho mỗi driver id ở request gửi đến là đủ. Và vì dataset gốc chỉ chứa 5 driver ids bao gồm `[1001, 1002, 1003, 1004, 1005]`, nên chúng ta chỉ cần 5 records cho mỗi dataset.
 
@@ -134,9 +134,9 @@ Với mỗi driver id, model sẽ trả về 1 số thực. Số thực này th�
 
 | request_id | Dự đoán của model | Tài xế được chọn | Hoàn thành |
 | ---------- | ----------------- | ---------------- | ---------- |
-| uuid-1     | 0.1               | 1001             | 1          |
-| uuid-2     | 1.2               | 1001             | 0          |
-| uuid-3     | -1.5              | 1002             | 1          |
+| uuid-1     | 0.1234            | 1001             | 1          |
+| uuid-2     | 1.2345            | 1001             | 0          |
+| uuid-3     | -1.5678           | 1002             | 1          |
 
 Như các bạn thấy, mặc dù chúng ta có dự đoán của model, nhưng chúng ta không có label ở dạng số thực này để so sánh. Chúng ta chỉ biết tài xế được chọn, tức là dự đoán luôn là `1` cho tài xế được chọn. Cột `Hoàn thành` chính là label cho mỗi request. Như vậy, để test chức năng theo dõi model performance của monitoring service, chúng ta chỉ cần sinh ra labels cho mỗi request được gửi tới ở dạng 1/0 chứ không phải ở dạng số thực mà model trả về.
 
@@ -150,7 +150,7 @@ Như các bạn thấy, mặc dù chúng ta có dự đoán của model, nhưng 
 1. `driver_ids`: danh sách các driver id được gửi đến trong request
 1. `trip_completed`: label cho request
 
-Giả sử tài xế `1001` luôn được dự đoán là tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe, thì bộ features của tài xế `1001` sẽ luôn được gửi về monitoring service, khiến cho chúng ta không thể kiểm soát được phân phối của data ở production trong quá trình test monitoring service. Do đó, chúng ta cần đảm bảo cả 5 bộ features của 5 tài xế trong dataset mà chúng ta dùng (`normal_data` hoặc `drift_data`) đều được gửi tới Online serving API lần lượt. Điều này giúp cho phân phối của data trong 5 requests này giống với phân phối của cả dataset mà chúng ta dùng, giúp chúng ta kiểm soát được 2 trường hợp data không bị drift và bị drift. Bảng dưới đây là một ví dụ cho dataset `request_data`.
+Giả sử tài xế `1001` luôn được dự đoán là tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe, thì bộ features của tài xế `1001` sẽ luôn được gửi về monitoring service, khiến cho chúng ta không thể kiểm soát được phân phối của production data trong quá trình test monitoring service. Do đó, chúng ta cần đảm bảo cả 5 bộ features của 5 tài xế trong dataset mà chúng ta dùng (`normal_data` hoặc `drift_data`) đều được gửi tới Online serving API lần lượt. Điều này giúp cho phân phối của data trong 5 requests này giống với phân phối của cả dataset mà chúng ta dùng, giúp chúng ta kiểm soát được 2 trường hợp data không bị drift và bị drift. Bảng dưới đây là một ví dụ cho dataset `request_data`.
 
 | request_id | driver_ids | trip_completed |
 | ---------- | ---------- | -------------- |
@@ -166,14 +166,12 @@ Như vậy là chúng ta đã phân tích xong cách test monitoring service, v�
 
 Trong phần này, chúng ta sẽ sinh ra 2 datasets có tính chất và mục đích như bảng dưới đây.
 
-| Tên dataset   | Phân phối                                   | Mục đích                                                  | Số records |
-| ------------- | ------------------------------------------- | --------------------------------------------------------- | ---------- |
-| `normal_data` | Phân phối chuẩn, giá trị thuộc [0.05, 0.25] | Giả làm training data và data không bị drift ở production | 5          |
-| `drift_data`  | Phân phối chuẩn, giá trị thuộc [0.75, 0.95] | Giả làm data bị drift ở production                        | 5          |
+| Dataset       | Phân phối                                   | Số records |
+| ------------- | ------------------------------------------- | ---------- |
+| `normal_data` | Phân phối chuẩn, giá trị thuộc [0.05, 0.25] | 5          |
+| `drift_data`  | Phân phối chuẩn, giá trị thuộc [0.75, 0.95] | 5          |
 
-Notebook `monitoring_service/nbs/prepare_datasets.ipynb` đã chứa code để sinh ra 2 datasets này. Mình sẽ tóm tắt chức năng của các đoạn code như sau.
-
-Đầu tiên, chúng ta sẽ lấy ra danh sách các driver id từ dataset gốc, và tạo một dataset cho bài toán classification dựa vào hàm `make_classification` có sẵn của scikit-learn, đồng thời biến đổi giá trị của features về đoạn mong muốn.
+Code để sinh ra 2 datasets này nằm tại `monitoring_service/nbs/prepare_datasets.ipynb`.
 
 ```python linenums="1" title="monitoring_service/nbs/prepare_datasets.ipynb"
 df_orig = pd.read_parquet(DATA_PATH, engine='fastparquet')
@@ -218,7 +216,7 @@ request_df['trip_completed'] = y
 ```
 
 1. Lấy ra các driver ids từ dataset gốc
-2. Tạo ra 1 dataset theo phân phối chuẩn
+2. Tạo ra 1 dataset cho bài toán classification theo phân phối chuẩn dựa vào hàm `make_classification` có sẵn của scikit-learn
 3. Biến đổi `X` về đoạn [0.05, 0.25]. `X` sẽ được dùng để tạo `normal_data`
 4. Biến đổi `X` về đoạn [0.75, 0.95], lưu vào `X_shift`. `X_shift` sẽ được dùng để tạo `drift_data`
 5. Sử dụng 3 cột đầu tiên của `X` và `X_shift` để làm features cho `normal_data` và `drift_data`
@@ -232,9 +230,7 @@ Như vậy là chúng ta vừa tạo xong `request_data` chứa thông tin về 
 
 ### Test datasets
 
-Code dùng để test các datasets và cách dùng Evidently được đặt tại `monitoring_service/nbs/test_datasets.ipynb`. Mình sẽ tóm tắt nội dung code như sau.
-
-Đầu tiên, chúng ta load datasets đã tạo và khởi tạo một số object. Các bạn hãy ấn vào phần chú thích của từng dòng để hiểu về mục đích của các dòng.
+Trong phần này, chúng ta sẽ sử dụng Evidently để phát hiện data drift và theo dõi model performance của 2 datasets trên. Code của phần này được đặt tại `monitoring_service/nbs/test_datasets.ipynb`.
 
 ```python linenums="1" title="monitoring_service/nbs/test_datasets.ipynb"
 normal_df = pd.read_parquet(ORIG_DATA_PATH, engine='fastparquet') # (1)
@@ -280,16 +276,16 @@ model_performance_monitor.execute( # (14)
 8. Định nghĩa 1 object `ModelMonitoring` để theo dõi model performance
 9. Chạy kiểm tra data drift, so sánh `drift_data` với `normal_data`
 10. Dùng `normal_data` làm `reference_data`, mang ý nghĩa là training data
-11. Dùng `drift_data` làm `current_data`, mang ý nghĩa là data ở production, để so sánh với training data
+11. Dùng `drift_data` làm `current_data`, mang ý nghĩa là production data, để so sánh với training data
 12. Thêm cột `prediction` vào `drift_data`, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là `1`
 13. Thêm cột `trip_completed` vào `drift_data`, hay chính là label của mỗi record
 14. Chạy kiểm tra model performance, so sánh `drift_data` với chính nó
 
 !!! question
 
-    Tại sao chúng ta lại kiểm tra model performance bằng cách so sánh `drift_data`, hay data ở production, với chính nó?
+    Tại sao chúng ta lại kiểm tra model performance bằng cách so sánh `drift_data`, hay production data, với chính nó?
 
-Trong Evidently, với loại monitoring là `ClassificationPerformanceMonitor`, nếu cả `reference_data` và `current_data` đều chứa prediction và label, thì Evidently sẽ tính toán các metrics cho model performance trên cả 2 datasets này, và thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên, để đơn giản hoá, chúng ta chỉ cần biết model performance của model với data ở production thôi, chứ không cần so sánh model performance giữa 2 datasets `reference_data` và `current_data`. Do đó, chúng ta sẽ truyền vào `drift_data` cho cả 2 loại datasets này.
+Trong Evidently, với loại monitoring là `ClassificationPerformanceMonitor`, nếu cả `reference_data` và `current_data` đều chứa prediction và label, thì Evidently sẽ tính toán các metrics cho model performance trên cả 2 datasets này, và thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên, để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa 2 datasets `reference_data` và `current_data`. Và vì `drift_data` đã chứa thông tin về prediction và label, nên chúng ta sẽ truyền vào `drift_data` cho cả 2 loại datasets này.
 
 Kết quả được in ra sau khi chạy sẽ giống như sau.
 
@@ -396,14 +392,14 @@ def _process_curr_data(self, new_rows: pd.DataFrame): # (1)
 
 !!! question
 
-    Tại sao chúng ta cần đọc `request_data` tức label data mỗi khi có records mới được gửi đến từ Online serving API?
+    Tại sao chúng ta cần đọc label data, hay `request_data`, mỗi khi có records mới được gửi đến từ Online serving API?
 
 Thực ra chúng ta không cần phải đọc lại `request_data` mỗi khi có records mới. Sở dĩ mình viết code như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.
 
 Sau khi kết hợp data mới nhận được với label data theo `request_id`, chúng ta sẽ có một record chứa các cột sau:
 
 - Các cột features: dùng để theo dõi data drift
-- Cột `prediction` và cột label `trip_completed`: dùng để theo dõi model performance. Lưu ý rằng cột `prediction` luôn có giá trị là `1`
+- Cột `prediction` và cột label `trip_completed`: dùng để theo dõi model performance. Lưu ý rằng cột `prediction` đã được biến đổi trong hàm `merge_request_with_label` để luôn có giá trị là `1`
 
 Tiếp đến, hãy cùng xem hàm `_process_next_run` và hàm `_execute_monitoring`.
 
@@ -468,18 +464,18 @@ Như vậy là chúng ta vừa tìm hiểu các đoạn code quan trọng nhất
 
 ```python linenums="1" title="monitoring_service/src/monitoring_service.py"
 app = Flask(AppConst.MONITORING_SERVICE) # (1)
-
+...
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": prometheus_client.make_wsgi_app()}) # (2)
-
+...
 SERVICE = MonitoringService() # (3)
-
+...
 @app.route("/iterate", methods=["POST"]) # (4)
 def iterate():
     item = flask.request.json
     df = pd.DataFrame.from_dict(item) # (5)
     SERVICE.iterate(new_rows=df) # (6)
     return "ok"
-
+...
 app.run(host="0.0.0.0", port=8309, debug=True) # (7)
 ```
 
@@ -491,7 +487,7 @@ app.run(host="0.0.0.0", port=8309, debug=True) # (7)
 6. Gọi hàm `iterate` để thực hiện đánh giá data drift và model performance
 7. Chạy Flask app ở port `8309` ở máy local
 
-Để Prometheus có thể thu thập metrics được gửi qua endpoint `/metrics`, chúng ta cần phải tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform` như dưới đây.
+Để Prometheus có thể thu thập metrics được gửi qua endpoint `/metrics`, chúng ta cần phải tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform`.
 
 ```yaml linenums="1" title="prom-graf/prometheus/config/prometheus.yml"
 - job_name: "monitoring_service"
@@ -505,7 +501,7 @@ Sau khi code xong monitoring service, chúng ta sẽ viết thêm code cho Onlin
 
 ### Tích hợp Online serving
 
-Các bạn hãy mở file code của Online serving API tại `model_serving/src/bentoml_service.py` trong repo `mlops-crash-course-code`. Hãy chú ý tới đoạn code trong hàm `inference` như dưới đây.
+Các bạn hãy mở file code của Online serving API tại `model_serving/src/bentoml_service.py` trong repo `mlops-crash-course-code`. Hãy chú ý tới đoạn code trong hàm `inference`.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 @svc.api(
@@ -575,14 +571,17 @@ Dashboard **Evidently Data Drift Dashboard** sẽ giống như hình dưới đ�
 Dashboard này chứa các panels về data drift bao gồm.
 
 - `General information`
-  - `Dataset drift`: Dataset có bị drift hay không
-  - `Share of drifted features`: Tỉ lệ số features bị drift trên tổng số features
-  - `# of drifted features`: Số features bị drift
-  - `# of features`: Tổng số features
-- `Detailed information`
-  - `P-value of features`: [p-value](https://en.wikipedia.org/wiki/P-value) của các features
 
-### Classification Performance Dashboard
+      - `Dataset drift`: Dataset có bị drift hay không
+      - `Share of drifted features`: Tỉ lệ số features bị drift trên tổng số features
+      - `# of drifted features`: Số features bị drift
+      - `# of features`: Tổng số features
+
+- `Detailed information`
+
+      - `P-value of features`: [p-value](https://en.wikipedia.org/wiki/P-value) của các features
+
+### Model Performance Dashboard
 
 Dashboard **Evidently Classification Performance Dashboard** sẽ giống như hình dưới đây.
 
@@ -591,29 +590,33 @@ Dashboard **Evidently Classification Performance Dashboard** sẽ giống như h
 Dashboard này chứa các panels về model performance bao gồm.
 
 - `Reference dataset data`
-  - `Quality`: Tổng hợp các model performance metrics theo thời gian
-  - `accuracy`, `f1`, `precision`, `recall`: Các model performance metrics
-  - `Prediction class representation`: Số lượng các prediction theo class
-  - `Target class representation`: Số lượng các label theo class
+
+      - `Quality`: Tổng hợp các model performance metrics theo thời gian
+      - `accuracy`, `f1`, `precision`, `recall`: Các model performance metrics
+      - `Prediction class representation`: Số lượng các prediction theo class
+      - `Target class representation`: Số lượng các label theo class
+
 - `Class 0 information`: Thông tin về class 0
-  - `Confusion 0`: Confusion matrix cho class 0
-  - `Confusion in time`: Các giá trị của confusion matrix theo thời gian
-  - `Quality`: Tổng hợp các model performance metrics cho class 0 theo thời gian
+
+      - `Confusion 0`: Confusion matrix cho class 0
+      - `Confusion in time`: Các giá trị của confusion matrix theo thời gian
+      - `Quality`: Tổng hợp các model performance metrics cho class 0 theo thời gian
+
 - `Class 1 information`: Tương tự class 0
 
 ### Alerts
 
-Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi một vấn đề về metrics xảy ra. Trong bài này, chúng ta sẽ tạo một Alert đơn giản trong Grafana để cảnh báo khi dataset bị drift. Các bạn hãy làm theo các bước dưới đây.
+Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi một vấn đề về metrics xảy ra. Trong bài này, chúng ta sẽ tạo một Alert đơn giản trong Grafana để cảnh báo khi dataset bị drift.
 
 1.  Ở sidebar bên phải của Grafana, các bạn click vào `Dashabords`. Ở trang Dashboard, tạo Folder tên là `Alerts`. Folder này được dùng để lưu Alert chúng ta sẽ tạo
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png" loading="lazy" />
 
-1.  Ở sidebar bên phải của Grafana, các bạn click vào `Alerting`. Trong giao diện của trang `Alerting`, tab `Alert rules`, các bạn click nút `New alert rule`.
+2.  Ở sidebar bên phải của Grafana, các bạn click vào `Alerting`. Trong giao diện của trang `Alerting`, tab `Alert rules`, các bạn click nút `New alert rule`.
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png" loading="lazy" />
 
-1.  Trong trang tạo alert rule mới tên là `Data drift detection`, các bạn điền các thông tin trong phần `1. Set a query and alert condition` như ảnh dưới, với query `A` là:
+3.  Trong trang tạo alert rule mới tên là `Data drift detection`, các bạn điền các thông tin trong phần `1. Set a query and alert condition` như ảnh dưới, với query `A` là:
 
     ```PromQL linenums="1"
     evidently:data_drift:dataset_drift{dataset_name="drivers"}
@@ -621,19 +624,21 @@ Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi mộ
 
      <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png" loading="lazy" />
 
-1.  Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
+4.  Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png" loading="lazy" />
 
-1.  Click `Save and exit`
+5.  Click `Save and exit`
 
-Để cấu hình cách mà Alert được gửi đi, các bạn vào tab `Notification polices` và thêm policy mới. Trong khoá học này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.
+!!! info
+
+    Để cấu hình cách mà Alert được gửi đi, các bạn vào tab `Notification polices` và thêm policy mới. Trong khoá học này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.
 
 ## Thử nghiệm
 
 ### Data bị drift
 
-Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py` và được giải thích như dưới đây.
+Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py`.
 
 ```python linenums="1" title="monitoring_service/src/mock_request.py"
 def construct_request(row: pd.Series) -> dict: # (1)
@@ -732,7 +737,7 @@ Các bạn có thể click vào nút `Show state history` để xem thời đi�
 Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
 
 ```bash
-    python src/mock_request.py -d normal -n 5
+python src/mock_request.py -d normal -n 5
 ```
 
 Sau khi gửi xong, các bạn hãy kiểm tra **Evidently Data Drift Dashboard** sẽ thấy thông tin Dataset không bị drift, số drifted features là 0. Ngoài ra, alert `Data drift detection` cũng đã ở trạng thái `Normal`.

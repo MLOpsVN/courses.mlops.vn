@@ -154,7 +154,7 @@ data_df = data_df[data_df.columns. \ # (9)
 
 ## Training code
 
-Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.
+Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model.
 
 ```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
 selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"] # (1)

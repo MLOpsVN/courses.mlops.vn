@@ -9,7 +9,7 @@ Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu 
 
 Trong bài này, dựa trên các kiến thức được trình bài trong bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu sơ lược lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.
 
-!!! note
+!!! warning
 
     Khái niệm về MLOps và các lý thuyết liên quan được nhiều nguồn khác nhau định nghĩa khác nhau. Chúng ta nên giữ một thái độ mở về sự khác nhau giữa các nguồn tài liệu này.
 

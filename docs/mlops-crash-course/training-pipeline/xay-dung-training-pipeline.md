@@ -25,17 +25,17 @@ Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai traini
 
 Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.
 
-1. Clone Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform). Lưu ý, repo `mlops-crash-course-platform` và repo `mlops-crash-course-code` phải được đặt trong cùng một folder
+1.  Clone Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform). Lưu ý, repo `mlops-crash-course-platform` và repo `mlops-crash-course-code` phải được đặt trong cùng một folder
 
-1. Copy file `training_pipeline/.env-example`, đổi tên thành `training_pipeline/.env`. File này chứa các config cần thiết cho training pipeline.
+1.  Copy file `training_pipeline/.env-example`, đổi tên thành `training_pipeline/.env`. File này chứa các config cần thiết cho training pipeline.
 
-1. Copy file `training_pipeline/deployment/.env-example`, đổi tên thành `training_pipeline/deployment/.env`. File này chứa các config cần thiết cho việc triển khai training pipeline.
+1.  Copy file `training_pipeline/deployment/.env-example`, đổi tên thành `training_pipeline/deployment/.env`. File này chứa các config cần thiết cho việc triển khai training pipeline.
 
-1. Set env var `TRAINING_PIPELINE_DIR` bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này là để hỗ trợ việc chạy python code trong folder `training_pipeline/src` trong quá trình phát triển.
+1.  Set env var `TRAINING_PIPELINE_DIR` bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này là để hỗ trợ việc chạy python code trong folder `training_pipeline/src` trong quá trình phát triển.
 
-```bash
-export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
-```
+    ```bash
+    export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
+    ```
 
 Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 
@@ -73,7 +73,7 @@ cd ..
 
 ## Data extraction
 
-Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về, để phục vụ cho quá trình train model. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk. Code của task này được lưu tại `training_pipeline/src/data_extraction.py` và được giải thích như dưới đây.
+Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về, để phục vụ cho quá trình train model. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk. Code của task này được lưu tại `training_pipeline/src/data_extraction.py`.
 
 ```python linenums="1" title="training_pipeline/src/data_extraction.py"
 fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO) # (1)
@@ -130,7 +130,7 @@ Sau khi đã lấy được data chứa các feature chúng ta muốn ở task D
 
 Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.
 
-Dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không. Code của task này được lưu tại file `training_pipeline/src/data_validation.py` và được giải thích như dưới đây.
+Dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không. Code của task này được lưu tại file `training_pipeline/src/data_validation.py`.
 
 ```python linenums="1" title="training_pipeline/src/data_validation.py"
 def check_unexpected_features(df: pd.DataFrame): # (1)
@@ -173,7 +173,7 @@ cd ..
 
 Đầu ra của task này là các tập dataset đã được lưu vào disk.
 
-Ở task này, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa. Code của task này được lưu tại file `training_pipeline/src/data_preparation.py` và được giải thích như dưới đây.
+Ở task này, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa. Code của task này được lưu tại file `training_pipeline/src/data_preparation.py`.
 
 ```python linenums="1" title="training_pipeline/src/data_preparation.py"
 target_col = 'trip_completed'
@@ -210,7 +210,7 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 
 Trong task này, chúng ta sẽ train model sử dụng data đã được chuẩn bị ở task Data preparation. Task này cũng là nơi mà chúng ta sẽ thực hiện hyperparameter tuning để train được model tốt nhất. Đầu ra của bước này là model đã được train.
 
-Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_training.py` và được giải thích như dưới đây.
+Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_training.py`.
 
 ```python linenums="1" title="training_pipeline/src/model_training.py"
 mlflow.set_tracking_uri(config.mlflow_tracking_uri) # (1)
@@ -267,7 +267,7 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 
 Đầu vào của task này là model đã được train ở task Model training. Trong task này, chúng ta thực hiện chạy prediction cho model trên test set lấy từ task Data preparation. Đầu ra của task này là nhóm các metrics dùng để đánh giá chất lượng của model.
 
-Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_evaluation.py` và được giải thích như dưới đây.
+Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_evaluation.py`.
 
 ```python linenums="1" title="training_pipeline/src/model_evaluation.py"
 model = mlflow.pyfunc.load_model(
@@ -306,7 +306,7 @@ Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có t
 
 Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể tự động register model với Model Registry.
 
-Code của task này được lưu tại file `training_pipeline/src/model_validation.py` và được giải thích như dưới đây.
+Code của task này được lưu tại file `training_pipeline/src/model_validation.py`.
 
 ```python linenums="1" title="training_pipeline/src/model_validation.py"
 eval_result = EvaluationResult.load(AppPath.EVALUATION_RESULT)
@@ -347,7 +347,7 @@ Các bạn có thể click vào model đã được register để xem thêm th�
 
 ## Airflow DAG
 
-Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py` và được giải thích như dưới đây.
+Như vậy là chúng ta đã phát triển xong các đoạn code cần thiết cho training pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py`.
 
 ```python linenums="1" title="training_pipeline/dags/training_dag.py"
 with DAG(
