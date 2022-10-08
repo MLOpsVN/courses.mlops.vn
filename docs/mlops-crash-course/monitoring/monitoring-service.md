@@ -28,17 +28,17 @@ Các tools sẽ được sử dụng trong bài này bao gồm:
 
     Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `monitoring_service`.
 
-## Architecture
+## Thiết kế monitoring service
 
 Theo dõi các metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng chính là yêu cầu đầu ra của monitoring service.
 
 Thông thường, để biết được data thay đổi như thế nào, chúng ta sẽ so sánh data ở production với data mà chúng ta sử dụng để train model dựa trên một thuật toán so sánh nào đó, cho phép chúng ta biết được data có bị drift hay không, hay nói cách khác, xem các thuộc tính về thống kê của data bị thay đổi nhiều hay ít như thế nào.
 
-Để biết được model performance thay đổi thế nào, chúng ta sẽ thu thập label ở production, so sánh với prediction mà model sinh ra, và theo dõi model performance metrics theo thời gian. Model performance ở production cũng sẽ được so sánh với model performance ở bước training. Như vậy, đầu vào của monitoring service là data ở bước train model, và label ở production.
+Để biết được model performance thay đổi thế nào, chúng ta sẽ thu thập label ở production, so sánh với prediction mà model sinh ra, và theo dõi model performance metrics theo thời gian. Model performance ở production cũng có thể được so sánh với model performance ở bước training. Tuy nhiên, để đơn giản, chúng ta sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của monitoring service là dự đoán của model và label ở production.
 
-Dựa vào các phân tích về đầu vào, đầu ra như trên, chúng ta có architecture của monitoring service như sau.
+Dựa vào các phân tích về đầu vào, đầu ra như trên, chúng ta có các chức năng chính của monitoring service như sau.
 
-TODO: Vẽ hình
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/design.png" loading="lazy" />
 
 Monitoring service có 3 chức năng chính:
 
@@ -49,7 +49,7 @@ Monitoring service có 3 chức năng chính:
 
 2.  Theo dõi model performance
 
-    - Input: training labels, labels của requests ở production
+    - Input: dự đoán của model, labels ở production
     - Output: Model performance metrics
 
 Trong bài này, chúng ta sẽ sử dụng thư viện Evidently để phát hiện data drift và model performance. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra, và giám sát data và model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như **PSI**, **K-L divergence**, **Jensen-Shannon distance**, **Wasserstein distance**, và các metrics phổ biến của model performance như **Accuracy**, **F1 score**, **RMSE**, **MAE**, v.v. Các bạn có thể đọc thêm ở [document của Evidently](https://docs.evidentlyai.com/reference/data-drift-algorithm) để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động để phát hiện data drift tuỳ thuộc vào kích thước của dataset.
@@ -60,28 +60,9 @@ Trong bài này, chúng ta sẽ sử dụng thư viện Evidently để phát hi
 
 Trong phần này, trước khi bắt tay vào code, chúng ta sẽ cùng phân tích xem làm thế nào để test 2 chức năng kể trên của monitoring service.
 
-### Cách test phát hiện data drift
+### Phát hiện data drift
 
-Để test chức năng phát hiện data drift của monitoring service, chúng ta cần sắp đặt 2 tình huống:
-
-1. Data ở production không bị drift
-1. Data ở production bị drift
-
-Chúng ta có 1 lựa chọn hiển nhiên nhất cho 2 tình huống này như sau:
-
-1.  Data ở production không bị drift
-
-    - Sinh ra dataset 1 làm data ở production có phân phối giống training data, lưu nó vào Feature Store
-    - Gửi request chứa driver ids tới Online serving API
-    - Data được lấy ra từ Feature Store để dự đoán sẽ có phân phối giống training data, tức là sẽ không xảy ra data drift giữa training data và data ở production
-
-1.  Data ở production bị drift
-
-    - Sinh ra dataset 2 làm data ở production có phân phối khác training data, lưu nó vào Feature Store
-    - Gửi request chứa driver ids tới Online serving API
-    - Data được lấy ra từ Feature Store để dự đoán sẽ có phân phối khác training data, tức là sẽ xảy ra data drift giữa training data và data ở production
-
-Tuy nhiên, cách sắp đặt như trên khiến chúng ta cần kiểm tra phân phối của training data. Việc này là không cần thiết, khi mà phân phối của training data có thể là bất kì phân phối nào, trong khi chúng ta chỉ cần kiểm tra xem monitoring service có hoạt động đúng chức năng không. Do đó, chúng ta có một cách sắp đặt đơn giản hơn như sau.
+Để test chức năng phát hiện data drift của monitoring service, chúng ta cần sắp đặt 2 tình huống như sau:
 
 1.  Data ở production không bị drift
 
@@ -90,7 +71,7 @@ Tuy nhiên, cách sắp đặt như trên khiến chúng ta cần kiểm tra ph�
 
 2.  Data ở production bị drift
 
-    - Sinh ra dataset 2, gọi là `drift_data`, có giá trị nằm trong khoảng [C, D] với C và D nằm đủ xa A và B. Giả sử `normal_data` là training data, còn `drift_data` là data ở production. `drift_data` được lưu vào Feature Store
+    - Sinh ra dataset 2, gọi là `drift_data`, có giá trị nằm trong khoảng [C, D] với C và D nằm đủ xa A và B. `normal_data` ở trên vẫn là training data, còn `drift_data` là data ở production. `drift_data` được lưu vào Feature Store
     - Data được lấy ra ở Feature Store (`drift_data`) để dự đoán có giá trị nằm xa training data (`normal_data`), tức là sẽ xảy ra data drift giữa training data và data ở production
 
 !!! question
@@ -125,7 +106,7 @@ Bảng dưới đây là một ví dụ của `drift_data`.
 | 3     | 2021-07-27 10:00:00+00:00 | 1004      | 0.884332  | 0.750000 | 750             |
 | 4     | 2021-07-23 05:00:00+00:00 | 1005      | 0.950000  | 0.950000 | 946             |
 
-### Cách test theo dõi model performance
+### Theo dõi model performance
 
 Để test chức năng theo dõi model performance của monitoring service, chúng ta cần có label của mỗi request được gửi tới Online serving API, thì mới biết được prediction tạo bởi model là đúng hay sai.
 
@@ -147,15 +128,15 @@ Và response trả về có dạng như sau.
 }
 ```
 
-Mặc dù với mỗi driver id, model sẽ trả về 1 số thực thể hiện khả năng mà tài xế có hoàn thành hay không. Tuy nhiên, ở production, chúng ta không có label để biết chính xác số thực này hay khả năng này là bao nhiêu. Chúng ta chỉ biết rằng, với driver id là `1001` trả về bởi model, tài xế có id `1001` có hoàn thành cuốc xe hay không. Bảng dưới đây giả sử request và label của request.
+Với mỗi driver id, model sẽ trả về 1 số thực. Số thực này thể hiện khả năng mà tài xế có hoàn thành hay không. Tuy nhiên, ở production, chúng ta không có label để biết chính xác số thực này hay khả năng này là bao nhiêu. Chúng ta chỉ biết rằng, với driver id là `1001` trả về bởi model, tài xế có id `1001` có hoàn thành cuốc xe hay không. Bảng dưới đây thể hiện kết quả dự đoán của model, tài xế được chọn, và thông tin cuốc xe có hoàn thành không, với mỗi request được gửi đến serving API.
 
-| request_id | Tài xế được chọn | Hoàn thành |
-| ---------- | ---------------- | ---------- |
-| uuid-1     | 1001             | 1          |
-| uuid-2     | 1001             | 0          |
-| uuid-3     | 1002             | 1          |
+| request_id | Dự đoán của model | Tài xế được chọn | Hoàn thành |
+| ---------- | ----------------- | ---------------- | ---------- |
+| uuid-1     | 0.1               | 1001             | 1          |
+| uuid-2     | 1.2               | 1001             | 0          |
+| uuid-3     | -1.5              | 1002             | 1          |
 
-Như các bạn thấy, response của mỗi request là tài xế được chọn, tức là prediction luôn là `1` cho tài xế được chọn. Cột `Hoàn thành` chính là label cho mỗi request. Như vậy, để test chức năng theo dõi model performance của monitoring service, chúng ta chỉ cần sinh ra labels cho mỗi request được gửi tới.
+Như các bạn thấy, mặc dù chúng ta có dự đoán của model, nhưng chúng ta không có label ở dạng số thực này để so sánh. Chúng ta chỉ biết tài xế được chọn, tức là dự đoán luôn là `1` cho tài xế được chọn. Cột `Hoàn thành` chính là label cho mỗi request. Như vậy, để test chức năng theo dõi model performance của monitoring service, chúng ta chỉ cần sinh ra labels cho mỗi request được gửi tới ở dạng 1/0 chứ không phải ở dạng số thực mà model trả về.
 
 !!! question
 
@@ -346,15 +327,15 @@ classification_performance:class_quality | 0.0 | {'dataset': 'reference', 'class
 
 ## Monitoring service
 
-Trong phần này, chúng ta sẽ phát triển monitoring service. Hình dưới đây thể hiện input và output của monitoring service.
+Trong phần này, chúng ta sẽ phát triển monitoring service. Hình dưới đây thể hiện các luồng data của monitoring service.
 
-TODO: Vẽ input và output của monitoring service
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/data-flow.png" loading="lazy" />
 
 Như hình trên, quá trình phát triển monitoring service bao gồm các bước chính sau.
 
 1. Viết code để gửi request và response data từ Online serving API sang _Monitoring API_ của monitoring service
 2. Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance
-3. Thiết lập Grafana dashboards để hiển thị các metrics liên quan tới data drift và model performance
+3. Thiết lập Prometheus server và Grafana dashboards để hiển thị các metrics liên quan tới data drift và model performance
 
 ### Monitoring API
 
@@ -608,7 +589,7 @@ Giống như ở bài trước [Metrics hệ thống](../metrics-he-thong), các
 
 Dashboard **Evidently Data Drift Dashboard** sẽ giống như hình dưới đây.
 
-TODO: Thêm hình
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-no-data.png" loading="lazy" />
 
 Dashboard này chứa các panels về data drift bao gồm.
 
@@ -624,7 +605,7 @@ Dashboard này chứa các panels về data drift bao gồm.
 
 Dashboard **Evidently Classification Performance Dashboard** sẽ giống như hình dưới đây.
 
-TODO: Thêm hình
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-no-data.png" loading="lazy" />
 
 Dashboard này chứa các panels về model performance bao gồm.
 
@@ -641,21 +622,29 @@ Dashboard này chứa các panels về model performance bao gồm.
 
 ### Alerts
 
-Ở sidebar bên phải của Grafana, các bạn click vào `Alerting`. Trong giao diện của trang `Alerting`, tab `Alert rules`, các bạn click nút `New alert rule`. Trong trang tạo alert rule mới tên là `Data drift detection`, các bạn điền các thông tin như dưới đây.
+Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi một vấn đề về metrics xảy ra. Trong bài này, chúng ta sẽ tạo một Alert đơn giản trong Grafana để cảnh báo khi dataset bị drift. Các bạn hãy làm theo các bước dưới đây.
 
-1.  Phần `1. Set a query and alert condition`, query `A`
+1.  Ở sidebar bên phải của Grafana, các bạn click vào `Dashabords`. Ở trang Dashboard, tạo Folder tên là `Alerts`. Folder này được dùng để lưu Alert chúng ta sẽ tạo
 
-    ```PromQL
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png" loading="lazy" />
+
+1.  Ở sidebar bên phải của Grafana, các bạn click vào `Alerting`. Trong giao diện của trang `Alerting`, tab `Alert rules`, các bạn click nút `New alert rule`.
+
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png" loading="lazy" />
+
+1.  Trong trang tạo alert rule mới tên là `Data drift detection`, các bạn điền các thông tin trong phần `1. Set a query and alert condition` như ảnh dưới, với query `A` là:
+
+    ```PromQL linenums="1"
     evidently:data_drift:dataset_drift{dataset_name="drivers"}
     ```
 
-TODO: Ảnh phần 1
+     <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png" loading="lazy" />
 
-1. Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
+1.  Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
 
-TODO: Ảnh phần 2 và 3
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png" loading="lazy" />
 
-1. Click `Save and exit`
+1.  Click `Save and exit`
 
 Để cấu hình cách mà Alert được gửi đi, các bạn vào tab `Notification polices` và thêm policy mới. Trong khoá học này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.
 
@@ -735,21 +724,25 @@ def main(data_type: str, n_request: int = 1): # (3)
     python src/mock_request.py -d drift -n 5
     ```
 
-Sau khi các requests được gửi xong, các bạn đợi khoảng 10s rồi kiểm tra các Grafana dashboards.
+Sau khi các requests được gửi xong, các bạn hãy kiểm tra **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**, kết quả sẽ giống như sau.
 
-Dashboard **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard** sẽ hiển thị kết quả giống như sau.
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png" loading="lazy" />
+    <figcaption>Evidently Data Drift Dashboard - Dataset drift</figcaption>
+</figure>
 
-TODO: Thêm ảnh drift
-
-TODO: Thêm ảnh model performance
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-with-data.png" loading="lazy" />
+    <figcaption>Evidently Classification Performance Dashboard</figcaption>
+</figure>
 
 Các bạn mở trang Alerting trong Grafana và sẽ thấy Alert `Data drift detection` mà chúng ta tạo ở trên đang ở trạng thái `Firing`.
 
-TODO: Thêm ảnh firing
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-firing.png" loading="lazy"/>
 
 Các bạn có thể click vào nút `Show state history` để xem thời điểm của các trạng thái của Alert này.
 
-TODO: Thêm ảnh state history
+<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png" loading="lazy"/>
 
 Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
 
@@ -757,15 +750,19 @@ Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới On
     python src/mock_request.py -d normal -n 5
 ```
 
-Sau khi gửi xong, các bạn sẽ thấy dashboard **Evidently Data Drift Dashboard** sẽ hiển thị thông tin rằng Dataset không bị drift, và số drifted features là 0.
+Sau khi gửi xong, các bạn hãy kiểm tra **Evidently Data Drift Dashboard** sẽ thấy thông tin Dataset không bị drift, số drifted features là 0. Ngoài ra, alert `Data drift detection` cũng đã ở trạng thái `Normal`.
 
-TODO: Thêm ảnh
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png" loading="lazy" />
+    <figcaption>Evidently Data Drift Dashboard - Dataset không drift</figcaption>
+</figure>
 
-Ở trang Alerting, alert ``Data drift detection` cũng đã ở trạng thái `Normal`.
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-normal.png" loading="lazy" />
+    <figcaption>Alert Data drift detection ở trạng thái Normal</figcaption>
+</figure>
 
-TODO: Thêm ảnh
-
-!!! note
+??? note
 
     Nếu các bạn mở Kibana ra, các bạn cũng sẽ thấy logs của Monitoring service được tự động thu thập nhờ chức năng tự động thu thập logs từ các containers của Filebeat
 
