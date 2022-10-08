@@ -5,11 +5,19 @@
 
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../training-pipeline/tong-quan-training-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã có được những thứ sau:
+
+1. Các rules để transform và clean data từ data source
+2. Các rules để sinh ra các features cho việc train model
+3. Code để chuẩn bị data cho việc train model
+4. Code để train model
+5. Code để đánh giá model
+
+Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeline](../../data-pipeline/tong-quan-data-pipeline) để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline. Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
 Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
-<img src="../../../assets/images/mlops-crash-course/training-pipeline/tong-quan-pipeline/training-pipeline-dag.png" loading="lazy"/>
+<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-dag.png" loading="lazy"/>
 
 ## Môi trường phát triển
 
@@ -41,6 +49,8 @@ Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 
 ## Cập nhật Feature Store
 
+Trong khoá học này, chúng ta sử dụng Feast làm Feature Store để version các feature và các bộ feature. Như ở bài trước khi xây dựng data pipline, chúng ta đã biết Feast sử dụng Feature Registry để làm nơi tập trung lưu trữ định nghĩa về các feature và metadata của chúng. Do Feature Registry này sẽ được lưu ở dạng file ở local, nên mỗi Data Scientist cần tự update Feature Registry này trên máy của mình để các feature được update.
+
 Trước khi cập nhật Feature Store, chúng ta cần đảm bảo rằng code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.
 
 Trong khoá học này, chúng ta để code của Feature Store tại `data_pipeline/feature_repo`. Như vậy, để triển khai code này sang training pipeline, chúng ta chỉ cần copy code từ `data_pipeline/feature_repo` sang `training_pipeline/feature_repo`. Để thuận tiện cho khoá học, các bạn chỉ cần chạy các lệnh sau.
@@ -63,7 +73,7 @@ cd ..
 
 ## Data extraction
 
-Tiếp theo, chúng ta cần viết code để lấy data phục vụ cho quá trình train model từ Feature Store. Code của task này được lưu tại `training_pipeline/src/data_extraction.py` và được giải thích như dưới đây.
+Trong task này, chúng ta sử dụng Feast để lấy data chứa các feature chúng ta muốn về, để phục vụ cho quá trình train model. Đầu vào của task này là định nghĩa về các feature chúng ta muốn lấy. Đầu ra của task này là data đã được lấy về và lưu vào disk. Code của task này được lưu tại `training_pipeline/src/data_extraction.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="training_pipeline/src/data_extraction.py"
 fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO) # (1)
@@ -108,7 +118,19 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
     <figcaption>Photo by <a href="https://unsplash.com/@amelune?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Diane Serik</a> on <a href="https://unsplash.com/s/photos/test?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
-Ở task Data validation này, dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không. Code của task này được lưu tại file `training_pipeline/src/data_validation.py` và được giải thích như dưới đây.
+Sau khi đã lấy được data chứa các feature chúng ta muốn ở task Data extraction, chúng ta cần đánh giá xem data có hợp lệ không trước khi train model, bằng cách kiểm tra những thứ sau.
+
+- Data schema
+  - Có nhận được feature không mong muốn nào không?
+  - Có nhận được các feature mong muốn không?
+  - Có nhận được các feature mong muốn với format và các giá trị mong muốn không?
+- Giá trị của data
+  - Các tính chất liên quan tới data distribution có hợp lệ không?
+  - Các giả sử mà chúng ta đưa ra đối với data có hợp lệ không?
+
+Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không.
+
+Dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không. Code của task này được lưu tại file `training_pipeline/src/data_validation.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="training_pipeline/src/data_validation.py"
 def check_unexpected_features(df: pd.DataFrame): # (1)
@@ -143,7 +165,15 @@ cd ..
 
 ## Data preparation
 
-Ở task Data preparation, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa. Code của task này được lưu tại file `training_pipeline/src/data_preparation.py` và được giải thích như dưới đây.
+Đầu vào của task này là data đã được lấy từ task Data extraction. Task này là nơi chúng ta sẽ thực hiện các bước sau.
+
+- Transform hoặc clean data nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật giá trị của các feature mà chúng ta mong muốn
+- Thực hiện feature engineering nếu cần thiết. Điều này xảy ra khi Feature Store chưa cập nhật kịp thời bởi Data Engineer để sinh ra các feature chúng ta mong muốn
+- Split data thành các tập training set, validation set, hay test set để phục vụ cho quá trình train model và đánh giá model
+
+Đầu ra của task này là các tập dataset đã được lưu vào disk.
+
+Ở task này, giả sử rằng chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, chúng ta không cần phải thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa. Code của task này được lưu tại file `training_pipeline/src/data_preparation.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="training_pipeline/src/data_preparation.py"
 target_col = 'trip_completed'
@@ -177,6 +207,8 @@ cd ..
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy các files `training.parquet`, `train_x.parquet`, `test_x.parquet`, `train_y.parquet`, và `test_y.parquet`.
 
 ## Model training
+
+Trong task này, chúng ta sẽ train model sử dụng data đã được chuẩn bị ở task Data preparation. Task này cũng là nơi mà chúng ta sẽ thực hiện hyperparameter tuning để train được model tốt nhất. Đầu ra của bước này là model đã được train.
 
 Đoạn code cho task Model training này đã được chúng ta viết trong khi thực hiện dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_training.py` và được giải thích như dưới đây.
 
@@ -233,6 +265,8 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 
 ## Model evaluation
 
+Đầu vào của task này là model đã được train ở task Model training. Trong task này, chúng ta thực hiện chạy prediction cho model trên test set lấy từ task Data preparation. Đầu ra của task này là nhóm các metrics dùng để đánh giá chất lượng của model.
+
 Đoạn code cho task Model evaluation này cũng đã được chúng ta viết ở dự án POC. Code của task này được lưu tại file `training_pipeline/src/model_evaluation.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="training_pipeline/src/model_evaluation.py"
@@ -264,7 +298,15 @@ Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các 
 
 ## Model validation
 
-Trong phần này, chúng ta cần đánh giá xem các offline metrics được tính toán ở task Model evaludation có thoả mãn một threshold đã được định nghĩa sẵn không, hay có thoả mãn một baseline đã được định nghĩa ở bước [Phân tích vấn đề](../../tong-quan-he-thong/phan-tich-van-de) không. Chúng ta cũng có thể cần phải kiểm tra xem model mới train được có tương thích với inference service ở production không. Để đơn giản hoá, mình sẽ chỉ viết code để so sánh offline metrics với các thresholds đã được định nghĩa sẵn trong file `training_pipeline/.env`. Code của task này được lưu tại file `training_pipeline/src/model_validation.py` và được giải thích như dưới đây.
+Trong task này, chúng ta sẽ sử dụng các metrics được sinh ra từ task Model evaluation để đánh giá model, các baseline và các yêu cầu kinh doanh đã được định nghĩa ở bước [Phân tích vấn đề](../../tong-quan-he-thong/phan-tich-van-de). Việc đánh giá model dựa trên các yếu tố này để chứng tỏ rằng model đã train có performance tốt hơn so với model cũ trước khi triển khai nó ra production.
+
+Thêm nữa, chúng ta cũng cần đánh giá xem model performance của model có tốt trên các phần khác nhau của dataset không. Ví dụ như model mới có Accuracy cao hơn model cũ khi được đánh giá trên tất cả khách hàng, nhưng lại có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.
+
+Ngoài ra, chúng ta cũng cần kiểm tra xem model mới train được có tương thích với hệ thống ở production không. Ví dụ như kiểm tra xem model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra đã được định nghĩa không, hay là thời gian inference có đảm bảo nằm trong một khoảng theo yêu cầu của vấn đề kinh doanh không. Để đơn giản hoá, mình sẽ chỉ viết code để so sánh offline metrics với các thresholds đã được định nghĩa sẵn trong file `training_pipeline/.env`.
+
+Nếu model thoả mãn các yêu cầu đề ra, chúng ta có thể tự động register model với Model Registry.
+
+Code của task này được lưu tại file `training_pipeline/src/model_validation.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="training_pipeline/src/model_validation.py"
 eval_result = EvaluationResult.load(AppPath.EVALUATION_RESULT)
@@ -392,5 +434,9 @@ Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt train
 ## Tổng kết
 
 Như vậy là chúng ta vừa trải qua quy trình phát triển điển hình cho training pipeline. Lưu ý rằng, vì code của training pipeline sẽ được cập nhật liên tục dựa theo các yêu cầu đến từ Data Scientist, nên chúng ta không hy vọng quá trình phát triển training pipeline sẽ chỉ cần thực hiện một lần rồi xong, mà nó sẽ được thực hiện trong nhiều vòng lặp.
+
+Các task ở trên là các task điển hình trong một training pipeline. Tuy nhiên, tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà chúng ta có thể bỏ bớt hoặc thêm vào các task khác. Chúng ta cũng có thể chia nhỏ ra các task thực hiện các công việc đòi hỏi tính toán nặng, để tránh việc phải chạy lại nhiều lần.
+
+Ở các dự án thực tế, Data Scientist vẫn tiếp tục thực hiện các thử nghiệm trên data và model, trong khi ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên các yêu cầu từ phía các Data Scientist.
 
 Sau khi tự động hoá được training pipeline, trong bài tiếp theo, chúng ta sẽ cùng nhau xây dựng và tự động hoá model serving pipeline.

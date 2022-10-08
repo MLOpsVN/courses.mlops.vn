@@ -13,15 +13,17 @@ Trong loạt bài về POC này, chúng ta sẽ cùng nhau xây dựng một d�
 
 Trong quá trình phân tích vấn đề kinh doanh, chúng ta đã tổng hợp được thông tin về data và quá trình xây dựng ML model như sau.
 
-| Câu hỏi                                            | Trả lời                                                                                                           |
-| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Data được lấy từ đâu?                              | Đã được tổng hợp bởi Data Engineer từ ứng dụng của công ty                                                        |
-| Data sẽ được transform, clean, và lưu trữ thế nào? | Data đã được Data Engineer xử lý để thực hiện POC trước, format là `parquet`, tạm thời lưu ở Database của công ty |
-| Các feature tiềm năng là gì?                       | conv_rate, acc_rate, avg_daily_trips                                                                              |
-| Các model architecture tiềm năng?                  | Linear Regression, Elastic Net                                                                                    |
-| Dùng metrics nào để đánh giá model?                | MSE, RMSE, R2                                                                                                     |
+| #   | Câu hỏi                                            | Trả lời                                                                                                           |
+| --- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 1   | Data được lấy từ đâu?                              | Đã được tổng hợp bởi Data Engineer từ ứng dụng của công ty                                                        |
+| 2   | Data sẽ được transform, clean, và lưu trữ thế nào? | Data đã được Data Engineer xử lý để thực hiện POC trước, format là `parquet`, tạm thời lưu ở Database của công ty |
+| 3   | Các feature tiềm năng là gì?                       | `conv_rate`, `acc_rate`, `avg_daily_trips`                                                                        |
+| 4   | Các model architecture tiềm năng?                  | Linear Regression, Elastic Net                                                                                    |
+| 5   | Dùng metrics nào để đánh giá model?                | MSE, RMSE, R2                                                                                                     |
 
-Ở bước xây dựng dự án POC này, chúng ta cần trả lời thêm một câu hỏi nữa, đó là: _Thế nào là một dự án POC thành công?_
+Ở bước xây dựng dự án POC này, chúng ta cần trả lời một câu hỏi quan trọng, đó là:
+
+**_Thế nào là một dự án POC thành công?_**
 
 Vì những dự án POC đầu tiên chưa thể đưa ML model ra môi trường production để trích xuất ra metric cuối cùng để đánh giá ML model được, nên chúng ta cần phải sử dụng metrics đã được định nghĩa ở trên để đánh giá ML model. Cụ thể, chúng ta cần phải đặt một threshold cho các metrics này. Ví dụ, chúng ta có thể sử dụng metric RMSE, và threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
 

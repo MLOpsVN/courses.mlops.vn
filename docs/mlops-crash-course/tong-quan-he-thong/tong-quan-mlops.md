@@ -112,11 +112,21 @@ Lưu ý rằng, các workflows trên không phải là thứ tự chính xác v�
 
 <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" loading="lazy"/>
 
-Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ các yêu cầu về các chức năng của hệ thống ML mà chúng ta sẽ xây dựng. Sau đó, chúng ta sẽ thực hiện một dự án PoC( Proof Of Concept) để chứng minh rằng giải pháp của chúng ta đề ra là khả thi, trước khi bắt tay vào thực hiện xây dựng chi tiết các chức năng phức tạp của hệ thống.
+Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ các yêu cầu về các chức năng của hệ thống ML mà chúng ta sẽ xây dựng. Sau đó, chúng ta sẽ thực hiện một dự án POC( Proof Of Concept) để chứng minh rằng giải pháp của chúng ta đề ra là khả thi, trước khi bắt tay vào thực hiện xây dựng chi tiết các chức năng phức tạp của hệ thống.
 
-Có thể có nhiều dự án PoC ở các mức độ khác nhau. Trong quá trình thực hiện dự án PoC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó.
+Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá trình thực hiện dự án POC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó.
 
-Trong khoá học này, chúng ta sẽ có các bài học lần lượt thực hiện các bước liên quan tới **Phân tích vấn đề**, **Xây dựng PoC**, **Data pipeline**, **Training pipeline**, **Model serving**, **Monitoring**, và **CI/CD**. Các bạn cần lưu ý rằng thứ tự các bài học không phản ánh thứ tự các công việc cần làm trong một dự án thực tế, mà nó sẽ như mình vừa miêu tả ở trên. Ngoài ra, các vòng lặp phản hồi sẽ xảy ra ở nhiều bước trong quá trình phát triển hệ thống và cộng tác cùng làm việc giữa các bộ phận và vị trí khác nhau.
+Trong khoá học này, chúng ta sẽ có các bài học lần lượt thực hiện các bước liên quan tới:
+
+1. Phân tích vấn đề
+1. Xây dựng POC
+1. Data pipeline
+1. Training pipeline
+1. Model serving
+1. Monitoring
+1. CI/CD
+
+Thứ tự các bài học không phản ánh thứ tự các công việc cần làm trong một dự án thực tế, mà nó sẽ như mình vừa miêu tả ở trên. Ngoài ra, các vòng lặp phản hồi sẽ xảy ra ở nhiều bước trong quá trình phát triển hệ thống và cộng tác cùng làm việc giữa các bộ phận và vị trí khác nhau.
 
 ## Tổng kết
 

@@ -5,7 +5,11 @@
 
 ## Giới thiệu
 
-Ở bài trước, [Tổng quan model serving](../tong-quan-model-serving), chúng ta đã phân tích về hai hình thức phổ biến khi triển khai model serving, đó chính là _batch serving_ và _online serving_. Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
+Sau khi train được một model tốt sử dụng training pipeline trong bài trước, chúng ta cần triển khai model tốt đó để thực hiện inference. Có hai hình thức triển khai model phổ biến, đó là _batch serving_ và _online serving_.
+
+Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Tuy nhiên, batch serving được tối ưu để xử lý số lượng lớn các requests và thường để chạy các model phức tạp, trong khi online serving thì được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và được xử lý offline. Online serving thì được triển khai lên một server nào đó dưới dạng RESTful APIs để người dùng có thể gọi tới qua internet.
+
+Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả hai hình thức batch serving và online serving. Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
 
 ## Môi trường phát triển
 
@@ -36,13 +40,17 @@ Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 
 ## Batch serving
 
-Batch serving sẽ được triển khai dưới dạng một Airflow DAG với các task như hình dưới:
+Trong khoá học này, chúng ta sẽ thiết kế batch serving với input là data file ở local. Chúng ta có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving.
 
-<img src="../../../assets/images/mlops-crash-course/model-serving/tong-quan-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
+Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:
+
+<img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-dag.png" loading="lazy" />
 
 ### Cập nhật Feature Store
 
-Task này được thực hiện giống như task **Cập nhật Feature Store** ở bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store). Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Các bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
+Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.
+
+Task này được thực hiện giống như task **Cập nhật Feature Store** ở training pipeline. Các bạn có thể xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store). Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Các bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
 
 1.  Triển khai code của Feature Store từ `data_pipeline/feature_repo` sang `model_serving/feature_repo`
 
@@ -53,7 +61,7 @@ Task này được thực hiện giống như task **Cập nhật Feature Store*
     cd ../model_serving
     ```
 
-1.  Cập nhật Feature Registry và Offline Feature Store của Feast
+2.  Cập nhật Feature Registry và Offline Feature Store của Feast
 
     ```bash
     cd feature_repo
@@ -63,7 +71,9 @@ Task này được thực hiện giống như task **Cập nhật Feature Store*
 
 ### Data extraction
 
-Tiếp theo, chúng ta sẽ viết code để đọc data mà chúng ta muốn chạy batch prediction. Code của task này được lưu tại `model_serving/src/data_extraction.py` và được giải thích như dưới đây.
+Trong task này, chúng ta cần đọc vào data mà chúng ta muốn chạy prediction. Khi đọc vào data, chúng ta cũng cần xử lý data này về input format mà model yêu cầu để tiện cho task **Batch prediction** tiếp theo, bằng cách lấy ra các features từ Feast và định dạng lại data mà chúng ta sẽ chạy prediction. Đầu ra của task này là data đã được xử lý về đúng input format của model và được lưu vào disk.
+
+Chúng ta sẽ viết code để đọc data mà chúng ta muốn chạy batch prediction. Code của task này được lưu tại `model_serving/src/data_extraction.py` và được giải thích như dưới đây.
 
 ```python linenums="1" title="model_serving/src/data_extraction.py"
 fs = feast.FeatureStore(repo_path=AppPath.FEATURE_REPO) # (1)
@@ -102,6 +112,8 @@ cd ..
 Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, các bạn sẽ nhìn thấy file `batch_input.parquet`.
 
 ### Batch prediction
+
+Ở task này, chúng ta sẽ load model sẽ được dùng từ một config file, và chạy prediction trên data đã được xử lý ở task trước. Đầu ra của task này là kết quả predictions và sẽ được lưu vào disk. Để đơn giản hoá, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.
 
 Trước khi chạy batch serving, rõ ràng rằng chúng ta đã quyết định xem sẽ dùng model nào cho batch serving. Thông tin về model mà chúng ta muốn chạy sẽ là một trong những input của batch serving pipeline. Input này có thể là Airflow variable, hoặc đường dẫn tới một file chứa thông tin về model.
 
@@ -193,6 +205,10 @@ Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt batch
 <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
 
 ## Online serving
+
+Về cơ bản, quá trình triển khai online serving chính là xây dựng một hoặc nhiều RESTful APIs, và triển khai các APIs này lên một server, cho phép người dùng có thể gọi tới qua internet.
+
+Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask trong Python. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _Bentoml_.
 
 Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API) để thực hiện online serving. Để quá trình xây dựng API này thuận tiện, chúng ta sẽ sử dụng Bentoml, một library chuyên được sử dụng cho việc tạo online serving API. Để xây dựng API này, chúng ta cần thực hiện các bước chính sau:
 
