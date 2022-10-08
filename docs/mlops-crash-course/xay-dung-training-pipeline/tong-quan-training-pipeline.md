@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/tong-quan-pipeline/pipeline.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@mbenna?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mike Benna</a> on <a href="https://unsplash.com/s/photos/pipeline?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã có được những thứ sau:

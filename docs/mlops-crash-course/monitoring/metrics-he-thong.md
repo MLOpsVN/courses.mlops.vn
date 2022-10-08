@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/speed-scale.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/dashboard?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics mà chúng ta thường cần theo dõi, và các bộ công cụ mà chúng ta sử dụng trong quá trình theo dõi.

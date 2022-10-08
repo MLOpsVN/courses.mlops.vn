@@ -29,7 +29,7 @@ nav:
   - MLOps Crash Course:
       - mlops-crash-course/index.md
       - Tổng quan hệ thống:
-          - MLOps: mlops-crash-course/tong-quan-he-thong/mlops.md
+          - Tổng quan MLOps: mlops-crash-course/tong-quan-he-thong/tong-quan-mlops.md
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
           - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
       - PoC:

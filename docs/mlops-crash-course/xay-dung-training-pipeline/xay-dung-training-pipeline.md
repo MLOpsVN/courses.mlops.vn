@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/build-pipeline.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@selimarda?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">SELİM ARDA ERYILMAZ</a> on <a href="https://unsplash.com/s/photos/pipeline?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã phân tích về các task cần thiết khi xây dựng training pipeline. Chi tiết về mục đích của từng bước, mời các bạn xem lại bài trước [Tổng quan training pipeline](../../xay-dung-training-pipeline/tong-quan-pipeline). Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).
@@ -112,6 +117,11 @@ cd ..
 Sau khi chạy xong, hãy kiểm tra folder `training_pipeline/artifacts`, các bạn sẽ nhìn thấy file `training.parquet`.
 
 ## Data validation
+
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/xay-dung-training-pipeline/xay-dung-pipeline/validation.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@amelune?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Diane Serik</a> on <a href="https://unsplash.com/s/photos/test?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
 
 Ở task Data validation này, dựa trên data đã được lưu vào disk ở task Data extraction, chúng ta sẽ đánh giá xem data chúng ta lấy có thực sự hợp lệ không. Code của task này được lưu tại file `training_pipeline/src/data_validation.py`.
 

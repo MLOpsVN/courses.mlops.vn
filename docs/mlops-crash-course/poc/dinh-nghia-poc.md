@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/poc/dinh-nghia-poc/poc.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@calder_burkhart?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Calder B</a> on <a href="https://unsplash.com/collections/9xo9_xs3W0I/proof-of-concept-poc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã thực hiện bước đầu tiên của bất kì một dự án phần mềm nào, đó chính là thu thập các yêu cầu, định nghĩa vấn đề kinh doang và phân tích vấn đề kinh doanh đó thông qua nhiều câu hỏi. Quá trình này giúp cho chúng ta hiểu rõ và sâu hơn về vấn đề mà chúng ta đang gặp phải, về những giải pháp tiềm năng, và lên kế hoạch để triển khai các giải pháp đó.
@@ -18,7 +23,7 @@ Trong quá trình phân tích vấn đề kinh doanh, chúng ta đã tổng hợ
 
 Ở bước xây dựng dự án POC này, chúng ta cần trả lời thêm một câu hỏi nữa, đó là: _Thế nào là một dự án POC thành công?_
 
-Vì những dự án POC đầu tiên chưa thể đưa ML model ra môi trường production để trích xuất ra metric cuối cùng để đánh giá ML model được, nên chúng ta cần phải sử dụng metrics đã được định nghĩa ở trên để đánh giá ML model. Cụ thể, chúng ta cần phải đặt một threshold cho các metrics này. Ví dụ, chúng ta có thể sử dụng metric RMSE, và threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.6**.
+Vì những dự án POC đầu tiên chưa thể đưa ML model ra môi trường production để trích xuất ra metric cuối cùng để đánh giá ML model được, nên chúng ta cần phải sử dụng metrics đã được định nghĩa ở trên để đánh giá ML model. Cụ thể, chúng ta cần phải đặt một threshold cho các metrics này. Ví dụ, chúng ta có thể sử dụng metric RMSE, và threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
 
 Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng được sử dụng như:
 

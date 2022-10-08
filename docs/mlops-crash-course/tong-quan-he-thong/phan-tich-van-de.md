@@ -1,8 +1,14 @@
-<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg" loading="lazy"/>
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg" loading="lazy"/>
+</figure>
+
+## Giới thiệu
 
 Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.
 
 Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống _Grab_, và vấn đề kinh doanh của công ty của bạn là: _Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?_. Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.
+
+## Phân tích vấn đề
 
 Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta.
 
@@ -41,12 +47,14 @@ Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả l�
 |                        | Architecture và tool sẽ dùng?                                                            | Architecture và tool sẽ được định nghĩa ở bài tiếp theo tools                                                                                                                      |
 | **Các mốc thời gian**  | Thời gian được phân bổ như thế nào cho từng chức năng?                                   | Timeline ở hình dưới                                                                                                                                                               |
 
-Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:
+Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực tế:
 
 <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" loading="lazy"/>
 
 Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm [ở đây](https://ml-ops.org/content/phase-zero) về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.
 
-Ngoài ra, trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
+## Tổng kết
+
+Trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
 
 Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các workflow và MLOps platform được dùng trong hệ thống.

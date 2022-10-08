@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/s/photos/problem?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Ở bài trước, chúng ta đã định nghĩa thế nào là một dự án POC thành công. Trong bài này, chúng ta sẽ thử nghiệm việc xây dựng model chứng minh rằng giải pháp sử dụng ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform.md).
@@ -72,6 +77,11 @@ Sau khi đã load và clean được data, Data Scientist sẽ phân tích data 
 May mắn rằng các file data của chúng ta không có feature nào chứa giá trị `null`. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model.
 
 ## Chuẩn bị data
+
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@lukechesser?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Luke Chesser</a> on <a href="https://unsplash.com/s/photos/analysis?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
 
 Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi record trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Ví dụ:
 

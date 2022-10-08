@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/tong-quan/cat-observe.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@milada_vigerova?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Milada Vigerova</a> on <a href="https://unsplash.com/s/photos/observe?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã triển khai Batch serving và Online serving. Triển khai model xong không phải là kết thúc dự án. Chúng ta còn cần phải theo dõi model sau khi đã triển khai để biết được khi nào hiệu quả hoạt động của model đi xuống để cải thiện model khi cần thiết.

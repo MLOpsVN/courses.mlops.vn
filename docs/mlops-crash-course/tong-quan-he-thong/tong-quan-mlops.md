@@ -1,8 +1,13 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/mlops-loop-en.jpg" loading="lazy"/>
+    <figcaption>Source: ml-ops.org</figcaption>
+</figure>
+
 ## Giới thiệu
 
-Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Tuy nhiên, ở thời điểm hiện tại, có rất nhiều thách thức mà các kĩ sư đang gặp phải để có thể tự động hoá các quy trình trong quá trình phát triển và triển khai các hệ thống ML. MLOps ra đời như một thuật ngữ chung để mô tả các vấn đề mà các kĩ sư gặp phải trong một dự án ML.
+Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Tuy nhiên, ở thời điểm hiện tại, có rất nhiều thách thức mà các kĩ sư đang gặp phải để có thể tự động hoá các quy trình trong quá trình phát triển và triển khai các hệ thống ML. MLOps ra đời như một thuật ngữ để mô tả các vấn đề và hướng tiếp cận để giải quyết các vấn đề mà các kĩ sư gặp phải trong một dự án ML.
 
-Trong bài này, dựa trên các kiến thức được trình bài trong bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu một chút lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.
+Trong bài này, dựa trên các kiến thức được trình bài trong bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu sơ lược lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.
 
 !!! note
 
@@ -10,13 +15,18 @@ Trong bài này, dựa trên các kiến thức được trình bài trong bài 
 
 ## Định nghĩa MLOps
 
-Theo bài báo trên, định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:
+Theo [bài báo trên][mlops-paper], định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:
 
 1. MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML
 1. MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering
 1. MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production một cách hiệu quả hơn, thông qua một vài nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.
 
 ## Các nguyên tắc trong MLOps
+
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kelly Sikkema</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
 
 Một nguyên tắc được xem như là một best practice, hay một sự hướng dẫn cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các nguyên tắc trong MLOps bao gồm:
 
@@ -60,6 +70,11 @@ Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu v
 
 ## Các components trong MLOps
 
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@jorgedevs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jorge Ramirez</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 Các components trong MLOps là các thành phần ở mức system design trong một hệ thống ML. Các components được liệt kê như sau.
 
 1. CI/CD component
@@ -75,7 +90,7 @@ Các components trong MLOps là các thành phần ở mức system design trong
 Tên của các components trên đã phần lớn giải thích ý nghĩa và công việc của các components đó, và đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều nguyên tắc ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Hình dưới đây thể hiện mối quan hệ của các components với các nguyên tắc trong MLOps.
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops/mlops-principles-and-components.png" loading="lazy"/>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png" loading="lazy"/>
     <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
 </figure>
 

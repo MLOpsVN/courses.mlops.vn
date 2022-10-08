@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving/serving.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@jaywennington?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jay Wennington</a> on <a href="https://unsplash.com/s/photos/serve?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Ở bài trước, [Tổng quan model serving](../tong-quan-model-serving), chúng ta đã phân tích về hai hình thức phổ biến khi triển khai model serving, đó chính là _batch serving_ và _online serving_. Source code của bài này được đặt tại Github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code).

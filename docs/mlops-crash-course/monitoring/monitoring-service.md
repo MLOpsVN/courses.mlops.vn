@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@ibrahimboran?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ibrahim Boran</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, theo dõi logs từ các services; và Prometheus server, Grafana server để theo dõi các metrics hệ thống của các services như là CPU, memory, network, v.v. Ngoài các metrics đó ra, trong một hệ thống ML, chúng ta cũng cần theo dõi các metrics liên quan tới data và model, để kịp thời phát hiện sự thay đổi của data và model performance ở production, để có thể cập nhật data hay train lại model kịp thời. Trong bài này, chúng ta sẽ thực hiện các công việc sau:

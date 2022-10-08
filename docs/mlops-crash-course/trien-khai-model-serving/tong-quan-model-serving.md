@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving/prepare.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@fabmag?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Fabrizio Magoni</a> on <a href="https://unsplash.com/s/photos/serve?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Sau khi train được một model tốt sử dụng training pipeline trong bài trước, chúng ta cần triển khai model tốt đó để thực hiện inference. Có hai hình thức triển khai model phổ biến, đó là _batch serving_ và _online serving_.
