@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/monitoring/tong-quan-monitoring/cat-observe.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@milada_vigerova?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Milada Vigerova</a> on <a href="https://unsplash.com/s/photos/observe?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong bài trước, chúng ta đã triển khai Batch serving và Online serving. Triển khai model xong không phải là kết thúc dự án. Chúng ta còn cần phải theo dõi model sau khi đã triển khai để biết được khi nào hiệu quả hoạt động của model đi xuống để cải thiện model khi cần thiết.
@@ -21,7 +26,7 @@ Ngoài theo dõi hiệu quả hoạt động của model, vì hệ thống của
 
 Trong bài này, chúng ta sẽ tìm hiểu các metrics nên được theo dõi trong một hệ thống ML và các giải pháp khả thi mà chúng ta sẽ triển khai trong khoá học này.
 
-## Theo dõi hoạt động của hệ thống
+## Theo dõi hệ thống
 
 Thông thường, có ba mảng sau chúng ta cần theo dõi trong một hệ thống phần mềm:
 
@@ -29,11 +34,11 @@ Thông thường, có ba mảng sau chúng ta cần theo dõi trong một hệ t
 1. Tài nguyên tính toán
 1. Ứng dụng
 
-Một số ví dụ về metrics trong các mảng trên như là: độ trễ, thông lượng, số requests trên một phút, tỉ lệ số requests có status code là 200, mức độ sử dụng CPU, GPU, và memory, v.v. Những metrics này được gọi là _operational metrics_.
+Một số ví dụ về metrics trong các mảng trên như là: độ trễ, thông lượng, số requests trên một phút, tỉ lệ số requests có status code là 200, mức độ sử dụng CPU, GPU, và memory, v.v. Những metrics này được gọi là _operational metrics_, tạm dịch là _metrics hệ thống_.
 
 Trong bài sau, chúng ta sẽ sử dụng Prometheus để thu thập các metrics trên từ máy tính mà chúng ta đang sử dụng để thực hành khoá học này. Chúng ta cũng sẽ sử dụng Bentoml để thu thập các metrics liên quan tới số requests gửi tới inference API.
 
-## Theo dõi chất lượng data và model
+## Theo dõi data và model
 
 Trong một hệ thống ML, hiển nhiên rằng chúng ta cần theo dõi các metrics liên quan tới data và model. Các metrics này được gọi là ML metrics, và được chia thành bốn nhóm. Bảng dưới đây chỉ ra thông tin về bốn nhóm metrics và ví dụ về các metrics trong các nhóm đó.
 
@@ -44,7 +49,7 @@ Trong một hệ thống ML, hiển nhiên rằng chúng ta cần theo dõi các
 | 3   | Dự đoán   | Dự đoán của model, để theo dõi model performance, và sự thay đổi các thuộc tính thống kê của dự đoán của model                       |
 | 4   | Label     | Lượt click chuột, mua hàng, yêu thích, chia sẻ, v.v, để theo dõi model performance, và sự thay đổi các thuộc tính thống kê của label |
 
-## Bộ công cụ theo dõi
+## Công cụ theo dõi
 
 Một bộ công cụ phù hợp giúp chúng ta đo lường, theo dõi, và hiểu ý nghĩa của các metrics trong một hệ thống phần mềm. Các công cụ phổ biến được kể đến như logs, dashboards, và alerts.
 

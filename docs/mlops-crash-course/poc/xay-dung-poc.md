@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/s/photos/problem?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Ở bài trước, chúng ta đã định nghĩa thế nào là một dự án POC thành công. Trong bài này, chúng ta sẽ thử nghiệm việc xây dựng model chứng minh rằng giải pháp sử dụng ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform.md).
@@ -11,7 +16,7 @@ Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 1. Jupyter notebook để thử nghiệm data, model
 1. MLflow để làm ML Metadata Store
 
-## Chuẩn bị data
+## Thu thập data
 
 Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:
 
@@ -21,7 +26,7 @@ Thông thường ở POC, do data pipeline chưa thể được xây dựng hoà
 
 Trong khoá học này, giả sử rằng Data Engineering đã thu thập data cho chúng ta từ data source và chuyển giao cho chúng ta một file data duy nhất ở dạng `parquet`. Chúng ta sẽ sử dụng file data này để thực hiện công việc của một Data Scientist trong các bước tiếp theo.
 
-## Phân tích data và viết training code
+## Phân tích data
 
 Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại `training_pipeline/nbs/poc-training-code.ipynb`.
 
@@ -71,7 +76,44 @@ Sau khi đã load và clean được data, Data Scientist sẽ phân tích data 
 
 May mắn rằng các file data của chúng ta không có feature nào chứa giá trị `null`. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model.
 
-Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi hàng trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Code để tổng hợp features và labels như dưới đây.
+## Chuẩn bị data
+
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@lukechesser?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Luke Chesser</a> on <a href="https://unsplash.com/s/photos/analysis?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+
+Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame `df_orig` với labels từ DataFrame `label_orig`. Cụ thể, với mỗi record trong `label_orig`, chúng ta muốn lấy ra _record mới nhất tương ứng_ trong `df_orig` mà có `driver_id` giống nhau. _Record mới nhất tương ứng_ ở đây có nghĩa là thời gian ở cột `datetime` trong `df_orig` sẽ xảy ra trước và gần nhất với thời gian ở cột `event_timestamp` trong `label_orig`. Ví dụ:
+
+- `df_orig` chứa 2 records như sau
+
+| index | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips |
+| ----- | ---------- | --------- | --------- | -------- | --------------- |
+| 1     | 2022-12-01 | 1001      | 0.1       | 0.1      | 100             |
+| 2     | 2022-11-01 | 1001      | 0.2       | 0.2      | 200             |
+| 3     | 2022-10-01 | 1001      | 0.3       | 0.3      | 300             |
+| 4     | 2022-09-01 | 1001      | 0.4       | 0.4      | 400             |
+
+- `label_orig` chứa 2 records như sau
+
+| index | event_timestamp | driver_id | trip_completed |
+| ----- | --------------- | --------- | -------------- |
+| 1     | 2022-12-15      | 1001      | 1              |
+| 2     | 2022-09-15      | 1001      | 0              |
+
+- Data mà chúng ta muốn tổng hợp gồm 2 records như sau
+
+| index | event_timestamp | driver_id | trip_completed | conv_rate | acc_rate | avg_daily_trips |
+| ----- | --------------- | --------- | -------------- | --------- | -------- | --------------- |
+| 1     | 2022-12-15      | 1001      | 1              | 0.1       | 0.1      | 100             |
+| 2     | 2022-09-15      | 1001      | 0              | 0.4       | 0.4      | 400             |
+
+- Giải thích
+
+      - Features từ index 1 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất so với `event_timestamp` của record ở index 1 trong `label_orig`
+      - Tương tự, features từ index 4 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất và xảy ra trước so với `event_timestamp` của record ở index 1 trong `label_orig`
+
+Code để tổng hợp features và labels như dưới đây.
 
 ```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
 groups = df_orig.groupby('driver_id') # (1)
@@ -110,7 +152,9 @@ data_df = data_df[data_df.columns. \ # (9)
 8. Biến thành Series (một hàng)
 9. Loại bỏ các cột không cần thiết
 
-Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.
+## Training code
+
+Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model.
 
 ```python linenums="1" title="training_pipeline/nbs/poc-training-code.ipynb"
 selected_ft = ["conv_rate", "acc_rate", "avg_daily_trips"] # (1)
@@ -139,58 +183,58 @@ predicted_qualities = model.predict(test_x) # (4)
 
 Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform.md), và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.
 
-## Theo dõi các thử nghiệm
+## Theo dõi thử nghiệm
 
-[MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.
+[MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm. Các bạn hãy làm theo các bước sau.
 
-Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên môi trường local. Hãy clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform) về máy của bạn, và chạy câu lệnh sau.
+1.  Clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform), và chạy câu lệnh sau để chạy MLflow server trên môi trường local
 
-```bash
-bash run.sh mlflow up
-```
+    ```bash
+    bash run.sh mlflow up
+    ```
 
-Trên browser của bạn, đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.
+1.  Đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa
 
-Tiếp theo, mở file notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.
+1.  Mở notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta
 
-```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
-MLFLOW_TRACKING_URI = "http://localhost:5000"
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.sklearn.autolog() # (1)
-```
+    ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
+    MLFLOW_TRACKING_URI = "http://localhost:5000"
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    mlflow.sklearn.autolog() # (1)
+    ```
 
-1. Vì chúng ta dùng `sklearn` để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
+    1.  Vì chúng ta dùng `sklearn` để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ.
 
-Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.
+1.  Thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.
 
-```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
-mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
+    ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
+    mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
 
-mlflow.log_param("features", selected_ft) # (2)
+    mlflow.log_param("features", selected_ft) # (2)
 
-mlflow.log_param("alpha", ALPHA) # (3)
-mlflow.log_param("l1_ratio", L1_RATIO)
+    mlflow.log_param("alpha", ALPHA) # (3)
+    mlflow.log_param("l1_ratio", L1_RATIO)
 
-mlflow.log_metric("testing_rmse", rmse) # (4)
-mlflow.log_metric("testing_r2", r2)
-mlflow.log_metric("testing_mae", mae)
+    mlflow.log_metric("testing_rmse", rmse) # (4)
+    mlflow.log_metric("testing_r2", r2)
+    mlflow.log_metric("testing_mae", mae)
 
-mlflow.sklearn.log_model(model, "model") # (5)
-```
+    mlflow.sklearn.log_model(model, "model") # (5)
+    ```
 
-1. Đặt tên cho lần chạy
-2. Log lại feature được dùng
-3. Log lại các hyperparameter
-4. Log lại các metric sau khi test trên test set
-5. Log lại model sau khi train
+    1. Đặt tên cho lần chạy
+    2. Log lại feature được dùng
+    3. Log lại các hyperparameter
+    4. Log lại các metric sau khi test trên test set
+    5. Log lại model sau khi train
 
-Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.
+1.  Mở MLflow trên browser, các bạn sẽ thấy một giao diện trông như sau.
 
-<img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
 
-Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của một lần chạy.
+    Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của một lần chạy.
 
-## Theo dõi các feature
+## Theo dõi features
 
 Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một parameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.
 
