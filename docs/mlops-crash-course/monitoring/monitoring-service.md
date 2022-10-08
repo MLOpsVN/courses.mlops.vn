@@ -4,7 +4,7 @@ Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, the
 
 1. Sinh ra dataset chứa feature bị drift
 1. Triển khai _monitoring service_ để theo dõi data và model performance
-1. Triển khai các Grafana dashboards để hiển thị các metrics về data và model
+1. Thiết lập các Grafana dashboards để hiển thị các metrics về data và model
 
 ## Môi trường phát triển
 
@@ -589,10 +589,186 @@ def monitor_request(df: pd.DataFrame):
 1. Biến đổi `DataFrame` thành dạng JSON với sự hỗ trợ của `NumpyEncoder` class, giúp cho việc biến đổi JSON trở lại thành `DataFrame` ở phía Monitoring API dễ dàng hơn
 2. Gửi POST request tới Monitoring API với data vừa biến đổi ở trên
 
-Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện prediction ở Online serving API, data được tổng hợp từ request gửi đến và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics đánh giá được ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics này qua endpoint `/metrics`. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ triển khai Grafana dashboards để hiển thị các metrics này.
+Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện prediction ở Online serving API, data được tổng hợp từ request gửi đến và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics đánh giá được ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics này qua endpoint `/metrics`. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics này.
 
-### Triển khai Grafana dashboards
+## Thiết lập Grafana dashboards và Alerts
 
-### Thử nghiệm
+Có 2 dashboards chúng ta cần thiết lập. 2 dashboards này bao gồm:
+
+1. `monitoring_service/dashboards/data_drift.json`: Dashboard cho metrics về data drift
+1. `monitoring_service/dashboards/classification_performance.json`: Dashboard cho metrics về model performance
+
+Giống như ở bài trước [Metrics hệ thống](../metrics-he-thong), các bạn cần làm các bước sau để triển khai các dashboards này lên Grafana.
+
+1. Copy 2 file dashboards trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
+1. Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
+1. Mở 2 file dashboards có tên **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**
+
+### Data Drift Dashboard
+
+Dashboard **Evidently Data Drift Dashboard** sẽ giống như hình dưới đây.
+
+TODO: Thêm hình
+
+Dashboard này chứa các panels về data drift bao gồm.
+
+1. `General information`
+   1. `Dataset drift`: Dataset có bị drift hay không
+   1. `Share of drifted features`: Tỉ lệ số features bị drift trên tổng số features
+   1. `# of drifted features`: Số features bị drift
+   1. `# of features`: Tổng số features
+1. `Detailed information`
+   1. `P-value of features`: [p-value](https://en.wikipedia.org/wiki/P-value) của các features
+
+### Classification Performance Dashboard
+
+Dashboard **Evidently Classification Performance Dashboard** sẽ giống như hình dưới đây.
+
+TODO: Thêm hình
+
+Dashboard này chứa các panels về model performance bao gồm.
+
+1. `Reference dataset data`
+   1. `Quality`: Tổng hợp các model performance metrics theo thời gian
+   1. `accuracy`, `f1`, `precision`, `recall`: Các model performance metrics
+   1. `Prediction class representation`: Số lượng các prediction theo class
+   1. `Target class representation`: Số lượng các label theo class
+1. `Class 0 information`: Thông tin về class 0
+   1. `Confusion 0`: Confusion matrix cho class 0
+   1. `Confusion in time`: Các giá trị của confusion matrix theo thời gian
+   1. `Quality`: Tổng hợp các model performance metrics cho class 0 theo thời gian
+1. `Class 1 information`: Tương tự class 0
+
+### Alerts
+
+Ở sidebar bên phải của Grafana, các bạn click vào `Alerting`. Trong giao diện của trang `Alerting`, tab `Alert rules`, các bạn click nút `New alert rule`. Trong trang tạo alert rule mới tên là `Data drift detection`, các bạn điền các thông tin như dưới đây.
+
+1.  Phần `1. Set a query and alert condition`, query `A`
+
+    ```PromQL
+    evidently:data_drift:dataset_drift{dataset_name="drivers"}
+    ```
+
+TODO: Ảnh phần 1
+
+1. Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
+
+TODO: Ảnh phần 2 và 3
+
+1. Click `Save and exit`
+
+Để cấu hình cách mà Alert được gửi đi, các bạn vào tab `Notification polices` và thêm policy mới. Trong khoá học này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.
+
+## Thử nghiệm
+
+Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py`. Mình sẽ tóm tắt chức năng của đoạn code như dưới đây.
+
+```python linenums="1" title="monitoring_service/src/mock_request.py"
+def construct_request(row: pd.Series) -> dict: # (1)
+    request_id = row["request_id"]
+    driver_ids = ast.literal_eval(row["driver_ids"])
+    return {
+        "request_id": request_id,
+        "driver_ids": driver_ids,
+    }
+
+def send_request(request: dict) -> None: # (2)
+    try:
+        data = json.dumps(request)
+        response = requests.post(
+            ONLINE_SERVING_API,
+            data=data,
+            headers={"content-type": "application/json"},
+        )
+        ...
+    except Exception as error:
+        ...
+
+def main(data_type: str, n_request: int = 1): # (3)
+    data_path = AppPath.NORMAL_DATA
+    if data_type == DataType.DRIFT:
+        data_path = AppPath.DRIFT_DATA
+    data_source = pd.read_parquet(data_path, engine="fastparquet") # (4)
+    request_data = pd.read_csv(AppPath.REQUEST_DATA) # (5)
+    ...
+    data_source.to_parquet(AppPath.FEAST_DATA_SOURCE, engine="fastparquet") # (6)
+
+    result = subprocess.run(["make", "feast_teardown"]) # (7)
+    ...
+    result = subprocess.run(["make", "feast_apply"]) # (8)
+    ...
+    result = subprocess.run(["make", "feast_materialize"]) # (9)
+    ...
+
+    total_request = request_data.shape[0]
+    for idx in range(n_request):
+        row = request_data.iloc[idx % total_request]
+        request = construct_request(row)
+        send_request(request) # (10)
+        ...
+```
+
+1. Hàm `construct_request` tạo payload dạng JSON để gửi tới Online serving API
+2. Hàm `send_request` gửi payload được tạo bởi hàm `construct_request` tới Online serving API
+3. Hàm `main` thực hiện quá trình gửi data
+4. Đọc dataset chứa các features, tuỳ thuộc vào loại data là `normal_data` hay `drift_data`
+5. Đọc `request_data`
+6. Ghi đè dataset chứa các features vào file data source của Feast
+7. Xoá data ở cả Offline Feature Store và Online Feature Store
+8. Ghi data từ file data source của Feast vào Offline Feature Store
+9. Ghi data từ Offline Feature Store vào Online Feature Store
+10. Gửi lần lượt các request trong `request_data` tới Online serving API
+
+Để tiến hành thử nghiệm, các bạn hãy làm theo các bước sau.
+
+1.  Đảm bảo rằng [Online serving service](../../trien-khai-model-serving/trien-khai-model-serving/#online-serving) đã chạy
+1.  Build docker image và chạy docker compose cho monitoring service
+
+    ```bash
+    make build_image
+    make compose_up
+    ```
+
+1.  Gửi 10 requests giả chứa `drift_data`
+
+    ```bash
+    python src/mock_request.py -d drift -n 10
+    ```
+
+Sau khi các requests được gửi xong, các bạn đợi khoảng 10s rồi kiểm tra các Grafana dashboards.
+
+Dashboard **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard** sẽ hiển thị kết quả giống như sau.
+
+TODO: Thêm ảnh drift
+
+TODO: Thêm ảnh model performance
+
+Các bạn mở trang Alerting trong Grafana và sẽ thấy Alert `Data drift detection` mà chúng ta tạo ở trên đang ở trạng thái `Firing`.
+
+TODO: Thêm ảnh firing
+
+Các bạn có thể click vào nút `Show state history` để xem thời điểm của các trạng thái của Alert này.
+
+TODO: Thêm ảnh state history
+
+Tiếp theo, chúng ta sẽ gửi 10 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
+
+```bash
+    python src/mock_request.py -d normal -n 10
+```
+
+Sau khi gửi xong, các bạn sẽ thấy dashboard **Evidently Data Drift Dashboard** sẽ hiển thị thông tin rằng Dataset không bị drift, và số drifted features là 0.
+
+TODO: Thêm ảnh
+
+Ở trang Alerting, alert ``Data drift detection` cũng đã ở trạng thái `Normal`.
+
+TODO: Thêm ảnh
 
 ## Tổng kết
+
+Theo dõi và bảo trì luôn luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm. Trong bài hướng dẫn **Monitoring** này, chúng ta đã được học về các metrics điển hình liên quan tới hệ thống, data, và model mà một hệ thống ML thường sẽ theo dõi.
+
+Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Các bạn đã hiểu các yêu cầu về tính năng thường thấy của một Monitoring service để theo dõi các metrics của data và model như là phát hiện Data drift, và theo dõi model performance. Các bạn cũng đã biết cách thiết lập một Alert trên Grafana. Trong thực tế, các bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift, hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.
+
+Trong bài tiếp theo, chúng ta sẽ thiết lập và triển khai CI/CD cho các phần trong hệ thống ML của chúng ta. CI/CD sẽ giúp chúng ta tự động test, và triển khai các Airflow pipelines, cũng như là các services như là Online serving service, hay Monitoring service, thay vì gõ các lệnh bằng tay trong terminal.
