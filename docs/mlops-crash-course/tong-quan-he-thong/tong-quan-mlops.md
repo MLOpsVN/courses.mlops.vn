@@ -13,7 +13,7 @@ Trong bài này, dựa trên các kiến thức được trình bài trong bài 
 
     Khái niệm về MLOps và các lý thuyết liên quan được nhiều nguồn khác nhau định nghĩa khác nhau. Chúng ta nên giữ một thái độ mở về sự khác nhau giữa các nguồn tài liệu này.
 
-## Định nghĩa MLOps
+## Định nghĩa
 
 Theo [bài báo trên][mlops-paper], định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:
 
@@ -21,7 +21,7 @@ Theo [bài báo trên][mlops-paper], định nghĩa trên về MLOps có thể �
 1. MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering
 1. MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production một cách hiệu quả hơn, thông qua một vài nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.
 
-## Các nguyên tắc trong MLOps
+## Các nguyên tắc
 
 <figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
@@ -68,7 +68,7 @@ Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh gi
 
 Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
-## Các components trong MLOps
+## Các components
 
 <figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg" loading="lazy"/>
@@ -96,7 +96,7 @@ Tên của các components trên đã phần lớn giải thích ý nghĩa và c
 
 Để hiểu rõ hơn về các components này, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
-## Các workflows trong MLOps
+## Các workflows
 
 Trong phần này, chúng ta sẽ tìm hiểu về các workflows điển hình trong quá trình phát triển một hệ thống ML. Các workflows này được mô tả ở bảng dưới đây.
 

@@ -33,7 +33,7 @@ Các tools sẽ được sử dụng trong bài này bao gồm:
 
     Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder `monitoring_service`.
 
-## Thiết kế monitoring service
+## Thiết kế
 
 Theo dõi các metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng chính là yêu cầu đầu ra của monitoring service.
 
@@ -59,7 +59,7 @@ Monitoring service có 3 chức năng chính:
 
 Trong bài này, chúng ta sẽ sử dụng thư viện Evidently để phát hiện data drift và model performance. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra, và giám sát data và model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như **PSI**, **K-L divergence**, **Jensen-Shannon distance**, **Wasserstein distance**, và các metrics phổ biến của model performance như **Accuracy**, **F1 score**, **RMSE**, **MAE**, v.v. Các bạn có thể đọc thêm ở [document của Evidently](https://docs.evidentlyai.com/reference/data-drift-algorithm) để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động để phát hiện data drift tuỳ thuộc vào kích thước của dataset.
 
-## Cách test monitoring service
+## Cách test
 
 > Before you start anything, learn how to finish it.
 
@@ -553,7 +553,7 @@ def monitor_request(df: pd.DataFrame): # (7)
 
 Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện prediction ở Online serving API, data được tổng hợp từ request gửi đến và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics đánh giá được ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics này qua endpoint `/metrics`. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics này.
 
-## Thiết lập Grafana dashboards và Alerts
+## Grafana dashboards và Alerts
 
 Có 2 dashboards chúng ta cần thiết lập. 2 dashboards này bao gồm:
 
@@ -631,7 +631,7 @@ Grafana Alerting cho phép chúng ta có thể kích hoạt cảnh báo khi mộ
 
 ## Thử nghiệm
 
-### Gửi `drift_data`
+### Data bị drift
 
 Sau khi thiết lập xong các dashboards, trong phần này chúng ta sẽ viết code để gửi request chứa `normal_data` và `drift_data` tới Online serving API. Code để gửi các requests được đặt tại `monitoring_service/src/mock_request.py` và được giải thích như dưới đây.
 
@@ -727,7 +727,7 @@ Các bạn có thể click vào nút `Show state history` để xem thời đi�
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png" loading="lazy"/>
 
-### Gửi `normal_data`
+### Data không bị drift
 
 Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
 

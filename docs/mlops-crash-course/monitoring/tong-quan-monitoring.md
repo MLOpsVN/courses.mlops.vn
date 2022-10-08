@@ -26,7 +26,7 @@ Ngoài theo dõi hiệu quả hoạt động của model, vì hệ thống của
 
 Trong bài này, chúng ta sẽ tìm hiểu các metrics nên được theo dõi trong một hệ thống ML và các giải pháp khả thi mà chúng ta sẽ triển khai trong khoá học này.
 
-## Theo dõi hoạt động của hệ thống
+## Theo dõi hệ thống
 
 Thông thường, có ba mảng sau chúng ta cần theo dõi trong một hệ thống phần mềm:
 
@@ -38,7 +38,7 @@ Một số ví dụ về metrics trong các mảng trên như là: độ trễ, 
 
 Trong bài sau, chúng ta sẽ sử dụng Prometheus để thu thập các metrics trên từ máy tính mà chúng ta đang sử dụng để thực hành khoá học này. Chúng ta cũng sẽ sử dụng Bentoml để thu thập các metrics liên quan tới số requests gửi tới inference API.
 
-## Theo dõi chất lượng data và model
+## Theo dõi data và model
 
 Trong một hệ thống ML, hiển nhiên rằng chúng ta cần theo dõi các metrics liên quan tới data và model. Các metrics này được gọi là ML metrics, và được chia thành bốn nhóm. Bảng dưới đây chỉ ra thông tin về bốn nhóm metrics và ví dụ về các metrics trong các nhóm đó.
 
@@ -49,7 +49,7 @@ Trong một hệ thống ML, hiển nhiên rằng chúng ta cần theo dõi các
 | 3   | Dự đoán   | Dự đoán của model, để theo dõi model performance, và sự thay đổi các thuộc tính thống kê của dự đoán của model                       |
 | 4   | Label     | Lượt click chuột, mua hàng, yêu thích, chia sẻ, v.v, để theo dõi model performance, và sự thay đổi các thuộc tính thống kê của label |
 
-## Bộ công cụ theo dõi
+## Công cụ theo dõi
 
 Một bộ công cụ phù hợp giúp chúng ta đo lường, theo dõi, và hiểu ý nghĩa của các metrics trong một hệ thống phần mềm. Các công cụ phổ biến được kể đến như logs, dashboards, và alerts.
 

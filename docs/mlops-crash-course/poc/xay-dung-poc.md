@@ -152,7 +152,7 @@ data_df = data_df[data_df.columns. \ # (9)
 8. Biến thành Series (một hàng)
 9. Loại bỏ các cột không cần thiết
 
-## Viết training code
+## Training code
 
 Sau khi tổng hợp được features và labels vào `data_df`, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.
 
@@ -183,7 +183,7 @@ predicted_qualities = model.predict(test_x) # (4)
 
 Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform.md), và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.
 
-## Theo dõi các thử nghiệm
+## Theo dõi thử nghiệm
 
 [MLflow](https://mlflow.org/) là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm. Các bạn hãy làm theo các bước sau.
 
@@ -234,7 +234,7 @@ Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghi
 
     Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của một lần chạy.
 
-## Theo dõi các feature
+## Theo dõi features
 
 Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một parameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.
 

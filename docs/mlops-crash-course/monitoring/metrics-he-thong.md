@@ -10,7 +10,7 @@ Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thốn
 Trong bài này, chúng ta sẽ bắt tay vào triển khai các giải pháp để theo dõi hệ thống ML mà chúng ta đang làm, cụ thể là những công việc sau:
 
 1. Triển khai ELK Stack để theo dõi logs của hệ thống
-1. Triển khai Prometheus và Grafana servers để theo dõi operational metrics
+1. Triển khai Prometheus và Grafana servers để theo dõi metrics hệ thống
 
 ## Môi trường phát triển
 
@@ -19,7 +19,7 @@ Trong bài này, chúng ta sẽ không viết code, mà sẽ đi triển khai EL
 Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
 
 1. Elasticsearch, Kibana, và Filebeat, để thu thập và hiển thị logs tập trung từ Online serving service
-2. Prometheus và Grafana để theo dõi và hiển thị operational metrics
+2. Prometheus và Grafana để theo dõi và hiển thị metrics hệ thống
 
 ## Logs
 
@@ -142,11 +142,11 @@ filebeat.autodiscover:
 
 Đoạn config này sẽ cấu hình Filebeat để nó tự động thu thập logs và gửi về Elasticsearch service khi có containers mới được tạo ra. Tuy nhiên, trong thực tế, chúng ta không muốn thu thập logs từ mọi containers, và chúng ta cũng muốn lọc ra những dòng log nhất định từ service. Để tuỳ chỉnh Filebeat config, các bạn có thể đọc thêm [tại đây](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html).
 
-## Operational metrics
+## Metrics hệ thống
 
-Trong phần này, chúng ta sẽ dùng Prometheus để thu thập các operational metrics và dùng Grafana để hiển thị các metrics đó.
+Trong phần này, chúng ta sẽ dùng Prometheus để thu thập các metrics hệ thống và dùng Grafana để hiển thị các metrics đó.
 
-### Triển khai Prometheus và Grafana servers
+### Prometheus và Grafana servers
 
 Để triển khai Prometheus và Grafana servers, các bạn hay vào repo `mlops-crash-course-platform`, và chạy lệnh sau:
 
@@ -209,7 +209,7 @@ Việc đăng nhập thành công chứng tỏ Grafana server đã được tri�
 
     Grafana cần một datasource để có thể lấy metrics về và hiển thị. Prometheus đã được cấu hình làm datasource mặc định của Grafana. Cấu hình này được đặt tại `prom-graf/grafana/config/datasources.yaml`.
 
-### Thiết lập Note Exporter Full dashboard
+### Node Exporter Full dashboard
 
 Ở phần này, chúng ta sẽ sử dụng một Grafana dashboard tên là [Node Exporter Full](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) được xây dựng sẵn bởi cộng đồng sử dụng Prometheus và Grafana. Dashboard này sẽ hiển thị các thông tin quan trọng của hệ thống về máy local mà chúng ta đang chạy. Để đảm bảo dashboard này chạy đúng chức năng, các bạn hãy chắc chắn rằng config file `prom-graf/prometheus/config/prometheus.yml` của Prometheus server chứa config sau:
 
@@ -232,7 +232,7 @@ Các bạn sẽ nhìn thấy dashboard giống như sau.
 
 Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose `prom-graf/prom-graf-docker-compose.yml` mà một vài phần của dashboard sẽ không được hiển thị hết. Các bạn có thể xem thêm [tại đây](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.
 
-### Thiết lập Bentoml dashboard
+### Bentoml dashboard
 
 Bentoml dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-code/monitoring_service/dashboards/bentoml_dashboard.json`. Chúng ta cần làm các bước sau để hiển thị Bentoml dashboard trên Grafana.
 
@@ -275,7 +275,7 @@ Cấu hình này cho phép Grafana tự động đọc dashboards được đặ
 
 ## Tổng kết
 
-Như vậy, chúng ta vừa thực hiện quá trình triển khai ELK Stack để thu thập logs lại tập trung một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus và Grafana servers để thu thập các operational metrics và hiển thị chúng.
+Như vậy, chúng ta vừa thực hiện quá trình triển khai ELK Stack để thu thập logs lại tập trung một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus và Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.
 
 Trong thực tế, với ELK Stack, chúng ta sẽ cần thiết lập các bộ filter để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus và Grafana, chúng ta sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung _PromQL_ để có thể chọn lọc và tổng hợp metrics data hiệu quả. Các bạn có thể đọc thêm tại [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
