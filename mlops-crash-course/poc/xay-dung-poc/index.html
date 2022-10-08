@@ -8,7 +8,7 @@
 <link href="https://courses.mlops.vn/mlops-crash-course/poc/xay-dung-poc/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Xây dựng PoC - MLOpsVN Courses</title>
+<title>Xây dựng POC - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -46,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Xây dựng PoC
+              Xây dựng POC
             
           </span>
 </div>
@@ -100,8 +100,8 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/mlops/">
-        MLOps
+<a class="md-nav__link" href="../../tong-quan-he-thong/tong-quan-mlops/">
+        Tổng quan MLOps
       </a>
 </li>
 <li class="md-nav__item">
@@ -120,28 +120,28 @@
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_2">
-          PoC
+          POC
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="PoC" class="md-nav" data-md-level="2">
+<nav aria-label="POC" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_2">
 <span class="md-nav__icon md-icon"></span>
-          PoC
+          POC
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../dinh-nghia-poc/">
-        Định nghĩa PoC
+        Định nghĩa POC
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Xây dựng PoC
+          Xây dựng POC
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Xây dựng PoC
+        Xây dựng POC
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -160,23 +160,33 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#thu-thap-data">
+    Thu thập data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-data">
+    Phân tích data
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#chuan-bi-data">
     Chuẩn bị data
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-viet-training-code">
-    Phân tích data và viết training code
+<a class="md-nav__link" href="#training-code">
+    Training code
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-thu-nghiem">
-    Theo dõi các thử nghiệm
+<a class="md-nav__link" href="#theo-doi-thu-nghiem">
+    Theo dõi thử nghiệm
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-feature">
-    Theo dõi các feature
+<a class="md-nav__link" href="#theo-doi-features">
+    Theo dõi features
   </a>
 </li>
 <li class="md-nav__item">
@@ -238,13 +248,8 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/tong-quan-training-pipeline/">
-        Tổng quan pipeline
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/xay-dung-training-pipeline/">
-        Xây dựng pipeline
+<a class="md-nav__link" href="../../training-pipeline/xay-dung-training-pipeline/">
+        Xây dựng training pipeline
       </a>
 </li>
 </ul>
@@ -263,12 +268,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/tong-quan-model-serving/">
-        Tổng quan model serving
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/trien-khai-model-serving/">
+<a class="md-nav__link" href="../../model-serving/trien-khai-model-serving/">
         Triển khai model serving
       </a>
 </li>
@@ -288,8 +288,8 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../monitoring/tong-quan/">
-        Tổng quan
+<a class="md-nav__link" href="../../monitoring/tong-quan-monitoring/">
+        Tổng quan monitoring
       </a>
 </li>
 <li class="md-nav__item">
@@ -408,23 +408,33 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#thu-thap-data">
+    Thu thập data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-data">
+    Phân tích data
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#chuan-bi-data">
     Chuẩn bị data
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#phan-tich-data-va-viet-training-code">
-    Phân tích data và viết training code
+<a class="md-nav__link" href="#training-code">
+    Training code
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-thu-nghiem">
-    Theo dõi các thử nghiệm
+<a class="md-nav__link" href="#theo-doi-thu-nghiem">
+    Theo dõi thử nghiệm
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#theo-doi-cac-feature">
-    Theo dõi các feature
+<a class="md-nav__link" href="#theo-doi-features">
+    Theo dõi features
   </a>
 </li>
 <li class="md-nav__item">
@@ -439,7 +449,11 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Xây dựng PoC</h1>
+<h1>Xây dựng POC</h1>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/s/photos/problem?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Ở bài trước, chúng ta đã định nghĩa thế nào là một dự án POC thành công. Trong bài này, chúng ta sẽ thử nghiệm việc xây dựng model chứng minh rằng giải pháp sử dụng ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài <a href="../../tong-quan-he-thong/mlops-platform.md">MLOps Platform</a>.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
@@ -449,7 +463,7 @@
 <li>Jupyter notebook để thử nghiệm data, model</li>
 <li>MLflow để làm ML Metadata Store</li>
 </ol>
-<h2 id="chuan-bi-data">Chuẩn bị data</h2>
+<h2 id="thu-thap-data">Thu thập data</h2>
 <p>Thông thường ở POC, do data pipeline chưa thể được xây dựng hoàn thiện ngay, nên data dùng để thử nghiệm ở bước POC sẽ được Data Engineer thu thập từ các data source, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:</p>
 <ul>
 <li>Phân tích data để định nghĩa các transformation rule cho data từ data source. Transformation rule này sẽ được dùng để xây dựng data pipeline</li>
@@ -457,7 +471,7 @@
 <li>Thử nghiệm các model architecture và hyperparameter để định nghĩa các bước trong training pipeline</li>
 </ul>
 <p>Trong khoá học này, giả sử rằng Data Engineering đã thu thập data cho chúng ta từ data source và chuyển giao cho chúng ta một file data duy nhất ở dạng <code>parquet</code>. Chúng ta sẽ sử dụng file data này để thực hiện công việc của một Data Scientist trong các bước tiếp theo.</p>
-<h2 id="phan-tich-data-va-viet-training-code">Phân tích data và viết training code</h2>
+<h2 id="phan-tich-data">Phân tích data</h2>
 <p>Trong phần này, chúng ta sẽ sử dụng Jupyter Notebook, một tool quen thuộc với Data Scientist, để viết code phân tích data và training code. Source code của các notebook sẽ được đặt tại <code>training_pipeline/nbs/poc-training-code.ipynb</code>.</p>
 <p>Đầu tiên, chúng ta sẽ load data và clean data. Ở đây chúng ta có hai file data là <code>training_pipeline/nbs/data/exp_driver_stats.parquet</code> và <code>training_pipeline/nbs/data/exp_driver_orders.csv</code>. File <code>exp_driver_stats.parquet</code> chứa data của các tài xế, được ghi lại ở nhiều thời điểm, một tài xế sẽ có nhiều records vì được ghi lại các thời điểm khác nhau. File <code>exp_driver_orders.csv</code> chứa thông tin về cuốc xe có hoàn thành hay không của các tài xế, một tài xế sẽ có nhiều records vì nhiều cuốc xe xảy ra ở các thời điểm khác nhau. Hai file này chứa các cột với ý nghĩa tương ứng như sau:</p>
 <table>
@@ -549,7 +563,134 @@
 </ul>
 <p>Ở mỗi một vấn đề về data ở trên, sẽ tồn tại một hoặc nhiều các giải pháp để giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay rằng chúng có hiệu quả hay không. Do đó, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm training model. Các metrics trong quá trình đánh giá model sẽ giúp chúng ta đánh giá xem các giải pháp mà chúng ta thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, hãy tưởng tượng bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp đi lặp lại nhiều lần.</p>
 <p>May mắn rằng các file data của chúng ta không có feature nào chứa giá trị <code>null</code>. Tiếp theo, để tập trung vào MLOps, chúng ta sẽ tối giản hoá quá trình phân tích data này và đi thẳng vào viết code để train model.</p>
-<p>Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame <code>df_orig</code> với labels từ DataFrame <code>label_orig</code>. Cụ thể, với mỗi hàng trong <code>label_orig</code>, chúng ta muốn lấy ra <em>record mới nhất tương ứng</em> trong <code>df_orig</code> mà có <code>driver_id</code> giống nhau. <em>Record mới nhất tương ứng</em> ở đây có nghĩa là thời gian ở cột <code>datetime</code> trong <code>df_orig</code> sẽ xảy ra trước và gần nhất với thời gian ở cột <code>event_timestamp</code> trong <code>label_orig</code>. Code để tổng hợp features và labels như dưới đây.</p>
+<h2 id="chuan-bi-data">Chuẩn bị data</h2>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@lukechesser?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Luke Chesser</a> on <a href="https://unsplash.com/s/photos/analysis?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<p>Đầu tiên, chúng ta sẽ cần tổng hợp features từ DataFrame <code>df_orig</code> với labels từ DataFrame <code>label_orig</code>. Cụ thể, với mỗi record trong <code>label_orig</code>, chúng ta muốn lấy ra <em>record mới nhất tương ứng</em> trong <code>df_orig</code> mà có <code>driver_id</code> giống nhau. <em>Record mới nhất tương ứng</em> ở đây có nghĩa là thời gian ở cột <code>datetime</code> trong <code>df_orig</code> sẽ xảy ra trước và gần nhất với thời gian ở cột <code>event_timestamp</code> trong <code>label_orig</code>. Ví dụ:</p>
+<ul>
+<li><code>df_orig</code> chứa 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>datetime</th>
+<th>driver_id</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-01</td>
+<td>1001</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-11-01</td>
+<td>1001</td>
+<td>0.2</td>
+<td>0.2</td>
+<td>200</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2022-10-01</td>
+<td>1001</td>
+<td>0.3</td>
+<td>0.3</td>
+<td>300</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2022-09-01</td>
+<td>1001</td>
+<td>0.4</td>
+<td>0.4</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>label_orig</code> chứa 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>event_timestamp</th>
+<th>driver_id</th>
+<th>trip_completed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-15</td>
+<td>1001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-09-15</td>
+<td>1001</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Data mà chúng ta muốn tổng hợp gồm 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>event_timestamp</th>
+<th>driver_id</th>
+<th>trip_completed</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-15</td>
+<td>1001</td>
+<td>1</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-09-15</td>
+<td>1001</td>
+<td>0</td>
+<td>0.4</td>
+<td>0.4</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Giải thích</p>
+<ul>
+<li>Features từ index 1 ở <code>df_orig</code> được lấy ra cho record index 1 ở <code>label_orig</code>, vì feature đó là mới nhất so với <code>event_timestamp</code> của record ở index 1 trong <code>label_orig</code></li>
+<li>Tương tự, features từ index 4 ở <code>df_orig</code> được lấy ra cho record index 1 ở <code>label_orig</code>, vì feature đó là mới nhất và xảy ra trước so với <code>event_timestamp</code> của record ở index 1 trong <code>label_orig</code></li>
+</ul>
+</li>
+</ul>
+<p>Code để tổng hợp features và labels như dưới đây.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-training-code.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
@@ -609,7 +750,8 @@
 <li>Biến thành Series (một hàng)</li>
 <li>Loại bỏ các cột không cần thiết</li>
 </ol>
-<p>Sau khi tổng hợp được features và labels vào <code>data_df</code>, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model như đoạn code dưới đây.</p>
+<h2 id="training-code">Training code</h2>
+<p>Sau khi tổng hợp được features và labels vào <code>data_df</code>, chúng ta sẽ chia DataFrame này thành training set và test set, rồi thực hiện một loạt các thao tác rất quen thuộc bao gồm train model, và đánh giá model.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-training-code.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -651,13 +793,19 @@
 <li>Đánh giá model</li>
 </ol>
 <p>Trong quá trình thử nghiệm data và model, chúng ta sẽ cần thử nghiệm rất nhiều các bộ feature khác nhau, nhiều model architecture khác nhau với các bộ hyperparameter khác nhau. Để có thể reproduce được kết quả training, chúng ta cần phải biết được thử nghiệm nào dùng bộ feature nào, dùng model architecture nào với bộ hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài <a href="../../tong-quan-he-thong/mlops-platform.md">MLOps Platform</a>, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi metadata của các lần thử nghiệm.</p>
-<h2 id="theo-doi-cac-thu-nghiem">Theo dõi các thử nghiệm</h2>
-<p><a href="https://mlflow.org/">MLflow</a> là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm.</p>
-<p>Việc đầu tiên, chúng ta sẽ cho chạy MLflow server trên môi trường local. Hãy clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a> về máy của bạn, và chạy câu lệnh sau.</p>
+<h2 id="theo-doi-thu-nghiem">Theo dõi thử nghiệm</h2>
+<p><a href="https://mlflow.org/">MLflow</a> là một open source platform để quản lý vòng đời và các quy trình trong một hệ thống Machine Learning. Một trong những chức năng của MLflow mà chúng ta sẽ sử dụng trong bài này đó là tính năng theo dõi các metadata của các thử nghiệm. Các bạn hãy làm theo các bước sau.</p>
+<ol>
+<li>
+<p>Clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>, và chạy câu lệnh sau để chạy MLflow server trên môi trường local</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>bash run.sh mlflow up
 </code></pre></div>
-<p>Trên browser của bạn, đi tới URL <a href="http://localhost:5000/">http://localhost:5000/</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa.</p>
-<p>Tiếp theo, mở file notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta.</p>
+</li>
+<li>
+<p>Đi tới URL <a href="http://localhost:5000/">http://localhost:5000/</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa</p>
+</li>
+<li>
+<p>Mở notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>, các bạn sẽ thấy chúng ta thêm một đoạn code nhỏ sau để tích hợp MLflow vào đoạn code training của chúng ta</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
 <span class="normal"><a href="#__codelineno-4-2">2</a></span>
 <span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">"http://localhost:5000"</span>
@@ -667,7 +815,9 @@
 <ol>
 <li>Vì chúng ta dùng <code>sklearn</code> để train model, dòng này giúp tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Nếu bạn sử dụng một training framework khác khi training, rất có khả năng MLflow cũng hỗ trợ quá trình tự động hoá này. Các bạn có thể xem thêm <a href="https://mlflow.org/docs/latest/tracking.html#automatic-logging">ở đây</a> để biết thêm thông tin về các training framework được MLflow hỗ trợ.</li>
 </ol>
-<p>Tiếp theo, thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.</p>
+</li>
+<li>
+<p>Thêm đoạn code sau để log lại các hyperparameter và metric tương ứng với một lần thử nghiệm.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
@@ -699,10 +849,14 @@
 <li>Log lại các metric sau khi test trên test set</li>
 <li>Log lại model sau khi train</li>
 </ol>
-<p>Bây giờ, hãy mở MLflow trên browser của bạn. Chúng ta sẽ nhìn thấy một giao diện trông như sau.</p>
+</li>
+<li>
+<p>Mở MLflow trên browser, các bạn sẽ thấy một giao diện trông như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"/></a></p>
 <p>Như các bạn thấy, mọi thông tin mà chúng ta log lại trong mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột <code>Start time</code> của một lần chạy.</p>
-<h2 id="theo-doi-cac-feature">Theo dõi các feature</h2>
+</li>
+</ol>
+<h2 id="theo-doi-features">Theo dõi features</h2>
 <p>Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một parameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.</p>
 <p>Như các bạn đã biết, mục đích của việc theo dõi các feature này là để chúng ta có thể reproduce lại một lần thử nghiệm. Chỉ bằng việc lưu lại tên của các feature được sử dụng, chúng ta không thể đảm bảo được sẽ reproduce lại được một lần chạy. Bởi vì có thể feature tên như vậy đã bị đổi tên, hoặc tên vẫn giữ nguyên nhưng transformation rule để sinh ra các feature đó đã bị thay đổi. Như vậy, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.</p>
 <p>Ở giai đoạn POC này, vì chúng ta chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ cho việc theo dõi các version của quy trình transform data và tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature từ bộ data thô mà Data Engineer chuyển giao cho chúng ta là đủ rồi. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi các version của quy trình transform các feature và tích hợp các version đó vào quá trình training.</p>
@@ -714,7 +868,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Định nghĩa PoC" class="md-footer__link md-footer__link--prev" href="../dinh-nghia-poc/" rel="prev">
+<a aria-label="Previous: Định nghĩa POC" class="md-footer__link md-footer__link--prev" href="../dinh-nghia-poc/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -723,7 +877,7 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              Định nghĩa PoC
+              Định nghĩa POC
             </div>
 </div>
 </a>

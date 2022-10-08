@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/model-serving/trien-khai-model-serving/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Triển khai model serving - MLOpsVN Courses</title>
+<link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Triển khai model serving
+            
+          </span>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../../">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-quan-he-thong/tong-quan-mlops/">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-quan-he-thong/phan-tich-van-de/">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-quan-he-thong/mlops-platform/">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          POC
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="POC" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          POC
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
+        Định nghĩa POC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../poc/xay-dung-poc/">
+        Xây dựng POC
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/tong-quan-data-pipeline/">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/airflow-co-ban/">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/feature-store/">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/xay-dung-data-pipeline/">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_4">
+          Training pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Training pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_4">
+<span class="md-nav__icon md-icon"></span>
+          Training pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../training-pipeline/xay-dung-training-pipeline/">
+        Xây dựng training pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_5">
+          Model serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_5">
+<span class="md-nav__icon md-icon"></span>
+          Model serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Triển khai model serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Triển khai model serving
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-serving">
+    Batch serving
+  </a>
+<nav aria-label="Batch serving" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-prediction">
+    Batch prediction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#airflow-dag">
+    Airflow DAG
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-serving">
+    Online serving
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../monitoring/tong-quan-monitoring/">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../monitoring/metrics-he-thong/">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../monitoring/monitoring-service/">
+        Monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ci-cd/gioi-thieu.md">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ci-cd/kiem-thu-he-thong.md">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ci-cd/data-pipeline.md">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ci-cd/training-pipeline.md">
+        CI/CD cho training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ci-cd/model-serving.md">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" id="__nav_2_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_8">
+          Tổng kết
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng kết" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_8">
+<span class="md-nav__icon md-icon"></span>
+          Tổng kết
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-ket/tom-tat-noi-dung.md">
+        Tóm tắt nội dung
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tong-ket/mot-so-van-de-khac.md">
+        Một số vấn đề khác
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../CONTRIBUTING/">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../CODE_OF_CONDUCT/">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-serving">
+    Batch serving
+  </a>
+<nav aria-label="Batch serving" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cap-nhat-feature-store">
+    Cập nhật Feature Store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-extraction">
+    Data extraction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-prediction">
+    Batch prediction
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#airflow-dag">
+    Airflow DAG
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-serving">
+    Online serving
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Triển khai model serving</h1>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/serving.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/serving.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@jaywennington?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jay Wennington</a> on <a href="https://unsplash.com/s/photos/serve?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Sau khi train được một model tốt sử dụng training pipeline trong bài trước, chúng ta cần triển khai model tốt đó để thực hiện inference. Có hai hình thức triển khai model phổ biến, đó là <em>batch serving</em> và <em>online serving</em>.</p>
+<p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Tuy nhiên, batch serving được tối ưu để xử lý số lượng lớn các requests và thường để chạy các model phức tạp, trong khi online serving thì được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và được xử lý offline. Online serving thì được triển khai lên một server nào đó dưới dạng RESTful APIs để người dùng có thể gọi tới qua internet.</p>
+<p>Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả hai hình thức batch serving và online serving. Source code của bài này được đặt tại Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>model_serving/dev_requirements.txt</code>. Các bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt môi trường phát triển.</p>
+<p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.</p>
+<ol>
+<li>
+<p>Copy file <code>model_serving/.env-example</code>, đổi tên thành <code>model_serving/.env</code>. File này chứa các config cần thiết cho việc triển khai model serving.</p>
+</li>
+<li>
+<p>Copy file <code>model_serving/deployment/.env-example</code>, đổi tên thành <code>model_serving/deployment/.env</code>. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.</p>
+</li>
+<li>
+<p>Set env var <code>MODEL_SERVING_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>model_serving</code>. Env var này là để hỗ trợ việc chạy python code trong folder <code>model_serving/src</code> trong quá trình phát triển.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">MODEL_SERVING_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/model_serving"</span>
+</code></pre></div>
+</li>
+</ol>
+<p>Các MLOps tools sẽ được sử dụng trong bài này bao gồm:</p>
+<ol>
+<li>Feast để truy xuất Feature Store</li>
+<li>MLflow để làm ML Metadata Store</li>
+<li>Airflow để quản lý batch serving pipeline</li>
+<li>Bentoml để triển khai online serving</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>model_serving</code>.</p>
+</div>
+<h2 id="batch-serving">Batch serving</h2>
+<p>Trong khoá học này, chúng ta sẽ thiết kế batch serving với input là data file ở local. Chúng ta có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving.</p>
+<p>Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-dag.png"/></a></p>
+<h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
+<p>Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.</p>
+<p>Task này được thực hiện giống như task <strong>Cập nhật Feature Store</strong> ở training pipeline. Các bạn có thể xem lại bài <a href="../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store">Xây dựng training pipeline</a>. Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Các bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.</p>
+<ol>
+<li>
+<p>Triển khai code của Feature Store từ <code>data_pipeline/feature_repo</code> sang <code>model_serving/feature_repo</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Làm theo hướng dẫn ở file data_pipeline/README.md trước, sau đó chạy</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nb">cd</span> ../data_pipeline
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>make deploy_feature_repo
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">cd</span> ../model_serving
+</code></pre></div>
+</li>
+<li>
+<p>Cập nhật Feature Registry và Offline Feature Store của Feast</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">cd</span> feature_repo
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>feast apply
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
+</li>
+</ol>
+<h3 id="data-extraction">Data extraction</h3>
+<p>Trong task này, chúng ta cần đọc vào data mà chúng ta muốn chạy prediction. Khi đọc vào data, chúng ta cũng cần xử lý data này về input format mà model yêu cầu để tiện cho task <strong>Batch prediction</strong> tiếp theo, bằng cách lấy ra các features từ Feast và định dạng lại data mà chúng ta sẽ chạy prediction. Đầu ra của task này là data đã được xử lý về đúng input format của model và được lưu vào disk.</p>
+<p>Chúng ta sẽ viết code để đọc data mà chúng ta muốn chạy batch prediction. Code của task này được lưu tại <code>model_serving/src/data_extraction.py</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/data_extraction.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">fs</span> <span class="o">=</span> <span class="n">feast</span><span class="o">.</span><span class="n">FeatureStore</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">orders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">batch_input_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">orders</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">batch_input_df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">get_historical_features</span><span class="p">(</span> <span class="c1"># (3)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">entity_df</span><span class="o">=</span><span class="n">orders</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">features</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="s2">"driver_stats:conv_rate"</span><span class="p">,</span> <span class="c1"># (4)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="s2">"driver_stats:acc_rate"</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>        <span class="s2">"driver_stats:avg_daily_trips"</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="p">],</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="p">)</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="n">batch_input_df</span> <span class="o">=</span> <span class="n">batch_input_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"event_timestamp"</span><span class="p">,</span> <span class="s2">"driver_id"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># (5)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">batch_input_df</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_INPUT_PQ</span><span class="p">)</span> <span class="c1"># (6)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Khởi tạo kết nối tới Feature Store</li>
+<li>Đọc file data mà chúng ta muốn chạy prediction nằm tại <code>model_serving/data/batch_request.csv</code></li>
+<li>Lấy ra các features <code>conv_rate</code>, <code>acc_rate</code>, và <code>avg_daily_trips</code></li>
+<li><code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code></li>
+<li>Bỏ các cột không cần thiết</li>
+<li>Lưu <code>batch_input_df</code> vào disk để tiện sử dụng cho task tiếp theo.</li>
+</ol>
+<p>Hãy cùng chạy task này ở môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>python data_extraction.py
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
+<p>Sau khi chạy xong, hãy kiểm tra folder <code>model_serving/artifacts</code>, các bạn sẽ nhìn thấy file <code>batch_input.parquet</code>.</p>
+<h3 id="batch-prediction">Batch prediction</h3>
+<p>Ở task này, chúng ta sẽ load model sẽ được dùng từ một config file, và chạy prediction trên data đã được xử lý ở task trước. Đầu ra của task này là kết quả predictions và sẽ được lưu vào disk. Để đơn giản hoá, trong khoá học này, chúng ta sẽ không thực hiện kĩ thuật tối ưu nào cho quá trình prediction.</p>
+<p>Trước khi chạy batch serving, rõ ràng rằng chúng ta đã quyết định xem sẽ dùng model nào cho batch serving. Thông tin về model mà chúng ta muốn chạy sẽ là một trong những input của batch serving pipeline. Input này có thể là Airflow variable, hoặc đường dẫn tới một file chứa thông tin về model.</p>
+<p>Trong phần này, chúng ta sẽ sử dụng model mà chúng ta đã register với MLflow Model Registry ở task <strong>Model validation</strong> trong bài <a href="../../training-pipeline/xay-dung-training-pipeline/#model-validation">Xây dựng training pipeline</a>. Trong task đó, thông tin về model đã registered được lưu tại <code>training_pipeline/artifacts/registered_model_version.json</code>. Chúng ta có thể upload file này vào một Storage nào đó trong tổ chức để các task khác có thể download được model, cụ thể là cho batch serving và online serving ở trong bài này.</p>
+<p>Vì chúng ta đang phát triển cả training pipeline và model serving ở local, nên chúng ta chỉ cần copy file <code>training_pipeline/artifacts/registered_model_version.json</code> sang <code>model_serving/artifacts/registered_model_version.json</code>. Để làm điều này, các bạn hãy chạy lệnh sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">cd</span> ../training_pipeline
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>make deploy_registered_model_file
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nb">cd</span> ../model_serving
+</code></pre></div>
+<p>Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Để đơn giản hoá quá trình batch prediction, đoạn code cho task batch prediction này giống như ở task <strong>Model evaluation</strong> mà chúng ta đã viết trong bài <a href="../../training-pipeline/xay-dung-training-pipeline/#model-evaluation">Xây dựng training pipeline</a>. Code của task này được lưu tại file <code>model_serving/src/batch_prediction.py</code> và được giải thích như sau.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/batch_prediction.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">mlflow_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="n">batch_df</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_INPUT_PQ</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="n">model_signature</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">signature</span> <span class="c1"># (3)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">feature_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">model_signature</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_names</span><span class="p">():</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>    <span class="n">feature_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="n">batch_df</span> <span class="o">=</span> <span class="n">batch_df</span><span class="p">[</span><span class="n">feature_list</span><span class="p">]</span> <span class="c1"># (4)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">batch_df</span><span class="p">)</span> <span class="c1"># (5)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="n">batch_df</span><span class="p">[</span><span class="s2">"pred"</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">batch_df</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">BATCH_OUTPUT_PQ</span><span class="p">)</span> <span class="c1"># (6)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>model_uri chứa model path lấy từ file <code>model_serving/artifacts/registered_model_version.json</code></li>
+<li>Load batch input được lưu ở task trước</li>
+<li>Load model signature từ MLflow model</li>
+<li>Vì batch data mà chúng ta đọc từ file vào có thể sẽ chứa các features không theo đúng thứ tự mà model yêu cầu, nên chúng ta cần sắp xếp các features theo đúng thứ tự</li>
+<li>Chạy prediction</li>
+<li>Lưu output vào disk</li>
+</ol>
+<p>Bây giờ, hãy cùng chạy task này trong môi trường phát triển của bạn bằng cách chạy lệnh sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>python batch_prediction.py
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nb">cd</span> ..
+</code></pre></div>
+<p>Sau khi chạy xong, hãy kiểm tra folder <code>model_serving/artifacts</code>, các bạn sẽ nhìn thấy file <code>batch_output.parquet</code>.</p>
+<h3 id="airflow-dag">Airflow DAG</h3>
+<p>Ở các phần trên, chúng ta đã phát triển xong các đoạn code cần thiết cho batch serving pipeline. Ở phần này, chúng ta sẽ viết Airflow DAG để kết nối các task trên lại thành một pipeline. Đoạn code để định nghĩa Airflow DAG được lưu tại <code>model_serving/dags/batch_serving_dag.py</code> và được tóm tắt như dưới đây.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/dags/batch_serving_dag.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"batch_serving_pipeline"</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>    <span class="c1"># các argument khác</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">feature_store_init_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"feature_store_init_task"</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd feature_repo &amp;&amp; feast apply'"</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="p">)</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>    <span class="n">data_extraction_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"data_extraction_task"</span><span class="p">,</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd src &amp;&amp; python data_extraction.py'"</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a>    <span class="p">)</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a>    <span class="c1"># các task khác</span>
+</code></pre></div></td></tr></table></div>
+<p>Chi tiết về những điểm quan trọng cần lưu ý, mời các bạn xem lại bài <a href="../../training-pipeline/xay-dung-training-pipeline/#airflow-dag">Xây dựng training pipeline</a>.</p>
+<p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/model_serving:latest</code> và triển khai Airflow DAGs bằng cách chạy các lệnh sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>make build_image <span class="c1"># (1)</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="c1"># Đảm bảo Airflow server đã chạy</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>make deploy_dags <span class="c1"># (2)</span>
+</code></pre></div>
+<ol>
+<li>Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa <code>DOCKER_USER</code> env var tại file <code>model_serving/deployment/.env</code> thành docker user của các bạn</li>
+<li>Copy <code>model_serving/dags/*</code> vào folder <code>dags</code> của Airflow</li>
+</ol>
+<p>Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt batch serving pipeline và chờ đợi kết quả.</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png"/></a></p>
+<h2 id="online-serving">Online serving</h2>
+<p>Về cơ bản, quá trình triển khai online serving chính là xây dựng một hoặc nhiều RESTful APIs, và triển khai các APIs này lên một server, cho phép người dùng có thể gọi tới qua internet.</p>
+<p>Thông thường, chúng ta sẽ sử dụng một library nào đó để xây dựng API, ví dụ như Flask trong Python. Trong khoá học này, chúng ta sẽ sử dụng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>Bentoml</em>.</p>
+<p>Trong phần này, chúng ta sẽ xây dựng một RESTful API (gọi tắt là API) để thực hiện online serving. Để quá trình xây dựng API này thuận tiện, chúng ta sẽ sử dụng Bentoml, một library chuyên được sử dụng cho việc tạo online serving API. Code của online serving được lưu tại <code>model_serving/src/bentoml_service.py</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/bentoml_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span>
+<span class="normal"><a href="#__codelineno-10-46">46</a></span>
+<span class="normal"><a href="#__codelineno-10-47">47</a></span>
+<span class="normal"><a href="#__codelineno-10-48">48</a></span>
+<span class="normal"><a href="#__codelineno-10-49">49</a></span>
+<span class="normal"><a href="#__codelineno-10-50">50</a></span>
+<span class="normal"><a href="#__codelineno-10-51">51</a></span>
+<span class="normal"><a href="#__codelineno-10-52">52</a></span>
+<span class="normal"><a href="#__codelineno-10-53">53</a></span>
+<span class="normal"><a href="#__codelineno-10-54">54</a></span>
+<span class="normal"><a href="#__codelineno-10-55">55</a></span>
+<span class="normal"><a href="#__codelineno-10-56">56</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">mlflow_model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="o">=</span><span class="n">model_uri</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="n">model</span> <span class="o">=</span> <span class="n">mlflow_model</span><span class="o">.</span><span class="n">_model_impl</span> <span class="c1"># (2)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">bentoml_model</span> <span class="o">=</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span> <span class="c1"># (3)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>    <span class="n">model_name</span><span class="p">,</span> <span class="c1"># (4)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>    <span class="n">model</span><span class="p">,</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>    <span class="n">signatures</span><span class="o">=</span><span class="p">{</span> <span class="c1"># (5)</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>        <span class="s2">"predict"</span><span class="p">:</span> <span class="p">{</span> <span class="c1"># (6)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>            <span class="s2">"batchable"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="c1"># (7)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>        <span class="p">},</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>    <span class="p">},</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>    <span class="n">custom_objects</span><span class="o">=</span><span class="p">{</span> <span class="c1"># (8)</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a>        <span class="s2">"feature_list"</span><span class="p">:</span> <span class="n">feature_list</span><span class="p">,</span> <span class="c1"># (9)</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="p">},</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="p">)</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="n">feature_list</span> <span class="o">=</span> <span class="n">bentoml_model</span><span class="o">.</span><span class="n">custom_objects</span><span class="p">[</span><span class="s2">"feature_list"</span><span class="p">]</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="n">bentoml_runner</span> <span class="o">=</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bentoml_model</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">to_runner</span><span class="p">()</span> <span class="c1"># (10)</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="n">svc</span> <span class="o">=</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="n">bentoml_model</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">runners</span><span class="o">=</span><span class="p">[</span><span class="n">bentoml_runner</span><span class="p">])</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="n">fs</span> <span class="o">=</span> <span class="n">feast</span><span class="o">.</span><span class="n">FeatureStore</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="p">)</span> <span class="c1"># (11)</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span> <span class="c1"># (12)</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">bentoml_runner</span><span class="o">.</span><span class="n">predict</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a>    <span class="k">return</span> <span class="n">result</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="k">class</span> <span class="nc">InferenceRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span> <span class="c1"># (13)</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a>    <span class="n">driver_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a><span class="k">class</span> <span class="nc">InferenceResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span> <span class="c1"># (14)</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a>    <span class="n">prediction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a>    <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a><span class="nd">@svc</span><span class="o">.</span><span class="n">api</span><span class="p">(</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a>    <span class="nb">input</span><span class="o">=</span><span class="n">JSON</span><span class="p">(</span><span class="n">pydantic_model</span><span class="o">=</span><span class="n">InferenceRequest</span><span class="p">),</span> <span class="c1"># (15)</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a>    <span class="n">output</span><span class="o">=</span><span class="n">JSON</span><span class="p">(</span><span class="n">pydantic_model</span><span class="o">=</span><span class="n">InferenceResponse</span><span class="p">),</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a><span class="p">)</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">InferenceRequest</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a>        <span class="n">driver_ids</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">driver_ids</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a>        <span class="n">online_features</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">get_online_features</span><span class="p">(</span> <span class="c1"># (16)</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a>            <span class="n">entity_rows</span><span class="o">=</span><span class="p">[{</span><span class="s2">"driver_id"</span><span class="p">:</span> <span class="n">driver_id</span><span class="p">}</span> <span class="k">for</span> <span class="n">driver_id</span> <span class="ow">in</span> <span class="n">driver_ids</span><span class="p">],</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a>            <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"driver_stats:</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">feature_list</span><span class="p">],</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a>        <span class="p">)</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a>        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">online_features</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a>
+<a id="__codelineno-10-46" name="__codelineno-10-46"></a>        <span class="n">input_features</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"driver_id"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># (17)</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47"></a>        <span class="n">input_features</span> <span class="o">=</span> <span class="n">input_features</span><span class="p">[</span><span class="n">feature_list</span><span class="p">]</span> <span class="c1"># (18)</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48"></a>
+<a id="__codelineno-10-49" name="__codelineno-10-49"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">input_features</span><span class="p">)</span> <span class="c1"># (19)</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50"></a>        <span class="n">df</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51"></a>        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52"></a>        <span class="n">best_driver_id</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"driver_id"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span> <span class="c1"># (20)</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53"></a>
+<a id="__codelineno-10-54" name="__codelineno-10-54"></a>        <span class="o">...</span> <span class="c1"># (21)</span>
+<a id="__codelineno-10-55" name="__codelineno-10-55"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56"></a>        <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Download model từ MLflow server giống như ở task Batch prediction của Batch serving pipeline. <code>model_uri</code> chứa model path lấy từ file <code>model_serving/artifacts/registered_model_version.json</code></li>
+<li>Đọc ra sklearn model được wrap trong MLflow model <code>mlflow_model</code></li>
+<li>Lưu model về <a href="https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model">dạng mà Bentoml yêu cầu</a></li>
+<li><code>model_name</code> được lấy từ file <code>model_serving/artifacts/registered_model_version.json</code></li>
+<li><a href="https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures">Signature của model</a>, thể hiện hàm mà model object sẽ gọi</li>
+<li>Key <code>predict</code> ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, <code>sklearn</code> model mà chúng ta train được sử dụng function <code>predict</code> để chạy prediction. Do đó, <code>signatures</code> của Bentoml sẽ chứa key <code>predict</code>. Chi tiết về <code>signatures</code>, các bạn có thể đọc thêm <a href="https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures">tại đây</a></li>
+<li>Thông tin thêm về key <code>batchable</code>, các bạn có thể đọc thêm <a href="https://docs.bentoml.org/en/latest/concepts/model.html#batching">tại đây</a>.</li>
+<li>Lưu bất kì Python object nào đi kèm với model. Đọc thêm <a href="https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model">tại đây</a></li>
+<li>Lưu lại thứ tự các features mà model yêu cầu. <code>feature_list</code> được lấy ra từ thông tin của model mà chúng ta đã lưu ở MLflow</li>
+<li>Tạo <a href="https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner"><em>Bentoml Runner</em> và <em>Bentoml Service</em></a>. Quá trình chạy model inference sẽ thông qua một Bentoml Runner. Bentoml Service chứa object Bentoml Runner, giúp chúng ta định nghĩa API một cách thuận tiện</li>
+<li>Khởi tạo kết nối tới Feature Store</li>
+<li>Hàm <code>predict</code> để thực hiện dự đoán</li>
+<li>Định nghĩa input class cho API</li>
+<li>Định nghĩa output class cho API</li>
+<li>Định nghĩa input và output ở dạng json cho API</li>
+<li>Đọc features từ Online Feature Store</li>
+<li>Loại bỏ cột không cần thiết</li>
+<li>Sắp xếp lại thứ tự features</li>
+<li>Gọi function <code>predict</code> để thực hiện prediction</li>
+<li>Lấy ra driver id có khả năng cao nhất sẽ hoàn thành cuốc xe. Driver id này sẽ được trả về trong response</li>
+<li>Đoạn code liên quan tới monitoring sẽ được giải thích trong bài monitoring. Chúng ta hãy tạm thời bỏ qua đoạn code này</li>
+</ol>
+<p>Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Ngoài ra, các bạn có thể triển khai docker image <code>mlopsvn/mlops_crash_course/model_serving:latest</code> lên một server nào đó để các services khác có thể gọi tới API đã được expose tại port <code>8172</code> trên server này.</p>
+<details class="info">
+<summary>Info</summary>
+<p>Port <code>8172</code> được định nghĩa tại <code>model_serving/deployment/.env</code>.</p>
+</details>
+<p>Hãy cùng thử chạy API <code>inference</code> bằng cách thực hiện các bước sau.</p>
+<ol>
+<li>
+<p>Build docker image và chạy docker compose</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>make build_image <span class="o">&amp;&amp;</span> make compose_up
+</code></pre></div>
+</li>
+<li>
+<p>Chạy <a href="../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline">Feast materialize pipeline</a> ở bài Data Pipeline để cập nhật Online Feature Store.</p>
+</li>
+<li>
+<p>Truy cập tới <code>http://localhost:8172/</code>, mở API <code>/inference</code>, và ấn nút <code>Try it out</code>. Ở phần <code>Request body</code>, các bạn gõ nội dung sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">{</span><span class="w"></span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>Kết quả của response trả về sẽ nhìn giống như sau.</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png"/></a></p>
+</li>
+</ol>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Như vậy, chúng ta vừa thực hiện quy trình triển khai batch serving và online serving điển hình. Lưu ý rằng, code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó.</p>
+<p>Sau khi tự động hoá được batch serving pipeline và triển khai được online serving API, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving API. Hệ thống này rất quan trọng trong việc theo dõi cả system performance và model performance, giúp chúng ta giải quyết các vấn đề nhanh hơn ở production, và cảnh báo chúng ta khi có các sự cố về hệ thống và model performance.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Xây dựng training pipeline" class="md-footer__link md-footer__link--prev" href="../../training-pipeline/xay-dung-training-pipeline/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Xây dựng training pipeline
+            </div>
+</div>
+</a>
+<a aria-label="Next: Tổng quan monitoring" class="md-footer__link md-footer__link--next" href="../../monitoring/tong-quan-monitoring/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Tổng quan monitoring
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate"], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

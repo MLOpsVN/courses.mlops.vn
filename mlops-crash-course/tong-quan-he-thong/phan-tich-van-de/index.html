@@ -22,6 +22,9 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -97,15 +100,42 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../mlops/">
-        MLOps
+<a class="md-nav__link" href="../tong-quan-mlops/">
+        Tổng quan MLOps
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Phân tích vấn đề
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
         Phân tích vấn đề
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-van-e">
+    Phân tích vấn đề
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../mlops-platform/">
@@ -118,23 +148,23 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_2">
-          PoC
+          POC
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="PoC" class="md-nav" data-md-level="2">
+<nav aria-label="POC" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_2">
 <span class="md-nav__icon md-icon"></span>
-          PoC
+          POC
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
-        Định nghĩa PoC
+        Định nghĩa POC
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/xay-dung-poc/">
-        Xây dựng PoC
+        Xây dựng POC
       </a>
 </li>
 </ul>
@@ -188,13 +218,8 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/tong-quan-training-pipeline/">
-        Tổng quan pipeline
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../xay-dung-training-pipeline/xay-dung-training-pipeline/">
-        Xây dựng pipeline
+<a class="md-nav__link" href="../../training-pipeline/xay-dung-training-pipeline/">
+        Xây dựng training pipeline
       </a>
 </li>
 </ul>
@@ -213,12 +238,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/tong-quan-model-serving/">
-        Tổng quan model serving
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../trien-khai-model-serving/trien-khai-model-serving/">
+<a class="md-nav__link" href="../../model-serving/trien-khai-model-serving/">
         Triển khai model serving
       </a>
 </li>
@@ -238,8 +258,8 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../monitoring/tong-quan/">
-        Tổng quan
+<a class="md-nav__link" href="../../monitoring/tong-quan-monitoring/">
+        Tổng quan monitoring
       </a>
 </li>
 <li class="md-nav__item">
@@ -342,6 +362,27 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-van-e">
+    Phân tích vấn đề
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -349,9 +390,15 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Phân tích vấn đề</h1>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/planning.jpg"/></a></p>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"/></a>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.</p>
-<p>Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống <em>Grab</em>, và vấn đề kinh doanh của công ty của bạn là: <em>Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?</em>. Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.</p>
+<p>Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống <em>Grab</em>, và vấn đề kinh doanh của công ty của bạn là:</p>
+<p><strong><em>Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?</em></strong></p>
+<p>Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.</p>
+<h2 id="phan-tich-van-e">Phân tích vấn đề</h2>
 <p>Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta.</p>
 <table>
 <thead>
@@ -398,7 +445,7 @@
 <td>Giả sử quy trình để transform và clean data, feature engineering đã được định nghĩa</td>
 </tr>
 <tr>
-<td><strong>Phát triển models</strong></td>
+<td><strong>Phát triển model</strong></td>
 <td>Có những giải pháp nào đã được thực hiện để so sánh và đối chiếu?</td>
 <td>Giả sử đã tìm hiểu các giải pháp trên internet và của các đối thủ cạnh tranh</td>
 </tr>
@@ -428,7 +475,7 @@
 <td>Các predictions dù thoả mãn threshold hay không thì đều được log lại và gán label sau</td>
 </tr>
 <tr>
-<td><strong>Đánh giá models</strong></td>
+<td><strong>Đánh giá model</strong></td>
 <td>Dùng metrics nào để đánh giá trong giai đoạn development và production?</td>
 <td>Dùng metrics RMSE</td>
 </tr>
@@ -438,7 +485,7 @@
 <td>Ở production, ngoài RMSE để đánh giá model performance, chúng ta cần tính cả tỉ lệ hoàn thành các cuốc xe trong 1 tháng gần nhất, để đánh giá mục tiêu kinh doanh</td>
 </tr>
 <tr>
-<td><strong>Triển khai models</strong></td>
+<td><strong>Triển khai</strong></td>
 <td>Data của quá trình inference sẽ được lấy từ đâu? Được format và lưu trữ thế nào?</td>
 <td>Data đầu vào của quá trình inference sẽ được lấy từ static DB và streaming DB</td>
 </tr>
@@ -524,10 +571,11 @@
 </tr>
 </tbody>
 </table>
-<p>Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực thế:</p>
+<p>Về các mốc thời gian của dự án, hình dưới đây là một ví dụ của một dự án trong thực tế:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"/></a></p>
 <p>Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm <a href="https://ml-ops.org/content/phase-zero">ở đây</a> về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.</p>
-<p>Ngoài ra, trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về bốn tính chất này.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về bốn tính chất này.</p>
 <p>Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các workflow và MLOps platform được dùng trong hệ thống.</p>
 </article>
 </div>
@@ -535,7 +583,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: MLOps" class="md-footer__link md-footer__link--prev" href="../mlops/" rel="prev">
+<a aria-label="Previous: Tổng quan MLOps" class="md-footer__link md-footer__link--prev" href="../tong-quan-mlops/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -544,7 +592,7 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              MLOps
+              Tổng quan MLOps
             </div>
 </div>
 </a>

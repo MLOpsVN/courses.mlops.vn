@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/poc/dinh-nghia-poc/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Định nghĩa POC - MLOpsVN Courses</title>
+<title>Tổng quan MLOps - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -46,7 +46,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Định nghĩa POC
+              Tổng quan MLOps
             
           </span>
 </div>
@@ -87,8 +87,8 @@
           MLOps Crash Course
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_1">
           Tổng quan hệ thống
           <span class="md-nav__icon md-icon"></span>
@@ -99,44 +99,14 @@
           Tổng quan hệ thống
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/tong-quan-mlops/">
-        Tổng quan MLOps
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/phan-tich-van-de/">
-        Phân tích vấn đề
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-quan-he-thong/mlops-platform/">
-        MLOps platform
-      </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_2">
-          POC
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="POC" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_2">
-<span class="md-nav__icon md-icon"></span>
-          POC
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Định nghĩa POC
+          Tổng quan MLOps
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Định nghĩa POC
+        Tổng quan MLOps
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -150,8 +120,23 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inh-nghia-poc">
-    Định nghĩa POC
+<a class="md-nav__link" href="#inh-nghia">
+    Định nghĩa
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-nguyen-tac">
+    Các nguyên tắc
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-components">
+    Các components
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-workflows">
+    Các workflows
   </a>
 </li>
 <li class="md-nav__item">
@@ -163,7 +148,37 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../xay-dung-poc/">
+<a class="md-nav__link" href="../phan-tich-van-de/">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mlops-platform/">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          POC
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="POC" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          POC
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
+        Định nghĩa POC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../poc/xay-dung-poc/">
         Xây dựng POC
       </a>
 </li>
@@ -373,8 +388,23 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inh-nghia-poc">
-    Định nghĩa POC
+<a class="md-nav__link" href="#inh-nghia">
+    Định nghĩa
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-nguyen-tac">
+    Các nguyên tắc
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-components">
+    Các components
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cac-workflows">
+    Các workflows
   </a>
 </li>
 <li class="md-nav__item">
@@ -389,70 +419,137 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Định nghĩa POC</h1>
+<h1>Tổng quan MLOps</h1>
 <figure>
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/poc/dinh-nghia-poc/poc.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/poc/dinh-nghia-poc/poc.jpg"/></a>
-<figcaption>Photo by <a href="https://unsplash.com/@calder_burkhart?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Calder B</a> on <a href="https://unsplash.com/collections/9xo9_xs3W0I/proof-of-concept-poc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/mlops-loop-en.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/mlops-loop-en.jpg"/></a>
+<figcaption>Source: ml-ops.org</figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Trong bài trước, chúng ta đã thực hiện bước đầu tiên của bất kì một dự án phần mềm nào, đó chính là thu thập các yêu cầu, định nghĩa vấn đề kinh doang và phân tích vấn đề kinh doanh đó thông qua nhiều câu hỏi. Quá trình này giúp cho chúng ta hiểu rõ và sâu hơn về vấn đề mà chúng ta đang gặp phải, về những giải pháp tiềm năng, và lên kế hoạch để triển khai các giải pháp đó.</p>
-<p>Trong loạt bài về POC này, chúng ta sẽ cùng nhau xây dựng một dự án POC. Dự án POC sẽ giúp chúng ta thử nghiệm các giải pháp nhanh chóng để chứng minh được rằng tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì chúng ta đang chọn ML làm giải pháp nên ở bước xây dựng dự án POC này, chúng ta sẽ đi chứng minh rằng giải pháp ML là khả thi.</p>
-<h2 id="inh-nghia-poc">Định nghĩa POC</h2>
-<p>Trong quá trình phân tích vấn đề kinh doanh, chúng ta đã tổng hợp được thông tin về data và quá trình xây dựng ML model như sau.</p>
+<p>Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Tuy nhiên, ở thời điểm hiện tại, có rất nhiều thách thức mà các kĩ sư đang gặp phải để có thể tự động hoá các quy trình trong quá trình phát triển và triển khai các hệ thống ML. MLOps ra đời như một thuật ngữ để mô tả các vấn đề và hướng tiếp cận để giải quyết các vấn đề mà các kĩ sư gặp phải trong một dự án ML.</p>
+<p>Trong bài này, dựa trên các kiến thức được trình bài trong bài báo <a href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a>, chúng ta sẽ tìm hiểu sơ lược lý thuyết về MLOps, các nguyên tắc trong MLOps, và các workflows điển hình trong MLOps.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Khái niệm về MLOps và các lý thuyết liên quan được nhiều nguồn khác nhau định nghĩa khác nhau. Chúng ta nên giữ một thái độ mở về sự khác nhau giữa các nguồn tài liệu này.</p>
+</div>
+<h2 id="inh-nghia">Định nghĩa</h2>
+<p>Theo <a href="https://arxiv.org/abs/2205.02302">bài báo trên</a>, định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:</p>
+<ol>
+<li>MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML</li>
+<li>MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering</li>
+<li>MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production một cách hiệu quả hơn, thông qua một vài nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.</li>
+</ol>
+<h2 id="cac-nguyen-tac">Các nguyên tắc</h2>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kelly Sikkema</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<p>Một nguyên tắc được xem như là một best practice, hay một sự hướng dẫn cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các nguyên tắc trong MLOps bao gồm:</p>
+<p><strong>CI/CD automation</strong></p>
+<p>Nguyên tắc này đảm bảo việc tích hợp và triển khai code được diễn ra tự động, với các bước build, test, triển khai.</p>
+<p><strong>Workflow orchestration</strong></p>
+<p>Trong quá trình phát triển một hệ thống ML, sẽ có rất nhiều các pipeline cần được chạy vào những khoảng thời gian nhất định, với các bước trong một pipeline phụ thuộc lẫn nhau, đồng thời có các thư viện và môi trường chạy khác nhau. Nguyên tắc này đảm bảo việc tự động hoá điều phối các pipeline này chạy đúng thứ tự, và đúng thời gian được chỉ định.</p>
+<p><strong>Reproducibility</strong></p>
+<p>Khả năng tái lập lại một kết quả hay một lần thử nghiệm model là một trong những yêu cầu thường thấy khi phát triển một hệ thống ML. Yêu cầu này đảm bảo việc chạy inference được ổn định, và để debug quá trình phát triển model nhanh và hiệu quả.</p>
+<p><strong>Versioning of code, data, model</strong></p>
+<p>Nguyên tắc này đảm bảo cả code, data, và model được version, để có thể tra soát lại xem một phiên bản model được train với data ở phiên bản nào, và sử dụng code ở phiên bản nào để train.</p>
+<p><strong>Collaboration</strong></p>
+<p>Trong quá trình phát triển một hệ thống ML, nhiều kĩ sư với chuyên môn khác nhau sẽ cùng tham gia vào phát triển hệ thống. Nguyên tắc này đảm bảo việc thiết lập một bộ các quy tắc, các công cụ, và cả văn hoá trong quá trình làm việc giữa các cá nhân ở các vai trò khác nhau với các trách nhiệm khác nhau.</p>
+<p><strong>Continuous ML training &amp; evaluation</strong></p>
+<p>Trong nhiều ML problems, ở môi trường production, việc data bị thay đổi liên tục khiến cho hiệu quả hoạt động của model giảm đi nhanh chóng. Nguyên tắc này đảm bảo việc thiết lập một hệ thống train và đánh giá model được chạy tự động ngay khi cần thiết.</p>
+<p><strong>ML metadata tracking</strong></p>
+<p>Mỗi bước ở mỗi pipeline trong quá trình phát triển một hệ thống ML yêu cầu các cấu hình hay data làm đầu vào, và data ở phía đầu ra. Nguyên tắc này được đề ra dựa trên yêu cầu về việc theo dõi và ghi lại các đầu vào và đầu ra này, kèm theo các thông tin về các lần chạy của các pipeline đó, ví dụ như: ngày tháng, thời gian chạy, phiên bản của data đang chạy, hyperparameter được dùng để train model, model train xong được lưu ở đâu, v.v.</p>
+<p><strong>Continuous monitoring</strong></p>
+<p>Nguyên tắc này đảm bảo việc theo dõi hệ thống ML liên tục các thông số liên quan tới code, data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một số thông số như: sự thay đổi về phân phối của các features của data ở production, model performance, lượng request được gửi đến server trên một giây, thời gian xử lý một request trung bình, v.v.</p>
+<p><strong>Feedback loops</strong></p>
+<p>Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh giá ngược về phần phát triển thường xuyên xảy ra, ví dụ như: phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data từ các nguồn data, hay phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model, v.v.</p>
+<p>Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở <a href="https://arxiv.org/abs/2205.02302">bài báo trên</a>.</p>
+<h2 id="cac-components">Các components</h2>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@jorgedevs?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jorge Ramirez</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<p>Các components trong MLOps là các thành phần ở mức system design trong một hệ thống ML. Các components được liệt kê như sau.</p>
+<ol>
+<li>CI/CD component</li>
+<li>Source code repository</li>
+<li>Workflow orchestration</li>
+<li>Feature store</li>
+<li>Model training infrastructure</li>
+<li>Model registry</li>
+<li>ML metadata store</li>
+<li>Model serving component</li>
+<li>Monitoring component</li>
+</ol>
+<p>Tên của các components trên đã phần lớn giải thích ý nghĩa và công việc của các components đó, và đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều nguyên tắc ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Hình dưới đây thể hiện mối quan hệ của các components với các nguyên tắc trong MLOps.</p>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png"/></a>
+<figcaption>Source: <a href="https://arxiv.org/abs/2205.02302" target="_blank">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
+</figure>
+<p>Để hiểu rõ hơn về các components này, các bạn có thể đọc kĩ hơn ở <a href="https://arxiv.org/abs/2205.02302">bài báo trên</a>.</p>
+<h2 id="cac-workflows">Các workflows</h2>
+<p>Trong phần này, chúng ta sẽ tìm hiểu về các workflows điển hình trong quá trình phát triển một hệ thống ML. Các workflows này được mô tả ở bảng dưới đây.</p>
 <table>
 <thead>
 <tr>
 <th>#</th>
-<th>Câu hỏi</th>
-<th>Trả lời</th>
+<th>Workflow</th>
+<th>Mô tả</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Data được lấy từ đâu?</td>
-<td>Đã được tổng hợp bởi Data Engineer từ ứng dụng của công ty</td>
+<td>Phân tích vấn đề</td>
+<td>Phân tích vấn đề kinh doanh, thiết kế hệ thống phần mềm, quyết định giải pháp về công nghệ sẽ dùng, định nghĩa vấn đề ML cần giải quyết, tìm kiếm data có thể sử dụng, thu thập data và phân tích data</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Data sẽ được transform, clean, và lưu trữ thế nào?</td>
-<td>Data đã được Data Engineer xử lý để thực hiện POC trước, format là <code>parquet</code>, tạm thời lưu ở Database của công ty</td>
+<td>Định nghĩa quy luật biến đổi data</td>
+<td>Sau khi phân tích và hiểu data, định nghĩa các quy luật để biến đổi data thành dạng có thể sử dụng được để thử nghiệm</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Các feature tiềm năng là gì?</td>
-<td><code>conv_rate</code>, <code>acc_rate</code>, <code>avg_daily_trips</code></td>
+<td>Xây dựng data pipeline</td>
+<td>Quy luật biến đổi data sẽ được sử dụng để xây dựng data pipeline</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Các model architecture tiềm năng?</td>
-<td>Linear Regression, Elastic Net</td>
+<td>Thử nghiệm model</td>
+<td>Thử nghiệm data và model, train model tốt nhất</td>
 </tr>
 <tr>
 <td>5</td>
-<td>Dùng metrics nào để đánh giá model?</td>
-<td>MSE, RMSE, R2</td>
+<td>Tự động hoá training pipeline</td>
+<td>Code từ quá trình thử nghiệm data và model sẽ được tự động vào training pipeline. Model sau khi train xong sẽ được triển khai tự động lên Model serving component và tích hợp với Monitoring component</td>
 </tr>
 </tbody>
 </table>
-<p>Ở bước xây dựng dự án POC này, chúng ta cần trả lời một câu hỏi quan trọng, đó là:</p>
-<p><strong><em>Thế nào là một dự án POC thành công?</em></strong></p>
-<p>Vì những dự án POC đầu tiên chưa thể đưa ML model ra môi trường production để trích xuất ra metric cuối cùng để đánh giá ML model được, nên chúng ta cần phải sử dụng metrics đã được định nghĩa ở trên để đánh giá ML model. Cụ thể, chúng ta cần phải đặt một threshold cho các metrics này. Ví dụ, chúng ta có thể sử dụng metric RMSE, và threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn <strong>0.5</strong>.</p>
-<p>Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng được sử dụng như:</p>
-<ul>
-<li>Sử dụng cả metric Accuracy, F1, AUC để đánh giá model performance cho bài toán classification</li>
-<li>Sử dụng thời gian training và inference của ML model để so sánh chi phí và lợi ích</li>
-</ul>
+<p>Lưu ý rằng, các workflows trên không phải là thứ tự chính xác về các công việc mà chúng ta sẽ làm khi xây dựng một hệ thống ML. Hình dưới đây là một ví dụ về các mốc thời gian và các công việc chúng ta cần làm khi trong một dự án ML.</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png"/></a></p>
+<p>Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ các yêu cầu về các chức năng của hệ thống ML mà chúng ta sẽ xây dựng. Sau đó, chúng ta sẽ thực hiện một dự án POC( Proof Of Concept) để chứng minh rằng giải pháp của chúng ta đề ra là khả thi, trước khi bắt tay vào thực hiện xây dựng chi tiết các chức năng phức tạp của hệ thống.</p>
+<p>Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá trình thực hiện dự án POC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó.</p>
+<p>Trong khoá học này, chúng ta sẽ có các bài học lần lượt thực hiện các bước liên quan tới:</p>
+<ol>
+<li>Phân tích vấn đề</li>
+<li>Xây dựng POC</li>
+<li>Data pipeline</li>
+<li>Training pipeline</li>
+<li>Model serving</li>
+<li>Monitoring</li>
+<li>CI/CD</li>
+</ol>
+<p>Thứ tự các bài học không phản ánh thứ tự các công việc cần làm trong một dự án thực tế, mà nó sẽ như mình vừa miêu tả ở trên. Ngoài ra, các vòng lặp phản hồi sẽ xảy ra ở nhiều bước trong quá trình phát triển hệ thống và cộng tác cùng làm việc giữa các bộ phận và vị trí khác nhau.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Dự án POC chỉ là một trong những vòng lặp được thực hiện khi xây dựng hệ thống. Ở những dự án POC đầu tiên, cách đánh giá model có thể chỉ là dùng offline metric. Ở các giai đoạn sau, khi hệ thống đã được triển khai ra production, các online metric sẽ được dùng để đánh giá giải pháp ở giai đoạn đó.</p>
-<p>Sau khi đã định nghĩa được thế nào là một dự án POC thành công, ở bước tiếp theo, chúng ta sẽ bắt tay vào thực hiện dự án POC.</p>
+<p>Trong bài này, chúng ta đã tìm hiểu khá nhiều thử thách về MLOps khi xây dựng một hệ thống ML. Tuy nhiên, MLOps vẫn còn là một mảng mới mẻ trên thế giới, và còn tồn tại khá nhiều thử thách dành cho các kĩ sư. Hy vọng rằng khoá học <strong>MLOps Crash Course</strong> sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ bắt đầu bước đầu tiên khi xây dựng một dự án ML, đó là bước <strong>Phân tích vấn đề</strong>.</p>
+<!-- MARKDOWN LINKS & IMAGES -->
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: MLOps platform" class="md-footer__link md-footer__link--prev" href="../../tong-quan-he-thong/mlops-platform/" rel="prev">
+<a aria-label="Previous: MLOps Crash Course" class="md-footer__link md-footer__link--prev" href="../../" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -461,17 +558,17 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              MLOps platform
+              MLOps Crash Course
             </div>
 </div>
 </a>
-<a aria-label="Next: Xây dựng POC" class="md-footer__link md-footer__link--next" href="../xay-dung-poc/" rel="next">
+<a aria-label="Next: Phân tích vấn đề" class="md-footer__link md-footer__link--next" href="../phan-tich-van-de/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Xây dựng POC
+              Phân tích vấn đề
             </div>
 </div>
 <div class="md-footer__button md-icon">
