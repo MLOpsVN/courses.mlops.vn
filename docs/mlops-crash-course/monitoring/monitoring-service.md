@@ -399,7 +399,7 @@ def _process_curr_data(self, new_rows: pd.DataFrame): # (1)
 
     merged_data = merge_request_with_label(new_rows, label_data) # (3)
     if not self.current_data is None: # (4)
-        curr_data: pd.DataFrame = pd.concat([self.current_data, merged_data])
+        curr_data: pd.DataFrame = pd.concat([self.current_data, merged_data], ignore_index=True)
     else:
         curr_data = merged_data
 
@@ -729,10 +729,10 @@ def main(data_type: str, n_request: int = 1): # (3)
     make compose_up
     ```
 
-1.  Gửi 10 requests giả chứa `drift_data`
+1.  Gửi 5 requests giả chứa `drift_data`
 
     ```bash
-    python src/mock_request.py -d drift -n 10
+    python src/mock_request.py -d drift -n 5
     ```
 
 Sau khi các requests được gửi xong, các bạn đợi khoảng 10s rồi kiểm tra các Grafana dashboards.
@@ -751,10 +751,10 @@ Các bạn có thể click vào nút `Show state history` để xem thời đi�
 
 TODO: Thêm ảnh state history
 
-Tiếp theo, chúng ta sẽ gửi 10 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
+Tiếp theo, chúng ta sẽ gửi 5 requests giả chứa `normal_data` tới Online serving API bằng cách chạy lệnh sau.
 
 ```bash
-    python src/mock_request.py -d normal -n 10
+    python src/mock_request.py -d normal -n 5
 ```
 
 Sau khi gửi xong, các bạn sẽ thấy dashboard **Evidently Data Drift Dashboard** sẽ hiển thị thông tin rằng Dataset không bị drift, và số drifted features là 0.
@@ -764,6 +764,10 @@ TODO: Thêm ảnh
 Ở trang Alerting, alert ``Data drift detection` cũng đã ở trạng thái `Normal`.
 
 TODO: Thêm ảnh
+
+!!! note
+
+    Nếu các bạn mở Kibana ra, các bạn cũng sẽ thấy logs của Monitoring service được tự động thu thập nhờ chức năng tự động thu thập logs từ các containers của Filebeat
 
 ## Tổng kết
 
