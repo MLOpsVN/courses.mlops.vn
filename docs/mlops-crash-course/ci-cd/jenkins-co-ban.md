@@ -158,7 +158,7 @@ pipeline {
 }
 ```
 
-1. Định nghĩa _executor_ chạy pipeline, ở đây `any` được hiểu là một _executor_ bất kỳ
+1. Định nghĩa _executor_ chạy pipeline (`ip:port` hoặc `docker image`), ở đây `any` được hiểu là một _executor_ bất kỳ
 2. Khai báo một bước trong pipeline
 3. Chạy câu lệnh `echo ...` trong bước này
 

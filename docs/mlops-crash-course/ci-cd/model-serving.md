@@ -1,17 +1,60 @@
 ## Giới thiệu
-Ở bài học về `data pipeline`, chúng ta đã cùng nhau xây dựng và deploy data pipeline theo các bước như sau:
-
-- Đóng gói code và môi trường thành image để chạy các bước trong pipeline
-- Thực hiện kiểm thử code
-- Copy file `dag` sang thư mục `dags/` của `Airflow`
-
-Nếu chúng ta tự động hóa các bước này thì có thể đẩy nhanh quá trình release pipeline version mới trên Airflow sau khi thay đổi ở code.
-Ở bài học này chúng ta sẽ tự động 3 bước trên cho `data pipeline`. Từ đó, chúng ta có thể ứng dụng tương tự với training pipeline.
+Ở bài học trước, chúng ta đã cùng nhau xây dựng Jenkins pipeline để tự động hóa quá trình release `data pipeline`. Trong bài học này chúng ta sẽ sửa Jenkinsfile để phục vụ cho `model serving`.
 
 ## Jenkins pipeline
-Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:
+Luồng CI/CD cho model serving sẽ được thay đổi thành như sau:
+
+<img src="../../../assets/images/mlops-crash-course/ci-cd/cicd_model_serving.png" loading="lazy" />
+
+???+ tip
+    Ở đây chúng ta sẽ dùng 1 image cho cả `online serving API` và `offline batch serving pipeline` để hạn chế sự khác nhau giữa code và môi trường chạy.
+
 ```py title="Jenkinsfile" linenums="1"
-placeholder
+pipeline {
+    agent { docker { image 'python:3.9' } }
+
+    stages {
+        stage('build model serving') {
+            // when {changeset "model_serving/**" }
+
+            steps {
+                echo 'Building model serving..'
+                sh 'make build_image'
+            }
+        }
+
+        stage('test model serving') {
+            // when {changeset "model_serving/**" }
+
+            steps {
+                echo 'Testing model serving..' # (1)
+            }
+        }
+
+        parallel { # (2)
+            stage('deploy serving pipeline') {
+                // when {changeset "model_serving/**" }
+
+                steps {
+                    sh 'make deploy_dags'
+                }
+            }
+
+            stage('deploy online serving API') {
+                // when {changeset "model_serving/**" }
+
+                steps {
+                    sh 'make compose_up'
+                }
+            }
+        }
+    }
+}
 ```
 
+1. Test code, phần này mọi người sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
+2. Định nghĩa 2 bước chạy song song là `serving pipeline` và `online serving API`
+
 ## Tổng kết
+Ở bài học này, chúng ta đã cải tiến Jenkinsfile của `data pipeline` để tự động hóa `model serving` bằng cách sử dụng từ khóa `parallel`.
+Mọi người có thể đọc thêm [document](https://www.jenkins.io/doc/) của Jenkins và tiếp tục custom luồng CI/CD, ví dụ: biến bước `deploy` trong CI/CD sang manual, thay vì tự động chạy cả luồng một lúc. 
