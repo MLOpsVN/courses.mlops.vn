@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/data-pipeline/airflow-co-ban/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/ci-cd/pipeline/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>Airflow cơ bản - MLOpsVN Courses</title>
+<title>CI/CD cho pipeline - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <meta content="#4cae4f" name="theme-color"/>
@@ -47,7 +47,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Airflow cơ bản
+              CI/CD cho pipeline
             
           </span>
 </div>
@@ -143,8 +143,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
           Data pipeline
           <span class="md-nav__icon md-icon"></span>
@@ -156,69 +156,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../tong-quan-data-pipeline/">
+<a class="md-nav__link" href="../../data-pipeline/tong-quan-data-pipeline/">
         Tổng quan pipeline
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Airflow cơ bản
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../data-pipeline/airflow-co-ban/">
         Airflow cơ bản
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#gioi-thieu">
-    Giới thiệu
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cac-khai-niem-co-ban">
-    Các khái niệm cơ bản
-  </a>
-<nav aria-label="Các khái niệm cơ bản" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#task">
-    Task
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#dag">
-    DAG
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tong-ket">
-    Tổng kết
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tai-lieu-tham-khao">
-    Tài liệu tham khảo
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../feature-store/">
+<a class="md-nav__link" href="../../data-pipeline/feature-store/">
         Feature store
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../xay-dung-data-pipeline/">
+<a class="md-nav__link" href="../../data-pipeline/xay-dung-data-pipeline/">
         Xây dựng pipeline
       </a>
 </li>
@@ -295,8 +248,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_7">
           CI/CD
           <span class="md-nav__icon md-icon"></span>
@@ -308,27 +261,55 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../ci-cd/gioi-thieu/">
+<a class="md-nav__link" href="../gioi-thieu/">
         Giới thiệu
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../ci-cd/kiem-thu-he-thong/">
+<a class="md-nav__link" href="../kiem-thu-he-thong/">
         Kiểm thử hệ thống
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../ci-cd/jenkins-co-ban/">
+<a class="md-nav__link" href="../jenkins-co-ban/">
         Jenkins cơ bản
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../ci-cd/pipeline/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          CI/CD cho pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         CI/CD cho pipeline
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../ci-cd/model-serving/">
+<a class="md-nav__link" href="#jenkins-pipeline">
+    Jenkins pipeline
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/">
         CI/CD cho serving API
       </a>
 </li>
@@ -393,32 +374,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cac-khai-niem-co-ban">
-    Các khái niệm cơ bản
+<a class="md-nav__link" href="#jenkins-pipeline">
+    Jenkins pipeline
   </a>
-<nav aria-label="Các khái niệm cơ bản" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#task">
-    Task
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#dag">
-    DAG
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tai-lieu-tham-khao">
-    Tài liệu tham khảo
   </a>
 </li>
 </ul>
@@ -428,66 +390,94 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>Airflow cơ bản</h1>
+<h1>CI/CD cho pipeline</h1>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.</p>
-<h2 id="cac-khai-niem-co-ban">Các khái niệm cơ bản</h2>
-<p>Airflow là một nền tảng cung cấp SDK và UI để hỗ trợ xây dựng, đặt lịch thực thi và theo dõi các pipeline.
-Một số khái niệm cơ bản trong Airflow:</p>
+<p>Ở bài học về <code>data pipeline</code>, chúng ta đã cùng nhau xây dựng và deploy data pipeline theo các bước như sau:</p>
 <ul>
-<li><strong>task:</strong> một thành phần (hoặc một bước) trong pipeline</li>
-<li><strong>DAG:</strong> định nghĩa thứ tự thực thi, lịch chạy và số lượng lần retry.v.v. cho các <em>task</em></li>
+<li>Đóng gói code và môi trường thành image để chạy các bước trong pipeline</li>
+<li>Thực hiện kiểm thử code</li>
+<li>Copy Python script định nghĩa <code>DAG</code> sang thư mục <code>dags/</code> của <code>Airflow</code></li>
 </ul>
-<h3 id="task">Task</h3>
-<p>Để tạo ra <em>task</em>, chúng ta sẽ dùng các <em>operators</em> cung cấp bởi Airflow SDK. Một số loại <em>operator</em> phổ biến bao gồm:</p>
-<ul>
-<li><strong>BashOperator:</strong> thực thi các bash command</li>
-<li><strong>PythonOperator:</strong> thực thi các Python script</li>
-<li><strong>EmailOperator:</strong> gửi email</li>
-<li><strong>DockerOperator:</strong> thực hiện các command bên trong docker container</li>
-<li><strong>MySQLOperator:</strong> thực thi các MySQL query, ngoài ra còn rất nhiều <em>operator</em> khác được phát triển bởi cộng đồng, mọi người xem thêm tại <a href="https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html">đây</a></li>
-</ul>
-<p>Ở series này chúng ta sẽ chủ yếu sử dụng 2 loại operators là <em>DockerOperator</em> và <em>BashOperator</em>.</p>
-<details class="tip" open="open">
-<summary>Tip</summary>
-<p>Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.</p>
-</details>
-<h3 id="dag">DAG</h3>
-<p>Sau khi đã code xong các <em>task</em>, chúng ta sẽ đưa các <em>task</em> này vào trong DAG như ví dụ sau:
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span>
-<span class="normal"><a href="#__codelineno-0-7">7</a></span>
-<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="s2">"my_dag_name"</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="n">pendulum</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">),</span>  <span class="c1"># (1)</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">schedule</span><span class="o">=</span><span class="s2">"@daily"</span><span class="p">,</span> <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># (2)</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">validate_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">explore_task</span><span class="p">,</span> <span class="n">validate_task</span><span class="p">]</span> <span class="c1"># (3)</span>
-</code></pre></div></td></tr></table></div></p>
+<p>Nếu chúng ta tự động hóa các bước này thì có thể đẩy nhanh quá trình release version mới cho pipeline mỗi khi developer thay đổi code.
+Ở bài học này chúng ta sẽ sử dụng Jenkins để làm điều này.</p>
+<h2 id="jenkins-pipeline">Jenkins pipeline</h2>
+<p>Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/cicd_data_pipeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/cicd_data_pipeline.png"/></a></p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">pipeline</span> <span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">agent</span> <span class="p">{</span> <span class="n">docker</span> <span class="p">{</span> <span class="n">image</span> <span class="s1">'python:3.9'</span> <span class="p">}</span> <span class="p">}</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">stages</span> <span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'build data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>                <span class="n">echo</span> <span class="s1">'Building data pipeline..'</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>                <span class="n">sh</span> <span class="s1">'make build_image'</span> <span class="c1"># (1)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>            <span class="p">}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>        <span class="p">}</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'test data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>                <span class="n">echo</span> <span class="s1">'Testing data pipeline..'</span> <span class="c1"># (2)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>            <span class="p">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>        <span class="p">}</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'deploy data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>                <span class="n">sh</span> <span class="s1">'make deploy_dags'</span> <span class="c1"># (3)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>            <span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="p">}</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="p">}</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
 <ol>
-<li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
-<li>Định nghĩa <em>task</em> bằng PythonOperator. Mọi người tự truyền các config vào <code>(...)</code></li>
-<li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, và cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
+<li>Build image cho để chạy các bước trong Airflow pipeline</li>
+<li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
+<li>Copy script chứa <code>DAG</code> qua folder <code>dags/</code> của Airflow</li>
 </ol>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng <em>task</em> và <em>DAG</em>. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.</p>
-<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
-<ul>
-<li><a href="https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html">https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html</a></li>
-</ul>
+<p>Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì <code>push</code> lên Github và để luồng CI/CD lo những phần còn lại, thật tiện lợi phải không nào!</p>
+<p>Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho <code>model serving</code>.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Tổng quan pipeline" class="md-footer__link md-footer__link--prev" href="../tong-quan-data-pipeline/" rel="prev">
+<a aria-label="Previous: Jenkins cơ bản" class="md-footer__link md-footer__link--prev" href="../jenkins-co-ban/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -496,17 +486,17 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <span class="md-footer__direction">
                 Previous
               </span>
-              Tổng quan pipeline
+              Jenkins cơ bản
             </div>
 </div>
 </a>
-<a aria-label="Next: Feature store" class="md-footer__link md-footer__link--next" href="../feature-store/" rel="next">
+<a aria-label="Next: CI/CD cho serving API" class="md-footer__link md-footer__link--next" href="../model-serving/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Feature store
+              CI/CD cho serving API
             </div>
 </div>
 <div class="md-footer__button md-icon">

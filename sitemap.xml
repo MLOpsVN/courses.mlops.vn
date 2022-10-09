@@ -21,6 +21,31 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/gioi-thieu/</loc>
+         <lastmod>2022-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/jenkins-co-ban/</loc>
+         <lastmod>2022-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/kiem-thu-he-thong/</loc>
+         <lastmod>2022-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/model-serving/</loc>
+         <lastmod>2022-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/pipeline/</loc>
+         <lastmod>2022-10-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/data-pipeline/airflow-co-ban/</loc>
          <lastmod>2022-10-09</lastmod>
          <changefreq>daily</changefreq>
