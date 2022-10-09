@@ -3,6 +3,9 @@ site_name: MLOpsVN Courses
 docs_dir: docs
 theme:
   name: material
+  palette:
+    primary: green
+    accent: green
   features:
     - content.code.annotate
 extra_css: [assets/stylesheets/styles.css]
@@ -22,34 +25,36 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          # format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.details
 nav:
   - Home: index.md
   - MLOps Crash Course:
       - mlops-crash-course/index.md
       - Tổng quan hệ thống:
+          - Tổng quan MLOps: mlops-crash-course/tong-quan-he-thong/tong-quan-mlops.md
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
           - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
-      - PoC:
-          - Định nghĩa PoC: mlops-crash-course/poc/dinh-nghia-poc.md
-          - Xây dựng PoC: mlops-crash-course/poc/xay-dung-poc.md
+      - POC:
+          - Định nghĩa POC: mlops-crash-course/poc/dinh-nghia-poc.md
+          - Xây dựng POC: mlops-crash-course/poc/xay-dung-poc.md
       - Data pipeline:
           - Tổng quan pipeline: mlops-crash-course/data-pipeline/tong-quan-data-pipeline.md
           - Airflow cơ bản: mlops-crash-course/data-pipeline/airflow-co-ban.md
           - Feature store: mlops-crash-course/data-pipeline/feature-store.md
           - Xây dựng pipeline: mlops-crash-course/data-pipeline/xay-dung-data-pipeline.md
       - Training pipeline:
-          - Tổng quan pipeline: mlops-crash-course/xay-dung-training-pipeline/tong-quan-training-pipeline.md
-          - Xây dựng pipeline: mlops-crash-course/xay-dung-training-pipeline/xay-dung-training-pipeline.md
+          - Xây dựng training pipeline: mlops-crash-course/training-pipeline/xay-dung-training-pipeline.md
       - Model serving:
-          - Tổng quan model serving: mlops-crash-course/trien-khai-model-serving/tong-quan-model-serving.md
-          - Triển khai model serving: mlops-crash-course/trien-khai-model-serving/trien-khai-model-serving.md
-      - Theo dõi hệ thống:
-          - Tổng quan: mlops-crash-course/theo-doi-he-thong/tong-quan.md
-          - Theo dõi hệ thống: mlops-crash-course/theo-doi-he-thong/theo-doi-he-thong.md
-          - Theo dõi model: mlops-crash-course/theo-doi-he-thong/theo-doi-model.md
-          - Theo dõi data: mlops-crash-course/theo-doi-he-thong/theo-doi-data.md
+          - Triển khai model serving: mlops-crash-course/model-serving/trien-khai-model-serving.md
+      - Monitoring:
+          - Tổng quan monitoring: mlops-crash-course/monitoring/tong-quan-monitoring.md
+          - Metrics hệ thống: mlops-crash-course/monitoring/metrics-he-thong.md
+          - Monitoring service: mlops-crash-course/monitoring/monitoring-service.md
       - CI/CD:
           - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
           - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md

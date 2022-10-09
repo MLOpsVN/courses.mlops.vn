@@ -1,7 +1,17 @@
+div.mermaid {
+  text-align: center;
+}
+
+:root > * {
+  --md-primary-fg-color: green;
+  /* --md-accent-fg-color: #63d297ff; */
+  --md-typeset-a-color: green;
+}
+
 figure {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
