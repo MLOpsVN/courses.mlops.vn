@@ -25,7 +25,7 @@ Theo [bài báo trên][mlops-paper], định nghĩa trên về MLOps có thể �
 
 <figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
-    <figcaption>Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kelly Sikkema</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+    <figcaption>Photo by <a href="https://unsplash.com/@austindistel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Austin Distel</a> on <a href="https://unsplash.com/s/photos/principle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
 Một nguyên tắc được xem như là một best practice, hay một sự hướng dẫn cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các nguyên tắc trong MLOps bao gồm:
@@ -110,7 +110,13 @@ Trong phần này, chúng ta sẽ tìm hiểu về các workflows điển hình 
 
 Lưu ý rằng, các workflows trên không phải là thứ tự chính xác về các công việc mà chúng ta sẽ làm khi xây dựng một hệ thống ML. Hình dưới đây là một ví dụ về các mốc thời gian và các công việc chúng ta cần làm khi trong một dự án ML.
 
-<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/timeline.png" loading="lazy"/>
+```mermaid
+flowchart TD
+    n1[Khởi động dự án] --> n2[Định nghĩa vấn đề] --> n3[POC 1] --> n4[POC 2] --> n5[Xây dựng các pipelines] --> n6[Tự động hoá các pipelines] --> n7[Production]
+    n3 --Định nghĩa lại<br>vấn đề--> n2
+    n4 --Cập nhật cách<br>biến đổi data--> n2
+    n7 --Cập nhật cách<br>train model--> n2
+```
 
 Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ các yêu cầu về các chức năng của hệ thống ML mà chúng ta sẽ xây dựng. Sau đó, chúng ta sẽ thực hiện một dự án POC( Proof Of Concept) để chứng minh rằng giải pháp của chúng ta đề ra là khả thi, trước khi bắt tay vào thực hiện xây dựng chi tiết các chức năng phức tạp của hệ thống.
 
