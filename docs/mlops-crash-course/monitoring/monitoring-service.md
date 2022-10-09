@@ -39,11 +39,11 @@ Theo dõi các metrics liên quan tới chất lượng data và model performan
 
 ```mermaid
     graph LR
-        n00[ ]--Training data-->n1[Phát hiện data drift]--Data metrics-->n01[ ]
+        n00[ ]--Training data-->n1[Phát hiện<br>data drift]--Data metrics-->n01[ ]
         n02[ ]--Production data-->n1
 
-        n10[ ]--Training data-->n2[Theo dõi model performance]--Model performance-->n11[ ]
-        n12[ ]--Label data-->n2
+        n10[ ]--Prediction-->n2[Theo dõi model<br>performance]--Model performance-->n11[ ]
+        n12[ ]--Label-->n2
 
         style n00 height:0px;
         style n01 height:0px;
@@ -326,9 +326,9 @@ Trong phần này, chúng ta sẽ phát triển monitoring service. Hình dướ
 
 ```mermaid
     flowchart LR
-        n01[ ] --Label data--> n2
-        n0[Client] --Request data--> n1[Online serving<br>service] --Monitoring<br>data--> n2[Monitoring<br>service] --Metrics--> n3[Prometheus<br>& Grafana]
-        n1 --Response data--> n0
+        n01[ ] --Label--> n2
+        n0[Client] --Request--> n1[Online serving<br>service] --Features &<br>prediction--> n2[Monitoring<br>service] --Metrics--> n3[Prometheus<br>& Grafana]
+        n1 --Response--> n0
 
         style n01 height:0px;
 ```

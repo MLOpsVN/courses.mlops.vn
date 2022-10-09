@@ -46,7 +46,7 @@ Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, v�
 
 ```mermaid
 flowchart LR
-    n1[1. Cập nhật Feature Store] --> n2[2. Data extraction] --> n3[3. Batch prediction]
+    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Batch<br>prediction]
 ```
 
 ### Cập nhật Feature Store
