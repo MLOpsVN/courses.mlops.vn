@@ -486,7 +486,8 @@
 </ol>
 <p>Phần 1 và 2 là đã được sử dụng trong bài <a href="../../data-pipeline/tong-quan-data-pipeline">Tổng quan data pipeline</a> để xây dựng data pipeline. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline. Source code của bài này được đặt tại Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a>.</p>
 <p>Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-dag.png"/></a></p>
+<pre class="mermaid"><code>flowchart LR
+    n1[1. Cập nhật&lt;br&gt;Feature Store] --&gt; n2[2. Data&lt;br&gt;extraction] --&gt; n3[3. Data&lt;br&gt;validation] --&gt; n4[4. Data&lt;br&gt;preparation] --&gt; n5[5. Model&lt;br&gt;training] --&gt; n6[6. Model&lt;br&gt;evaluation] --&gt; n7[7. Model&lt;br&gt;validation]</code></pre>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
 <p>Để xây dựng pipeline nhanh chóng, chúng ta cần xây dựng môi trường phát triển ở local. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code> (giống môi trường phát triển của bài <a href="../../poc/xay-dung-poc/#moi-truong-phat-trien">POC</a>).</p>
 <p>Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.</p>

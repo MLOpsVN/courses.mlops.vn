@@ -497,7 +497,8 @@
 <h2 id="batch-serving">Batch serving</h2>
 <p>Trong khoá học này, chúng ta sẽ thiết kế batch serving với input là data file ở local. Chúng ta có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving.</p>
 <p>Chúng ta sẽ sử dụng Airflow để triển khai batch serving pipeline, với các tasks như hình dưới:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-dag.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-dag.png"/></a></p>
+<pre class="mermaid"><code>flowchart LR
+    n1[1. Cập nhật&lt;br&gt;Feature Store] --&gt; n2[2. Data&lt;br&gt;extraction] --&gt; n3[3. Batch&lt;br&gt;prediction]</code></pre>
 <h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
 <p>Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.</p>
 <p>Task này được thực hiện giống như task <strong>Cập nhật Feature Store</strong> ở training pipeline. Các bạn có thể xem lại bài <a href="../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store">Xây dựng training pipeline</a>. Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Các bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.</p>

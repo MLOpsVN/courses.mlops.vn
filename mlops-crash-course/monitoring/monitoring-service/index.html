@@ -626,7 +626,19 @@
 </div>
 <h2 id="thiet-ke">Thiết kế</h2>
 <p>Theo dõi các metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng chính là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/design.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/design.png"/></a></p>
+<pre class="mermaid"><code>    graph LR
+        n00[ ]--Training data--&gt;n1[Phát hiện&lt;br&gt;data drift]--Data metrics--&gt;n01[ ]
+        n02[ ]--Production data--&gt;n1
+
+        n10[ ]--Prediction--&gt;n2[Theo dõi model&lt;br&gt;performance]--Model performance--&gt;n11[ ]
+        n12[ ]--Label--&gt;n2
+
+        style n00 height:0px;
+        style n01 height:0px;
+        style n02 height:0px;
+        style n10 height:0px;
+        style n11 height:0px;
+        style n12 height:0px;</code></pre>
 <p>Thông thường, để biết được data thay đổi như thế nào, chúng ta sẽ so sánh training data với production data dựa trên một thuật toán so sánh nào đó, cho phép chúng ta biết được data có bị drift hay không, hay nói cách khác, xem các thuộc tính về thống kê của data bị thay đổi nhiều hay ít như thế nào. Như vậy, đầu vào của chức năng <strong>Phát hiện data drift</strong> là features ở bước training và features ở production.</p>
 <p>Để biết được model performance thay đổi thế nào, chúng ta sẽ thu thập label ở production, so sánh với prediction mà model sinh ra, và theo dõi model performance metrics theo thời gian. Model performance ở production cũng có thể được so sánh với model performance ở bước training. Tuy nhiên, để đơn giản, chúng ta sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của chức năng <strong>Theo dõi model performance</strong> là dự đoán của model và label ở production.</p>
 <p>Trong bài này, chúng ta sẽ sử dụng thư viện Evidently để phát hiện data drift và model performance. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra, và giám sát data và model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như <strong>PSI</strong>, <strong>K-L divergence</strong>, <strong>Jensen-Shannon distance</strong>, <strong>Wasserstein distance</strong>, và các metrics phổ biến của model performance như <strong>Accuracy</strong>, <strong>F1 score</strong>, <strong>RMSE</strong>, <strong>MAE</strong>, v.v. Các bạn có thể đọc thêm ở <a href="https://docs.evidentlyai.com/reference/data-drift-algorithm">document của Evidently</a> để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động để phát hiện data drift tuỳ thuộc vào kích thước của dataset.</p>
@@ -1103,8 +1115,8 @@
 <li>Định nghĩa 1 object <code>ModelMonitoring</code> để theo dõi data drift. <code>ModelMonitoring</code> là 1 class trong Evidently. Class này định nghĩa các loại monitoring mà chúng ta muốn chạy. Có nhiều loại monitoring như <code>DataDriftMonitor</code>, <code>CatTargetDriftMonitor</code>, <code>NumTargetDriftMonitor</code>, v.v.</li>
 <li>Định nghĩa 1 object <code>ModelMonitoring</code> để theo dõi model performance</li>
 <li>Chạy kiểm tra data drift, so sánh <code>drift_data</code> với <code>normal_data</code></li>
-<li>Dùng <code>normal_data</code> làm <code>reference_data</code>, mang ý nghĩa là training data</li>
-<li>Dùng <code>drift_data</code> làm <code>current_data</code>, mang ý nghĩa là production data, để so sánh với training data</li>
+<li>Dùng <code>normal_data</code> làm <strong>reference window</strong>, hay training data. Trong Evidently, <strong>reference window</strong> được gán vào tham số <code>reference_data</code></li>
+<li>Dùng <code>drift_data</code> làm <strong>test window</strong>, hay production data, để so sánh với training data. Trong Evidently, <strong>test window</strong> được gán vào tham số <code>current_data</code></li>
 <li>Thêm cột <code>prediction</code> vào <code>drift_data</code>, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là <code>1</code></li>
 <li>Thêm cột <code>trip_completed</code> vào <code>drift_data</code>, hay chính là label của mỗi record</li>
 <li>Chạy kiểm tra model performance, so sánh <code>drift_data</code> với chính nó</li>
@@ -1113,7 +1125,7 @@
 <p class="admonition-title">Question</p>
 <p>Tại sao chúng ta lại kiểm tra model performance bằng cách so sánh <code>drift_data</code>, hay production data, với chính nó?</p>
 </div>
-<p>Trong Evidently, với loại monitoring là <code>ClassificationPerformanceMonitor</code>, nếu cả <code>reference_data</code> và <code>current_data</code> đều chứa prediction và label, thì Evidently sẽ tính toán các metrics cho model performance trên cả 2 datasets này, và thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên, để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa 2 datasets <code>reference_data</code> và <code>current_data</code>. Và vì <code>drift_data</code> đã chứa thông tin về prediction và label, nên chúng ta sẽ truyền vào <code>drift_data</code> cho cả 2 loại datasets này.</p>
+<p>Trong Evidently, với loại monitoring là <code>ClassificationPerformanceMonitor</code>, nếu cả <strong>reference window</strong> và <strong>test window</strong> đều chứa prediction và label, thì Evidently sẽ tính toán các metrics cho model performance trên cả 2 datasets này, và thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên, để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa <strong>reference window</strong> và <strong>test window</strong>. Và vì <code>drift_data</code> đã chứa thông tin về prediction và label, nên chúng ta sẽ truyền vào <code>drift_data</code> cho cả 2 loại datasets này.</p>
 <p>Kết quả được in ra sau khi chạy sẽ giống như sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>data_drift:n_drifted_features <span class="p">|</span> <span class="m">3</span> <span class="p">|</span> None <span class="c1"># (1)</span>
 <a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>data_drift:dataset_drift <span class="p">|</span> True <span class="p">|</span> None <span class="c1"># (2)</span>
@@ -1125,18 +1137,23 @@
 </code></pre></div>
 <ol>
 <li>Số features bị drift</li>
-<li>Dataset <code>current_data</code> có bị drift không</li>
+<li><strong>test window</strong> có bị drift không</li>
 <li><code>accuracy</code> của model</li>
 <li><code>precision</code> của model cho class <code>0</code></li>
 </ol>
 <p>Để tìm hiểu thêm về các loại monitoring khác hay các chức năng khác của Evidently, các bạn có thể xem thêm các ví dụ tại <a href="https://docs.evidentlyai.com/examples">website của Evidently</a>.</p>
 <h2 id="monitoring-service">Monitoring service</h2>
 <p>Trong phần này, chúng ta sẽ phát triển monitoring service. Hình dưới đây thể hiện các luồng data của monitoring service.</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/data-flow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/data-flow.png"/></a></p>
+<pre class="mermaid"><code>    flowchart LR
+        n01[ ] --Label--&gt; n2
+        n0[Client] --Request--&gt; n1[Online serving&lt;br&gt;service] --Features &amp;&lt;br&gt;prediction--&gt; n2[Monitoring&lt;br&gt;service] --Metrics--&gt; n3[Prometheus&lt;br&gt;&amp; Grafana]
+        n1 --Response--&gt; n0
+
+        style n01 height:0px;</code></pre>
 <p>Như hình trên, quá trình phát triển monitoring service bao gồm các bước chính sau.</p>
 <ol>
-<li>Viết code để gửi request và response data từ Online serving API sang <em>Monitoring API</em> của monitoring service</li>
-<li>Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance</li>
+<li>Viết code để gửi request và response data từ Online serving API sang <em>Monitoring API</em> của monitoring service, với features được lấy từ dataset <code>normal_data</code> hoặc <code>drift_data</code>, và request data được đọc từ dataset <code>request_data</code></li>
+<li>Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance, với label được đọc từ dataset <code>request_data</code></li>
 <li>Thiết lập Prometheus server và Grafana dashboards để hiển thị các metrics liên quan tới data drift và model performance</li>
 </ol>
 <h3 id="monitoring-api">Monitoring API</h3>
