@@ -1,3 +1,7 @@
+div.mermaid {
+  text-align: center;
+}
+
 :root > * {
   --md-primary-fg-color: green;
   /* --md-accent-fg-color: #63d297ff; */

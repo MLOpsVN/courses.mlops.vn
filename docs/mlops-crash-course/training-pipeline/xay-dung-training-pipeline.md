@@ -17,7 +17,10 @@ Phần 1 và 2 là đã được sử dụng trong bài [Tổng quan data pipeli
 
 Trong bài này, chúng ta sẽ cùng nhau viết code để triển khai training pipeline với các task như hình dưới.
 
-<img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-dag.png" loading="lazy"/>
+```mermaid
+flowchart LR
+    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Data<br>validation] --> n4[4. Data<br>preparation] --> n5[5. Model<br>training] --> n6[6. Model<br>evaluation] --> n7[7. Model<br>validation]
+```
 
 ## Môi trường phát triển
 
