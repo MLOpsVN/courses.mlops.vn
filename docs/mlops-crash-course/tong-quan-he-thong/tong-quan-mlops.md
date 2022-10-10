@@ -82,7 +82,7 @@ Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh gi
 1. Phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model
 1. v.v.
 
-Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
+Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
 ## Các components
 
@@ -110,7 +110,7 @@ Tên các components đã giải thích ý nghĩa và công việc của các co
     <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
 </figure>
 
-Để hiểu rõ hơn về các components này, các bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
+Để hiểu rõ hơn về các components này, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
 ## Các workflows
 

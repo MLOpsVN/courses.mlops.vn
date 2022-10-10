@@ -11,12 +11,12 @@ Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC th�
 
 ## Môi trường phát triển
 
-Đầu tiên, chúng ta cần xây dựng môi trường phát triển ở local. Các bạn hãy clone github repo [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code/) về máy. Các thư viện các bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt môi trường phát triển.
+Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt môi trường phát triển.
 
-Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
+Các MLOps tools được dùng trong bài này bao gồm:
 
 1. Jupyter notebook để thử nghiệm data, model
-1. MLflow để làm ML Metadata Store
+2. MLflow để làm ML Metadata Store
 
 ## Định nghĩa POC
 
@@ -212,7 +212,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
 ## Theo dõi thử nghiệm
 
-[MLflow](https://mlflow.org/) là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Các bạn hãy làm theo các bước sau.
+[MLflow](https://mlflow.org/) là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Bạn hãy làm theo các bước sau.
 
 1.  Clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform), chạy MLflow server trên môi trường local
 
@@ -255,11 +255,11 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
     4. Log lại metric sau khi test trên test set
     5. Log lại model
 
-1.  Mở MLflow trên browser, các bạn sẽ thấy giao diện như sau.
+1.  Mở MLflow trên browser, bạn sẽ thấy giao diện như sau.
 
     <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
 
-    Mọi thông tin chúng ta log lại mỗi lần thử nghiệm đã được lưu lại. Các bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của lần chạy đó.
+    Mọi thông tin chúng ta log lại mỗi lần thử nghiệm đã được lưu lại. Bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của lần chạy đó.
 
 ## Theo dõi features
 

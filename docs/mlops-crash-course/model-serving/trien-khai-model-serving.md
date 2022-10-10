@@ -13,21 +13,21 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 ## Môi trường phát triển
 
-Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library các bạn cần cài đặt cho môi trường phát triển được đặt tại `model_serving/dev_requirements.txt`. Các bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
+Để quá trình phát triển thuận tiện, chúng ta cần xây dựng môi trường phát triển ở máy local. Các library bạn cần cài đặt cho môi trường phát triển được đặt tại `model_serving/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển.
 
 Sau khi cài đặt môi trường phát triển, chúng ta cần làm các việc sau.
 
-1.  Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa các config cần thiết cho việc triển khai model serving.
+1.  Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa config cần thiết cho việc triển khai model serving.
 
-1.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa các config cần thiết cho việc triển khai việc triển khai model serving.
+1.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa config cần thiết cho việc triển khai việc triển khai model serving.
 
-1.  Set env var `MODEL_SERVING_DIR` bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này là để hỗ trợ việc chạy python code trong folder `model_serving/src` trong quá trình phát triển.
+1.  Set env var `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
 
     ```bash
     export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
     ```
 
-Các MLOps tools sẽ được sử dụng trong bài này bao gồm:
+Các MLOps tools được dùng trong bài này bao gồm:
 
 1. Feast để truy xuất Feature Store
 1. MLflow để làm ML Metadata Store
@@ -53,7 +53,7 @@ flowchart LR
 
 Ở task này, chúng ta đang giả sử nơi chạy Batch serving là ở một server nào đó với infrastructure đủ mạnh cho việc tối ưu chạy batch serving. Khi chạy batch serving, chúng ta cần lấy được data từ Feature Store để phục vụ cho quá trình prediction. Do đó, chúng ta cần cập nhật Feature Store ở trên server nơi chúng ta triển khai batch serving.
 
-Task này được thực hiện giống như task **Cập nhật Feature Store** ở training pipeline. Các bạn có thể xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store). Mời các bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Các bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
+Task này được thực hiện giống như task **Cập nhật Feature Store** ở training pipeline. Bạn có thể xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store). Mời bạn xem lại nếu cần thêm giải thích chi tiết về mục đích của task này. Bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
 
 1.  Triển khai code của Feature Store từ `data_pipeline/feature_repo` sang `model_serving/feature_repo`
 
@@ -112,7 +112,7 @@ python data_extraction.py
 cd ..
 ```
 
-Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, các bạn sẽ nhìn thấy file `batch_input.parquet`.
+Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, bạn sẽ nhìn thấy file `batch_input.parquet`.
 
 ### Batch prediction
 
@@ -122,7 +122,7 @@ Trước khi chạy batch serving, rõ ràng rằng chúng ta đã quyết đị
 
 Trong phần này, chúng ta sẽ sử dụng model mà chúng ta đã register với MLflow Model Registry ở task **Model validation** trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-validation). Trong task đó, thông tin về model đã registered được lưu tại `training_pipeline/artifacts/registered_model_version.json`. Chúng ta có thể upload file này vào một Storage nào đó trong tổ chức để các task khác có thể download được model, cụ thể là cho batch serving và online serving ở trong bài này.
 
-Vì chúng ta đang phát triển cả training pipeline và model serving ở local, nên chúng ta chỉ cần copy file `training_pipeline/artifacts/registered_model_version.json` sang `model_serving/artifacts/registered_model_version.json`. Để làm điều này, các bạn hãy chạy lệnh sau.
+Vì chúng ta đang phát triển cả training pipeline và model serving ở local, nên chúng ta chỉ cần copy file `training_pipeline/artifacts/registered_model_version.json` sang `model_serving/artifacts/registered_model_version.json`. Để làm điều này, bạn hãy chạy lệnh sau.
 
 ```bash
 cd ../training_pipeline
@@ -130,7 +130,7 @@ make deploy_registered_model_file
 cd ../model_serving
 ```
 
-Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Để đơn giản hoá quá trình batch prediction, đoạn code cho task batch prediction này giống như ở task **Model evaluation** mà chúng ta đã viết trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-evaluation). Code của task này được lưu tại file `model_serving/src/batch_prediction.py` và được giải thích như sau.
+Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Để đơn giản hoá quá trình batch prediction, đoạn code cho task batch prediction này giống như ở task **Model evaluation** mà chúng ta đã viết trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-evaluation). Code của task này được lưu tại `model_serving/src/batch_prediction.py` và được giải thích như sau.
 
 ```python linenums="1" title="model_serving/src/batch_prediction.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
@@ -164,7 +164,7 @@ python batch_prediction.py
 cd ..
 ```
 
-Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, các bạn sẽ nhìn thấy file `batch_output.parquet`.
+Sau khi chạy xong, hãy kiểm tra folder `model_serving/artifacts`, bạn sẽ nhìn thấy file `batch_output.parquet`.
 
 ### Airflow DAG
 
@@ -190,7 +190,7 @@ with DAG(
     # các task khác
 ```
 
-Chi tiết về những điểm quan trọng cần lưu ý, mời các bạn xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#airflow-dag).
+Chi tiết về những điểm quan trọng cần lưu ý, mời bạn xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#airflow-dag).
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/model_serving:latest` và triển khai Airflow DAGs bằng cách chạy các lệnh sau.
 
@@ -200,7 +200,7 @@ make build_image # (1)
 make deploy_dags # (2)
 ```
 
-1. Nếu các bạn muốn sử dụng docker image của riêng mình thì hãy sửa `DOCKER_USER` env var tại file `model_serving/deployment/.env` thành docker user của các bạn
+1. Nếu bạn muốn sử dụng docker image của riêng mình thì hãy sửa `DOCKER_USER` env var tại file `model_serving/deployment/.env` thành docker user của bạn
 2. Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
 Sau đó, hãy mở Airflow server trên browser của bạn, kích hoạt batch serving pipeline và chờ đợi kết quả.
@@ -279,8 +279,8 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 3. Lưu model về [dạng mà Bentoml yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 4. `model_name` được lấy từ file `model_serving/artifacts/registered_model_version.json`
 5. [Signature của model](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures), thể hiện hàm mà model object sẽ gọi
-6. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures)
-7. Thông tin thêm về key `batchable`, các bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
+6. Key `predict` ở đây chính là tên function mà model của bạn sẽ gọi. Trong khoá học này, `sklearn` model mà chúng ta train được sử dụng function `predict` để chạy prediction. Do đó, `signatures` của Bentoml sẽ chứa key `predict`. Chi tiết về `signatures`, bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures)
+7. Thông tin thêm về key `batchable`, bạn có thể đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
 8. Lưu bất kì Python object nào đi kèm với model. Đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 9. Lưu lại thứ tự các features mà model yêu cầu. `feature_list` được lấy ra từ thông tin của model mà chúng ta đã lưu ở MLflow
 10. Tạo [_Bentoml Runner_ và _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner). Quá trình chạy model inference sẽ thông qua một Bentoml Runner. Bentoml Service chứa object Bentoml Runner, giúp chúng ta định nghĩa API một cách thuận tiện
@@ -296,7 +296,7 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 20. Lấy ra driver id có khả năng cao nhất sẽ hoàn thành cuốc xe. Driver id này sẽ được trả về trong response
 21. Đoạn code liên quan tới monitoring sẽ được giải thích trong bài monitoring. Chúng ta hãy tạm thời bỏ qua đoạn code này
 
-Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Ngoài ra, các bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để các services khác có thể gọi tới API đã được expose tại port `8172` trên server này.
+Trong phần này, chúng ta sử dụng docker compose nhằm mục đích tiện cho việc triển khai online serving API trên máy local. Ngoài ra, bạn có thể triển khai docker image `mlopsvn/mlops_crash_course/model_serving:latest` lên một server nào đó để các services khác có thể gọi tới API đã được expose tại port `8172` trên server này.
 
 ??? info
 
@@ -311,7 +311,7 @@ Hãy cùng thử chạy API `inference` bằng cách thực hiện các bước 
     ```
 
 1.  Chạy [Feast materialize pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline) ở bài Data Pipeline để cập nhật Online Feature Store.
-1.  Truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, các bạn gõ nội dung sau:
+1.  Truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {
