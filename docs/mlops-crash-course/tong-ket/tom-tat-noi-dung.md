@@ -9,5 +9,10 @@ Feature store cũng là một thành phần thú vị trong chuỗi bài giảng
 Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps platform, có tính tái sử dụng ở nhiều dự án ML khác nhau, đặt ra một quy chuẩn trong việc thiết kế và xây dựng hệ thống ML, đồng thời giảm thiểu tối đa các công việc trùng lặp giữa nhiều team với nhau.
 
 ## Những hạn chế của khóa học
+Có một số hạn chế trong giáo trình giảng dạy khóa học này, bao gồm:
+
+- Tập dữ liệu: dữ liệu tương đối bé, cả về số lượng cột lẫn dòng, điều này có thể dẫn tới một số vấn đề như:
+    - Model không đạt hiệu năng như mong muốn
+    - Ứng dụng feature store có vẻ hơi giống giết gà dùng gao mổ trâu
 
 ## Những hướng phát triển tiếp theo
