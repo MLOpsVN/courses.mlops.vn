@@ -377,7 +377,7 @@ Bạn làm các bước sau để test thử code.
 
 ## Airflow DAG
 
-Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG, hay một pipeline hoàn chỉnh. Đoạn code để định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py`.
+Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG, hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py`.
 
 ```python linenums="1" title="training_pipeline/dags/training_dag.py"
 with DAG(
@@ -438,7 +438,7 @@ DEFAULT_DOCKER_OPERATOR_ARGS = {
 7. Folder nằm trong docker container
 8. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
 
-Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/training_pipeline:latest` và triển khai Airflow DAG bằng cách các bước sau.
+Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/training_pipeline:latest` và triển khai Airflow DAG bằng các bước sau.
 
 1.  Chạy lệnh
 
@@ -451,7 +451,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
     1.  Nếu muốn dùng docker image cá nhân thì bạn cần đổi `DOCKER_USER` env var tại file `training_pipeline/deployment/.env` thành docker user của bạn
     2.  Copy `training_pipeline/dags/*` vào folder `dags` của Airflow
 
-1.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu mặc định là `airflow`. Nếu bạn không thấy training pipeline trên Airflow UI, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
+2.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu mặc định là `airflow`. Nếu bạn không thấy training pipeline trên Airflow UI, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
 
     ```bash
     bash run.sh airflow restart
@@ -459,11 +459,11 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 
     Airflow DAG có sử dụng một Airflow Variable tên là `MLOPS_CRASH_COURSE_CODE_DIR` trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối. Ngoài ra, nếu bạn dùng docker image của riêng bạn thì hãy đặt Airflow variable `DOCKER_USER` thành tên docker user của bạn. Bạn có thể tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để set Airflow Variable.
 
-1.  Kích hoạt training pipeline và đợi kết quả
+3.  Kích hoạt training pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
 
-1.  Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại
+4.  Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại
 
 ## Tổng kết
 

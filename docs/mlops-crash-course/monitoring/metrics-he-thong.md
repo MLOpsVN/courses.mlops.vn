@@ -101,7 +101,7 @@ Việc đăng nhập thành công chứng tỏ Kibana server đã được tri�
 
 Sau khi đã triển khai ELK Stack thành công, hãy cùng thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving API hay chưa.
 
-1.  Gửi một vài requests tới Online serving API bằng cách mở browser, truy cập tới `http://localhost:8172/`, mở API `/inference`, và ấn nút `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
+1.  Gửi một vài requests tới Online serving API bằng cách mở browser, truy cập tới `http://localhost:8172/`, mở API `/inference`, và click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {
