@@ -27,10 +27,10 @@ Các library bạn cần cài đặt cho môi trường phát triển nằm tạ
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Feast để truy xuất Feature Store
-1. MLflow làm ML Metadata Store
-1. Airflow để quản lý batch serving pipeline
-1. Bentoml để triển khai online serving
+1. Feast: truy xuất Feature Store
+1. MLflow: ML Metadata Store, Model Registry
+1. Airflow: điều phối batch serving pipeline
+1. Bentoml: triển khai online serving
 
 !!! note
 

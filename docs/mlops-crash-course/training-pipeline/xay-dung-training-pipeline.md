@@ -38,9 +38,9 @@ Các thư viện bạn cần cài đặt cho môi trường phát triển đư�
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Feast để truy xuất Feature Store
-1. MLflow để làm ML Metadata Store
-1. Airflow để quản lý training pipeline
+1. Feast: truy xuất Feature Store
+1. MLflow: ML Metadata Store, Model Registry
+1. Airflow: điều phối training pipeline
 
 !!! note
 

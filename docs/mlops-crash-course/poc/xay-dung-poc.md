@@ -15,8 +15,8 @@ Các thư viện bạn cần cài đặt cho môi trường phát triển đư�
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Jupyter notebook để thử nghiệm data, model
-2. MLflow để làm ML Metadata Store
+1. Jupyter notebook: thử nghiệm data, model
+2. MLflow: ML Metadata Store, Model Registry
 
 ## Định nghĩa POC
 
