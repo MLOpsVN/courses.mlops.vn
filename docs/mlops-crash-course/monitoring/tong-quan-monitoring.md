@@ -39,7 +39,7 @@ Một số ví dụ về metrics trong các mảng trên như:
 
 Những metrics này được gọi là _operational metrics_, tạm dịch là _metrics hệ thống_.
 
-Trong bài sau, chúng ta sẽ dùng Prometheus để thu thập các metrics trên từ máy local, và Bentoml để thu thập các metrics liên quan tới Online serving API.
+Trong bài sau, chúng ta sẽ dùng Prometheus để thu thập các metrics trên từ máy local, và BentoML để thu thập các metrics liên quan tới Online serving API.
 
 ## Theo dõi data và model
 
@@ -89,3 +89,7 @@ Trong bài sau, chúng ta sẽ dùng Grafana để thiết lập một alert khi
 Để xây dựng một hệ thống ML thành công, monitoring platform là tối quan trọng. Bạn sẽ không biết trước được chuyện gì hay bug nào sẽ xảy ra. Vì vậy, hãy chuẩn bị cho nó!
 
 Trong bài tiếp theo, chúng ta sẽ triển khai ELK Stack, Prometheus server, Grafana server, và viết Monitoring service để theo dõi các metrics liên quan tới hoạt động của hệ thống, data và ML model.
+
+## Tài liệu tham khảo
+
+- [CS 329S. Lecture 10. Data Distribution Shifts and Monitoring](https://docs.google.com/document/d/14uX2m9q7BUn_mgnM3h6if-s-r0MZrvDb-ZHNjgA1Uyo/edit)

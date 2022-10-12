@@ -93,7 +93,7 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
 
 1.  Kiểm tra Kibana server được triển khai thành công chưa:
 
-    1.  Trên browser, truy cập vào Kibana server tại [http://localhost:5601](http://localhost:5601)
+    1.  Trên browser, truy cập vào Kibana server tại <http://localhost:5601>
     1.  Đăng nhập với tên user là `elastic`, và mật khẩu là `changeme`
 
         Việc đăng nhập thành công chứng tỏ Kibana server đã triển khai thành công.
@@ -102,7 +102,7 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
 
 Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving service hay chưa.
 
-1.  Gửi vài request tới Online serving API bằng cách truy cập [http://localhost:8172/](http://localhost:8172/), mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
+1.  Gửi vài request tới Online serving API bằng cách truy cập <http://localhost:8172>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {
@@ -111,7 +111,7 @@ Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xe
     }
     ```
 
-1.  Đăng nhập vào Kibana server [http://localhost:5601](http://localhost:5601). Ở sidebar bên phải, chọn **Discover**.
+1.  Đăng nhập vào Kibana server <http://localhost:5601>. Ở sidebar bên phải, chọn **Discover**.
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png" loading="lazy" />
 
@@ -183,7 +183,7 @@ Trong phần này, Prometheus sẽ được dùng để thu thập các metrics 
 
 1.  Kiểm tra Prometheus server được triển khai thành công chưa:
 
-    1.  Truy cập Prometheus server tại [http://localhost:9090](http://localhost:9090)
+    1.  Truy cập Prometheus server tại <http://localhost:9090>
     1.  Trên Navbar, click **Status**, chọn **Targets**
     1.  Kiểm tra xem các endpoints của các job **prometheus**, **node**, **online_serving** có ở trạng thái **UP** không. Bạn có thể cần đợi 30s cho tới khi các endpoints đạt trạng thái này. Hình dưới cho thấy endpoints của các targets trên đã ở trạng thái **UP**.
 
@@ -195,7 +195,7 @@ Trong phần này, Prometheus sẽ được dùng để thu thập các metrics 
 
 1.  Kiểm tra xem Grafana server được triển khai thành công chưa
 
-    1.  Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
+    1.  Truy cập vào Grafana server tại <http://localhost:3000>
     1.  Đăng nhập với tên user là `admin`, và mật khẩu là `admin`. Việc đăng nhập thành công chứng tỏ Grafana server đã được triển khai thành công.
 
     !!! info
@@ -216,7 +216,7 @@ static_configs:
         - "localhost:8172"
 ```
 
-Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần phải thu thập metrics từ URI [localhost:8172/metrics](localhost:8172/metrics), với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
+Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png" loading="lazy" />
 
@@ -241,14 +241,14 @@ Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần p
 
     Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose `prom-graf/prom-graf-docker-compose.yml` mà một vài phần của dashboard sẽ không được hiển thị hết. Bạn có thể xem thêm [tại đây](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.
 
-### Bentoml dashboard
+### BentoML dashboard
 
-Bentoml dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-code/monitoring_service/dashboards/bentoml_dashboard.json`. Bạn làm các bước sau để triển khai Bentoml dashboard trên Grafana.
+BentoML dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-code/monitoring_service/dashboards/bentoml_dashboard.json`. Bạn làm các bước sau để triển khai BentoML dashboard trên Grafana.
 
 1.  Copy file dashboard trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
-1.  Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
+1.  Truy cập vào Grafana server tại <http://localhost:3000>
 1.  Ở sidebar bên phải, chọn **Dashboards**
-1.  Ở giao diện của trang Dashboards, bạn sẽ thấy _Bentoml Dashboard_, click chọn để mở. Bentoml dashboard sẽ giống như sau.
+1.  Ở giao diện của trang Dashboards, bạn sẽ thấy _BentoML Dashboard_, click chọn để mở. BentoML dashboard sẽ giống như sau.
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
 
@@ -289,3 +289,9 @@ Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại m
 Trong thực tế, với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus và Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung _PromQL_ để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
 Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data và model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.
+
+## Tài liệu tham khảo
+
+- [Docker Logs with the ELK Stack](https://logz.io/blog/docker-logging/)
+- [Monitoring a Linux host with Prometheus, Node Exporter, and Docker Compose](https://grafana.com/docs/grafana-cloud/quickstart/docker-compose-linux/)
+- [BentoML - Monitoring with Prometheus](https://docs.bentoml.org/en/0.13-lts/guides/monitoring.html)

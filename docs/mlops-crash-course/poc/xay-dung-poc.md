@@ -220,7 +220,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
     bash run.sh mlflow up
     ```
 
-1.  Đi tới URL [http://localhost:5000/](http://localhost:5000/) để kiểm tra xem MLflow server đã được khởi tạo thành công chưa
+1.  Đi tới URL <http://localhost:5000> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa
 
 1.  Mở notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, thêm đoạn code sau để tích hợp MLflow vào đoạn code training
 
@@ -274,3 +274,8 @@ Mục đích của việc theo dõi các feature là để có thể tái lập 
 Qua nhiều lần thử nghiệm data và model, ngoài việc chứng minh giải pháp ML là khả thi, chúng ta sẽ hiểu rõ hơn về vấn đề kinh doanh, về giải pháp tiềm năng, và về cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại định nghĩa của vấn đề kinh doanh, định nghĩa các cách biến đổi data để xây dựng data pipeline, định nghĩa training code để xây dựng training pipeline, và định nghĩa serving code để xây dựng model serving component.
 
 Trong bài tiếp theo, chúng ta sẽ xây dựng data pipeline, một trong những pipeline phức tạp nhất của hệ thống.
+
+## Tài liệu tham khảo
+
+- [MLflow tracking](https://www.mlflow.org/docs/latest/tracking.html)
+- [MLflow Model registry](https://www.mlflow.org/docs/latest/model-registry.html)

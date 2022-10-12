@@ -30,7 +30,7 @@ Các MLOps tools được dùng trong bài này bao gồm:
 1. Feast: truy xuất Feature Store
 1. MLflow: ML Metadata Store, Model Registry
 1. Airflow: điều phối batch serving pipeline
-1. Bentoml: triển khai online serving
+1. BentoML: triển khai online serving
 
 !!! note
 
@@ -213,7 +213,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 
 ## Online serving
 
-Khi triển khai Online serving, hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _Bentoml_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
+Khi triển khai Online serving, hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _BentoML_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
@@ -276,14 +276,14 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 
 1. Download model từ MLflow server
 2. Lấy ra sklearn model
-3. Lưu model về [dạng mà Bentoml yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
+3. Lưu model về [dạng mà BentoML yêu cầu](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 4. `model_name` được lấy từ file `model_serving/artifacts/registered_model_version.json`
 5. [Signature của model](https://docs.bentoml.org/en/latest/concepts/model.html#model-signatures), thể hiện hàm mà model object sẽ gọi
-6. Key `predict` là tên hàm mà model sẽ gọi. Vì `sklearn` model dùng hàm `predict` để chạy inference nên `signatures` của Bentoml sẽ chứa key `predict`
+6. Key `predict` là tên hàm mà model sẽ gọi. Vì `sklearn` model dùng hàm `predict` để chạy inference nên `signatures` của BentoML sẽ chứa key `predict`
 7. Thông tin thêm về key `batchable`. Đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#batching).
 8. Lưu bất kì Python object nào đi kèm với model. Đọc thêm [tại đây](https://docs.bentoml.org/en/latest/concepts/model.html#save-a-trained-model)
 9. Lưu thứ tự các features model yêu cầu. `feature_list` được lấy ra từ metadata của model đã lưu ở MLflow
-10. Tạo [_Bentoml Runner_ và _Bentoml Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner). Quá trình chạy inference thông qua một Bentoml Runner. Bentoml Service chứa object Bentoml Runner, giúp định nghĩa API một cách thuận tiện
+10. Tạo [_BentoML Runner_ và _BentoML Service_](https://docs.bentoml.org/en/latest/concepts/model.html#using-model-runner). Quá trình chạy inference thông qua một BentoML Runner. BentoML Service chứa object BentoML Runner, giúp định nghĩa API một cách thuận tiện
 11. Khởi tạo kết nối tới Feature Store
 12. Hàm `predict` để thực hiện inference
 13. Định nghĩa input class cho API
@@ -318,7 +318,7 @@ Bạn làm các bước sau để triển khai Online serving service.
     cd ..
     ```
 
-3.  Truy cập [http://localhost:8172/](http://localhost:8172/), mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
+3.  Truy cập <http://localhost:8172/>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {
@@ -336,3 +336,7 @@ Bạn làm các bước sau để triển khai Online serving service.
 Chúng ta vừa thực hiện quy trình điển hình để triển khai batch serving và online serving. Code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó. Do đó, batch serving và online serving code cũng sẽ được cập nhật theo yêu cầu của Data Scientist.
 
 Sau khi tự động hoá batch serving pipeline và triển khai online serving service, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving service. Hệ thống này rất quan trọng trong việc theo dõi system performance và model performance, giúp chúng ta giải quyết các vấn đề ở production nhanh hơn, và cảnh báo khi có các sự cố về hệ thống và model performance.
+
+## Tài liệu tham khảo
+
+- [BentoML](https://docs.bentoml.org/en/latest/tutorial.html)

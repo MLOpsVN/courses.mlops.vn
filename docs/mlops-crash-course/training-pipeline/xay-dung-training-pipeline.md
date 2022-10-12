@@ -472,3 +472,8 @@ Chúng ta vừa trải qua quy trình phát triển điển hình cho training p
 Trong một dự án ML, trong khi Data Scientist vẫn thực hiện các thử nghiệm trên data và model, ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên yêu cầu từ Data Scientist.
 
 Sau khi tự động hoá training pipeline, trong bài tiếp theo, chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.
+
+## Tài liệu tham khảo
+
+- [CS 329S. Lecture 5. Model Development](https://docs.google.com/document/d/1UqrR4QP_RMZErC7uLMoLvPtzLys6ikgeUXiylS1WWPE/edit#heading=h.ozmqmwituoup)
+- [MLOps: Continuous delivery and automation pipelines in machine learning](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)

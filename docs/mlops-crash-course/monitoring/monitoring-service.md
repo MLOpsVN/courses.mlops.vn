@@ -581,8 +581,8 @@ Có 2 dashboards chúng ta cần thiết lập, bao gồm:
 Bạn cần làm các bước sau để triển khai các dashboards này lên Grafana.
 
 1. Copy 2 file dashboards trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
-1. Truy cập vào Grafana server tại [http://localhost:3000](http://localhost:3000)
-1. Mở 2 file dashboards có tên **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**
+2. Truy cập vào Grafana server tại <http://localhost:3000>
+3. Mở 2 file dashboards có tên **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**
 
 ### Data Drift Dashboard
 
@@ -787,3 +787,9 @@ Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình p
 Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data và model như **Phát hiện Data drift**, và **Theo dõi model performance**. Bạn cũng đã biết cách triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift, hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.
 
 Trong bài tiếp theo, chúng ta sẽ thiết lập và triển khai CI/CD cho các phần trong hệ thống ML. CI/CD giúp chúng ta tự động test và tự động triển khai các Airflow DAGs, cũng như là các services như Online serving service hay Monitoring service, thay vì gõ các lệnh thủ công trong terminal.
+
+## Tài liệu tham khảo
+
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+- [Evidently](https://docs.evidentlyai.com/)
+- [Grafana Alerting](https://grafana.com/docs/grafana/latest/alerting/)

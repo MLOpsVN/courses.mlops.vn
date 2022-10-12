@@ -67,3 +67,7 @@ Ngoài các câu hỏi trên, tuỳ vào vấn đề kinh doanh mà sẽ có cá
 Trong quá trình phát triển hệ thống ML, mọi thành viên đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
 
 Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các architecture, workflows và MLOps platform được dùng trong khoá học.
+
+## Tài liệu tham khảo
+
+- [CS 329S. Lecture 2. ML and Data Systems Fundamentals](https://docs.google.com/document/d/10K3pYTNvreVy5hl2EqWf_LX3mMW4CQw1TdMrHplMu00/edit#heading=h.aix49dp857xj)
