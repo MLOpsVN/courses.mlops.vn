@@ -40,7 +40,6 @@ nav:
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
           - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
       - POC:
-          - Định nghĩa POC: mlops-crash-course/poc/dinh-nghia-poc.md
           - Xây dựng POC: mlops-crash-course/poc/xay-dung-poc.md
       - Data pipeline:
           - Tổng quan pipeline: mlops-crash-course/data-pipeline/tong-quan-data-pipeline.md
