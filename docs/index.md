@@ -6,9 +6,5 @@ MLOpsVN là một tổ chức với cam kết thu ngắn khoảng cách giữa A
 
 ## Liên hệ
 
-- Website: [mlops.vn](https://mlops.vn)
-- Khoá học: [courses.mlops.vn](https://courses.mlops.vn)
 - Email: [mlopsvn@gmail.com](maito:mlopsvn@gmail.com)
-- [Facebook page](https://www.facebook.com/MLOpsVN)
 - [Facebook group](https://www.facebook.com/groups/mlopsvn)
-- [LinkedIn](https://www.linkedin.com/company/mlopsvn/)
