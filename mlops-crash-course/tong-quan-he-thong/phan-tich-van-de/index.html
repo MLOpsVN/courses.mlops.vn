@@ -135,6 +135,11 @@
     Tổng kết
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -158,11 +163,6 @@
           POC
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
-        Định nghĩa POC
-      </a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/xay-dung-poc/">
         Xây dựng POC
@@ -383,6 +383,11 @@
     Tổng kết
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -395,12 +400,20 @@
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"/></a>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Một hệ thống ML cũng chính là một hệ thống phần mềm. Khi đi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm chính là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.</p>
-<p>Trong khoá học này, chúng ta giả sử rằng công ty của bạn có mô hình kinh doanh giống <em>Grab</em>, và vấn đề kinh doanh của công ty của bạn là:</p>
-<p><strong><em>Dự đoán xem tài xế có hoàn thành một cuốc xe hay không?</em></strong></p>
-<p>Giải quyết được vấn đề này sẽ kích thích đáng kể trải nghiệm người dùng một cách tích cực khi sử dụng ứng dụng của công ty bạn để đặt xe. Chúng ta cũng đồng thời giả sử rằng công ty của bạn hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này.</p>
+<p>Một hệ thống ML cũng là một hệ thống phần mềm. Khi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.</p>
+<p>Giả sử rằng công ty của bạn có mô hình kinh doanh giống <em>Grab</em>, và vấn đề kinh doanh của công ty của bạn là:</p>
+<p><strong><em>Dự đoán xem tài xế có hoàn thành một cuốc xe hay không để chọn ra tài xế tốt nhất khi có yêu cầu đặt xe từ một khách hàng?</em></strong></p>
+<p>Giả sử rằng công ty hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này. Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.</p>
+<pre class="mermaid"><code>graph LR
+    n01[ ] --Thông tin tài xế 1--&gt; n1[Hệ thống ML] --Tài xế có khả năng cao nhất&lt;br&gt;hoàn thành cuốc xe--&gt; n02[ ]
+    n03[ ] --Thông tin tài xế 2--&gt; n1
+    n04[ ] --Thông tin tài xế 3--&gt; n1
+    style n01 height:0px;
+    style n02 height:0px;
+    style n03 height:0px;
+    style n04 height:0px;</code></pre>
 <h2 id="phan-tich-van-e">Phân tích vấn đề</h2>
-<p>Quá trình định nghĩa vấn đề kinh doanh bao gồm quá trình trả lời cho nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời cho vấn đề của chúng ta.</p>
+<p>Quá trình định nghĩa vấn đề kinh doanh là quá trình trả lời nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời.</p>
 <table>
 <thead>
 <tr>
@@ -412,13 +425,13 @@
 <tbody>
 <tr>
 <td><strong>Mục tiêu</strong></td>
-<td>Các mục tiêu kinh doanh?</td>
-<td>Tăng số lượng các cuốc xe được hoàn thành trong 1 tháng lên 10%</td>
+<td>Mục tiêu kinh doanh?</td>
+<td>Tăng số lượng cuốc xe được hoàn thành trong 1 tháng 10%</td>
 </tr>
 <tr>
 <td></td>
-<td>Các chức năng chính của hệ thống?</td>
-<td>Rank xác suất hoàn thành cuốc xe của driver được chọn</td>
+<td>Các chức năng chính?</td>
+<td>Chọn tài xế có khả năng cao nhất hoàn thành cuốc xe</td>
 </tr>
 <tr>
 <td><strong>Các bên liên quan</strong></td>
@@ -438,86 +451,81 @@
 <tr>
 <td><strong>Data</strong></td>
 <td>Có thể lấy ở các nguồn nào?</td>
-<td>Static data và streaming data từ app của công ty</td>
+<td>Static data và streaming data từ ứng dụng đặt xe của công ty</td>
 </tr>
 <tr>
 <td></td>
-<td>Định nghĩa quy trình để transform data sang format có thể dùng được?</td>
-<td>Giả sử quy trình để transform và clean data, feature engineering đã được định nghĩa</td>
+<td>Định nghĩa quy trình để biến đổi data sang format có thể dùng được?</td>
+<td>Giả sử quy trình để biến đổi data, feature engineering đã được định nghĩa</td>
 </tr>
 <tr>
 <td><strong>Phát triển model</strong></td>
-<td>Có những giải pháp nào đã được thực hiện để so sánh và đối chiếu?</td>
-<td>Giả sử đã tìm hiểu các giải pháp trên internet và của các đối thủ cạnh tranh</td>
+<td>Có giải pháp nào đã được thực hiện để đối chiếu?</td>
+<td>Giả sử đã tìm hiểu các giải pháp của đối thủ cạnh tranh</td>
 </tr>
 <tr>
 <td></td>
-<td>Có những thresholds nào được sử dụng để khiến giải pháp trở nên hữu ích?</td>
-<td>Quá trình inference không được chạy quá 500ms</td>
+<td>Có những thresholds nào được dùng để khiến giải pháp trở nên hữu ích?</td>
+<td>Model inference không được chạy quá 500ms</td>
 </tr>
 <tr>
 <td></td>
-<td>Cân nhắc các tradeoffs</td>
+<td>Cân nhắc tradeoffs</td>
 <td>False positives (false alarm) có ảnh hưởng nghiêm trọng hơn</td>
 </tr>
 <tr>
 <td></td>
-<td>Giải pháp ML của chúng ta có cần được interpretable không? Nếu có thì giải thích cho ai?</td>
-<td>Giải pháp này có yêu cầu interpretable, để có thể giúp các bộ phận khác của công ty đưa ra giải pháp để tối ưu các features</td>
+<td>Có cần confidence score không? Dùng threshold nào?</td>
+<td>Không cần, rank các tài xế theo xác suất mà model dự đoán sau</td>
 </tr>
 <tr>
 <td></td>
-<td>Giải pháp ML này có cần confidence score không? Nếu có thì dùng threshold nào?</td>
-<td>Sử dụng threshold 0.5. Thông qua các POC sau đó mà chúng ta sẽ tối ưu threshold này sau</td>
-</tr>
-<tr>
-<td></td>
-<td>Làm gì với các predictions thoả mãn và không thoả mãn threshold?</td>
-<td>Các predictions dù thoả mãn threshold hay không thì đều được log lại và gán label sau</td>
+<td>Làm gì với các dự đoán không được chọn?</td>
+<td>Được log lại và gán label</td>
 </tr>
 <tr>
 <td><strong>Đánh giá model</strong></td>
-<td>Dùng metrics nào để đánh giá trong giai đoạn development và production?</td>
+<td>Dùng metrics nào để đánh giá model lúc phát triển và ở production?</td>
 <td>Dùng metrics RMSE</td>
 </tr>
 <tr>
 <td></td>
 <td>Làm sao để liên kết model performance với mục tiêu kinh doanh?</td>
-<td>Ở production, ngoài RMSE để đánh giá model performance, chúng ta cần tính cả tỉ lệ hoàn thành các cuốc xe trong 1 tháng gần nhất, để đánh giá mục tiêu kinh doanh</td>
+<td>Ở production, ngoài RMSE để đánh giá model performance, cần tính tỉ lệ hoàn thành các cuốc xe trong 1 tháng gần nhất</td>
 </tr>
 <tr>
 <td><strong>Triển khai</strong></td>
 <td>Data của quá trình inference sẽ được lấy từ đâu? Được format và lưu trữ thế nào?</td>
-<td>Data đầu vào của quá trình inference sẽ được lấy từ static DB và streaming DB</td>
+<td>Data đầu vào của quá trình inference được lấy từ <em>Online Feature Store</em> (sẽ được giải thích trong bài <strong>Model serving</strong>)</td>
 </tr>
 <tr>
 <td></td>
-<td>Model được deploy lên đâu?</td>
-<td>Model được deploy lên hệ thống on-premise của công ty</td>
+<td>Model được triển khai ở đâu?</td>
+<td>Lên server nội bộ của công ty</td>
 </tr>
 <tr>
 <td></td>
 <td>Khi nào chạy batch prediction? Khi nào chạy online prediction?</td>
-<td>Model sẽ được đóng gói để có thể serve được cả batch và online</td>
+<td>Chạy batch prediction mỗi giờ cho các tài xế ít hoạt động, data ít thay đổi. Chạy online prediction cho các tài xế hoạt động nhiều</td>
 </tr>
 <tr>
 <td></td>
 <td>Tốc độ thay đổi của data thế nào?</td>
-<td>Vài features sẽ thay đổi không thường xuyên, có thể schedule để chạy và update hàng ngày. Vài features cần lấy từ streaming data, cần data pipeline riêng để preprocess và lưu trữ</td>
+<td>Vài features sẽ thay đổi không thường xuyên, đặt lịch để cập nhật hàng ngày. Vài features cần lấy từ streaming data, cần data pipeline riêng để xử lý và lưu trữ</td>
 </tr>
 <tr>
 <td></td>
 <td>Bao lâu thì cần train lại model?</td>
-<td>Dựa vào tốc độ thay đổi của data hoặc feature drift</td>
+<td>Dựa vào tốc độ thay đổi của data hoặc chất lượng data ở production</td>
 </tr>
 <tr>
 <td></td>
 <td>Labels ở production được thu thập như thế nào?</td>
-<td>Sau khi tài xế được chọn, trải qua một vài quy trình khác, chúng ta thu thập được kết quả xem cuốc xe có hoàn thành không</td>
+<td>Sau khi tài xế được chọn, ứng dụng đặt xe sẽ trả về kết quả xem cuốc xe có hoàn thành không</td>
 </tr>
 <tr>
 <td><strong>Quyền riêng tư</strong></td>
-<td>Có những yêu cầu nào về quyền riêng tư của data, labels, v.v</td>
+<td>Có yêu cầu nào về quyền riêng tư của data, labels, v.v</td>
 <td>Data và labels chỉ được dùng trong nội bộ công ty</td>
 </tr>
 <tr>
@@ -527,55 +535,54 @@
 </tr>
 <tr>
 <td></td>
-<td>Chúng ta có thể giữ data của users trong bao lâu?</td>
+<td>Có thể giữ data của users trong bao lâu?</td>
 <td>Không giới hạn</td>
 </tr>
 <tr>
 <td><strong>Chi phí và lợi ích</strong></td>
 <td>Ngân sách ban đầu</td>
-<td>500k$</td>
+<td>$500,000</td>
 </tr>
 <tr>
 <td></td>
 <td>So sánh chi phí và lợi ích</td>
-<td>Lợi ích lớn hơn chi phí nhiều, vì hệ thống có thể tái sử dụng, chi phí để optimize không lớn</td>
+<td>Lợi ích lớn hơn chi phí nhiều, hệ thống có thể tái sử dụng, chi phí để optimize không lớn</td>
 </tr>
 <tr>
 <td></td>
-<td>Cần đạt được các yêu cầu nào để tăng budget?</td>
-<td>Hoàn thành các mốc thời gian tiếp theo, triển khai model ra production và chứng minh lợi ích lớn hơn chi phí</td>
+<td>Cần đạt yêu cầu nào để tăng kinh phí?</td>
+<td>Hoàn thành các mốc thời gian tiếp theo, triển khai model ra production và tiếp tục chứng minh lợi ích lớn hơn nhiều chi phí</td>
 </tr>
 <tr>
 <td><strong>Rủi ro</strong></td>
-<td>Phân tích các rủi ro đi kèm khi thực hiện mỗi chức năng</td>
-<td>Có thể model được đánh giá offline là tốt, nhưng khi ra production, lại không thể chứng minh là mang lại hiệu quả</td>
+<td>Phân tích rủi ro đi kèm</td>
+<td>Có thể model được đánh giá offline là tốt, nhưng ở production không mang lại hiệu quả cao</td>
 </tr>
 <tr>
 <td></td>
-<td>Phân tích các rủi ro kinh doanh khác</td>
+<td>Phân tích rủi ro kinh doanh khác</td>
 <td>Hết tiền trước khi hoàn thiện POC</td>
 </tr>
 <tr>
 <td><strong>Ràng buộc kĩ thuật</strong></td>
-<td>Có hệ thống nào trong công ty chúng ta cần tích hợp với không?</td>
+<td>Có hệ thống cũ nào cần tích hợp với không?</td>
 <td>Không</td>
 </tr>
 <tr>
 <td></td>
-<td>Architecture và tool sẽ dùng?</td>
-<td>Architecture và tool sẽ được định nghĩa ở bài tiếp theo tools</td>
-</tr>
-<tr>
-<td><strong>Các mốc thời gian</strong></td>
-<td>Thời gian được phân bổ như thế nào cho từng chức năng?</td>
-<td>Timeline ở hình dưới</td>
+<td>Architecture và tools sẽ dùng?</td>
+<td>Được định nghĩa ở bài tiếp theo</td>
 </tr>
 </tbody>
 </table>
-<p>Ngoài các câu hỏi cơ bản ở trên, tuỳ thuộc vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi đi kèm khác. Trong bảng trên, nhiều câu trả lời liên quan tới phía kinh doanh của công ty, hơn là liên quan tới MLOps, đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist dành thời gian thảo luận, phân tích và trả lời. Lưu ý rằng câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án, bằng nhiều vòng lặp. Chúng ta không thể mong đợi rằng mọi thứ sẽ được trả lời đúng ngay từ khi còn chưa bắt đầu thực hiện nó. Các bạn có thể tham khảo thêm <a href="https://ml-ops.org/content/phase-zero">ở đây</a> về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.</p>
+<p>Ngoài các câu hỏi trên, tuỳ vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi khác. Trong bảng trên, nhiều câu trả lời liên quan tới mảng kinh doanh của công ty đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist thảo luận, phân tích và trả lời. Câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án. Chúng ta không mong đợi câu trả lời sẽ đúng từ khi còn chưa bắt đầu thực hiện dự án. Bạn có thể tham khảo thêm <a href="https://ml-ops.org/content/phase-zero">ở đây</a> về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Trong quá trình phát triển hệ thống, mọi thành viên trong dự án đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Các bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về bốn tính chất này.</p>
-<p>Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các workflow và MLOps platform được dùng trong hệ thống.</p>
+<p>Trong quá trình phát triển hệ thống ML, mọi thành viên đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về bốn tính chất này.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các architecture, workflows và MLOps platform được dùng trong khoá học.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://docs.google.com/document/d/10K3pYTNvreVy5hl2EqWf_LX3mMW4CQw1TdMrHplMu00/edit#heading=h.aix49dp857xj">CS 329S. Lecture 2. ML and Data Systems Fundamentals</a></li>
+</ul>
 </article>
 </div>
 </div>

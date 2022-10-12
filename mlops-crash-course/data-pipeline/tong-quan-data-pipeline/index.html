@@ -131,11 +131,6 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../poc/dinh-nghia-poc/">
-        Định nghĩa POC
-      </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/xay-dung-poc/">
         Xây dựng POC
       </a>
@@ -412,7 +407,7 @@
 <article class="md-content__inner md-typeset">
 <h1>Tổng quan pipeline</h1>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Trong khoa học máy tính có khái niệm <em>garbage in, garbage out</em>, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của <a href="https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says">Forbes</a>, các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.  </p>
+<p>Trong khoa học máy tính có khái niệm <em>garbage in, garbage out</em>, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của <a href="https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says">Forbes</a>, các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.</p>
 <p>Ở bài học này, chúng ta sẽ cùng nhau tìm hiểu các công việc phổ biến trong xử lý dữ liệu, khái niệm về pipeline dữ liệu, để từ đó mọi người có thể rút ra được những việc cần làm cho bài toán của mình và lên kế hoạch triển khai cho phù hợp.</p>
 <h2 id="cac-cong-oan-chinh-trong-xu-ly-du-lieu">Các công đoạn chính trong xử lý dữ liệu</h2>
 <p>Thông thường công việc xử lý dữ liệu bao gồm các công đoạn chính như sau:</p>
@@ -476,13 +471,12 @@
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/data_pipeline_example.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/data_pipeline_example.png"/></a></p>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:</p>
-<ul>
-<li>Pipeline trở nên cực kỳ phức tạp và khó debug</li>
-<li>Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline</li>
-<li>Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý</li>
-</ul>
 </details>
+<p>Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:</p>
+<div class="highlight"><pre><span></span><code>- Pipeline trở nên cực kỳ phức tạp và khó debug
+- Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
+- Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
+</code></pre></div>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tỉm hiểu về Airflow, một tool giúp xây dựng pipeline.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
