@@ -13,13 +13,13 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 ## Môi trường phát triển
 
-Các library bạn cần cài đặt cho môi trường phát triển nằm tại `model_serving/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt môi trường phát triển. Sau khi cài đặt môi trường phát triển, bạn cần làm các việc sau.
+Các library bạn cần cài đặt cho môi trường phát triển nằm tại `model_serving/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt. Sau khi cài đặt, bạn làm tiếp các bước sau.
 
 1.  Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa config cần thiết cho source code.
 
-1.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa config cần thiết cho việc triển khai 2 loại serving trên.
+2.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa config cần thiết cho việc triển khai 2 loại serving trên.
 
-1.  Set env var `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
+3.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
 
     ```bash
     export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"

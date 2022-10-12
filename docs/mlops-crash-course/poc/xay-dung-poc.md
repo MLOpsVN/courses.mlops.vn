@@ -11,7 +11,7 @@ Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC th�
 
 ## Môi trường phát triển
 
-Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt môi trường phát triển.
+Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt.
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
