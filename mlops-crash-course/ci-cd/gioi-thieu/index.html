@@ -291,11 +291,6 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tu-ong-hoa-nhu-the-nao">
-    Tự động hóa như thế nào
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
   </a>
@@ -331,30 +326,10 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" id="__nav_2_8" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_8">
-          Tổng kết
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Tổng kết" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_8">
-<span class="md-nav__icon md-icon"></span>
-          Tổng kết
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-ket/tom-tat-noi-dung.md">
-        Tóm tắt nội dung
+<a class="md-nav__link" href="../../tong-ket/tom-tat-noi-dung/">
+        Tổng kết
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../tong-ket/mot-so-van-de-khac.md">
-        Một số vấn đề khác
-      </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../CONTRIBUTING/">
@@ -401,11 +376,6 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#moi-truong-trien-khai-du-an">
     Môi trường triển khai dự án
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tu-ong-hoa-nhu-the-nao">
-    Tự động hóa như thế nào
   </a>
 </li>
 <li class="md-nav__item">
@@ -497,12 +467,12 @@
 <h2 id="moi-truong-trien-khai-du-an">Môi trường triển khai dự án</h2>
 <p>Thông thường có 3 môi trường triển khai dự án bao gồm:</p>
 <ul>
-<li><strong>Development</strong>/<strong>Dev:</strong> môi trường này thường có cấu hình yếu</li>
-<li><strong>Staging:</strong> môi trường này và <em>prod</em> thường có cấu hình giống nhau</li>
-<li><strong>Production</strong>/<strong>Prod:</strong></li>
+<li><strong>Development</strong>/<strong>Dev:</strong> môi trường này thường có cấu hình yếu, với quyền truy cập dữ liệu thật "gần như" bằng 0. Ở môi trường này sẽ dùng dữ liệu giả, với cùng schema với dữ liệu thực tế.</li>
+<li><strong>Staging:</strong> môi trường này thường có cấu hình và quyền truy cập dữ liệu giống như môi trường <code>production</code></li>
+<li><strong>Production</strong>/<strong>Prod</strong> môi trường chạy thực tế</li>
 </ul>
-<h2 id="tu-ong-hoa-nhu-the-nao">Tự động hóa như thế nào</h2>
 <h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học vừa rồi, chúng ta đã cùng nhau đi qua các khái niệm cơ bản về CI/CD. Ở bài tiếp theo, chúng ta sẽ ứng dụng để tự động hóa việc triển khai model serving và các pipeline, thay vì làm thủ công như những bài trước.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://mlops-guide.github.io/MLOps/PipelineAutomation/">https://mlops-guide.github.io/MLOps/PipelineAutomation/</a></li>
