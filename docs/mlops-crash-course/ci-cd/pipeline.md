@@ -11,7 +11,10 @@ Nếu chúng ta tự động hóa các bước này thì có thể đẩy nhanh 
 ## Jenkins pipeline
 Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/cicd_data_pipeline.png" loading="lazy" />
+```mermaid
+flowchart LR
+    n1[1. Build data pipeline] --> n2[2. Test data pipeline] --> n3[3. Deploy data pipeline]
+```
 
 ```py title="Jenkinsfile" linenums="1"
 pipeline {

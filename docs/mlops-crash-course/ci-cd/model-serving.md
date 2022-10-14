@@ -4,7 +4,12 @@
 ## Jenkins pipeline
 Luồng CI/CD cho model serving sẽ được thay đổi thành như sau:
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/cicd_model_serving.png" loading="lazy" />
+```mermaid
+graph LR
+    n1[1. Build model serving] --> n2[2. Test model serving]
+    n2[2. Test model serving] --> n3[3.1. Deploy offline batch serving pipeline]
+    n2[2. Test model serving] --> n4[3.2. Deploy online serving API]
+```
 
 ???+ tip
     Ở đây chúng ta sẽ dùng 1 image cho cả `online serving API` và `offline batch serving pipeline` để hạn chế sự khác nhau giữa code và môi trường chạy.
