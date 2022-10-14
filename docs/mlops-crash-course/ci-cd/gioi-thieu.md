@@ -31,13 +31,12 @@ Tùy từng yêu cầu đầu ra và tiến độ hiện tại của dự án, n
 ## Môi trường triển khai dự án
 Thông thường có 3 môi trường triển khai dự án bao gồm:
 
-- **Development**/**Dev:** môi trường này thường có cấu hình yếu
-- **Staging:** môi trường này và _prod_ thường có cấu hình giống nhau
-- **Production**/**Prod:**
-
-## Tự động hóa như thế nào
+- **Development**/**Dev:** môi trường này thường có cấu hình yếu, với quyền truy cập dữ liệu thật "gần như" bằng 0. Ở môi trường này sẽ dùng dữ liệu giả, với cùng schema với dữ liệu thực tế.
+- **Staging:** môi trường này thường có cấu hình và quyền truy cập dữ liệu giống như môi trường `production`
+- **Production**/**Prod** môi trường chạy thực tế
 
 ## Tổng kết
+Ở bài học vừa rồi, chúng ta đã cùng nhau đi qua các khái niệm cơ bản về CI/CD. Ở bài tiếp theo, chúng ta sẽ ứng dụng để tự động hóa việc triển khai model serving và các pipeline, thay vì làm thủ công như những bài trước.
 
 ## Tài liệu tham khảo
 - <https://mlops-guide.github.io/MLOps/PipelineAutomation/>
