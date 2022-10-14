@@ -370,7 +370,10 @@
 <p>Ở bài học trước, chúng ta đã cùng nhau xây dựng Jenkins pipeline để tự động hóa quá trình release <code>data pipeline</code>. Trong bài học này chúng ta sẽ sửa Jenkinsfile để phục vụ cho <code>model serving</code>.</p>
 <h2 id="jenkins-pipeline">Jenkins pipeline</h2>
 <p>Luồng CI/CD cho model serving sẽ được thay đổi thành như sau:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/cicd_model_serving.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/cicd_model_serving.png"/></a></p>
+<pre class="mermaid"><code>graph LR
+    n1[1. Build model serving] --&gt; n2[2. Test model serving]
+    n2[2. Test model serving] --&gt; n3[3.1. Deploy offline batch serving pipeline]
+    n2[2. Test model serving] --&gt; n4[3.2. Deploy online serving API]</code></pre>
 <details class="tip" open="open">
 <summary>Tip</summary>
 <p>Ở đây chúng ta sẽ dùng 1 image cho cả <code>online serving API</code> và <code>offline batch serving pipeline</code> để hạn chế sự khác nhau giữa code và môi trường chạy.</p>

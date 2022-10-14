@@ -377,7 +377,8 @@
 Ở bài học này chúng ta sẽ sử dụng Jenkins để làm điều này.</p>
 <h2 id="jenkins-pipeline">Jenkins pipeline</h2>
 <p>Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/cicd_data_pipeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/cicd_data_pipeline.png"/></a></p>
+<pre class="mermaid"><code>flowchart LR
+    n1[1. Build data pipeline] --&gt; n2[2. Test data pipeline] --&gt; n3[3. Deploy data pipeline]</code></pre>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
