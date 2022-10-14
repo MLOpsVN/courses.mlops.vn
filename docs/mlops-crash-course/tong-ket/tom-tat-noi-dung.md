@@ -10,14 +10,14 @@ Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps 
 
 ## Những hướng phát triển tiếp theo
 Sau khi hoàn thành khóa học này, mọi người hoàn toàn có thể tự học thêm bằng cách:
-- Tập dữ liệu:
+
+- **Tập dữ liệu:**
     - Thử nghiệm với tập dữ liệu phức tạp hơn, với nhiều dòng và nhiều cột hơn
     - Cải thiện các bước preprocess/postprocess bằng những xử lý phức tạp hơn
-- CI/CD: 
-    - Thực hiện trên nhiều môi trường khác nhau
-- Model serving:
+- **CI/CD:** Thực hiện trên nhiều môi trường khác nhau
+- **Model serving:**
     - Thực hiện các loại deployment khác nhau, ví dụ canary hoặc shadow
     - Thực hiện A/B hoặc multi-armed bandits testing
-- Pipeline: Thực hiện trigger pipeline thông qua Alert Manager, thay vì chạy định kỳ
-- Logging: Lưu thêm log từ các pipelines, thay vì chỉ model serving
+- **Pipeline:** Thực hiện trigger pipeline thông qua Alert Manager, thay vì chạy định kỳ
+- **Logging:** Lưu thêm log từ các pipelines, thay vì chỉ model serving
 - Triển khai hệ thống trên Kubernetes
