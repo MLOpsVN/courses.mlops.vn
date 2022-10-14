@@ -27,14 +27,18 @@ Thông thường công việc xử lý dữ liệu bao gồm các công đoạn 
 Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: _data ingestion_, _data cleaning_, và _data exploration & validation_, hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.
 
 Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipeline xử lý dữ liệu, ví dụ bên dưới:
-<img src="../../../assets/images/mlops-crash-course/data-pipeline/data_pipeline_example.png" loading="lazy" />
+
+```mermaid
+flowchart LR
+    n1[ingest_task] --> n2[clean_task] --> n3[explore_and_validate_task]
+```
 
 ???+ warning
-Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
-
-    - Pipeline trở nên cực kỳ phức tạp và khó debug
-    - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
-    - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
+    Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
+    
+        - Pipeline trở nên cực kỳ phức tạp và khó debug
+        - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
+        - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
 
 ## Tổng kết
 
