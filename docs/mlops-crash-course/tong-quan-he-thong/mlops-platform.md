@@ -21,37 +21,27 @@ Kiến trúc MLOps platform của chúng ta sẽ như sau:
 
 Các tương tác chính trong MLOps platform:
 
-1\. Airflow data pipeline đẩy feature vào feature store
+1\. Data Pipeline kéo và xử lý dữ liệu từ file source
 
-2\. Data Scientist (DS) kéo dữ liệu từ offline store về thông qua Feast SDK để thực hiện các experiment: eda, train và tune
+2\. Dữ liệu sau khi xử lý bởi Data Pipeline sẽ được đẩy vào Feature Store
 
-3\. DS lưu thông tin mỗi lần thử nghiệm vào MLFlow
+3\. Data Scientist (DS) kéo feature từ Feature Store để thực hiện các thí nghiệm trên notebook
 
-4\. DS push code lên Github để trigger các CI/CD pipeline tương ứng:
+4\. Training Pipeline kéo feature về để train model
 
-- <span style="color:red">**Flow Đỏ**</span>: push code data pipeline để trigger CI/CD cho data pipeline
-- <span style="color:blue">**Flow Xanh dương**</span>: push code model training để trigger CI/CD cho model training pipeline
-- <span style="color:green">**Flow Xanh lá**</span>: push code model serving để trigger CI/CD cho model serving
+5\. Metadata của các experiment, ví dụ như hyperparameters và metrics, ... được lưu vào Metadata Store
 
-5\. CI/CD pipeline tự động cập nhật pipeline tương ứng (tương tự với 6, 7 và 8)
+6\. Metadata của Training Pipeline cũng được lưu vào Metadata Store
 
-9\. Prometheus kéo metrics từ model serving API để hiển thị lên Grafana dashboard
+7\. Model sau khi train sẽ được lưu trữ ở Model Registry 
 
-10\. Đẩy log về Elastic Search (tương tự với 11, 12 và 13)
+8\. Batch Serving Pipeline và Online Serving API kéo model từ Model Registry về để serve
 
-14\. Model training pipeline lưu trữ model đi kèm với metadata
+9\. Logs và metrics được scrape từ Online Serving API
 
-15\. CI/CD cho model serving kéo model và metadata từ MLFlow để đóng gói trước khi deploy
+10\. DS push code lên Github trigger CI/CD cho các pipelines và Online Serving API
 
-16\. Kéo features mới nhất tương ứng với các IDs trong request API để cho qua model dự đoán
-
-17\. Kéo features về để train model
-
-18\. Materialize feature từ offline sang online store
-
-19\. Stream dữ liệu vào online store
-
-20\. Stream dữ liệu vào offline store
+14\. Kafka liên tục ghi dữ liệu mới vào Feature Store giúp feature luôn ở trạng thái _fresh_
 
 ## Infra layer
 

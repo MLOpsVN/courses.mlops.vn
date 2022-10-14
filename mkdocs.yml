@@ -61,9 +61,7 @@ nav:
           - Jenkins cơ bản: mlops-crash-course/ci-cd/jenkins-co-ban.md
           - CI/CD cho pipeline: mlops-crash-course/ci-cd/pipeline.md
           - CI/CD cho serving API: mlops-crash-course/ci-cd/model-serving.md
-      - Tổng kết:
-          - Tóm tắt nội dung: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
-          - Một số vấn đề khác: mlops-crash-course/tong-ket/mot-so-van-de-khac.md
+      - Tổng kết: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
       - Contributing: CONTRIBUTING.md
       - Code of Conduct: CODE_OF_CONDUCT.md
 
