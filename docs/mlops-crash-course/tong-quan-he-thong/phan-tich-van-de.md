@@ -8,7 +8,7 @@ Một hệ thống ML cũng là một hệ thống phần mềm. Khi xây dựng
 
 Giả sử rằng công ty của bạn có mô hình kinh doanh giống _Grab_, và vấn đề kinh doanh của công ty của bạn là:
 
-**_Dự đoán xem tài xế có hoàn thành một cuốc xe hay không để chọn ra tài xế tốt nhất khi có yêu cầu đặt xe từ một khách hàng?_**
+**_Làm thế nào để chọn ra tài xế có khả năng cao nhất sẽ hoàn thành một cuốc xe khi có yêu cầu đặt xe từ khách hàng?_**
 
 Giả sử rằng công ty hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này. Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.
 

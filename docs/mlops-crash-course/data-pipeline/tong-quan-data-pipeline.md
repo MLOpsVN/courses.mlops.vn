@@ -34,11 +34,12 @@ flowchart LR
 ```
 
 ???+ warning
+
     Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
-    
-        - Pipeline trở nên cực kỳ phức tạp và khó debug
-        - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
-        - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
+
+    - Pipeline trở nên cực kỳ phức tạp và khó debug
+    - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
+    - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
 
 ## Tổng kết
 
