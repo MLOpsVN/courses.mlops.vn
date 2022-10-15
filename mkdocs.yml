@@ -20,6 +20,7 @@ plugins:
       zoomable: true
       draggable: true
   - section-index
+  - search
 markdown_extensions:
   - admonition
   - pymdownx.highlight:
