@@ -55,6 +55,6 @@ Thông thường, một công ty sẽ có một nhóm các Infra engineer làm n
 
 Trên Infra layer là Application layer, hay chính là nơi mà các engineer khác xây dựng các ứng dụng cho chính công ty đó. Các ứng dụng này có thể là môi trường Jupyter notebook, Gitlab server, Jenkins server, monitoring platform, hoặc MLOps platform, v.v. Trong khoá học này, chúng ta sẽ học cách triển khai MLOps platform trên localhost.
 
-### Tổng kết
+## Tổng kết
 
 Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về problem mà chúng ta đang giải quyết. Dựa vào Timeline đã được định nghĩa, tiếp theo chúng ta sẽ thực hiện POC.
