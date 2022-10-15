@@ -456,10 +456,10 @@
 <p>Các library bạn cần cài đặt cho môi trường phát triển nằm tại <code>model_serving/dev_requirements.txt</code>. Bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt. Sau khi cài đặt, bạn làm tiếp các bước sau.</p>
 <ol>
 <li>
-<p>Copy file <code>model_serving/.env-example</code>, đổi tên thành <code>model_serving/.env</code>. File này chứa config cần thiết cho source code.</p>
+<p>File <code>model_serving/.env</code> chứa config cần thiết cho source code.</p>
 </li>
 <li>
-<p>Copy file <code>model_serving/deployment/.env-example</code>, đổi tên thành <code>model_serving/deployment/.env</code>. File này chứa config cần thiết cho việc triển khai 2 loại serving trên.</p>
+<p>File <code>model_serving/deployment/.env</code> chứa config cần thiết cho việc triển khai 2 loại serving trên.</p>
 </li>
 <li>
 <p>Đặt environment variable <code>MODEL_SERVING_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>model_serving</code>. Env var này hỗ trợ chạy python code ở folder <code>model_serving/src</code> trong quá trình phát triển.</p>

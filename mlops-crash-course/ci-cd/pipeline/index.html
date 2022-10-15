@@ -379,6 +379,10 @@
 <p>Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:</p>
 <pre class="mermaid"><code>flowchart LR
     n1[1. Build data pipeline] --&gt; n2[2. Test data pipeline] --&gt; n3[3. Deploy data pipeline]</code></pre>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Ở bài học này chúng ta sẽ sử dụng docker agent, do đó trước hết mọi người phải truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
+</details>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -408,42 +412,57 @@
 <span class="normal"><a href="#__codelineno-0-27">27</a></span>
 <span class="normal"><a href="#__codelineno-0-28">28</a></span>
 <span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">pipeline</span> <span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">agent</span> <span class="p">{</span> <span class="n">docker</span> <span class="p">{</span> <span class="n">image</span> <span class="s1">'python:3.9'</span> <span class="p">}</span> <span class="p">}</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">stages</span> <span class="p">{</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'build data pipeline'</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">pipeline</span> <span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">agent</span> <span class="p">{</span> 
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>        <span class="n">docker</span> <span class="p">{</span> 
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>            <span class="n">image</span> <span class="s1">'python:3.9'</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="p">}</span> 
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="p">}</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>            <span class="n">steps</span> <span class="p">{</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>                <span class="n">echo</span> <span class="s1">'Building data pipeline..'</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>                <span class="n">sh</span> <span class="s1">'make build_image'</span> <span class="c1"># (1)</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>            <span class="p">}</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>        <span class="p">}</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'test data pipeline'</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>            <span class="n">steps</span> <span class="p">{</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>                <span class="n">echo</span> <span class="s1">'Testing data pipeline..'</span> <span class="c1"># (2)</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>            <span class="p">}</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>        <span class="p">}</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'deploy data pipeline'</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>            <span class="o">//</span> <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a>            <span class="n">steps</span> <span class="p">{</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>                <span class="n">sh</span> <span class="s1">'make deploy_dags'</span> <span class="c1"># (3)</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>            <span class="p">}</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="p">}</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="p">}</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="p">}</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">stages</span> <span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'build data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>            <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>                <span class="n">echo</span> <span class="s1">'Building data pipeline..'</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>                <span class="n">sh</span> <span class="s1">'cd data_pipeline &amp;&amp; make build_image'</span>  <span class="c1"># (1)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>            <span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>        <span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'test data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>            <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>                <span class="n">echo</span> <span class="s1">'Testing data pipeline..'</span>  <span class="c1"># (2)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>            <span class="p">}</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="p">}</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'deploy data pipeline'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>            <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/**"</span> <span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>                <span class="n">sh</span> <span class="s1">'cd data_pipeline &amp;&amp; make deploy_dags'</span> <span class="c1"># (3)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="p">}</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>        <span class="p">}</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="p">}</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Build image cho để chạy các bước trong Airflow pipeline</li>
 <li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
 <li>Copy script chứa <code>DAG</code> qua folder <code>dags/</code> của Airflow</li>
 </ol>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"/></a></p>
+<p>, thì mọi người thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới: 
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"/></a></p>
+</details>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì <code>push</code> lên Github và để luồng CI/CD lo những phần còn lại, thật tiện lợi phải không nào!</p>
 <p>Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho <code>model serving</code>.</p>
