@@ -191,25 +191,10 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_2">
-          POC
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="POC" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_2">
-<span class="md-nav__icon md-icon"></span>
-          POC
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/xay-dung-poc/">
-        Xây dựng POC
+        POC
       </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
@@ -246,45 +231,15 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_4">
-          Training pipeline
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Training pipeline" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_4">
-<span class="md-nav__icon md-icon"></span>
-          Training pipeline
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../training-pipeline/xay-dung-training-pipeline/">
-        Xây dựng training pipeline
+        Training pipeline
       </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_5">
-          Model serving
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model serving" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_5">
-<span class="md-nav__icon md-icon"></span>
-          Model serving
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../model-serving/trien-khai-model-serving/">
-        Triển khai model serving
+        Model serving
       </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
@@ -439,11 +394,11 @@
 </div>
 <h2 id="inh-nghia">Định nghĩa</h2>
 <p>Theo <a href="https://arxiv.org/abs/2205.02302">bài báo trên</a>, định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:</p>
-<ol>
+<ul>
 <li>MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML</li>
 <li>MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering</li>
 <li>MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production hiệu quả hơn, thông qua các nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.</li>
-</ol>
+</ul>
 <h2 id="cac-nguyen-tac">Các nguyên tắc</h2>
 <figure>
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg"/></a>
@@ -464,29 +419,29 @@
 <p>Ở môi trường production, việc data thay đổi liên tục khiến hiệu quả hoạt động của model giảm nhanh chóng. Nguyên tắc này đảm bảo việc thiết lập một pipeline để train và đánh giá model tự động ngay khi cần thiết.</p>
 <p><strong>7. ML metadata tracking</strong></p>
 <p>Mỗi bước ở mỗi pipeline trong một hệ thống ML yêu cầu các cấu hình hay data đầu vào, đầu ra. Nguyên tắc này được đặt ra dựa trên yêu cầu về việc theo dõi và ghi lại các đầu vào và đầu ra đó, kèm theo thông tin về các lần chạy của các pipeline, ví dụ như:</p>
-<ol>
+<ul>
 <li>Ngày, tháng, thời gian chạy</li>
 <li>Phiên bản của data đang chạy</li>
 <li>Hyperparameter dùng để train model</li>
 <li>Model train xong lưu ở đâu</li>
 <li>v.v.</li>
-</ol>
+</ul>
 <p><strong>8. Continuous monitoring</strong></p>
 <p>Nguyên tắc này đảm bảo việc theo dõi liên tục các thông số liên quan tới code, data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một số thông số điển hình bao gồm:</p>
-<ol>
+<ul>
 <li>Các tính chất thống kê của data ở production</li>
 <li>Model performance</li>
 <li>Lượng request được gửi đến server</li>
 <li>Thời gian xử lý một request</li>
 <li>v.v.</li>
-</ol>
+</ul>
 <p><strong>9. Feedback loops</strong></p>
 <p>Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh giá ngược về phần phát triển thường xuyên xảy ra, ví dụ:</p>
-<ol>
+<ul>
 <li>Phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data thô</li>
 <li>Phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model</li>
 <li>v.v.</li>
-</ol>
+</ul>
 <p>Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, bạn có thể đọc kĩ hơn ở <a href="https://arxiv.org/abs/2205.02302">bài báo trên</a>.</p>
 <h2 id="cac-components">Các components</h2>
 <figure>

@@ -148,25 +148,10 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_2">
-          POC
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="POC" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_2">
-<span class="md-nav__icon md-icon"></span>
-          POC
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../poc/xay-dung-poc/">
-        Xây dựng POC
+        POC
       </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
@@ -203,45 +188,15 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_4">
-          Training pipeline
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Training pipeline" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_4">
-<span class="md-nav__icon md-icon"></span>
-          Training pipeline
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../training-pipeline/xay-dung-training-pipeline/">
-        Xây dựng training pipeline
+        Training pipeline
       </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" id="__nav_2_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2_5">
-          Model serving
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model serving" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_2_5">
-<span class="md-nav__icon md-icon"></span>
-          Model serving
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../model-serving/trien-khai-model-serving/">
-        Triển khai model serving
+        Model serving
       </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
@@ -311,10 +266,10 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kiem-thu-he-thong-software-truyen-thong">
-    Kiểm thử hệ thống software truyền thống
+<a class="md-nav__link" href="#kiem-thu-he-thong-phan-mem-truyen-thong">
+    Kiểm thử hệ thống phần mềm truyền thống
   </a>
-<nav aria-label="Kiểm thử hệ thống software truyền thống" class="md-nav">
+<nav aria-label="Kiểm thử hệ thống phần mềm truyền thống" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#functional-testing">
@@ -413,10 +368,10 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kiem-thu-he-thong-software-truyen-thong">
-    Kiểm thử hệ thống software truyền thống
+<a class="md-nav__link" href="#kiem-thu-he-thong-phan-mem-truyen-thong">
+    Kiểm thử hệ thống phần mềm truyền thống
   </a>
-<nav aria-label="Kiểm thử hệ thống software truyền thống" class="md-nav">
+<nav aria-label="Kiểm thử hệ thống phần mềm truyền thống" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#functional-testing">
@@ -465,10 +420,20 @@
 <article class="md-content__inner md-typeset">
 <h1>Kiểm thử hệ thống</h1>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Khác với các hệ thống software truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
+<p>Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
 <p>Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/ml-testing.png"><img height="70" loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/ml-testing.png" width="600"/></a></p>
-<h2 id="kiem-thu-he-thong-software-truyen-thong">Kiểm thử hệ thống software truyền thống</h2>
+<pre class="mermaid"><code>graph LR
+    n01[ ] --"Đầu vào"--&gt; n1[Hệ thống phần mềm&lt;br&gt;truyền thống] --Kết quả--&gt; n02[ ]
+    n03[ ] --Thuật toán--&gt; n1
+    n04[ ] --"Đầu vào"--&gt; n2[Hệ thống&lt;br&gt;Machine Learning] --"Thuật toán&lt;br&gt;(model)"--&gt; n05[ ]
+    n06[ ] --Kết quả&lt;br&gt;mong muốn--&gt; n2
+    style n01 height:0px;
+    style n02 height:0px;
+    style n03 height:0px;
+    style n04 height:0px;
+    style n05 height:0px;
+    style n06 height:0px;</code></pre>
+<h2 id="kiem-thu-he-thong-phan-mem-truyen-thong">Kiểm thử hệ thống phần mềm truyền thống</h2>
 <p>Thông thường có 2 loại kiểm thử phần mềm:</p>
 <ul>
 <li><strong>Functional Testing:</strong> kiểm tra xem hệ thống đã đảm bảo yêu cầu về chức năng chưa, ví dụ ấn tắt windows update mãi mà nó vẫn update thì là fail rồi :)</li>
@@ -478,10 +443,10 @@
 <p>Thông thường loại này bao gồm:</p>
 <ol>
 <li><strong>Unit testing:</strong> test từng module nhỏ</li>
-<li>
-<p><strong>Integration testing:</strong> test một module lớn bao gồm nhiều module nhỏ để đảm bảo khi kết hợp không xảy ra vấn đề gì</p>
-<p><strong>Mẹo nhỏ:</strong> Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu. </p>
-<p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.
+<li><strong>Integration testing:</strong> test một module lớn bao gồm nhiều module nhỏ để đảm bảo khi kết hợp không xảy ra vấn đề gì</li>
+</ol>
+<p><strong>Mẹo nhỏ:</strong> Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.</p>
+<p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">example.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -529,13 +494,11 @@
 <a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 <a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
-</code></pre></div></td></tr></table></div></p>
-</li>
-<li>
-<p><strong>Regression testing:</strong> kiểm tra lại toàn bộ chức năng của hệ thống mỗi khi có thay đổi của một hoặc vài chức năng nào đó</p>
-</li>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li><strong>Regression testing:</strong> kiểm tra lại toàn bộ chức năng của hệ thống mỗi khi có thay đổi của một hoặc vài chức năng nào đó</li>
 <li><strong>Smoke testing:</strong> chạy một bài test cơ bản với chức năng tối thiểu để xem hệ thống sẵn sàng cho việc test chưa
-    Một ví dụ đơn giản: Bắt đầu kiểm tra một hệ thống bóng đèn, vừa ấn nút xong khói (smoke) bốc lên nghi ngút thì khỏi test tiếc gì thêm.</li>
+   Một ví dụ đơn giản: Bắt đầu kiểm tra một hệ thống bóng đèn, vừa ấn nút xong khói (smoke) bốc lên nghi ngút thì khỏi test tiếc gì thêm.</li>
 </ol>
 <h3 id="non-functional-testing">Non-functional Testing</h3>
 <ol>
@@ -543,42 +506,45 @@
 <li><strong>Stress testing:</strong> đánh giá hành vi của hệ thống tại các điều kiện không lường trước, ví dụ một phần hệ thống đột nhiên shutdown thì phản hồi có chấp nhận được không</li>
 </ol>
 <h3 id="luong-phat-trien-phan-mem-co-ban">Luồng phát triển phần mềm cơ bản</h3>
-<p>Thông thường, các developer tuân thủ một số quy ước sau khi phát triển phần mềm:
-1. Không merge code nếu chưa chạy các test case
-2. Luôn viết code test khi commit logic mới
-3. Khi fix bug, luôn viết code test để bắt bug, và phòng xảy ra trường hợp tương tự trong tương lai</p>
+<p>Thông thường, các developer tuân thủ một số quy ước sau khi phát triển phần mềm:</p>
+<ol>
+<li>Không merge code nếu chưa chạy các test case</li>
+<li>Luôn viết code test khi commit logic mới</li>
+<li>Khi fix bug, luôn viết code test để bắt bug, và phòng xảy ra trường hợp tương tự trong tương lai</li>
+</ol>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg"><img height="150" loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600"/></a></p>
 <figcaption align="center" font-size="8px"><i>Source: https://www.jeremyjordan.me/testing-ml/</i></figcaption>
 <h2 id="he-thong-ml-can-kiem-thu-nhung-gi">Hệ thống ML cần kiểm thử những gì?</h2>
-<p>Những bài test cho hệ thống phần mềm có thể ứng dụng cho hầu hết ML code, tuy nhiên vẫn chưa để đủ đảm bảo hệ thống ML có thể hoạt động với độ tin cậy cao. </p>
+<p>Những bài test cho hệ thống phần mềm có thể ứng dụng cho hầu hết ML code, tuy nhiên vẫn chưa để đủ đảm bảo hệ thống ML có thể hoạt động với độ tin cậy cao.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png"><img height="300" loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png" width="600"/></a></p>
 <figcaption align="center" font-size="8px"><i>Source: https://learning.oreilly.com/library/view/building-machine-learning</i></figcaption>
 <p>OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thêm những gì?</p>
 <ul>
-<li>
-<p><strong>Data pipeline testing:</strong> đảm bảo dữ liệu không bị corrupt, đúng format và đúng schema (kiểu dữ liệu), ...</p>
+<li><strong>Data pipeline testing:</strong> đảm bảo dữ liệu không bị corrupt, đúng format và đúng schema (kiểu dữ liệu), ...</li>
+</ul>
 <p>Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
-Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png"><img height="300" loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600"/></a></p>
-</li>
-<li>
-<p><strong>Model testing:</strong> đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...</p>
+  Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:</p>
+<div class="highlight"><pre><span></span><code>&lt;img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" /&gt;
+</code></pre></div>
+<ul>
+<li><strong>Model testing:</strong> đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...</li>
+</ul>
 <p>Có thể chia thành 2 loại model testing:</p>
 <ul>
 <li>
 <p><strong>Testing</strong></p>
 <ul>
-<li><strong>Pre-train testing:</strong> tìm bug trước khi train/evaluate<ul>
+<li><strong>Pre-train testing:</strong> tìm bug trước khi train/evaluate</li>
 <li>Kiểm tra xem có data leakage (leak thông tin), ví dụ observation trong tập train cũng có ở tập validation/test</li>
 <li>Kiểm tra xem có feature leakage (feature mang thông tin của label)</li>
 <li>Kiểm tra model output có shape, hoặc có miền giá trị như ý muốn</li>
-</ul>
-</li>
 <li>
 <p><strong>Post-train testing:</strong> hoạt động của model (model behavior) có như ý muốn ở các tình huống (scenarios) khác nhau?</p>
+</li>
+<li>
+<p><strong>Invariance testing:</strong> mô tả những thay đổi của input mà không làm thay đổi kết quả dự đoán của model
+    Ví dụ: trong bài toán sentiment analysis, thì 2 câu sau nên có cùng một output:</p>
 <ul>
-<li><strong>Invariance testing:</strong> mô tả những thay đổi của input mà không làm thay đổi kết quả dự đoán của model
-    Ví dụ: trong bài toán sentiment analysis, thì 2 câu sau nên có cùng một output:<ul>
 <li>Bộ phim A hay quá!</li>
 <li>Bộ phim B hay quá!</li>
 </ul>
@@ -590,12 +556,8 @@ Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu t�
 </ul>
 <p><strong>Note:</strong> Công cụ <a href="https://pair-code.github.io/what-if-tool/">What-If</a> hỗ trợ rất tốt trong việc kiểm tra model behavior ở các tình huống khác nhau.</p>
 </li>
-</ul>
-</li>
 <li>
 <p><strong>Evaluation:</strong> đánh giá hiệu quả của model thông qua các metrics như accuracy và F1, ... trên tập validation/test.</p>
-</li>
-</ul>
 </li>
 </ul>
 <h2 id="mot-so-tool-hay-dung-e-test-va-debug">Một số tool hay dùng để test và debug</h2>
