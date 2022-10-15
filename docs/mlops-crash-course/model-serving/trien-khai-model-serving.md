@@ -15,9 +15,9 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 Các library bạn cần cài đặt cho môi trường phát triển nằm tại `model_serving/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt. Sau khi cài đặt, bạn làm tiếp các bước sau.
 
-1.  Copy file `model_serving/.env-example`, đổi tên thành `model_serving/.env`. File này chứa config cần thiết cho source code.
+1.  File `model_serving/.env` chứa config cần thiết cho source code.
 
-2.  Copy file `model_serving/deployment/.env-example`, đổi tên thành `model_serving/deployment/.env`. File này chứa config cần thiết cho việc triển khai 2 loại serving trên.
+2.  File `model_serving/deployment/.env` chứa config cần thiết cho việc triển khai 2 loại serving trên.
 
 3.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
 

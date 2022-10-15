@@ -26,9 +26,9 @@ Các thư viện bạn cần cài đặt cho môi trường phát triển đư�
 
 1.  Clone Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform). Lưu ý, repo `mlops-crash-course-platform` và repo `mlops-crash-course-code` phải được đặt trong cùng một folder
 
-2.  Copy file `training_pipeline/.env-example`, đổi tên thành `training_pipeline/.env`. File này chứa config cần thiết cho training pipeline.
+2.  File `training_pipeline/.env` chứa config cần thiết cho training pipeline.
 
-3.  Copy file `training_pipeline/deployment/.env-example`, đổi tên thành `training_pipeline/deployment/.env`. File này chứa config cần thiết cho việc triển khai training pipeline.
+3.  File `training_pipeline/deployment/.env` chứa config cần thiết cho việc triển khai training pipeline.
 
 4.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.
 

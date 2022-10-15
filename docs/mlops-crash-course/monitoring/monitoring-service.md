@@ -15,7 +15,7 @@ Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, the
 
 Các library bạn cần cài đặt cho môi trường phát triển được đặt tại `monitoring_service/dev_requirements.txt`. Sau khi cài đặt, bạn làm tiếp các bước sau.
 
-1.  Copy file `monitoring_service/deployment/.env-example`, đổi tên thành `monitoring_service/deployment/.env`. File này chứa config để triển khai monitoring service.
+1.  File `monitoring_service/deployment/.env` chứa config để triển khai monitoring service.
 
 1.  Đặt environment variable `MONITORING_SERVICE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `monitoring_service`. Env var này hỗ trợ chạy python code ở folder `monitoring_service/src` trong quá trình phát triển.
 
