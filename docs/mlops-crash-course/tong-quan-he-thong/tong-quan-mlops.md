@@ -17,9 +17,9 @@ Trong bài này, dựa trên kiến thức từ bài báo [Machine Learning Oper
 
 Theo [bài báo trên][mlops-paper], định nghĩa trên về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:
 
-1. MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML
-1. MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering
-1. MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production hiệu quả hơn, thông qua các nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.
+- MLOps là một mô hình, bao gồm các best practices, các khái niệm, và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một dự án ML
+- MLOps là các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering
+- MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production hiệu quả hơn, thông qua các nguyên tắc mà chúng ta sẽ xem xét ngay sau đây.
 
 ## Các nguyên tắc
 
@@ -58,29 +58,29 @@ Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tha
 
 Mỗi bước ở mỗi pipeline trong một hệ thống ML yêu cầu các cấu hình hay data đầu vào, đầu ra. Nguyên tắc này được đặt ra dựa trên yêu cầu về việc theo dõi và ghi lại các đầu vào và đầu ra đó, kèm theo thông tin về các lần chạy của các pipeline, ví dụ như:
 
-1. Ngày, tháng, thời gian chạy
-1. Phiên bản của data đang chạy
-1. Hyperparameter dùng để train model
-1. Model train xong lưu ở đâu
-1. v.v.
+- Ngày, tháng, thời gian chạy
+- Phiên bản của data đang chạy
+- Hyperparameter dùng để train model
+- Model train xong lưu ở đâu
+- v.v.
 
 **8. Continuous monitoring**
 
 Nguyên tắc này đảm bảo việc theo dõi liên tục các thông số liên quan tới code, data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một số thông số điển hình bao gồm:
 
-1. Các tính chất thống kê của data ở production
-1. Model performance
-1. Lượng request được gửi đến server
-1. Thời gian xử lý một request
-1. v.v.
+- Các tính chất thống kê của data ở production
+- Model performance
+- Lượng request được gửi đến server
+- Thời gian xử lý một request
+- v.v.
 
 **9. Feedback loops**
 
 Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh giá ngược về phần phát triển thường xuyên xảy ra, ví dụ:
 
-1. Phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data thô
-1. Phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model
-1. v.v.
+- Phản hồi từ quá trình thử nghiệm data và model tới quá trình xử lý data thô
+- Phản hồi từ quá trình đánh giá model performance ở production tới quá trình thử nghiệm model
+- v.v.
 
 Xuyên suốt khoá học, các nguyên tắc này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
