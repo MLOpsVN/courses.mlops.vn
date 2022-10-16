@@ -11,7 +11,7 @@ Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC th�
 
 ## Môi trường phát triển
 
-Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, `pipenv`, hoặc bất kì tool nào để cài đặt.
+Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, hoặc bất kì tool nào để cài đặt. Phiên bản Python được sử dụng trong cả khoá học là `3.9`.
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
@@ -137,8 +137,8 @@ Vì các file data của chúng ta không có feature nào chứa `null`, và đ
 
 - Giải thích
 
-      - Features từ index 1 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất (`2022-12-01`) so với `event_timestamp` của record ở index 1 (`2022-12-15`) trong `label_orig`
-      - Tương tự, features từ index 4 ở `df_orig` được lấy ra cho record index 1 ở `label_orig`, vì feature đó là mới nhất và xảy ra trước (`2022-09-01`) so với `event_timestamp` của record ở index 1 (`2022-09-15`) trong `label_orig`
+      - Features từ `index 1` ở `df_orig` được lấy ra cho record `index 1` ở `label_orig`, vì feature đó là mới nhất (`2022-12-01`) so với `event_timestamp` của record ở `index 1` (`2022-12-15`) trong `label_orig`
+      - Tương tự, features từ `index 4` ở `df_orig` được lấy ra cho record `index 1` ở `label_orig`, vì feature đó là mới nhất và xảy ra trước (`2022-09-01`) so với `event_timestamp` của record ở `index 1` (`2022-09-15`) trong `label_orig`
 
 Code để tổng hợp features và labels như dưới đây.
 
@@ -212,7 +212,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
 ## Theo dõi thử nghiệm
 
-[MLflow](https://mlflow.org/) là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Bạn hãy làm theo các bước sau.
+[MLflow](https://mlflow.org/) là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Code của phần này được đặt tại notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`. Logic của code giống như notebook `training_pipeline/nbs/poc-training-code.ipynb`, chỉ có thêm đoạn code để tích hợp MLflow vào. Bạn hãy làm theo các bước sau để tích hợp MLflow.
 
 1.  Clone github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform), chạy MLflow server trên môi trường local
 
@@ -222,7 +222,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
 1.  Đi tới URL <http://localhost:5000> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa
 
-1.  Mở notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, thêm đoạn code sau để tích hợp MLflow vào đoạn code training
+1.  Trong notebook `training_pipeline/nbs/poc-integrate-mlflow.ipynb`, các bạn để ý đoạn code sau được thêm vào ở đoạn code training để tích hợp MLflow vào đoạn code training
 
     ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
     MLFLOW_TRACKING_URI = "http://localhost:5000"
@@ -232,7 +232,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
     1.  Vì `sklearn` được dùng để train model, dòng này tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Xem thêm [ở đây](https://mlflow.org/docs/latest/tracking.html#automatic-logging) để biết thêm thông tin về các training framework được MLflow hỗ trợ tự động log ML metadata.
 
-1.  Thêm đoạn code sau để log lại các hyperparameter và metric
+1.  Đoạn code sau để log lại các hyperparameter và metric
 
     ```python linenums="1" title="training_pipeline/nbs/poc-integrate-mlflow.ipynb"
     mlflow.set_tag("mlflow.runName", uuid.uuid1()) # (1)
