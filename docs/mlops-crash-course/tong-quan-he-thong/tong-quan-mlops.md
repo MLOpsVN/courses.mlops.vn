@@ -134,7 +134,7 @@ flowchart TD
     n7 --Cập nhật cách<br>train model--> n2
 ```
 
-Đầu tiên, cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ yêu cầu về các chức năng của hệ thống ML. Sau đó, chúng ta sẽ thực hiện dự án _Proof Of Concept_ (POC) để chứng minh rằng giải pháp đề ra là khả thi, trước khi bắt tay vào xây dựng chi tiết các chức năng phức tạp.
+Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ yêu cầu về các chức năng của hệ thống ML. Sau đó, dự án _Proof Of Concept_ (POC) sẽ được thực hiện để chứng minh rằng giải pháp đề ra là khả thi, trước khi bắt tay vào xây dựng chi tiết các chức năng phức tạp.
 
 Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá trình thực hiện dự án POC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó. Dựa trên các bước xây dựng một hệ thống ML trong thực tế, khoá học này sẽ bao gồm các bài học lần lượt như sau:
 

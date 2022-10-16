@@ -14,7 +14,9 @@ Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm *
 <img src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
 
 ## Môi trường phát triển
+
 Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
+
 ```bash
 bash run.sh airflow up
 ```
@@ -103,7 +105,7 @@ processor.ingest_stream_feature_view()
 7\. ETL pipeline cập nhật dữ liệu của offline store
 
 ???+ tip
-    Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
+Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
 
     - thực hiện POC
     - thử nghiệm với các feature khác nhằm mục đích cải thiện model
@@ -116,63 +118,70 @@ processor.ingest_stream_feature_view()
 
 Để tạo ra một Airflow pipeline, thông thường chúng ta sẽ làm theo trình tự sau:
 
-1. Định nghĩa _DAG_ cho pipeline (line 1-8)
-2. Viết các task cho pipeline, ví dụ: _ingest_task_, _clean_task_ và _explore_and_validate_task_ (line 9-25)
-3. Viết thứ tự chạy các task (line 27)
-4. Copy file code dag sang folder _airflow/run_env/dags_ của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
+1.  Định nghĩa _DAG_ cho pipeline (line 1-8)
+1.  Viết các task cho pipeline, ví dụ: _ingest_task_, _clean_task_ và _explore_and_validate_task_ (line 9-25)
+1.  Viết thứ tự chạy các task (line 27)
+1.  Chạy lệnh sau để copy file code DAG sang folder `airflow/run_env/dags/data_pipeline` của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
 
-```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
-with DAG(
-    dag_id="db_to_offline_store", # (1)
-    default_args=DefaultConfig.DEFAULT_DAG_ARGS, # (2)
-    schedule_interval="@once",  # (3)
-    start_date=pendulum.datetime(2022, 1, 1, tz="UTC"), # (4)
-    catchup=False,  # (5)
-    tags=["data_pipeline"],
-) as dag:
-    ingest_task = DockerOperator(
-        task_id="ingest_task",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'cd src/db_to_offline_store && python ingest.py'",  # (6)
-    )
+    ```bash
+    cd data_pipeline
+    make deploy_dags
+    ```
 
-    clean_task = DockerOperator(
-        task_id="clean_task",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'cd src/db_to_offline_store && python clean.py'",
-    )
+    ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
+    with DAG(
+        dag_id="db_to_offline_store", # (1)
+        default_args=DefaultConfig.DEFAULT_DAG_ARGS, # (2)
+        schedule_interval="@once",  # (3)
+        start_date=pendulum.datetime(2022, 1, 1, tz="UTC"), # (4)
+        catchup=False,  # (5)
+        tags=["data_pipeline"],
+    ) as dag:
+        ingest_task = DockerOperator(
+            task_id="ingest_task",
+            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
+            command="/bin/bash -c 'cd src/db_to_offline_store && python ingest.py'",  # (6)
+        )
 
-    explore_and_validate_task = DockerOperator(
-        task_id="explore_and_validate_task",
-        **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'cd src/db_to_offline_store && python explore_and_validate.py'",
-    )
+        clean_task = DockerOperator(
+            task_id="clean_task",
+            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
+            command="/bin/bash -c 'cd src/db_to_offline_store && python clean.py'",
+        )
 
-    ingest_task >> clean_task >> explore_and_validate_task  # (7)
-```
+        explore_and_validate_task = DockerOperator(
+            task_id="explore_and_validate_task",
+            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
+            command="/bin/bash -c 'cd src/db_to_offline_store && python explore_and_validate.py'",
+        )
 
-1.  Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard
-2.  Định nghĩa image cho các **DockerOperator**, số lần retry pipeline, và khoảng thời gian giữa các lần retry
-3.  Lịch chạy pipeline, ở đây _@once_ là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
-4.  Ngày bắt đầu chạy pipeline theo múi giờ UTC
-5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
-6.  Command chạy trong docker container cho bước này
-7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
+        ingest_task >> clean_task >> explore_and_validate_task  # (7)
+    ```
 
-???+ info
-    Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào _DEFAULT_DAG_ARGS_ trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
+    1.  Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard
+    2.  Định nghĩa image cho các **DockerOperator**, số lần retry pipeline, và khoảng thời gian giữa các lần retry
+    3.  Lịch chạy pipeline, ở đây _@once_ là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
+    4.  Ngày bắt đầu chạy pipeline theo múi giờ UTC
+    5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
+    6.  Command chạy trong docker container cho bước này
+    7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
 
-Sau khi hoàn tất các bước ở trên, mọi người truy cập Airflow sẽ thấy một DAG với tên chính là dag_id: _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
+    ???+ info
 
-<img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
+        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào _DEFAULT_DAG_ARGS_ trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
 
-Chúng ta cũng có thể xem thứ tự các task của pipeline này như sau:
+1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên chính là dag*id: \_db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
-<img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
+
+1.  Xem thứ tự các task của pipeline này như sau:
+
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
 
 Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipline_ như bên dưới.
 
 ### Feast materialize pipeline
+
 Materialize dữ liệu từ _offline_ qua _online_ giúp làm mới dữ liệu ở _online store_
 
 ```py title="data_pipeline/dags/materialize_offline_to_online.py" linenums="1"
@@ -192,6 +201,7 @@ with DAG(
 ```
 
 ### Stream to stores pipline
+
 Mọi người thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
 
 ```py title="data_pipeline/dags/stream_to_stores.py" linenums="1"
@@ -217,10 +227,12 @@ with DAG(
 ```
 
 ## Tổng kết
-Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store. 
 
-Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình. 
+Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store.
+
+Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.
 
 ## Tài liệu tham khảo
+
 - <https://feast.dev/>
 - <https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html>
