@@ -439,7 +439,7 @@
 <p>Trong bài trước, chúng ta đã thực hiện bước đầu tiên của một dự án phần mềm, đó chính là thu thập các yêu cầu và phân tích vấn đề kinh doanh. Quá trình này giúp hiểu rõ và sâu hơn về vấn đề chúng ta đang gặp, về những giải pháp tiềm năng, và lên kế hoạch để triển khai chúng.</p>
 <p>Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên chúng ta sẽ chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài <a href="../../tong-quan-he-thong/mlops-platform">MLOps Platform</a>.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Bạn có thể dùng <code>virtualenv</code>, <code>conda</code>, <code>pipenv</code>, hoặc bất kì tool nào để cài đặt.</p>
+<p>Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Bạn có thể dùng <code>virtualenv</code>, <code>conda</code>, hoặc bất kì tool nào để cài đặt. Phiên bản Python được sử dụng trong cả khoá học là <code>3.9</code>.</p>
 <p>Các MLOps tools được dùng trong bài này bao gồm:</p>
 <ol>
 <li>Jupyter notebook: thử nghiệm data, model</li>
@@ -717,8 +717,8 @@
 <li>
 <p>Giải thích</p>
 <ul>
-<li>Features từ index 1 ở <code>df_orig</code> được lấy ra cho record index 1 ở <code>label_orig</code>, vì feature đó là mới nhất (<code>2022-12-01</code>) so với <code>event_timestamp</code> của record ở index 1 (<code>2022-12-15</code>) trong <code>label_orig</code></li>
-<li>Tương tự, features từ index 4 ở <code>df_orig</code> được lấy ra cho record index 1 ở <code>label_orig</code>, vì feature đó là mới nhất và xảy ra trước (<code>2022-09-01</code>) so với <code>event_timestamp</code> của record ở index 1 (<code>2022-09-15</code>) trong <code>label_orig</code></li>
+<li>Features từ <code>index 1</code> ở <code>df_orig</code> được lấy ra cho record <code>index 1</code> ở <code>label_orig</code>, vì feature đó là mới nhất (<code>2022-12-01</code>) so với <code>event_timestamp</code> của record ở <code>index 1</code> (<code>2022-12-15</code>) trong <code>label_orig</code></li>
+<li>Tương tự, features từ <code>index 4</code> ở <code>df_orig</code> được lấy ra cho record <code>index 1</code> ở <code>label_orig</code>, vì feature đó là mới nhất và xảy ra trước (<code>2022-09-01</code>) so với <code>event_timestamp</code> của record ở <code>index 1</code> (<code>2022-09-15</code>) trong <code>label_orig</code></li>
 </ul>
 </li>
 </ul>
@@ -826,7 +826,7 @@
 </ol>
 <p>Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model architecture với các bộ hyperparameter khác nhau. Để có thể tái lập kết quả training, cần phải biết được thử nghiệm nào dùng bộ feature nào, model architecture nào, với các hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài <a href="../../tong-quan-he-thong/mlops-platform">MLOps Platform</a>, và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi các thông tin trên, hay ML metadata của các lần thử nghiệm.</p>
 <h2 id="theo-doi-thu-nghiem">Theo dõi thử nghiệm</h2>
-<p><a href="https://mlflow.org/">MLflow</a> là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Bạn hãy làm theo các bước sau.</p>
+<p><a href="https://mlflow.org/">MLflow</a> là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Code của phần này được đặt tại notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>. Logic của code giống như notebook <code>training_pipeline/nbs/poc-training-code.ipynb</code>, chỉ có thêm đoạn code để tích hợp MLflow vào. Bạn hãy làm theo các bước sau để tích hợp MLflow.</p>
 <ol>
 <li>
 <p>Clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>, chạy MLflow server trên môi trường local</p>
@@ -837,7 +837,7 @@
 <p>Đi tới URL <a href="http://localhost:5000">http://localhost:5000</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa</p>
 </li>
 <li>
-<p>Mở notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>, thêm đoạn code sau để tích hợp MLflow vào đoạn code training</p>
+<p>Trong notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>, các bạn để ý đoạn code sau được thêm vào ở đoạn code training để tích hợp MLflow vào đoạn code training</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
 <span class="normal"><a href="#__codelineno-4-2">2</a></span>
 <span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">"http://localhost:5000"</span>
@@ -849,7 +849,7 @@
 </ol>
 </li>
 <li>
-<p>Thêm đoạn code sau để log lại các hyperparameter và metric</p>
+<p>Đoạn code sau để log lại các hyperparameter và metric</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
