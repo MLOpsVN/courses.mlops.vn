@@ -573,10 +573,10 @@
 <li>Thiết lập Grafana dashboards để hiển thị metrics về data và model</li>
 </ol>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Các library bạn cần cài đặt cho môi trường phát triển được đặt tại <code>monitoring_service/dev_requirements.txt</code>. Sau khi cài đặt, bạn làm tiếp các bước sau.</p>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
-<p>File <code>monitoring_service/deployment/.env</code> chứa config để triển khai monitoring service.</p>
+<p>Cài đặt các thư viện cần thiết trong file <code>monitoring_service/dev_requirements.txt</code></p>
 </li>
 <li>
 <p>Đặt environment variable <code>MONITORING_SERVICE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>monitoring_service</code>. Env var này hỗ trợ chạy python code ở folder <code>monitoring_service/src</code> trong quá trình phát triển.</p>
@@ -1491,7 +1491,7 @@
 <ol>
 <li>Copy 2 file dashboards trên vào <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code></li>
 <li>Truy cập vào Grafana server tại <a href="http://localhost:3000">http://localhost:3000</a></li>
-<li>Mở 2 file dashboards có tên <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong></li>
+<li>Mở 2 dashboards có tên <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong></li>
 </ol>
 <h3 id="data-drift-dashboard">Data Drift Dashboard</h3>
 <p>Dashboard <strong>Evidently Data Drift Dashboard</strong> sẽ giống như hình dưới đây.</p>
@@ -1670,20 +1670,32 @@
 </ol>
 <p>Để tiến hành thử nghiệm, bạn làm theo các bước sau.</p>
 <ol>
-<li>Đảm bảo rằng <a href="../../model-serving/trien-khai-model-serving/#online-serving">Online serving service</a> đã chạy</li>
+<li>
+<p>Đảm bảo <a href="../../model-serving/trien-khai-model-serving/#online-serving">Online serving service</a> đã chạy</p>
+</li>
+<li>
+<p>Cập nhật Feature Store</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nb">cd</span> ../data_pipeline
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>make deploy_feature_repo <span class="c1"># (1)</span>
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nb">cd</span> ../monitoring_service
+</code></pre></div>
+<ol>
+<li>Triển khai code của Feature Store</li>
+</ol>
+</li>
 <li>
 <p>Build docker image và chạy docker compose cho monitoring service</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>make build_image
-<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>make compose_up
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>make build_image
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>make compose_up
 </code></pre></div>
 </li>
 <li>
 <p>Gửi 5 requests giả chứa <code>drift_data</code></p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>python src/mock_request.py -d drift -n <span class="m">5</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>python src/mock_request.py -d drift -n <span class="m">5</span>
 </code></pre></div>
 </li>
 <li>
-<p>Kiểm tra <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong>, kết quả sẽ giống như sau.</p>
+<p>Đợi 30s, kiểm tra <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong>, kết quả sẽ giống như sau.</p>
 <p><figure>
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png"/></a>
 <figcaption>Evidently Data Drift Dashboard - Dataset drift</figcaption>
@@ -1707,7 +1719,7 @@
 <ol>
 <li>
 <p>Gửi 5 requests giả chứa <code>normal_data</code> tới Online serving API</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>python src/mock_request.py -d normal -n <span class="m">5</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>python src/mock_request.py -d normal -n <span class="m">5</span>
 </code></pre></div>
 </li>
 <li>

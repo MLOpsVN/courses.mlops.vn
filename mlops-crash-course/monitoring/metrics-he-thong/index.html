@@ -519,7 +519,7 @@
 </ul>
 </li>
 <li>
-<p>Đợi 10 giây để việc khởi tạo các servers hoàn thành</p>
+<p>Đợi 20s để việc khởi tạo các servers hoàn thành</p>
 </li>
 <li>
 <p>Kiểm tra Elasticsearch server được triển khai thành công chưa:</p>
@@ -527,18 +527,22 @@
 </code></pre></div>
 <p>Nếu Elasticsearch server được triển khai thành công, ở terminal sẽ hiển thị tương tự như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="o">{</span>
-<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="s2">"name"</span> : <span class="s2">"W3NuLnv"</span>,
-<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="s2">"cluster_name"</span> : <span class="s2">"docker-cluster"</span>,
-<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="s2">"cluster_uuid"</span> : <span class="s2">"fauVIbHoSE2SlN_nDzxxdA"</span>,
-<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="s2">"version"</span> : <span class="o">{</span>
-<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="s2">"number"</span> : <span class="s2">"5.2.1"</span>,
-<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="s2">"build_hash"</span> : <span class="s2">"db0d481"</span>,
-<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="s2">"build_date"</span> : <span class="s2">"2017-02-09T22:05:32.386Z"</span>,
-<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="s2">"build_snapshot"</span> : false,
-<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="s2">"lucene_version"</span> : <span class="s2">"6.4.1"</span>
-<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="o">}</span>,
-<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="s2">"tagline"</span> : <span class="s2">"You Know, for Search"</span>
-<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="o">}</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="s2">"name"</span> : <span class="s2">"ee711e6d1977"</span>,
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="s2">"cluster_name"</span> : <span class="s2">"docker-cluster"</span>,
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="s2">"cluster_uuid"</span> : <span class="s2">"sG38FtFuQSedHb68U_Uv5Q"</span>,
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="s2">"version"</span> : <span class="o">{</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>        <span class="s2">"number"</span> : <span class="s2">"8.4.1"</span>,
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="s2">"build_flavor"</span> : <span class="s2">"default"</span>,
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="s2">"build_type"</span> : <span class="s2">"docker"</span>,
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="s2">"build_hash"</span> : <span class="s2">"2bd229c8e56650b42e40992322a76e7914258f0c"</span>,
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="s2">"build_date"</span> : <span class="s2">"2022-08-26T12:11:43.232597118Z"</span>,
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>        <span class="s2">"build_snapshot"</span> : false,
+<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>        <span class="s2">"lucene_version"</span> : <span class="s2">"9.3.0"</span>,
+<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>        <span class="s2">"minimum_wire_compatibility_version"</span> : <span class="s2">"7.17.0"</span>,
+<a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a>        <span class="s2">"minimum_index_compatibility_version"</span> : <span class="s2">"7.0.0"</span>
+<a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="o">}</span>,
+<a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="s2">"tagline"</span> : <span class="s2">"You Know, for Search"</span>
+<a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="o">}</span>
 </code></pre></div>
 </li>
 <li>
@@ -631,7 +635,7 @@
 </ul>
 </li>
 </ul>
-<p>Node exporter server được cài đặt thêm vào để thu thập các metrics liên quan tới node (chính là máy local hiện tại của bạn), ví dụ như các metrics liên quan tới CPU, memory, v.v. Bạn có thể đọc thêm ở Github repo này <a href="https://github.com/prometheus/node_exporter">prometheus/node_exporter</a>.</p>
+<p>Node exporter server được cài đặt thêm vào để tính toán các metrics liên quan tới node (chính là máy local hiện tại của bạn), ví dụ như các metrics liên quan tới CPU, memory, v.v. Chúng ta sẽ học cách lấy ra các metrics này từ Node exporter server và hiển thị lên Grafana dashboard ở phần dưới.</p>
 </li>
 <li>
 <p>Kiểm tra Prometheus server được triển khai thành công chưa:</p>
@@ -675,7 +679,7 @@
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"></span>
 <a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"localhost:8172"</span><span class="w"></span>
 </code></pre></div></td></tr></table></div>
-<p>Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần phải thu thập metrics từ URI <a href="http://localhost:8172/metrics">http://localhost:8172/metrics</a>, với <code>/metrics</code> là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.</p>
+<p>Thiết lập này báo cho Prometheus biết rằng, mỗi 5s, nó cần phải thu thập metrics từ URI <a href="http://localhost:8172/metrics">http://localhost:8172/metrics</a>, với <code>/metrics</code> là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"/></a></p>
 <h3 id="node-exporter-full-dashboard">Node Exporter Full dashboard</h3>
 <p>Ở phần này, chúng ta sẽ triển khai Grafana dashboard tên là <a href="https://grafana.com/grafana/dashboards/1860-node-exporter-full/">Node Exporter Full</a>. Dashboard này được xây dựng sẵn bởi cộng đồng sử dụng Prometheus và Grafana. Nó hiển thị các thông tin quan trọng của hệ thống về máy local mà bạn đang chạy. Bạn hãy làm các bước sau để triển khai.</p>
@@ -692,9 +696,9 @@
 </code></pre></div></td></tr></table></div>
 </li>
 <li>
-<p>Trên giao diện của Grafana Web UI, ở menu bên trái, chọn <code>Dashboards</code> &gt; <code>Manage</code></p>
+<p>Trên giao diện của Grafana Web UI, ở menu bên trái, chọn <code>Dashboards</code> &gt; <code>Browse</code></p>
 </li>
-<li>Click <code>Import</code>, nhập vào ID của Node Exporter Full dashboard là <em>1860</em></li>
+<li>Click <code>Import</code>, nhập vào ID của Node Exporter Full dashboard là <em>1860</em>, click <code>Load</code></li>
 <li>
 <p>Chọn datasource là Prometheus, click <code>Import</code>. Bạn sẽ nhìn thấy dashboard giống như sau</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png"/></a></p>
@@ -713,7 +717,7 @@
 <p>Dashboard này bao gồm 2 panel:</p>
 <ul>
 <li><code>request_in_progress</code>: Hiển thị số lượng request đang được xử lý</li>
-<li><code>request_total</code>: Hiển thị số lượng request trong 1 giây, được đo trong thời gian mỗi 5 phút</li>
+<li><code>request_total</code>: Hiển thị số lượng request trong 1s, được đo trong thời gian mỗi 5 phút</li>
 </ul>
 </li>
 <li>

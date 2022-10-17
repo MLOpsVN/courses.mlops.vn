@@ -438,13 +438,10 @@
 <p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Trong khi batch serving được tối ưu để xử lý số lượng lớn các requests, thường để chạy các model phức tạp, thì online serving được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và chạy offline. Online serving thường được triển khai lên một server dưới dạng RESTful APIs để người dùng có thể gọi tới.</p>
 <p>Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả hai hình thức batch serving và online serving.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Các library bạn cần cài đặt cho môi trường phát triển nằm tại <code>model_serving/dev_requirements.txt</code>. Bạn có thể dùng <code>virtualenv</code>, <code>conda</code> hoặc bất kì tool nào để cài đặt. Sau khi cài đặt, bạn làm tiếp các bước sau.</p>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
-<p>File <code>model_serving/.env</code> chứa config cần thiết cho source code.</p>
-</li>
-<li>
-<p>File <code>model_serving/deployment/.env</code> chứa config cần thiết cho việc triển khai 2 loại serving trên.</p>
+<p>Cài đặt các thư viện cần thiết trong file <code>model_serving/dev_requirements.txt</code></p>
 </li>
 <li>
 <p>Đặt environment variable <code>MODEL_SERVING_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>model_serving</code>. Env var này hỗ trợ chạy python code ở folder <code>model_serving/src</code> trong quá trình phát triển.</p>
@@ -651,18 +648,23 @@ cd ..
 <p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/model_serving:latest</code> và triển khai Airflow DAGs bằng cách các bước sau.</p>
 <ol>
 <li>
+<p>Đăng nhập vào Airflow UI với tài khoản và mật khẩu là <code>airflow</code>.</p>
+</li>
+<li>
+<p>Đặt Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code></p>
+</li>
+<li>
 <p>Chạy lệnh</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>make build_image <span class="c1"># (1)</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>make build_image
 <a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="c1"># Đảm bảo Airflow server đã chạy</span>
-<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>make deploy_dags <span class="c1"># (2)</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>make deploy_dags <span class="c1"># (1)</span>
 </code></pre></div>
 <ol>
-<li>Nếu muốn dùng docker image cá nhân thì bạn cần đổi <code>DOCKER_USER</code> env var tại file <code>model_serving/deployment/.env</code> thành docker user của bạn</li>
 <li>Copy <code>model_serving/dags/*</code> vào folder <code>dags</code> của Airflow</li>
 </ol>
 </li>
 <li>
-<p>Kích hoạt training pipeline và đợi kết quả</p>
+<p>Kích hoạt batch serving pipeline và đợi kết quả</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png"/></a></p>
 </li>
 </ol>
@@ -816,18 +818,27 @@ cd ..
 </code></pre></div>
 </li>
 <li>
+<p>Chạy Online Feature Store bằng cách vào repo <code>mlops-crash-course-platform</code> và chạy lệnh sau</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>bash run.sh feast up
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Online Feature Store thực chất là một Redis database. Các bạn xem file <code>feast/feast-docker-compose.yml</code> trong repo <code>mlops-crash-course-platform</code></p>
+</div>
+</li>
+<li>
 <p>Cập nhật Online Feature Store. Xem lại bài <a href="../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline">Xây dựng data pipeline</a></p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">cd</span> feature_repo
-<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>feast materialize
-<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nb">cd</span> feature_repo
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>feast materialize-incremental <span class="k">$(</span>date +%Y-%m-%d<span class="k">)</span>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
 <p>Truy cập <a href="http://localhost:8172/">http://localhost:8172/</a>, mở API <code>/inference</code>, click <code>Try it out</code>. Ở phần <code>Request body</code>, bạn gõ nội dung sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">{</span><span class="w"></span>
-<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
-<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
-<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="p">{</span><span class="w"></span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>Kết quả của response trả về sẽ giống như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png"/></a></p>

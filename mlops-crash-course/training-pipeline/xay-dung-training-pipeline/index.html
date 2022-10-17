@@ -458,16 +458,13 @@
 <pre class="mermaid"><code>flowchart LR
     n1[1. Cập nhật&lt;br&gt;Feature Store] --&gt; n2[2. Data&lt;br&gt;extraction] --&gt; n3[3. Data&lt;br&gt;validation] --&gt; n4[4. Data&lt;br&gt;preparation] --&gt; n5[5. Model&lt;br&gt;training] --&gt; n6[6. Model&lt;br&gt;evaluation] --&gt; n7[7. Model&lt;br&gt;validation]</code></pre>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Sau khi cài đặt, bạn làm tiếp các bước sau.</p>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
 <p>Clone Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>. Lưu ý, repo <code>mlops-crash-course-platform</code> và repo <code>mlops-crash-course-code</code> phải được đặt trong cùng một folder</p>
 </li>
 <li>
-<p>File <code>training_pipeline/.env</code> chứa config cần thiết cho training pipeline.</p>
-</li>
-<li>
-<p>File <code>training_pipeline/deployment/.env</code> chứa config cần thiết cho việc triển khai training pipeline.</p>
+<p>Cài đặt các thư viện cần thiết trong file <code>training_pipeline/dev_requirements.txt</code></p>
 </li>
 <li>
 <p>Đặt environment variable <code>TRAINING_PIPELINE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>. Env var này hỗ trợ chạy python code ở folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
@@ -555,6 +552,10 @@
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>python data_extraction.py
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
+<p>Nếu các bạn gặp lỗi sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>PermissionError: <span class="o">[</span>Errno <span class="m">13</span><span class="o">]</span> Permission denied: <span class="s1">'/training_pipeline'</span>
+</code></pre></div>
+<p>Thì các bạn cần đặt environment variable <code>TRAINING_PIPELINE_DIR</code> như hướng dẫn ở phần <strong>Môi trường phát triển</strong>.</p>
 </li>
 <li>
 <p>Kiểm tra folder <code>training_pipeline/artifacts</code>, bạn sẽ thấy file <code>training.parquet</code></p>
@@ -586,37 +587,37 @@
 <li>Các giả sử về data có như mong muốn không?</li>
 </ul>
 <p>Task này không sinh ra các artifact hay file nào, mà nó sẽ quyết định xem task tiếp theo có được thực hiện hay không. Code của task này được lưu tại <code>training_pipeline/src/data_validation.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/data_validation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">def</span> <span class="nf">check_unexpected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (1)</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="n">cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span> <span class="c1"># (2)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>            <span class="c1"># Báo lỗi feature 'col' không mong muốn</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="k">def</span> <span class="nf">check_expected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (3)</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">dtypes</span><span class="p">:</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a>            <span class="c1"># Báo lỗi feature 'feature' không tìm thấy</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a>            <span class="n">expected_type</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a>            <span class="n">real_type</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a>            <span class="k">if</span> <span class="n">expected_type</span> <span class="o">!=</span> <span class="n">real_type</span><span class="p">:</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a>                <span class="c1"># Báo lỗi feature 'feature' có định dạng không mong muốn</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/data_validation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">def</span> <span class="nf">check_unexpected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (1)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span> <span class="c1"># (2)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>            <span class="c1"># Báo lỗi feature 'col' không mong muốn</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="k">def</span> <span class="nf">check_expected_features</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (3)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="n">dtypes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">dtypes</span><span class="p">:</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>            <span class="c1"># Báo lỗi feature 'feature' không tìm thấy</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>            <span class="n">expected_type</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">feature_dict</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>            <span class="n">real_type</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>            <span class="k">if</span> <span class="n">expected_type</span> <span class="o">!=</span> <span class="n">real_type</span><span class="p">:</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>                <span class="c1"># Báo lỗi feature 'feature' có định dạng không mong muốn</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Kiểm tra xem có feature nào không mong muốn</li>
@@ -624,9 +625,9 @@
 <li>Kiểm tra xem có feature mong muốn và ở định dạng mong muốn không</li>
 </ol>
 <p>Để đơn gian hoá code và tập trung vào MLOps, chúng ta sẽ không kiểm tra các tính chất thống kê của data. Bạn làm các bước sau để test thử code.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">cd</span> src
-<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>python data_validation.py
-<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>python data_validation.py
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 <h2 id="data-preparation">Data preparation</h2>
 <p>Task Data preparation có đầu vào và đầu ra như sau.</p>
@@ -641,35 +642,35 @@
 <li>Tạo training set, test set để train và đánh giá model</li>
 </ul>
 <p>Code của task này được lưu tại <code>training_pipeline/src/data_preparation.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/data_preparation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-6-10">10</a></span>
-<span class="normal"><a href="#__codelineno-6-11">11</a></span>
-<span class="normal"><a href="#__codelineno-6-12">12</a></span>
-<span class="normal"><a href="#__codelineno-6-13">13</a></span>
-<span class="normal"><a href="#__codelineno-6-14">14</a></span>
-<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s1">'trip_completed'</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> <span class="c1"># (1)</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="p">)</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">target_col</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">target_col</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span> <span class="c1"># (2)</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/data_preparation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s1">'trip_completed'</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> <span class="c1"># (1)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="n">target_col</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">target_col</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">target_col</span><span class="p">]]</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">train_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="n">to_parquet</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Chia data ra thành training set và test set, vì giả sử chúng ta đã lấy được các feature mong muốn ở định dạng mong muốn, cũng không cần thực hiện thêm các bước biển đổi data, hoặc sinh ra các feature khác nữa</li>
@@ -679,9 +680,9 @@
 <ol>
 <li>
 <p>Chạy code</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cd</span> src
-<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>python data_preparation.py
-<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>python data_preparation.py
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
@@ -695,49 +696,49 @@
 <li>Đầu ra: model đã được train.</li>
 </ul>
 <p>Code cho task Model training đã được viết ở dự án POC. Code của task này được lưu tại <code>training_pipeline/src/model_training.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_training.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-8-10">10</a></span>
-<span class="normal"><a href="#__codelineno-8-11">11</a></span>
-<span class="normal"><a href="#__codelineno-8-12">12</a></span>
-<span class="normal"><a href="#__codelineno-8-13">13</a></span>
-<span class="normal"><a href="#__codelineno-8-14">14</a></span>
-<span class="normal"><a href="#__codelineno-8-15">15</a></span>
-<span class="normal"><a href="#__codelineno-8-16">16</a></span>
-<span class="normal"><a href="#__codelineno-8-17">17</a></span>
-<span class="normal"><a href="#__codelineno-8-18">18</a></span>
-<span class="normal"><a href="#__codelineno-8-19">19</a></span>
-<span class="normal"><a href="#__codelineno-8-20">20</a></span>
-<span class="normal"><a href="#__codelineno-8-21">21</a></span>
-<span class="normal"><a href="#__codelineno-8-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">mlflow_tracking_uri</span><span class="p">)</span> <span class="c1"># (1)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span> <span class="c1"># (2)</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span> <span class="c1"># (3)</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="n">alpha</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a>    <span class="n">l1_ratio</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">,</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span><span class="p">,</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="p">)</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12"></a>
-<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span> <span class="c1"># (4)</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"l1_ratio"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">)</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16"></a>    <span class="n">model</span><span class="p">,</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17"></a>    <span class="c1"># nơi lưu model</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="p">)</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19"></a>
-<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="n">run_id</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">last_active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span> <span class="c1"># (5)</span>
-<a id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="n">run_info</span> <span class="o">=</span> <span class="n">RunInfo</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="n">run_info</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_training.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">mlflow_tracking_uri</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_X_PQ</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TRAIN_Y_PQ</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span> <span class="c1"># (3)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="n">alpha</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="n">l1_ratio</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">,</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="n">random_state</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">random_seed</span><span class="p">,</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="p">)</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"l1_ratio"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">l1_ratio</span><span class="p">)</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>    <span class="n">model</span><span class="p">,</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>    <span class="c1"># nơi lưu model</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="p">)</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="n">run_id</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">last_active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span> <span class="c1"># (5)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="n">run_info</span> <span class="o">=</span> <span class="n">RunInfo</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="n">run_info</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Set URI tới MLflow server</li>
@@ -751,14 +752,14 @@
 <ol>
 <li>
 <p>Mở repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a> và chạy mlflow server.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>bash run.sh mlflow up
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a>bash run.sh mlflow up
 </code></pre></div>
 </li>
 <li>
 <p>Chạy code</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">cd</span> src
-<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>python model_training.py
-<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>python model_training.py
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
@@ -776,27 +777,27 @@
 <li>Đầu ra: các metrics để đánh giá chất lượng model</li>
 </ul>
 <p>Code cho task Model evaluation đã được viết ở dự án POC. Code của task này được lưu tại <code>training_pipeline/src/model_evaluation.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_evaluation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-11-10">10</a></span>
-<span class="normal"><a href="#__codelineno-11-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a>    <span class="c1"># nơi lưu model</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="p">)</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a>
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span> <span class="c1"># (1)</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="n">predicted_qualities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">predicted_qualities</span><span class="p">)</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9"></a>
-<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="c1"># (2)</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="n">eval_result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_evaluation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>    <span class="c1"># nơi lưu model</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="p">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_X_PQ</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">TEST_Y_PQ</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="n">predicted_qualities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">predicted_qualities</span><span class="p">)</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="n">eval_result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Chạy inference trên test set</li>
@@ -806,9 +807,9 @@
 <ol>
 <li>
 <p>Chạy code</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nb">cd</span> src
-<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>python model_evaluation.py
-<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>python model_evaluation.py
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
@@ -825,31 +826,31 @@
 </ul>
 <p>Trong task này, chúng ta chỉ viết code để so sánh offline metrics với các thresholds được định nghĩa trong file <code>training_pipeline/.env</code>. Nếu model thoả mãn các thresholds, chúng ta có thể tự động lưu model vào Model Registry. Thông tin của model được lưu và version của nó cũng được lưu vào disk để sử dụng khi cần, ví dụ để triển khai ra production.</p>
 <p>Code của task này được lưu tại <code>training_pipeline/src/model_validation.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_validation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-13-10">10</a></span>
-<span class="normal"><a href="#__codelineno-13-11">11</a></span>
-<span class="normal"><a href="#__codelineno-13-12">12</a></span>
-<span class="normal"><a href="#__codelineno-13-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">EVALUATION_RESULT</span><span class="p">)</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">rmse</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">rmse_threshold</span><span class="p">:</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a>    <span class="c1"># return vì RMSE không thoả mãn threshold</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5"></a>
-<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">mae</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">mae_threshold</span><span class="p">:</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7"></a>    <span class="c1"># return vì MAE không thoả mãn threshold</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8"></a>
-<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="n">result</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span> <span class="c1"># (1)</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10"></a>    <span class="c1"># thông tin về model</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="p">)</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12"></a>
-<a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="n">dump_json</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">REGISTERED_MODEL_VERSION</span><span class="p">)</span> <span class="c1"># (2)</span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_validation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">eval_result</span> <span class="o">=</span> <span class="n">EvaluationResult</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">EVALUATION_RESULT</span><span class="p">)</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">rmse</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">rmse_threshold</span><span class="p">:</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>    <span class="c1"># return vì RMSE không thoả mãn threshold</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="k">if</span> <span class="n">eval_result</span><span class="o">.</span><span class="n">mae</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">mae_threshold</span><span class="p">:</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>    <span class="c1"># return vì MAE không thoả mãn threshold</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="n">result</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span> <span class="c1"># (1)</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a>    <span class="c1"># thông tin về model</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="p">)</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="n">dump_json</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">REGISTERED_MODEL_VERSION</span><span class="p">)</span> <span class="c1"># (2)</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Lưu model vào Model Registry nếu các offline metrics thoả mãn threshold</li>
@@ -859,9 +860,9 @@
 <ol>
 <li>
 <p>Chạy code</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nb">cd</span> src
-<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>python model_validation.py
-<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nb">cd</span> ..
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>python model_validation.py
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
@@ -882,50 +883,7 @@
 </ol>
 <h2 id="airflow-dag">Airflow DAG</h2>
 <p>Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG, hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/training_dag.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-15-10">10</a></span>
-<span class="normal"><a href="#__codelineno-15-11">11</a></span>
-<span class="normal"><a href="#__codelineno-15-12">12</a></span>
-<span class="normal"><a href="#__codelineno-15-13">13</a></span>
-<span class="normal"><a href="#__codelineno-15-14">14</a></span>
-<span class="normal"><a href="#__codelineno-15-15">15</a></span>
-<span class="normal"><a href="#__codelineno-15-16">16</a></span>
-<span class="normal"><a href="#__codelineno-15-17">17</a></span>
-<span class="normal"><a href="#__codelineno-15-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"training_pipeline"</span><span class="p">,</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span> <span class="c1"># (1)</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4"></a>    <span class="c1"># các argument khác</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    <span class="n">feature_store_init_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span> <span class="c1"># (2)</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"feature_store_init_task"</span><span class="p">,</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd feature_repo &amp;&amp; feast apply'"</span><span class="p">,</span> <span class="c1"># (3)</span>
-<a id="__codelineno-15-9" name="__codelineno-15-9"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span> <span class="c1"># (4)</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10"></a>    <span class="p">)</span>
-<a id="__codelineno-15-11" name="__codelineno-15-11"></a>
-<a id="__codelineno-15-12" name="__codelineno-15-12"></a>    <span class="n">data_extraction_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
-<a id="__codelineno-15-13" name="__codelineno-15-13"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"data_extraction_task"</span><span class="p">,</span>
-<a id="__codelineno-15-14" name="__codelineno-15-14"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd src &amp;&amp; python data_extraction.py'"</span><span class="p">,</span>
-<a id="__codelineno-15-15" name="__codelineno-15-15"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-15-16" name="__codelineno-15-16"></a>    <span class="p">)</span>
-<a id="__codelineno-15-17" name="__codelineno-15-17"></a>
-<a id="__codelineno-15-18" name="__codelineno-15-18"></a>    <span class="c1"># các task khác</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>DAG sẽ chạy một lần khi được bật, sau đó sẽ cần kích hoạt lại bằng tay</li>
-<li>Vì các task khác nhau có môi trường chạy và các dependencies khác nhau, nên <code>DockerOperator</code> được dùng để cách ly các task trong các docker containers khác nhau. Để đơn giản, chúng ta chỉ dùng một Docker image duy nhất cho tất cả các task</li>
-<li>Command sẽ được gọi trong mỗi task. Command này giống với command bạn đã chạy trong quá trình viết code ở trên</li>
-<li>Vì chỉ một docker image duy nhất dùng cho các tasks, nên chỉ cần một config chung cho các docker containers được tạo ra ở mỗi task. Config chung này được lưu trong biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>, được giải thích dưới đây.</li>
-</ol>
-<p>Biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code> chứa các config cho <code>DockerOperator</code> như sau.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/utils.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/training_dag.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
@@ -942,26 +900,69 @@
 <span class="normal"><a href="#__codelineno-16-15">15</a></span>
 <span class="normal"><a href="#__codelineno-16-16">16</a></span>
 <span class="normal"><a href="#__codelineno-16-17">17</a></span>
-<span class="normal"><a href="#__codelineno-16-18">18</a></span>
-<span class="normal"><a href="#__codelineno-16-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2"></a>    <span class="s2">"image"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">AppConst</span><span class="o">.</span><span class="n">DOCKER_USER</span><span class="si">}</span><span class="s2">/mlops_crash_course/training_pipeline:latest"</span><span class="p">,</span> <span class="c1"># (1)</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3"></a>    <span class="s2">"network_mode"</span><span class="p">:</span> <span class="s2">"host"</span><span class="p">,</span> <span class="c1"># (2)</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4"></a>    <span class="s2">"mounts"</span><span class="p">:</span> <span class="p">[</span> <span class="c1"># (3)</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5"></a>        <span class="c1"># (4)</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6"></a>        <span class="n">Mount</span><span class="p">(</span>
-<a id="__codelineno-16-7" name="__codelineno-16-7"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/feature_repo"</span><span class="p">,</span>
-<a id="__codelineno-16-9" name="__codelineno-16-9"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span>
-<a id="__codelineno-16-10" name="__codelineno-16-10"></a>        <span class="p">),</span>
-<a id="__codelineno-16-11" name="__codelineno-16-11"></a>        <span class="c1"># (5)</span>
-<a id="__codelineno-16-12" name="__codelineno-16-12"></a>        <span class="n">Mount</span><span class="p">(</span>
-<a id="__codelineno-16-13" name="__codelineno-16-13"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">ARTIFACTS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span> <span class="c1"># (6)</span>
-<a id="__codelineno-16-14" name="__codelineno-16-14"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/artifacts"</span><span class="p">,</span> <span class="c1"># (7)</span>
-<a id="__codelineno-16-15" name="__codelineno-16-15"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span> <span class="c1"># (8)</span>
-<a id="__codelineno-16-16" name="__codelineno-16-16"></a>        <span class="p">),</span>
-<a id="__codelineno-16-17" name="__codelineno-16-17"></a>    <span class="p">],</span>
-<a id="__codelineno-16-18" name="__codelineno-16-18"></a>    <span class="c1"># các config khác</span>
-<a id="__codelineno-16-19" name="__codelineno-16-19"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-16-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"training_pipeline"</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>    <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">"@once"</span><span class="p">,</span> <span class="c1"># (1)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>    <span class="c1"># các argument khác</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a>    <span class="n">feature_store_init_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span> <span class="c1"># (2)</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"feature_store_init_task"</span><span class="p">,</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd feature_repo &amp;&amp; feast apply'"</span><span class="p">,</span> <span class="c1"># (3)</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span> <span class="c1"># (4)</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a>    <span class="p">)</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a>    <span class="n">data_extraction_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"data_extraction_task"</span><span class="p">,</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"bash -c 'cd src &amp;&amp; python data_extraction.py'"</span><span class="p">,</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16"></a>    <span class="p">)</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17"></a>
+<a id="__codelineno-16-18" name="__codelineno-16-18"></a>    <span class="c1"># các task khác</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>DAG sẽ chạy một lần khi được bật, sau đó sẽ cần kích hoạt lại bằng tay</li>
+<li>Vì các task khác nhau có môi trường chạy và các dependencies khác nhau, nên <code>DockerOperator</code> được dùng để cách ly các task trong các docker containers khác nhau. Để đơn giản, chúng ta chỉ dùng một Docker image duy nhất cho tất cả các task</li>
+<li>Command sẽ được gọi trong mỗi task. Command này giống với command bạn đã chạy trong quá trình viết code ở trên</li>
+<li>Vì chỉ một docker image duy nhất dùng cho các tasks, nên chỉ cần một config chung cho các docker containers được tạo ra ở mỗi task. Config chung này được lưu trong biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code>, được giải thích dưới đây.</li>
+</ol>
+<p>Biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code> chứa các config cho <code>DockerOperator</code> như sau.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/utils.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>    <span class="s2">"image"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">AppConst</span><span class="o">.</span><span class="n">DOCKER_USER</span><span class="si">}</span><span class="s2">/mlops_crash_course/training_pipeline:latest"</span><span class="p">,</span> <span class="c1"># (1)</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>    <span class="s2">"network_mode"</span><span class="p">:</span> <span class="s2">"host"</span><span class="p">,</span> <span class="c1"># (2)</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>    <span class="s2">"mounts"</span><span class="p">:</span> <span class="p">[</span> <span class="c1"># (3)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a>        <span class="c1"># (4)</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a>        <span class="n">Mount</span><span class="p">(</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/feature_repo"</span><span class="p">,</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a>        <span class="p">),</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a>        <span class="c1"># (5)</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a>        <span class="n">Mount</span><span class="p">(</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">ARTIFACTS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span> <span class="c1"># (6)</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/artifacts"</span><span class="p">,</span> <span class="c1"># (7)</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span> <span class="c1"># (8)</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16"></a>        <span class="p">),</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17"></a>    <span class="p">],</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18"></a>    <span class="c1"># các config khác</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Docker image dùng cho task</li>
@@ -976,25 +977,38 @@
 <p>Tiếp theo, chúng ta cần build docker image <code>mlopsvn/mlops_crash_course/training_pipeline:latest</code> và triển khai Airflow DAG bằng các bước sau.</p>
 <ol>
 <li>
-<p>Chạy lệnh</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>make build_image <span class="c1"># (1)</span>
-<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="c1"># Đảm bảo Airflow server đã chạy</span>
-<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>make deploy_dags <span class="c1"># (2)</span>
-</code></pre></div>
-<ol>
-<li>Nếu muốn dùng docker image cá nhân thì bạn cần đổi <code>DOCKER_USER</code> env var tại file <code>training_pipeline/deployment/.env</code> thành docker user của bạn</li>
-<li>Copy <code>training_pipeline/dags/*</code> vào folder <code>dags</code> của Airflow</li>
-</ol>
+<p>Đăng nhập vào Airflow UI với tài khoản và mật khẩu là <code>airflow</code>.</p>
 </li>
 <li>
-<p>Đăng nhập vào Airflow UI với tài khoản và mật khẩu mặc định là <code>airflow</code>. Nếu bạn không thấy training pipeline trên Airflow UI, thì bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>bash run.sh airflow restart
+<p>Đặt Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để đặt Airflow Variable</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> được dùng trong file <code>training_pipeline/dags/utils.py</code>. Variable này chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>, vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối.</p>
+</div>
+</li>
+<li>
+<p>Chạy lệnh</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>make build_image
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="c1"># Đảm bảo Airflow server đã chạy</span>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>make deploy_dags <span class="c1"># (1)</span>
 </code></pre></div>
-<p>Airflow DAG có sử dụng một Airflow Variable tên là <code>MLOPS_CRASH_COURSE_CODE_DIR</code> trong file <code>training_pipeline/dags/utils.py</code>. Variable này chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>, vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối. Ngoài ra, nếu bạn dùng docker image của riêng bạn thì hãy đặt Airflow variable <code>DOCKER_USER</code> thành tên docker user của bạn. Bạn có thể tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> để set Airflow Variable.</p>
+<ol>
+<li>Copy <code>training_pipeline/dags/*</code> vào folder <code>dags</code> của Airflow</li>
+</ol>
+<p>Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a>bash run.sh airflow restart
+</code></pre></div>
 </li>
 <li>
 <p>Kích hoạt training pipeline và đợi kết quả</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png"/></a></p>
+<p>Nếu bạn gặp lỗi sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a>    sock.connect<span class="o">(</span>self.unix_socket<span class="o">)</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>PermissionError: <span class="o">[</span>Errno <span class="m">13</span><span class="o">]</span> Permission denied
+</code></pre></div>
+<p>Lỗi này xảy ra vì Airflow không có quyền truy cập vào /var/run/docker.sock ở máy local. Bạn chạy lệnh sau để fix:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a>sudo chmod <span class="m">666</span> /var/run/docker.sock
+</code></pre></div>
 </li>
 <li>
 <p>Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại</p>
