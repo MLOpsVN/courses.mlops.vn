@@ -13,9 +13,9 @@ Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, the
 
 ## Môi trường phát triển
 
-Các library bạn cần cài đặt cho môi trường phát triển được đặt tại `monitoring_service/dev_requirements.txt`. Sau khi cài đặt, bạn làm tiếp các bước sau.
+Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  File `monitoring_service/deployment/.env` chứa config để triển khai monitoring service.
+1.  Cài đặt các thư viện cần thiết trong file `monitoring_service/dev_requirements.txt`
 
 1.  Đặt environment variable `MONITORING_SERVICE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `monitoring_service`. Env var này hỗ trợ chạy python code ở folder `monitoring_service/src` trong quá trình phát triển.
 
@@ -582,7 +582,7 @@ Bạn cần làm các bước sau để triển khai các dashboards này lên G
 
 1. Copy 2 file dashboards trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
 2. Truy cập vào Grafana server tại <http://localhost:3000>
-3. Mở 2 file dashboards có tên **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**
+3. Mở 2 dashboards có tên **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**
 
 ### Data Drift Dashboard
 
@@ -720,7 +720,18 @@ def main(data_type: str, n_request: int = 1): # (3)
 
 Để tiến hành thử nghiệm, bạn làm theo các bước sau.
 
-1.  Đảm bảo rằng [Online serving service](../../model-serving/trien-khai-model-serving/#online-serving) đã chạy
+1.  Đảm bảo [Online serving service](../../model-serving/trien-khai-model-serving/#online-serving) đã chạy
+
+1.  Cập nhật Feature Store
+
+    ```bash
+    cd ../data_pipeline
+    make deploy_feature_repo # (1)
+    cd ../monitoring_service
+    ```
+
+    1. Triển khai code của Feature Store
+
 1.  Build docker image và chạy docker compose cho monitoring service
 
     ```bash
@@ -734,7 +745,7 @@ def main(data_type: str, n_request: int = 1): # (3)
     python src/mock_request.py -d drift -n 5
     ```
 
-1.  Kiểm tra **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**, kết quả sẽ giống như sau.
+1.  Đợi 30s, kiểm tra **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**, kết quả sẽ giống như sau.
 
     <figure>
         <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png" loading="lazy" />

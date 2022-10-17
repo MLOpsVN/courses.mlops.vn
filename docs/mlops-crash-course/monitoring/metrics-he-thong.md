@@ -66,8 +66,8 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
           - `elk/elk-docker-compose.yml`: File docker-compose để chạy Kibana server
           - `elk/kibana/config/kibana.yml`: Config của Kibana server
 
-1.  Đợi 10 giây để việc khởi tạo các servers hoàn thành
-1.  Kiểm tra Elasticsearch server được triển khai thành công chưa:
+2.  Đợi 20s để việc khởi tạo các servers hoàn thành
+3.  Kiểm tra Elasticsearch server được triển khai thành công chưa:
 
     ```bash
     curl -X GET http://localhost:9200 -u elastic:changeme
@@ -77,24 +77,28 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
 
     ```bash
     {
-    "name" : "W3NuLnv",
-    "cluster_name" : "docker-cluster",
-    "cluster_uuid" : "fauVIbHoSE2SlN_nDzxxdA",
-    "version" : {
-        "number" : "5.2.1",
-        "build_hash" : "db0d481",
-        "build_date" : "2017-02-09T22:05:32.386Z",
-        "build_snapshot" : false,
-        "lucene_version" : "6.4.1"
-    },
-    "tagline" : "You Know, for Search"
+        "name" : "ee711e6d1977",
+        "cluster_name" : "docker-cluster",
+        "cluster_uuid" : "sG38FtFuQSedHb68U_Uv5Q",
+        "version" : {
+            "number" : "8.4.1",
+            "build_flavor" : "default",
+            "build_type" : "docker",
+            "build_hash" : "2bd229c8e56650b42e40992322a76e7914258f0c",
+            "build_date" : "2022-08-26T12:11:43.232597118Z",
+            "build_snapshot" : false,
+            "lucene_version" : "9.3.0",
+            "minimum_wire_compatibility_version" : "7.17.0",
+            "minimum_index_compatibility_version" : "7.0.0"
+        },
+        "tagline" : "You Know, for Search"
     }
     ```
 
-1.  Kiểm tra Kibana server được triển khai thành công chưa:
+4.  Kiểm tra Kibana server được triển khai thành công chưa:
 
     1.  Trên browser, truy cập vào Kibana server tại <http://localhost:5601>
-    1.  Đăng nhập với tên user là `elastic`, và mật khẩu là `changeme`
+    2.  Đăng nhập với tên user là `elastic`, và mật khẩu là `changeme`
 
         Việc đăng nhập thành công chứng tỏ Kibana server đã triển khai thành công.
 
@@ -179,7 +183,7 @@ Trong phần này, Prometheus sẽ được dùng để thu thập các metrics 
 
           - `prom-graf/prom-graf-docker-compose.yml`: File docker-compose để chạy Node exporter server
 
-    Node exporter server được cài đặt thêm vào để thu thập các metrics liên quan tới node (chính là máy local hiện tại của bạn), ví dụ như các metrics liên quan tới CPU, memory, v.v. Bạn có thể đọc thêm ở Github repo này [prometheus/node_exporter](https://github.com/prometheus/node_exporter).
+    Node exporter server được cài đặt thêm vào để tính toán các metrics liên quan tới node (chính là máy local hiện tại của bạn), ví dụ như các metrics liên quan tới CPU, memory, v.v. Chúng ta sẽ học cách lấy ra các metrics này từ Node exporter server và hiển thị lên Grafana dashboard ở phần dưới.
 
 1.  Kiểm tra Prometheus server được triển khai thành công chưa:
 
@@ -216,7 +220,7 @@ static_configs:
         - "localhost:8172"
 ```
 
-Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
+Thiết lập này báo cho Prometheus biết rằng, mỗi 5s, nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png" loading="lazy" />
 
@@ -233,8 +237,8 @@ Thiết lập này báo cho Prometheus biết rằng, mỗi 5 giây, nó cần p
             - "localhost:9100"
     ```
 
-1.  Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Manage`
-1.  Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_
+1.  Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Browse`
+1.  Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_, click `Load`
 1.  Chọn datasource là Prometheus, click `Import`. Bạn sẽ nhìn thấy dashboard giống như sau
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
@@ -255,7 +259,7 @@ BentoML dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-cod
     Dashboard này bao gồm 2 panel:
 
     - `request_in_progress`: Hiển thị số lượng request đang được xử lý
-    - `request_total`: Hiển thị số lượng request trong 1 giây, được đo trong thời gian mỗi 5 phút
+    - `request_total`: Hiển thị số lượng request trong 1s, được đo trong thời gian mỗi 5 phút
 
 1.  Click vào tên của panel, chọn **Explore** để xem câu truy vấn _PromQL_ được sử dụng để đọc data từ Prometheus.
 

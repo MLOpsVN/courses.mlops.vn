@@ -13,13 +13,11 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 ## Môi trường phát triển
 
-Các library bạn cần cài đặt cho môi trường phát triển nằm tại `model_serving/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda` hoặc bất kì tool nào để cài đặt. Sau khi cài đặt, bạn làm tiếp các bước sau.
+Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  File `model_serving/.env` chứa config cần thiết cho source code.
+1.  Cài đặt các thư viện cần thiết trong file `model_serving/dev_requirements.txt`
 
-2.  File `model_serving/deployment/.env` chứa config cần thiết cho việc triển khai 2 loại serving trên.
-
-3.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
+1.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
 
     ```bash
     export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
@@ -196,18 +194,21 @@ with DAG(
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/model_serving:latest` và triển khai Airflow DAGs bằng cách các bước sau.
 
+1.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu là `airflow`.
+
+1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`
+
 1.  Chạy lệnh
 
     ```bash
-    make build_image # (1)
+    make build_image
     # Đảm bảo Airflow server đã chạy
-    make deploy_dags # (2)
+    make deploy_dags # (1)
     ```
 
-    1.  Nếu muốn dùng docker image cá nhân thì bạn cần đổi `DOCKER_USER` env var tại file `model_serving/deployment/.env` thành docker user của bạn
-    2.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
+    1.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
-1.  Kích hoạt training pipeline và đợi kết quả
+1.  Kích hoạt batch serving pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
 
@@ -310,15 +311,25 @@ Bạn làm các bước sau để triển khai Online serving service.
     make compose_up
     ```
 
-2.  Cập nhật Online Feature Store. Xem lại bài [Xây dựng data pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline)
+1.  Chạy Online Feature Store bằng cách vào repo `mlops-crash-course-platform` và chạy lệnh sau
+
+    ```bash
+    bash run.sh feast up
+    ```
+
+    !!! info
+
+        Online Feature Store thực chất là một Redis database. Các bạn xem file `feast/feast-docker-compose.yml` trong repo `mlops-crash-course-platform`
+
+1.  Cập nhật Online Feature Store. Xem lại bài [Xây dựng data pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline)
 
     ```bash
     cd feature_repo
-    feast materialize
+    feast materialize-incremental $(date +%Y-%m-%d)
     cd ..
     ```
 
-3.  Truy cập <http://localhost:8172/>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
+1.  Truy cập <http://localhost:8172/>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {

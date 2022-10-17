@@ -94,10 +94,10 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
 
 - **Data pipeline testing:** đảm bảo dữ liệu không bị corrupt, đúng format và đúng schema (kiểu dữ liệu), ...
 
-  Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
-  Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:
+      Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
+      Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" />
+      <img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" />
 
 - **Model testing:** đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...
 

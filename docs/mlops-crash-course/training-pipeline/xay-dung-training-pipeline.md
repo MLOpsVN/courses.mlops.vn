@@ -22,15 +22,13 @@ flowchart LR
 
 ## Môi trường phát triển
 
-Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Sau khi cài đặt, bạn làm tiếp các bước sau.
+Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
 1.  Clone Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform). Lưu ý, repo `mlops-crash-course-platform` và repo `mlops-crash-course-code` phải được đặt trong cùng một folder
 
-2.  File `training_pipeline/.env` chứa config cần thiết cho training pipeline.
+1.  Cài đặt các thư viện cần thiết trong file `training_pipeline/dev_requirements.txt`
 
-3.  File `training_pipeline/deployment/.env` chứa config cần thiết cho việc triển khai training pipeline.
-
-4.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.
+1.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.
 
     ```bash
     export TRAINING_PIPELINE_DIR="path/to/mlops-crash-course-code/training_pipeline"
@@ -111,6 +109,14 @@ Bạn làm các bước sau để test thử code.
     python data_extraction.py
     cd ..
     ```
+
+    Nếu các bạn gặp lỗi sau:
+
+    ```bash
+    PermissionError: [Errno 13] Permission denied: '/training_pipeline'
+    ```
+
+    Thì các bạn cần đặt environment variable `TRAINING_PIPELINE_DIR` như hướng dẫn ở phần **Môi trường phát triển**.
 
 1.  Kiểm tra folder `training_pipeline/artifacts`, bạn sẽ thấy file `training.parquet`
 
@@ -440,30 +446,48 @@ DEFAULT_DOCKER_OPERATOR_ARGS = {
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/training_pipeline:latest` và triển khai Airflow DAG bằng các bước sau.
 
+1.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu là `airflow`.
+
+1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để đặt Airflow Variable
+
+    !!! info
+
+        Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` được dùng trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối.
+
 1.  Chạy lệnh
 
     ```bash
-    make build_image # (1)
+    make build_image
     # Đảm bảo Airflow server đã chạy
-    make deploy_dags # (2)
+    make deploy_dags # (1)
     ```
 
-    1.  Nếu muốn dùng docker image cá nhân thì bạn cần đổi `DOCKER_USER` env var tại file `training_pipeline/deployment/.env` thành docker user của bạn
-    2.  Copy `training_pipeline/dags/*` vào folder `dags` của Airflow
+    1.  Copy `training_pipeline/dags/*` vào folder `dags` của Airflow
 
-2.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu mặc định là `airflow`. Nếu bạn không thấy training pipeline trên Airflow UI, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server.
+    Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server
 
     ```bash
     bash run.sh airflow restart
     ```
 
-    Airflow DAG có sử dụng một Airflow Variable tên là `MLOPS_CRASH_COURSE_CODE_DIR` trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối. Ngoài ra, nếu bạn dùng docker image của riêng bạn thì hãy đặt Airflow variable `DOCKER_USER` thành tên docker user của bạn. Bạn có thể tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để set Airflow Variable.
-
-3.  Kích hoạt training pipeline và đợi kết quả
+1.  Kích hoạt training pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
 
-4.  Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại
+    Nếu bạn gặp lỗi sau:
+
+    ```bash
+        sock.connect(self.unix_socket)
+    PermissionError: [Errno 13] Permission denied
+    ```
+
+    Lỗi này xảy ra vì Airflow không có quyền truy cập vào /var/run/docker.sock ở máy local. Bạn chạy lệnh sau để fix:
+
+    ```bash
+    sudo chmod 666 /var/run/docker.sock
+    ```
+
+1.  Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại
 
 ## Tổng kết
 
