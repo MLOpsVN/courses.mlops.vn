@@ -178,6 +178,12 @@ processor.ingest_stream_feature_view()
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
 
+1. Để trigger pipeline chạy một cách thủ công (không theo schedule), mọi người ấn vào *db_to_offline_store*
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow3.png" loading="lazy" />
+    , và ấn vào nút `Play` như hình dưới
+    
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
+
 ???+ tip
     Nếu mọi người gặp lỗi `Permission denied` như sau:
     ```bash
