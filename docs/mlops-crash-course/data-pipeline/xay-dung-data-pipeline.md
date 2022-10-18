@@ -105,7 +105,7 @@ processor.ingest_stream_feature_view()
 7\. ETL pipeline cập nhật dữ liệu của offline store
 
 ???+ tip
-Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
+    Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
 
     - thực hiện POC
     - thử nghiệm với các feature khác nhằm mục đích cải thiện model
@@ -170,13 +170,38 @@ processor.ingest_stream_feature_view()
 
         Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào _DEFAULT_DAG_ARGS_ trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
 
-1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên chính là dag*id: \_db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
+1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên chính là dag_id: *db_to_offline_store*, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
 1.  Xem thứ tự các task của pipeline này như sau:
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
+
+???+ tip
+    Nếu mọi người gặp lỗi `Permission denied` như sau:
+    ```bash
+    [2022-10-16, 14:01:48 UTC] {taskinstance.py:1902} ERROR - Task failed with exception
+    Traceback (most recent call last):
+    File "/home/airflow/.local/lib/python3.7/site-packages/urllib3/connectionpool.py", line 710, in urlopen
+        chunked=chunked,
+    File "/home/airflow/.local/lib/python3.7/site-packages/urllib3/connectionpool.py", line 398, in _make_request
+        conn.request(method, url, **httplib_request_kw)
+    File "/usr/local/lib/python3.7/http/client.py", line 1281, in request
+        self._send_request(method, url, body, headers, encode_chunked)
+    File "/usr/local/lib/python3.7/http/client.py", line 1327, in _send_request
+        self.endheaders(body, encode_chunked=encode_chunked)
+    File "/usr/local/lib/python3.7/http/client.py", line 1276, in endheaders
+        self._send_output(message_body, encode_chunked=encode_chunked)
+    File "/usr/local/lib/python3.7/http/client.py", line 1036, in _send_output
+        self.send(msg)
+    File "/usr/local/lib/python3.7/http/client.py", line 976, in send
+        self.connect()
+    File "/home/airflow/.local/lib/python3.7/site-packages/docker/transport/unixconn.py", line 30, in connect
+        sock.connect(self.unix_socket)
+    PermissionError: [Errno 13] Permission denied
+    ```
+    thì có nghĩa là user `Airflow` thiếu quyền để chạy Docker command, mọi người làm theo cách [sau](https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue/48957722#48957722) để thêm user này vào docker group (recommended), hoặc sử dụng command `sudo chmod 666 /var/run/docker.sock` để gán quyền cho tất cả user.
 
 Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipline_ như bên dưới.
 
