@@ -1,4 +1,12 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png" loading="lazy"/>
+    <figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
+</figure>
+
 ## Giới thiệu
+Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này. 
+
+Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.
 
 ## Cài đặt Jenkins
 
@@ -49,7 +57,7 @@ Sau đó, chúng ta sẽ tới giao diện đăng ký user sử dụng Jenkins, 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
 
 ???+ tip
-Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản `admin` để tránh đi quá sâu vào phần quản trị này.
+    Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản `admin` để tránh đi quá sâu vào phần quản trị này.
 
 Ở bước tiếp theo, các bạn giữ nguyên Jenkins URL như sau:
 
@@ -94,8 +102,11 @@ Bây giờ, chúng ta có thể truy cập Jenkins qua link forward ở trên <h
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png" loading="lazy" />
 
 ### Thêm Jenkins webhook vào Github
+Đầu tiên mọi người push code đã clone từ [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code) lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng `https://github.com/yourusername/mlops-crash-course-code`. Ví dụ: nếu Github username là `MLOps` thi đường link tới repo sẽ là `https://github.com/MLOps/mlops-crash-course-code`. 
 
-Bây giờ chúng ta sẽ vào phần `Settings` ở repo code của chúng ta và chọn phần `Webhooks` như bên dưới
+Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về `ci-cd`, mọi người sẽ làm việc trên repo `https://github.com/yourusername/mlops-crash-course-code` của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo `https://github.com/MLOpsVN/mlops-crash-course-code`, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.
+
+Bây giờ chúng ta sẽ vào phần `Settings` ở repo code của chúng ta (<https://github.com/yourusername/mlops-crash-course-code>) và chọn phần `Webhooks` như bên dưới
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png" loading="lazy" />
 
@@ -149,17 +160,19 @@ Nếu chúng ta ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc t
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
 
-Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file `Jenkinsfile` đơn giản ở trong folder
+Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file `Jenkinsfile` đơn giản ở trong folder `mlops-crash-course-code/`
 
 ```bash
-.
-├── data_pipeline
+mlops-crash-course-code/
+├── data_pipeline/
 ├── Jenkinsfile
 ├── LICENSE
-├── model_deployment
+├── model_serving/
 ├── README.md
-├── stream_emitting
-└── training_pipeline
+├── .gitignore
+├── stream_emitting/
+└── training_pipeline/
+└── monitoring_service/
 ```
 
 với nội dung như sau:
@@ -240,27 +253,30 @@ Finished: SUCCESS
 ```
 
 ???+ tip
-Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
+    Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
 
-````py title="Jenkinsfile" linenums="1"
-pipeline {
-...
+    ````py title="Jenkinsfile" linenums="1"
+    pipeline {
+    ...
 
-            stage('test data pipeline') {
-                when {changeset "data_pipeline/*.*" }
+                stage('test data pipeline') {
+                    when {changeset "data_pipeline/*.*" }
 
-                steps {
-                    echo 'Testing data pipeline..'
+                    steps {
+                        echo 'Testing data pipeline..'
+                    }
                 }
-            }
 
-            ...
+                ...
+            }
         }
-    }
-    ```
+        ```
+    ````
 
 ???+ tip
-Kiểu viết `Jenkinsfile` như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là _Declarative Pipeline_. Ngoài ra còn một cách viết khác dùng `Groovy script`gọi là _Scripted Pipeline_, cách này thông thường sử dụng cho những logic phức tạp.
+    Kiểu viết `Jenkinsfile` như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là _Declarative Pipeline_. Ngoài ra còn một cách viết khác dùng `Groovy script`gọi là _Scripted Pipeline_, cách này thông thường sử dụng cho những logic phức tạp.
 
 ## Tổng kết
-````
+Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không. 
+
+Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.

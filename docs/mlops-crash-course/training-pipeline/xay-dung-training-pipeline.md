@@ -24,7 +24,7 @@ flowchart LR
 
 Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  Clone Github repo [mlops-crash-course-platform](https://github.com/MLOpsVN/mlops-crash-course-platform). Lưu ý, repo `mlops-crash-course-platform` và repo `mlops-crash-course-code` phải được đặt trong cùng một folder
+1.  Vào repo `mlops-crash-course-code` sử dụng command `cd mlops-crash-course-code`
 
 1.  Cài đặt các thư viện cần thiết trong file `training_pipeline/dev_requirements.txt`
 
@@ -36,9 +36,9 @@ Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Feast: truy xuất Feature Store
-1. MLflow: ML Metadata Store, Model Registry
-1. Airflow: điều phối training pipeline
+1. **Feast:** truy xuất Feature Store
+1. **MLflow:** ML Metadata Store, Model Registry
+1. **Airflow:** điều phối training pipeline
 
 !!! note
 
@@ -69,8 +69,8 @@ cd ..
 
 Trong task này, các features được lấy từ Offline Feature Store để phục vụ cho quá trình train model.
 
-- Đầu vào: tên các features chúng ta muốn lấy
-- Đầu ra: file data chứa features được lưu vào disk
+- **Đầu vào:** tên các features chúng ta muốn lấy
+- **Đầu ra:** file data chứa features được lưu vào disk
 
 Code của task này được lưu tại `training_pipeline/src/data_extraction.py`.
 
@@ -177,8 +177,8 @@ cd ..
 
 Task Data preparation có đầu vào và đầu ra như sau.
 
-- Đầu vào: file data chứa features ở bước Data extraction
-- Đầu ra: training set và test set đã được lưu vào disk
+- **Đầu vào:** file data chứa features ở bước Data extraction
+- **Đầu ra:** training set và test set đã được lưu vào disk
 
 Task này thực hiện các việc sau.
 
@@ -225,8 +225,8 @@ Bạn làm các bước sau để test thử code.
 
 Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên, trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:
 
-- Đầu vào: data được chuẩn bị ở task Data preparation
-- Đầu ra: model đã được train.
+- **Đầu vào:** data được chuẩn bị ở task Data preparation
+- **Đầu ra:** model đã được train.
 
 Code cho task Model training đã được viết ở dự án POC. Code của task này được lưu tại `training_pipeline/src/model_training.py`.
 
@@ -289,8 +289,8 @@ Bạn làm các bước sau để test thử code.
 
 Task Model evaluation thực hiện chạy prediction cho model trên test set. Task này có:
 
-- Đầu vào: model đã được train
-- Đầu ra: các metrics để đánh giá chất lượng model
+- **Đầu vào:** model đã được train
+- **Đầu ra:** các metrics để đánh giá chất lượng model
 
 Code cho task Model evaluation đã được viết ở dự án POC. Code của task này được lưu tại `training_pipeline/src/model_evaluation.py`.
 
