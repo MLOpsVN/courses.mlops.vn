@@ -53,7 +53,9 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
 
 ## Sử dụng platform
 ### Start
-Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):
+Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người cài Docker theo hướng dẫn tại ![đây](https://www.docker.com/) và Docker Compose version v2.10.2 theo hướng dẫn tại ![đây](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04).
+
+Cuối cùng, mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):
 
 ```bash
 cd mlops-crash-course-platform && bash run.sh all up
