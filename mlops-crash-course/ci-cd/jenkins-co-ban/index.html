@@ -304,6 +304,11 @@
     Smoke test luồng push code để trigger Jenkins pipeline
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -391,6 +396,11 @@
     Smoke test luồng push code để trigger Jenkins pipeline
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -399,7 +409,13 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Jenkins cơ bản</h1>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png"/></a>
+<figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
+</figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này. </p>
+<p>Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.</p>
 <h2 id="cai-at-jenkins">Cài đặt Jenkins</h2>
 <p>Trước hết mọi người vào repo <code>mlops-crash-course-platform/</code> và start service này như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh jenkins up
@@ -431,8 +447,8 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"/></a></p>
 <details class="tip" open="open">
 <summary>Tip</summary>
-</details>
 <p>Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản <code>admin</code> để tránh đi quá sâu vào phần quản trị này.</p>
+</details>
 <p>Ở bước tiếp theo, các bạn giữ nguyên Jenkins URL như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"/></a></p>
 <p>Sau khi cài xong, chúng ta sẽ nhìn thấy giao diện sau:</p>
@@ -460,7 +476,9 @@
 <p>Bây giờ, chúng ta có thể truy cập Jenkins qua link forward ở trên <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a>, và sử dụng username <code>admin</code>, và password như trên.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"/></a></p>
 <h3 id="them-jenkins-webhook-vao-github">Thêm Jenkins webhook vào Github</h3>
-<p>Bây giờ chúng ta sẽ vào phần <code>Settings</code> ở repo code của chúng ta và chọn phần <code>Webhooks</code> như bên dưới</p>
+<p>Đầu tiên mọi người push code đã clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a> lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng <code>https://github.com/yourusername/mlops-crash-course-code</code>. Ví dụ: nếu Github username là <code>MLOps</code> thi đường link tới repo sẽ là <code>https://github.com/MLOps/mlops-crash-course-code</code>. </p>
+<p>Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về <code>ci-cd</code>, mọi người sẽ làm việc trên repo <code>https://github.com/yourusername/mlops-crash-course-code</code> của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo <code>https://github.com/MLOpsVN/mlops-crash-course-code</code>, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.</p>
+<p>Bây giờ chúng ta sẽ vào phần <code>Settings</code> ở repo code của chúng ta (<a href="https://github.com/yourusername/mlops-crash-course-code">https://github.com/yourusername/mlops-crash-course-code</a>) và chọn phần <code>Webhooks</code> như bên dưới</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"/></a></p>
 <p>Sau đó ấn <code>Add webhook</code> và điền <code>Payload URL</code> là <code>https://a846-183-80-56-103.ngrok.io/github-webhook/</code>, và <code>Content type</code> là <code>application/json</code>
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"/></a></p>
@@ -490,15 +508,17 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"/></a></p>
 <p>Nếu chúng ta ấn vào project <code>mlops-demo</code>, chúng ta sẽ thấy ở góc tay trái bên dưới có <code>Build History</code>, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"/></a></p>
-<p>Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file <code>Jenkinsfile</code> đơn giản ở trong folder</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>.
-<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>├── data_pipeline
+<p>Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file <code>Jenkinsfile</code> đơn giản ở trong folder <code>mlops-crash-course-code/</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>mlops-crash-course-code/
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>├── data_pipeline/
 <a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>├── Jenkinsfile
 <a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>├── LICENSE
-<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>├── model_deployment
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>├── model_serving/
 <a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>├── README.md
-<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>├── stream_emitting
-<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>└── training_pipeline
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>├── .gitignore
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>├── stream_emitting/
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>└── training_pipeline/
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>└── monitoring_service/
 </code></pre></div>
 <p>với nội dung như sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
@@ -588,7 +608,6 @@
 </code></pre></div>
 <details class="tip" open="open">
 <summary>Tip</summary>
-</details>
 <p>Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder <code>data_pipeline/</code>, chúng ta thêm điều kiện <code>when</code> như sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
@@ -604,12 +623,7 @@
 <span class="normal"><a href="#__codelineno-10-12">12</a></span>
 <span class="normal"><a href="#__codelineno-10-13">13</a></span>
 <span class="normal"><a href="#__codelineno-10-14">14</a></span>
-<span class="normal"><a href="#__codelineno-10-15">15</a></span>
-<span class="normal"><a href="#__codelineno-10-16">16</a></span>
-<span class="normal"><a href="#__codelineno-10-17">17</a></span>
-<span class="normal"><a href="#__codelineno-10-18">18</a></span>
-<span class="normal"><a href="#__codelineno-10-19">19</a></span>
-<span class="normal"><a href="#__codelineno-10-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">pipeline</span> <span class="p">{</span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">pipeline</span> <span class="p">{</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="o">...</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3"></a>
 <a id="__codelineno-10-4" name="__codelineno-10-4"></a>            <span class="n">stage</span><span class="p">(</span><span class="s1">'test data pipeline'</span><span class="p">)</span> <span class="p">{</span>
@@ -624,12 +638,15 @@
 <a id="__codelineno-10-13" name="__codelineno-10-13"></a>        <span class="p">}</span>
 <a id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="p">}</span>
 <a id="__codelineno-10-15" name="__codelineno-10-15"></a>    <span class="err">```</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16"></a>
-<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="err">???</span><span class="o">+</span> <span class="n">tip</span>
-<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="n">Kiểu</span> <span class="n">viết</span> <span class="err">`</span><span class="n">Jenkinsfile</span><span class="err">`</span> <span class="n">như</span> <span class="n">ở</span> <span class="n">trên</span><span class="p">,</span> <span class="n">tuân</span> <span class="n">theo</span> <span class="n">các</span> <span class="n">rule</span> <span class="n">và</span> <span class="n">syntax</span> <span class="n">được</span> <span class="n">định</span> <span class="n">nghĩa</span> <span class="n">sẵn</span><span class="p">,</span> <span class="n">gọi</span> <span class="n">là</span> <span class="n">_Declarative</span> <span class="n">Pipeline_</span><span class="o">.</span> <span class="n">Ngoài</span> <span class="n">ra</span> <span class="n">còn</span> <span class="n">một</span> <span class="n">cách</span> <span class="n">viết</span> <span class="n">khác</span> <span class="n">dùng</span> <span class="err">`</span><span class="n">Groovy</span> <span class="n">script</span><span class="err">`</span><span class="n">gọi</span> <span class="n">là</span> <span class="n">_Scripted</span> <span class="n">Pipeline_</span><span class="p">,</span> <span class="n">cách</span> <span class="n">này</span> <span class="n">thông</span> <span class="n">thường</span> <span class="n">sử</span> <span class="n">dụng</span> <span class="n">cho</span> <span class="n">những</span> <span class="n">logic</span> <span class="n">phức</span> <span class="n">tạp</span><span class="o">.</span>
-<a id="__codelineno-10-19" name="__codelineno-10-19"></a>
-<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="c1">## Tổng kết</span>
 </code></pre></div></td></tr></table></div>
+</details>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Kiểu viết <code>Jenkinsfile</code> như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là <em>Declarative Pipeline</em>. Ngoài ra còn một cách viết khác dùng <code>Groovy script</code>gọi là <em>Scripted Pipeline</em>, cách này thông thường sử dụng cho những logic phức tạp.</p>
+</details>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không. </p>
+<p>Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.</p>
 </article>
 </div>
 </div>

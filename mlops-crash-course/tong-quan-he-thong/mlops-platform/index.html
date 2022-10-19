@@ -161,6 +161,30 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#su-dung-platform">
+    Sử dụng platform
+  </a>
+<nav aria-label="Sử dụng platform" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start">
+    Start
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stop">
+    Stop
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cau-truc-thu-muc-lam-viec">
+    Cấu trúc thư mục làm việc
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#infra-layer">
     Infra layer
   </a>
@@ -168,6 +192,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
   </a>
 </li>
 </ul>
@@ -334,6 +363,30 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#su-dung-platform">
+    Sử dụng platform
+  </a>
+<nav aria-label="Sử dụng platform" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start">
+    Start
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stop">
+    Stop
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cau-truc-thu-muc-lam-viec">
+    Cấu trúc thư mục làm việc
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#infra-layer">
     Infra layer
   </a>
@@ -341,6 +394,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tong-ket">
     Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
   </a>
 </li>
 </ul>
@@ -351,6 +409,10 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>MLOps platform</h1>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png"/></a>
+<figcaption>Photo by <a href="https://coussement-bruno.medium.com/?source=post_page-----69ff5d96b7db--------------------------------">Coussement Bruno</a> on <a href="https://towardsdatascience.com/which-cloud-servicer-provider-ml-platform-do-you-need-69ff5d96b7db">Towards Data Science</a></figcaption>
+</figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
 <p>MLOps platform là nền tảng cung cấp các tool cần thiết để quản lý và triển khai các dự án ML. Trong một số tài liệu khác MLOps platform còn có tên là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và tool tương ứng như sau:</p>
 <table>
@@ -406,8 +468,8 @@
 </table>
 <details class="tip" open="open">
 <summary>Tip</summary>
-</details>
 <p>Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.</p>
+</details>
 <p>Kiến trúc MLOps platform của chúng ta sẽ như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png"/></a></p>
 <p>Các tương tác chính trong MLOps platform:</p>
@@ -423,6 +485,45 @@
 <p>10. 11. 12. 13. DS push code lên Github kích hoạt triển khai tự động (CI/CD) cho các pipelines và Online Serving API</p>
 <p>14. Ngoài data source ở dạng tĩnh (static data), streaming data từ <em>Kafka</em> sẽ ghi liên tục vào Feature Store để cập nhật feature</p>
 <p>Các tương tác và các tools được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.</p>
+<h2 id="su-dung-platform">Sử dụng platform</h2>
+<h3 id="start">Start</h3>
+<p>Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a>. Tiếp đó mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):</p>
+<p><div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all up
+</code></pre></div>
+, hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast up
+</code></pre></div></p>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Ở mỗi bài học sẽ có phần <strong>Môi trường phát triển</strong> để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: <code>cd mlops-crash-course-platform &amp;&amp; bash run.sh feast up</code> mọi người sẽ thấy lại ở bài học về Feature Store.</p>
+</details>
+<h3 id="stop">Stop</h3>
+<p>Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:</p>
+<ul>
+<li>Stop tất cả service:
+    <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
+</code></pre></div></li>
+<li>Stop một nhóm service
+    <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast down
+</code></pre></div></li>
+</ul>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Nếu muốn stop các service, đồng thời xóa dữ liệu lưu trữ trong các Docker volume, mọi người thêm argument <code>--volumes</code>.
+Ví dụ: <code>bash run.sh all down --volumes</code></p>
+</details>
+<h2 id="cau-truc-thu-muc-lam-viec">Cấu trúc thư mục làm việc</h2>
+<p>Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo <code>mlops-crash-course-platform</code> và <code>mlops-crash-course-code</code> trong cùng 1 folder như sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="err">├──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">platform</span><span class="o">/</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="err">└──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">code</span><span class="o">/</span>
+</code></pre></div>
+<p>, trong đó:</p>
+<ul>
+<li>Repo: <code>mlops-crash-course-platform</code> clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a> chứa các file docker-compose để deploy </li>
+<li>Repo: <code>mlops-crash-course-code</code> clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">đây</a> chứa code của dự án ML sẽ trình bày trong bài học POC</li>
+</ul>
+<p>Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder <code>mlops-crash-course/</code></p>
 <h2 id="infra-layer">Infra layer</h2>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png"/></a></p>
 <p>Phần này cung cấp cho bạn một cái nhìn tổng quan hơn nữa về MLOps platform khi được đặt trong cơ sở hạ tầng IT của một tổ chức.</p>
@@ -430,6 +531,12 @@
 <p>Trên Infra layer là Application layer, hay chính là nơi mà các engineer khác xây dựng các ứng dụng cho chính tổ chức đó. Các ứng dụng này có thể là môi trường Jupyter notebook, Gitlab server, Jenkins server, monitoring platform, v.v. MLOps platform mà chúng ta đang xây dựng cũng nằm trên Application layer này.</p>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống mà chúng ta sẽ phát triển. Trong bài tiếp theo, chúng ta sẽ triển khai dự án POC.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://ml-ops.org/content/end-to-end-ml-workflow">https://ml-ops.org/content/end-to-end-ml-workflow</a></li>
+<li><a href="https://valohai.com/mlops-platforms-compared/">https://valohai.com/mlops-platforms-compared/</a></li>
+<li><a href="https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning</a></li>
+</ul>
 </article>
 </div>
 </div>

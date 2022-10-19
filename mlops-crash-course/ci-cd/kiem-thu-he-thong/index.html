@@ -419,6 +419,9 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1>Kiểm thử hệ thống</h1>
+<figure>
+<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"/></a>
+</figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
 <p>Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.</p>
@@ -445,7 +448,9 @@
 <li><strong>Unit testing:</strong> test từng module nhỏ</li>
 <li><strong>Integration testing:</strong> test một module lớn bao gồm nhiều module nhỏ để đảm bảo khi kết hợp không xảy ra vấn đề gì</li>
 </ol>
-<p><strong>Mẹo nhỏ:</strong> Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.</p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.</p>
 <p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">example.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
@@ -495,6 +500,7 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
+</details>
 <ol>
 <li><strong>Regression testing:</strong> kiểm tra lại toàn bộ chức năng của hệ thống mỗi khi có thay đổi của một hoặc vài chức năng nào đó</li>
 <li><strong>Smoke testing:</strong> chạy một bài test cơ bản với chức năng tối thiểu để xem hệ thống sẵn sàng cho việc test chưa

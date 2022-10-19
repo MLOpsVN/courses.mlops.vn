@@ -451,10 +451,10 @@
 </ol>
 <p>Các MLOps tools được dùng trong bài này bao gồm:</p>
 <ol>
-<li>Feast: truy xuất Feature Store</li>
-<li>MLflow: ML Metadata Store, Model Registry</li>
-<li>Airflow: điều phối batch serving pipeline</li>
-<li>BentoML: triển khai online serving</li>
+<li><strong>Feast:</strong> truy xuất Feature Store</li>
+<li><strong>MLflow:</strong> ML Metadata Store, Model Registry</li>
+<li><strong>Airflow:</strong> điều phối batch serving pipeline</li>
+<li><strong>BentoML:</strong> triển khai online serving</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -485,8 +485,8 @@
 <h3 id="data-extraction">Data extraction</h3>
 <p>Task Data extraction có đầu vào và đầu ra như sau:</p>
 <ul>
-<li>Đầu vào: data được đọc từ Offline Feature Store. Data sẽ được xử lý theo format mà model yêu cầu để tiện cho task <strong>Batch prediction</strong> tiếp theo</li>
-<li>Đầu ra: data đã được xử lý và được lưu vào disk</li>
+<li><strong>Đầu vào:</strong> data được đọc từ Offline Feature Store. Data sẽ được xử lý theo format mà model yêu cầu để tiện cho task <strong>Batch prediction</strong> tiếp theo</li>
+<li><strong>Đầu ra:</strong> data đã được xử lý và được lưu vào disk</li>
 </ul>
 <p>Code của task này được lưu tại <code>model_serving/src/data_extraction.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/data_extraction.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
@@ -533,11 +533,9 @@
 <ol>
 <li>
 <p>Chạy code</p>
-<div class="highlight"><pre><span></span><code>```bash
-cd src
-python data_extraction.py
-cd ..
-```
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> src
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>python data_extraction.py
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
@@ -547,8 +545,8 @@ cd ..
 <h3 id="batch-prediction">Batch prediction</h3>
 <p>Task Batch prediction có đầu vào và đầu ra như sau:</p>
 <ul>
-<li>Đầu vào: config file chứa thông tin về model được dùng</li>
-<li>Đầu ra: kết quả predictions được lưu vào disk</li>
+<li><strong>Đầu vào:</strong> config file chứa thông tin về model được dùng</li>
+<li><strong>Đầu ra:</strong> kết quả predictions được lưu vào disk</li>
 </ul>
 <p>Model được dùng là model đã được lưu vào MLflow Model Registry ở task <strong>Model validation</strong> trong bài <a href="../../training-pipeline/xay-dung-training-pipeline/#model-validation">Xây dựng training pipeline</a>. Trong task <strong>Model validation</strong> đó, thông tin về model đã đăng ký được lưu tại file <code>training_pipeline/artifacts/registered_model_version.json</code>. File này cần được upload vào một Storage nào đó trong tổ chức để các task khác, cụ thể là cho batch serving và online serving ở trong bài này, có thể biết được model nào là tốt nhất.</p>
 <p>Vì chúng ta đang phát triển cả training pipeline và model serving ở local, nên bạn chỉ cần copy file <code>training_pipeline/artifacts/registered_model_version.json</code> sang <code>model_serving/artifacts/registered_model_version.json</code>. Để làm điều này, bạn hãy chạy lệnh sau.</p>

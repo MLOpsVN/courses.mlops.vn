@@ -461,7 +461,7 @@
 <p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
-<p>Clone Github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>. Lưu ý, repo <code>mlops-crash-course-platform</code> và repo <code>mlops-crash-course-code</code> phải được đặt trong cùng một folder</p>
+<p>Vào repo <code>mlops-crash-course-code</code> sử dụng command <code>cd mlops-crash-course-code</code></p>
 </li>
 <li>
 <p>Cài đặt các thư viện cần thiết trong file <code>training_pipeline/dev_requirements.txt</code></p>
@@ -474,9 +474,9 @@
 </ol>
 <p>Các MLOps tools được dùng trong bài này bao gồm:</p>
 <ol>
-<li>Feast: truy xuất Feature Store</li>
-<li>MLflow: ML Metadata Store, Model Registry</li>
-<li>Airflow: điều phối training pipeline</li>
+<li><strong>Feast:</strong> truy xuất Feature Store</li>
+<li><strong>MLflow:</strong> ML Metadata Store, Model Registry</li>
+<li><strong>Airflow:</strong> điều phối training pipeline</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -501,8 +501,8 @@
 <h2 id="data-extraction">Data extraction</h2>
 <p>Trong task này, các features được lấy từ Offline Feature Store để phục vụ cho quá trình train model.</p>
 <ul>
-<li>Đầu vào: tên các features chúng ta muốn lấy</li>
-<li>Đầu ra: file data chứa features được lưu vào disk</li>
+<li><strong>Đầu vào:</strong> tên các features chúng ta muốn lấy</li>
+<li><strong>Đầu ra:</strong> file data chứa features được lưu vào disk</li>
 </ul>
 <p>Code của task này được lưu tại <code>training_pipeline/src/data_extraction.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/data_extraction.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
@@ -632,8 +632,8 @@
 <h2 id="data-preparation">Data preparation</h2>
 <p>Task Data preparation có đầu vào và đầu ra như sau.</p>
 <ul>
-<li>Đầu vào: file data chứa features ở bước Data extraction</li>
-<li>Đầu ra: training set và test set đã được lưu vào disk</li>
+<li><strong>Đầu vào:</strong> file data chứa features ở bước Data extraction</li>
+<li><strong>Đầu ra:</strong> training set và test set đã được lưu vào disk</li>
 </ul>
 <p>Task này thực hiện các việc sau.</p>
 <ul>
@@ -692,8 +692,8 @@
 <h2 id="model-training">Model training</h2>
 <p>Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên, trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:</p>
 <ul>
-<li>Đầu vào: data được chuẩn bị ở task Data preparation</li>
-<li>Đầu ra: model đã được train.</li>
+<li><strong>Đầu vào:</strong> data được chuẩn bị ở task Data preparation</li>
+<li><strong>Đầu ra:</strong> model đã được train.</li>
 </ul>
 <p>Code cho task Model training đã được viết ở dự án POC. Code của task này được lưu tại <code>training_pipeline/src/model_training.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_training.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
@@ -773,8 +773,8 @@
 <h2 id="model-evaluation">Model evaluation</h2>
 <p>Task Model evaluation thực hiện chạy prediction cho model trên test set. Task này có:</p>
 <ul>
-<li>Đầu vào: model đã được train</li>
-<li>Đầu ra: các metrics để đánh giá chất lượng model</li>
+<li><strong>Đầu vào:</strong> model đã được train</li>
+<li><strong>Đầu ra:</strong> các metrics để đánh giá chất lượng model</li>
 </ul>
 <p>Code cho task Model evaluation đã được viết ở dự án POC. Code của task này được lưu tại <code>training_pipeline/src/model_evaluation.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_evaluation.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
