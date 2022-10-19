@@ -50,6 +50,37 @@ Các tương tác chính trong MLOps platform:
 
 Các tương tác và các tools được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.
 
+## Sử dụng platform
+### Start
+Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):
+
+```bash
+cd mlops-crash-course-platform && bash run.sh all up
+```
+, hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):
+```bash
+cd mlops-crash-course-platform && bash run.sh feast up
+```
+
+???+ info
+    Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
+
+### Stop
+Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:
+
+- Stop tất cả service:
+    ```bash
+    cd mlops-crash-course-platform && bash run.sh all down
+    ```
+- Stop một nhóm service
+    ```bash
+    cd mlops-crash-course-platform && bash run.sh feast down
+    ```
+
+???+ tip
+    Nếu muốn stop các service, đồng thời xóa dữ liệu lưu trữ trong các Docker volume, mọi người thêm argument `--volumes`.
+    Ví dụ: `bash run.sh all down --volumes` 
+
 ## Infra layer
 
 <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png" loading="lazy" />

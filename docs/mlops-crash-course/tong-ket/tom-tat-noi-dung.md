@@ -8,6 +8,21 @@ Feature store cũng là một thành phần thú vị trong chuỗi bài giảng
 
 Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps platform, có tính tái sử dụng ở nhiều dự án ML khác nhau, đặt ra một quy chuẩn trong việc thiết kế và xây dựng hệ thống ML, đồng thời giảm thiểu tối đa các công việc trùng lặp giữa nhiều team với nhau.
 
+## Dọn dẹp môi trường phát triển
+Để dọn dẹp môi trường phát triển, mọi người làm theo các bước sau:
+1. Teardown mlops-platform sử dụng command:
+    ```bash
+    cd mlops-crash-course-platform
+    bash run.sh all down --volumes
+    ```
+
+2. Stop các service khác
+    ```bash
+    cd mlops-crash-course-code
+    make -C model_serving compose_down
+    make -C monitoring_serving compose_down
+    ```
+
 ## Những hướng phát triển tiếp theo
 Sau khi hoàn thành khóa học này, mọi người hoàn toàn có thể tự học thêm bằng cách:
 
