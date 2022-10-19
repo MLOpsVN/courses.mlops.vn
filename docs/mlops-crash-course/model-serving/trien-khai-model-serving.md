@@ -25,10 +25,10 @@ Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Feast: truy xuất Feature Store
-1. MLflow: ML Metadata Store, Model Registry
-1. Airflow: điều phối batch serving pipeline
-1. BentoML: triển khai online serving
+1. **Feast:** truy xuất Feature Store
+1. **MLflow:** ML Metadata Store, Model Registry
+1. **Airflow:** điều phối batch serving pipeline
+1. **BentoML:** triển khai online serving
 
 !!! note
 
@@ -68,8 +68,8 @@ cd ..
 
 Task Data extraction có đầu vào và đầu ra như sau:
 
-- Đầu vào: data được đọc từ Offline Feature Store. Data sẽ được xử lý theo format mà model yêu cầu để tiện cho task **Batch prediction** tiếp theo
-- Đầu ra: data đã được xử lý và được lưu vào disk
+- **Đầu vào:** data được đọc từ Offline Feature Store. Data sẽ được xử lý theo format mà model yêu cầu để tiện cho task **Batch prediction** tiếp theo
+- **Đầu ra:** data đã được xử lý và được lưu vào disk
 
 Code của task này được lưu tại `model_serving/src/data_extraction.py`.
 
@@ -103,11 +103,11 @@ Bạn làm các bước sau để test thử code.
 
 1.  Chạy code
 
-        ```bash
-        cd src
-        python data_extraction.py
-        cd ..
-        ```
+    ```bash
+    cd src
+    python data_extraction.py
+    cd ..
+    ```
 
 1.  Kiểm tra folder `model_serving/artifacts`, bạn sẽ thấy file `batch_input.parquet`
 
@@ -115,8 +115,8 @@ Bạn làm các bước sau để test thử code.
 
 Task Batch prediction có đầu vào và đầu ra như sau:
 
-- Đầu vào: config file chứa thông tin về model được dùng
-- Đầu ra: kết quả predictions được lưu vào disk
+- **Đầu vào:** config file chứa thông tin về model được dùng
+- **Đầu ra:** kết quả predictions được lưu vào disk
 
 Model được dùng là model đã được lưu vào MLflow Model Registry ở task **Model validation** trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-validation). Trong task **Model validation** đó, thông tin về model đã đăng ký được lưu tại file `training_pipeline/artifacts/registered_model_version.json`. File này cần được upload vào một Storage nào đó trong tổ chức để các task khác, cụ thể là cho batch serving và online serving ở trong bài này, có thể biết được model nào là tốt nhất.
 

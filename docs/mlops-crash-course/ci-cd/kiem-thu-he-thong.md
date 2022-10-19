@@ -1,3 +1,7 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png" loading="lazy"/>
+</figure>
+
 ## Giới thiệu
 
 Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.

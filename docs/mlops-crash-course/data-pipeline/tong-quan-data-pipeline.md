@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/broken-data-pipeline.jpeg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://barrmoses.medium.com/?source=post_page-----4d42c2a8f054--------------------------------">Barr Moses</a> on <a href="https://barrmoses.medium.com/the-broken-data-pipeline-before-christmas-4d42c2a8f054">Medium</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Trong khoa học máy tính có khái niệm _garbage in, garbage out_, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.

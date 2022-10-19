@@ -1,4 +1,12 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png" loading="lazy"/>
+    <figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
+</figure>
+
 ## Giới thiệu
+Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này. 
+
+Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.
 
 ## Cài đặt Jenkins
 

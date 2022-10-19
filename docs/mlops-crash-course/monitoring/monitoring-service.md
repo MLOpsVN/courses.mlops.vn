@@ -25,9 +25,9 @@ Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
 Các tools sẽ được sử dụng trong bài này bao gồm:
 
-1. Feast: truy xuất Feature Store
-1. Flask: viết API cho monitoring service
-1. Evidently: kiểm tra chất lượng data và model performance
+1. **Feast:** truy xuất Feature Store
+1. **Flask:** viết API cho monitoring service
+1. **Evidently:** kiểm tra chất lượng data và model performance
 
 !!! note
 

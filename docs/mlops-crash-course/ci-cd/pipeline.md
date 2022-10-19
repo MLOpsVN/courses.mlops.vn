@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/a-world-without-ci.cd-meme.jpg" loading="lazy"/>
+    <figcaption>Photo from <a href="https://flexagon.com/blog/why-the-world-needs-ci-cd/">flexagon.com</a></figcaption>
+</figure>
+
 ## Giới thiệu
 Ở bài học về `data pipeline`, chúng ta đã cùng nhau xây dựng và deploy data pipeline theo các bước như sau:
 

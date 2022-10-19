@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/automation.jpg" loading="lazy"/>
+    <figcaption>Photo from <a href="https://airflow-tutorial.readthedocs.io/en/latest/pipelines.html">airflow-tutorial</a></figcaption>
+</figure>
+
 ## Giới thiệu
 Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.
 

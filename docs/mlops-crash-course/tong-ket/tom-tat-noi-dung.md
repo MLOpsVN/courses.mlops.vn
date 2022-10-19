@@ -1,3 +1,7 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-ket/ending_meme.jpg" loading="lazy"/>
+</figure>
+
 ## Tóm tắt nội dung khóa học
 
 Chúng ta đã cùng nhau đi qua một chặng đường dài, từ bước làm rõ bài toán kinh doanh, thực hiện POC chứng minh hiệu quả của model, tiếp tới là xây dựng các data pipeline, training pipeline, sau đó đóng gói để serve model, và cuối cùng là tự động hóa tất cả các bước trên. Trong suốt cả quãng đường này, chúng ta cũng làm quen với rất nhiều tool, đi kèm với best practices được đúc rút và thu thập từ nhiều nguồn tài liệu khác nhau có thể kể tới như Airflow, MLFLow, Feast, .v.v. Việc học cách sủ dụng các tool này là cần thiết, song không nên quá phụ thuộc hay lạm dụng nó mà quên đi vấn đề chính là làm thế nào để giải quyết bài toán một cách đơn giản và hiệu quả nhất.
@@ -10,7 +14,8 @@ Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps 
 
 ## Dọn dẹp môi trường phát triển
 Để dọn dẹp môi trường phát triển, mọi người làm theo các bước sau:
-1. Teardown mlops-platform sử dụng command:
+
+1. Teardown `mlops-platform` sử dụng command:
     ```bash
     cd mlops-crash-course-platform
     bash run.sh all down --volumes
@@ -23,7 +28,7 @@ Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps 
     make -C monitoring_serving compose_down
     ```
 
-## Những hướng phát triển tiếp theo
+## Các hướng phát triển tiếp theo
 Sau khi hoàn thành khóa học này, mọi người hoàn toàn có thể tự học thêm bằng cách:
 
 - **Tập dữ liệu:**

@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/ci-cd-meo.jpg" loading="lazy"/>
+    <figcaption>Photo from <a href="https://www.mabl.com/blog/using-mocks-for-testing-development-cicd-pipeline/">www.mabl.com</a></figcaption>
+</figure>
+
 ## Giới thiệu
 Ở bài học trước, chúng ta đã cùng nhau xây dựng Jenkins pipeline để tự động hóa quá trình release `data pipeline`. Trong bài học này chúng ta sẽ sửa Jenkinsfile để phục vụ cho `model serving`.
 

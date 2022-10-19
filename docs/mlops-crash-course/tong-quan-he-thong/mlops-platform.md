@@ -1,6 +1,7 @@
----
-comments: true
----
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png" loading="lazy"/>
+    <figcaption>Photo by <a href="https://coussement-bruno.medium.com/?source=post_page-----69ff5d96b7db--------------------------------">Coussement Bruno</a> on <a href="https://towardsdatascience.com/which-cloud-servicer-provider-ml-platform-do-you-need-69ff5d96b7db">Towards Data Science</a></figcaption>
+</figure>
 
 ## Giới thiệu
 
@@ -18,7 +19,7 @@ MLOps platform là nền tảng cung cấp các tool cần thiết để quản 
 | Monitoring          | Theo dõi resource hệ thống, hiệu năng của model và chất lượng dữ liệu trên production | Prometheus & Grafana & ELK         |
 
 ???+ tip
-Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.
+    Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.
 
 Kiến trúc MLOps platform của chúng ta sẽ như sau:
 
@@ -79,7 +80,23 @@ cd mlops-crash-course-platform && bash run.sh feast up
 
 ???+ tip
     Nếu muốn stop các service, đồng thời xóa dữ liệu lưu trữ trong các Docker volume, mọi người thêm argument `--volumes`.
-    Ví dụ: `bash run.sh all down --volumes` 
+    Ví dụ: `bash run.sh all down --volumes`
+
+## Cấu trúc thư mục làm việc
+Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo `mlops-crash-course-platform` và `mlops-crash-course-code` trong cùng 1 folder như sau:
+
+```python
+mlops-crash-course
+├── mlops-crash-course-platform/
+└── mlops-crash-course-code/
+```
+
+, trong đó:
+
+- Repo: `mlops-crash-course-platform` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-platform) chứa các file docker-compose để deploy 
+- Repo: `mlops-crash-course-code` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-code) chứa code của dự án ML sẽ trình bày trong bài học POC
+
+Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder `mlops-crash-course/`
 
 ## Infra layer
 
@@ -94,3 +111,9 @@ Trên Infra layer là Application layer, hay chính là nơi mà các engineer k
 ## Tổng kết
 
 Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống mà chúng ta sẽ phát triển. Trong bài tiếp theo, chúng ta sẽ triển khai dự án POC.
+
+## Tài liệu tham khảo
+
+- <https://ml-ops.org/content/end-to-end-ml-workflow>
+- <https://valohai.com/mlops-platforms-compared/>
+- <https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning>

@@ -1,3 +1,7 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/why-cicd.jpg" loading="lazy"/>
+</figure>
+
 ## Giới thiệu
 Công việc mà cần nhiều sức người và tự động hóa ít thường rất dễ xảy ra sai sót. Nếu vỉệc này lặp lại càng nhiều thì tỉ lệ sai sót càng cao, và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùg nhau đi tìm hiểu về tự động hóa trong ML: tự động hóa những gì và tự động hóa như thế nào.
 

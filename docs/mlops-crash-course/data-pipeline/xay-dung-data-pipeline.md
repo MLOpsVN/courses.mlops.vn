@@ -1,3 +1,8 @@
+<figure>
+    <img src="../../../assets/images/mlops-crash-course/data-pipeline/pipeline-everywhere.jpeg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://snehamehrin22.medium.com/?source=post_page-----fe14643c67fd--------------------------------">Sneha Mehrin</a> on <a href="https://snehamehrin22.medium.com/how-to-build-a-technical-design-architecture-for-an-analytics-data-pipeline-fe14643c67fd">Medium</a></figcaption>
+</figure>
+
 ## Giới thiệu
 
 Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command `feast apply` để tạo ra feature definition ở đường dẫn `data_pipeline/feature_repo/registry/local_registry.db`. Trong bài học này chúng ta sẽ sử dụng folder này để config client `store` giao tiếp với feature store như sau:

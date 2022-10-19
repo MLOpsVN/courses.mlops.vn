@@ -78,9 +78,9 @@ Alerts giúp cảnh báo tới đúng người, đúng thời điểm, khi một
 
 Một alert thường gồm ba thành phần:
 
-1. Chính sách (_Policy_): điều kiện để xảy ra alert
-2. Kênh thông báo (_Channel_): khi cảnh báo xảy ra, ai sẽ được thông báo, bằng cách nào
-3. Mô tả (_Description_): mô tả cảnh báo về chuyện gì đang xảy ra
+1. **Chính sách (_Policy_):** điều kiện để xảy ra alert
+2. **Kênh thông báo (_Channel_):** khi cảnh báo xảy ra, ai sẽ được thông báo, bằng cách nào
+3. **Mô tả (_Description_):** mô tả cảnh báo về chuyện gì đang xảy ra
 
 Trong bài sau, chúng ta sẽ dùng Grafana để thiết lập một alert khi dataset bị drift.
 
