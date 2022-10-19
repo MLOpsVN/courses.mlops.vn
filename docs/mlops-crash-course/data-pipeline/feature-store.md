@@ -143,12 +143,16 @@ driver_stats_stream_source = KafkaSource(
 Sau khi config feature store bằng cách thay đổi các file trong repo `feature_repo/`, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
 - **FileSource:** đảm bảo đường dẫn tồn tại, file không bị lỗi
-- **KafkaSource:** đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục `stream_emitting/` và chạy command:
+- **KafkaSource:** đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, mọi người truy cập vào thư mục `stream_emitting/` và chạy command:
   ```console
   bash deploy.sh start
   ```
   khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
   <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+
+    ???+ tip
+        - Để **stop** server, chúng ta sử dụng command `bash deploy.sh stop`
+        - Để **teardown** server, nghĩa là vừa stop vừa remove tất cả docker volume liên quan, chúng ta sử dụng command `bash deploy.sh teardown`
 
 và cuối cùng chúng ta sẽ apply các thay đổi như sau:
 

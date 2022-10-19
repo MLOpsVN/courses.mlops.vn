@@ -26,6 +26,7 @@ Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps 
     cd mlops-crash-course-code
     make -C model_serving compose_down
     make -C monitoring_serving compose_down
+    bash stream_emitting/deploy.sh start
     ```
 
 ## Các hướng phát triển tiếp theo
