@@ -572,11 +572,20 @@
 <p>Sau khi config feature store bằng cách thay đổi các file trong repo <code>feature_repo/</code>, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:</p>
 <ul>
 <li><strong>FileSource:</strong> đảm bảo đường dẫn tồn tại, file không bị lỗi</li>
-<li><strong>KafkaSource:</strong> đảm bảo bootstrap servers đang chạy. Để start boootstrap server này, mọi người truy cập vào thư mục <code>stream_emitting/</code> và chạy command:
+<li>
+<p><strong>KafkaSource:</strong> đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, mọi người truy cập vào thư mục <code>stream_emitting/</code> và chạy command:
   <div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="go">bash deploy.sh start</span>
 </code></pre></div>
   khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-  <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"/></a></li>
+  <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"/></a></p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<ul>
+<li>Để <strong>stop</strong> server, chúng ta sử dụng command <code>bash deploy.sh stop</code></li>
+<li>Để <strong>teardown</strong> server, nghĩa là vừa stop vừa remove tất cả docker volume liên quan, chúng ta sử dụng command <code>bash deploy.sh teardown</code></li>
+</ul>
+</details>
+</li>
 </ul>
 <p>và cuối cùng chúng ta sẽ apply các thay đổi như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="go">cd feature_repo</span>
