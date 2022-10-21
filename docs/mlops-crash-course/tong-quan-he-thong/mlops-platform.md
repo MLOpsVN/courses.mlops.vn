@@ -84,7 +84,7 @@ cd mlops-crash-course-platform && bash run.sh feast up
     Nếu muốn stop các service, đồng thời xóa dữ liệu lưu trữ trong các Docker volume, mọi người thêm argument `--volumes`.
     Ví dụ: `bash run.sh all down --volumes`
 
-## Cấu trúc thư mục làm việc
+## Cấu trúc code
 Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo `mlops-crash-course-platform` và `mlops-crash-course-code` trong cùng 1 folder như sau:
 
 ```python
@@ -98,7 +98,17 @@ mlops-crash-course
 - Repo: `mlops-crash-course-platform` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-platform) chứa các file docker-compose để deploy 
 - Repo: `mlops-crash-course-code` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-code) chứa code của dự án ML sẽ trình bày trong bài học POC
 
-Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder `mlops-crash-course/`
+???+ warning
+    Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
+
+    ```bash
+    conda create -n myenv python=3.9
+    conda activate myenv
+    cd data_pipeline
+    pip install -r dev_requirements.txt
+    ```
+
+Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder `mlops-crash-course/` (bằng cách sử dụng command `cd mlops-crash-course/` )
 
 ## Infra layer
 
