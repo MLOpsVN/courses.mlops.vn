@@ -406,10 +406,10 @@
 <span class="normal"><a href="#__codelineno-0-32">32</a></span>
 <span class="normal"><a href="#__codelineno-0-33">33</a></span>
 <span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">pipeline</span> <span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">agent</span> <span class="p">{</span> 
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>        <span class="n">docker</span> <span class="p">{</span> 
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>            <span class="n">image</span> <span class="s1">'python:3.9'</span> <span class="c1"># (1) </span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="p">}</span> 
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">agent</span> <span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>        <span class="n">docker</span> <span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>            <span class="n">image</span> <span class="s1">'python:3.9'</span> <span class="c1"># (1)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="p">}</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="p">}</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>
 <a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">stages</span> <span class="p">{</span>
@@ -448,112 +448,13 @@
 </ol>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"/></a></p>
-<p>, thì mọi người thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới: 
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"/></a></p>
+<p>Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"/></a></p>
+<p>Thì mọi người thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"/></a></p>
 </details>
 <p>Sau khi mọi người thay đổi code ở folder <code>data-pipeline/</code> và push code lên Github, mọi người sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png"/></a></p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>+ docker inspect -f . python:3.9
-<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>.
-<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="o">[</span>Pipeline<span class="o">]</span> // withEnv
-<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="o">[</span>Pipeline<span class="o">]</span> withDockerContainer
-<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>Jenkins seems to be running inside container 1512656ef882dffe830aeaebaaefb49a72673a7bc61c451700b1b860213f4b5a
-<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>$ docker run -t -d -u <span class="m">0</span>:0 -w /var/jenkins_home/workspace/_demo_quandv_fix_bug_materialize --volumes-from 1512656ef882dffe830aeaebaaefb49a72673a7bc61c451700b1b860213f4b5a -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** python:3.9 cat
-<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>$ docker top 2e4c21d3087d8cd719b8c1c1634e29f4bc2bfb2fa4f6644485a559022340552d -eo pid,comm
-<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span>
-<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
-<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span>build data pipeline<span class="o">)</span>
-<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="nb">echo</span>
-<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a>Building data pipeline..
-<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="o">[</span>Pipeline<span class="o">]</span> sh
-<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a>+ <span class="nb">cd</span> data_pipeline
-<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a>+ make build_image
-<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="nb">source</span> <span class="s2">"./deployment/.env"</span> <span class="o">&amp;&amp;</span> bash deployment/deploy.sh build
-<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a>Sending build context to Docker daemon  <span class="m">25</span>.09kB
-<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a>Step <span class="m">1</span>/13 : FROM python:3.8-slim AS build
-<a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a> ---&gt; bdd3315885d4
-<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a>Step <span class="m">2</span>/13 : RUN apt-get update
-<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a> ---&gt; Running <span class="k">in</span> a3976c6a325f
-<a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a>Get:1 http://deb.debian.org/debian bullseye InRelease <span class="o">[</span><span class="m">116</span> kB<span class="o">]</span>
-<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a>Get:2 http://deb.debian.org/debian-security bullseye-security InRelease <span class="o">[</span><span class="m">48</span>.4 kB<span class="o">]</span>
-<a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a>Get:3 http://deb.debian.org/debian bullseye-updates InRelease <span class="o">[</span><span class="m">44</span>.1 kB<span class="o">]</span>
-<a href="#__codelineno-1-27" id="__codelineno-1-27" name="__codelineno-1-27"></a>Get:4 http://deb.debian.org/debian bullseye/main amd64 Packages <span class="o">[</span><span class="m">8184</span> kB<span class="o">]</span>
-<a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a>Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages <span class="o">[</span><span class="m">189</span> kB<span class="o">]</span>
-<a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a>Get:6 http://deb.debian.org/debian bullseye-updates/main amd64 Packages <span class="o">[</span><span class="m">6344</span> B<span class="o">]</span>
-<a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a>Fetched <span class="m">8587</span> kB <span class="k">in</span> 2s <span class="o">(</span><span class="m">4974</span> kB/s<span class="o">)</span>
-<a href="#__codelineno-1-31" id="__codelineno-1-31" name="__codelineno-1-31"></a>Reading package lists...
-<a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a>Removing intermediate container a3976c6a325f
-<a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a> ---&gt; 87b1070b627f
-<a href="#__codelineno-1-34" id="__codelineno-1-34" name="__codelineno-1-34"></a>Step <span class="m">3</span>/13 : RUN python -m venv /opt/venv
-<a href="#__codelineno-1-35" id="__codelineno-1-35" name="__codelineno-1-35"></a> ---&gt; Running <span class="k">in</span> b066e5a08cdd
-<a href="#__codelineno-1-36" id="__codelineno-1-36" name="__codelineno-1-36"></a>Removing intermediate container b066e5a08cdd
-<a href="#__codelineno-1-37" id="__codelineno-1-37" name="__codelineno-1-37"></a> ---&gt; af2314d67d5d
-<a href="#__codelineno-1-38" id="__codelineno-1-38" name="__codelineno-1-38"></a>Step <span class="m">4</span>/13 : ENV <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/opt/venv/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-<a href="#__codelineno-1-39" id="__codelineno-1-39" name="__codelineno-1-39"></a> ---&gt; Running <span class="k">in</span> bfa436419627
-<a href="#__codelineno-1-40" id="__codelineno-1-40" name="__codelineno-1-40"></a>Removing intermediate container bfa436419627
-<a href="#__codelineno-1-41" id="__codelineno-1-41" name="__codelineno-1-41"></a> ---&gt; 848df69e17f2
-<a href="#__codelineno-1-42" id="__codelineno-1-42" name="__codelineno-1-42"></a>Step <span class="m">5</span>/13 : COPY deployment/requirements.txt .
-<a href="#__codelineno-1-43" id="__codelineno-1-43" name="__codelineno-1-43"></a> ---&gt; da3ba833e7e5
-<a href="#__codelineno-1-44" id="__codelineno-1-44" name="__codelineno-1-44"></a>Step <span class="m">6</span>/13 : RUN pip install -r requirements.txt
-<a href="#__codelineno-1-45" id="__codelineno-1-45" name="__codelineno-1-45"></a> ---&gt; Running <span class="k">in</span> abc449670506
-<a href="#__codelineno-1-46" id="__codelineno-1-46" name="__codelineno-1-46"></a>Collecting <span class="nv">pyspark</span><span class="o">==</span><span class="m">3</span>.0.1
-<a href="#__codelineno-1-47" id="__codelineno-1-47" name="__codelineno-1-47"></a>  Downloading pyspark-3.0.1.tar.gz <span class="o">(</span><span class="m">204</span>.2 MB<span class="o">)</span>
-<a href="#__codelineno-1-48" id="__codelineno-1-48" name="__codelineno-1-48"></a>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class="m">204</span>.2/204.2 MB <span class="m">7</span>.4 MB/s eta <span class="m">0</span>:00:00
-<a href="#__codelineno-1-49" id="__codelineno-1-49" name="__codelineno-1-49"></a>  Preparing metadata <span class="o">(</span>setup.py<span class="o">)</span>: started
-<a href="#__codelineno-1-50" id="__codelineno-1-50" name="__codelineno-1-50"></a>  Preparing metadata <span class="o">(</span>setup.py<span class="o">)</span>: finished with status <span class="s1">'done'</span>
-<a href="#__codelineno-1-51" id="__codelineno-1-51" name="__codelineno-1-51"></a>...
-<a href="#__codelineno-1-52" id="__codelineno-1-52" name="__codelineno-1-52"></a>Step <span class="m">9</span>/13 : ENV <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-11-openjdk-amd64
-<a href="#__codelineno-1-53" id="__codelineno-1-53" name="__codelineno-1-53"></a> ---&gt; Running <span class="k">in</span> 7f9e90e2b252
-<a href="#__codelineno-1-54" id="__codelineno-1-54" name="__codelineno-1-54"></a>Removing intermediate container 7f9e90e2b252
-<a href="#__codelineno-1-55" id="__codelineno-1-55" name="__codelineno-1-55"></a> ---&gt; abd41170b226
-<a href="#__codelineno-1-56" id="__codelineno-1-56" name="__codelineno-1-56"></a>Step <span class="m">10</span>/13 : COPY --from<span class="o">=</span>build /opt/venv /opt/venv
-<a href="#__codelineno-1-57" id="__codelineno-1-57" name="__codelineno-1-57"></a> ---&gt; b7c37ed2e321
-<a href="#__codelineno-1-58" id="__codelineno-1-58" name="__codelineno-1-58"></a>Step <span class="m">11</span>/13 : ENV <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/opt/venv/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-<a href="#__codelineno-1-59" id="__codelineno-1-59" name="__codelineno-1-59"></a> ---&gt; Running <span class="k">in</span> 41d839e620a6
-<a href="#__codelineno-1-60" id="__codelineno-1-60" name="__codelineno-1-60"></a>Removing intermediate container 41d839e620a6
-<a href="#__codelineno-1-61" id="__codelineno-1-61" name="__codelineno-1-61"></a> ---&gt; ce5c3b6c57bc
-<a href="#__codelineno-1-62" id="__codelineno-1-62" name="__codelineno-1-62"></a>Step <span class="m">12</span>/13 : COPY . /data_pipeline
-<a href="#__codelineno-1-63" id="__codelineno-1-63" name="__codelineno-1-63"></a> ---&gt; 1d49a90d64ff
-<a href="#__codelineno-1-64" id="__codelineno-1-64" name="__codelineno-1-64"></a>Step <span class="m">13</span>/13 : WORKDIR /data_pipeline
-<a href="#__codelineno-1-65" id="__codelineno-1-65" name="__codelineno-1-65"></a> ---&gt; Running <span class="k">in</span> ee905d3559ea
-<a href="#__codelineno-1-66" id="__codelineno-1-66" name="__codelineno-1-66"></a>Removing intermediate container ee905d3559ea
-<a href="#__codelineno-1-67" id="__codelineno-1-67" name="__codelineno-1-67"></a> ---&gt; af80a23fe864
-<a href="#__codelineno-1-68" id="__codelineno-1-68" name="__codelineno-1-68"></a>Successfully built af80a23fe864
-<a href="#__codelineno-1-69" id="__codelineno-1-69" name="__codelineno-1-69"></a>Successfully tagged mlopsvn/mlops_crash_course/data_pipeline:2794a04
-<a href="#__codelineno-1-70" id="__codelineno-1-70" name="__codelineno-1-70"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-71" id="__codelineno-1-71" name="__codelineno-1-71"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
-<a href="#__codelineno-1-72" id="__codelineno-1-72" name="__codelineno-1-72"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
-<a href="#__codelineno-1-73" id="__codelineno-1-73" name="__codelineno-1-73"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span><span class="nb">test</span> data pipeline<span class="o">)</span>
-<a href="#__codelineno-1-74" id="__codelineno-1-74" name="__codelineno-1-74"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="nb">echo</span>
-<a href="#__codelineno-1-75" id="__codelineno-1-75" name="__codelineno-1-75"></a>Testing data pipeline..
-<a href="#__codelineno-1-76" id="__codelineno-1-76" name="__codelineno-1-76"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-77" id="__codelineno-1-77" name="__codelineno-1-77"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
-<a href="#__codelineno-1-78" id="__codelineno-1-78" name="__codelineno-1-78"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
-<a href="#__codelineno-1-79" id="__codelineno-1-79" name="__codelineno-1-79"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span>deploy data pipeline<span class="o">)</span>
-<a href="#__codelineno-1-80" id="__codelineno-1-80" name="__codelineno-1-80"></a><span class="o">[</span>Pipeline<span class="o">]</span> sh
-<a href="#__codelineno-1-81" id="__codelineno-1-81" name="__codelineno-1-81"></a>+ <span class="nb">cd</span> data_pipeline
-<a href="#__codelineno-1-82" id="__codelineno-1-82" name="__codelineno-1-82"></a>+ make deploy_dags
-<a href="#__codelineno-1-83" id="__codelineno-1-83" name="__codelineno-1-83"></a><span class="nb">source</span> <span class="s2">"./deployment/.env"</span> <span class="o">&amp;&amp;</span> bash deployment/deploy.sh dags <span class="s2">""</span>../../mlops-crash-course-platform/airflow/run_env/dags/data_pipeline<span class="s2">""</span>
-<a href="#__codelineno-1-84" id="__codelineno-1-84" name="__codelineno-1-84"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-85" id="__codelineno-1-85" name="__codelineno-1-85"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
-<a href="#__codelineno-1-86" id="__codelineno-1-86" name="__codelineno-1-86"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-87" id="__codelineno-1-87" name="__codelineno-1-87"></a>$ docker stop --time<span class="o">=</span><span class="m">1</span> 2e4c21d3087d8cd719b8c1c1634e29f4bc2bfb2fa4f6644485a559022340552d
-<a href="#__codelineno-1-88" id="__codelineno-1-88" name="__codelineno-1-88"></a>$ docker rm -f 2e4c21d3087d8cd719b8c1c1634e29f4bc2bfb2fa4f6644485a559022340552d
-<a href="#__codelineno-1-89" id="__codelineno-1-89" name="__codelineno-1-89"></a><span class="o">[</span>Pipeline<span class="o">]</span> // withDockerContainer
-<a href="#__codelineno-1-90" id="__codelineno-1-90" name="__codelineno-1-90"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-91" id="__codelineno-1-91" name="__codelineno-1-91"></a><span class="o">[</span>Pipeline<span class="o">]</span> // withEnv
-<a href="#__codelineno-1-92" id="__codelineno-1-92" name="__codelineno-1-92"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
-<a href="#__codelineno-1-93" id="__codelineno-1-93" name="__codelineno-1-93"></a><span class="o">[</span>Pipeline<span class="o">]</span> // node
-<a href="#__codelineno-1-94" id="__codelineno-1-94" name="__codelineno-1-94"></a><span class="o">[</span>Pipeline<span class="o">]</span> End of Pipeline
-<a href="#__codelineno-1-95" id="__codelineno-1-95" name="__codelineno-1-95"></a>
-<a href="#__codelineno-1-96" id="__codelineno-1-96" name="__codelineno-1-96"></a>GitHub has been notified of this commit’s build result
-<a href="#__codelineno-1-97" id="__codelineno-1-97" name="__codelineno-1-97"></a>
-<a href="#__codelineno-1-98" id="__codelineno-1-98" name="__codelineno-1-98"></a>Finished: SUCCESS
-</code></pre></div>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì <code>push</code> lên Github và để luồng CI/CD lo những phần còn lại, thật tiện lợi phải không nào!</p>
 <p>Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho <code>model serving</code>.</p>

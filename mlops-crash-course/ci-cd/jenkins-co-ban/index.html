@@ -300,8 +300,8 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#smoke-test-luong-push-code-e-trigger-jenkins-pipeline">
-    Smoke test luồng push code để trigger Jenkins pipeline
+<a class="md-nav__link" href="#trigger-jenkins-pipeline">
+    Trigger Jenkins pipeline
   </a>
 </li>
 <li class="md-nav__item">
@@ -392,8 +392,8 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#smoke-test-luong-push-code-e-trigger-jenkins-pipeline">
-    Smoke test luồng push code để trigger Jenkins pipeline
+<a class="md-nav__link" href="#trigger-jenkins-pipeline">
+    Trigger Jenkins pipeline
   </a>
 </li>
 <li class="md-nav__item">
@@ -414,22 +414,33 @@
 <figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này. </p>
+<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này.</p>
 <p>Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.</p>
 <h2 id="cai-at-jenkins">Cài đặt Jenkins</h2>
-<p>Trước hết mọi người vào repo <code>mlops-crash-course-platform/</code> và start service này như sau:</p>
+<p>Các bạn làm các bước sau để cài đặt:</p>
+<ol>
+<li>
+<p>Vào repo <code>mlops-crash-course-platform/</code> và chạy:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh jenkins up
 </code></pre></div>
-<p>Chúng ta sử dụng <code>docker ps</code> để kiểm tra tình trạng service:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                         PORTS                                                                                      NAMES
-<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>f81b55f1b151   jenkins/jenkins:lts    <span class="s2">"/usr/bin/tini -- /u…"</span>   <span class="m">41</span> minutes ago   Up <span class="m">41</span> minutes                  <span class="m">0</span>.0.0.0:50000-&gt;50000/tcp, :::50000-&gt;50000/tcp, <span class="m">0</span>.0.0.0:8081-&gt;8080/tcp, :::8081-&gt;8080/tcp   jenkins
+</li>
+<li>
+<p>Kiểm tra tình trạng service:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>docker ps
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                         PORTS                                                                                      NAMES
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>f81b55f1b151   jenkins/jenkins:lts    <span class="s2">"/usr/bin/tini -- /u…"</span>   <span class="m">41</span> minutes ago   Up <span class="m">41</span> minutes                  <span class="m">0</span>.0.0.0:50000-&gt;50000/tcp, :::50000-&gt;50000/tcp, <span class="m">0</span>.0.0.0:8081-&gt;8080/tcp, :::8081-&gt;8080/tcp   jenkins
 </code></pre></div>
-<p>Service này đã <code>Up</code> và được serve tại đường dẫn <a href="http://localhost:8081">http://localhost:8081</a> như sau:</p>
+</li>
+<li>
+<p>Truy cập <a href="http://localhost:8081">http://localhost:8081</a>, các bạn sẽ thấy:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png"/></a></p>
-<p>Để lấy mật khẩu <code>admin</code>, chúng ta sẽ kiểm tra logs của jenkins container với câu lệnh:</p>
+</li>
+<li>
+<p>Kiểm tra logs của jenkins container để lấy mật khẩu <code>admin</code>:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>docker logs jenkins
 </code></pre></div>
-<p>và mọi người sẽ thấy mật khẩu như sau:</p>
+<p>Các bạn sẽ thấy mật khẩu như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>*************************************************************
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>*************************************************************
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>*************************************************************
@@ -441,25 +452,39 @@
 <a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>
 <a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a>This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 </code></pre></div>
-<p>Tiếp theo chúng ta sẽ chọn <code>Install suggested plugins</code>, và chờ Jenkins cài đặt các plugins.</p>
+</li>
+<li>
+<p>Chọn <code>Install suggested plugins</code>, và chờ Jenkins cài đặt các plugins.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"/></a></p>
-<p>Sau đó, chúng ta sẽ tới giao diện đăng ký user sử dụng Jenkins, để cho đơn giản, chúng ta sẽ chọn <code>Skip and continue as admin</code></p>
+</li>
+<li>
+<p>Ở giao diện đăng ký user sử dụng Jenkins, chọn <code>Skip and continue as admin</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"/></a></p>
 <details class="tip" open="open">
 <summary>Tip</summary>
 <p>Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản <code>admin</code> để tránh đi quá sâu vào phần quản trị này.</p>
 </details>
-<p>Ở bước tiếp theo, các bạn giữ nguyên Jenkins URL như sau:</p>
+</li>
+<li>
+<p>Cấu hình Jenkins URL như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"/></a></p>
-<p>Sau khi cài xong, chúng ta sẽ nhìn thấy giao diện sau:</p>
+</li>
+<li>
+<p>Cuối cùng, bạn sẽ thấy giao diện sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png"/></a></p>
+</li>
+</ol>
 <h2 id="ket-noi-jenkins-voi-github">Kết nối Jenkins với Github</h2>
 <p>Bây giờ chúng ta sẽ kết nối Jenkins ở local với Github để mỗi khi push code lên thì Github sẽ trigger CI/CD pipeline trên máy cá nhân của chúng ta.</p>
 <h3 id="expose-jenkins-voi-ngrok">Expose Jenkins với ngrok</h3>
-<p>Đầu tiên, cài đặt <a href="https://ngrok.com/download">ngrok</a>, và expose Jenkins service tại local với câu lệnh:</p>
+<p>Các bạn làm các bước sau:</p>
+<ol>
+<li>Cài đặt <em>ngrok</em>, xác nhận email, set token theo hướng dận <a href="https://ngrok.com/download">tại đây</a></li>
+<li>
+<p>Expose Jenkins service tại local với câu lệnh:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>ngrok http <span class="m">8081</span>
 </code></pre></div>
-<p>Chúng ta sẽ thấy console hiển thị như sau:</p>
+<p>Bạn sẽ thấy console hiển thị như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a>ngrok by @inconshreveable                                       <span class="o">(</span>Ctrl+C to quit<span class="o">)</span>
 <a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
 <a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>Session Status                online
@@ -471,39 +496,58 @@
 <a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>Forwarding                    https://a846-183-80-56-103.ngrok.io -&gt; http://loca
 <a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>
 <a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>Connections                   ttl     opn     rt1     rt5     p50     p90
-<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>                              <span class="m">0</span>       <span class="m">0</span>       <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>                            <span class="m">0</span>       <span class="m">0</span>       <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00
 </code></pre></div>
-<p>Bây giờ, chúng ta có thể truy cập Jenkins qua link forward ở trên <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a>, và sử dụng username <code>admin</code>, và password như trên.</p>
+</li>
+<li>
+<p>Truy cập Jenkins qua link forward ở trên <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"/></a></p>
+</li>
+</ol>
 <h3 id="them-jenkins-webhook-vao-github">Thêm Jenkins webhook vào Github</h3>
-<p>Đầu tiên mọi người push code đã clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a> lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng <code>https://github.com/yourusername/mlops-crash-course-code</code>. Ví dụ: nếu Github username là <code>MLOps</code> thi đường link tới repo sẽ là <code>https://github.com/MLOps/mlops-crash-course-code</code>. </p>
-<p>Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về <code>ci-cd</code>, mọi người sẽ làm việc trên repo <code>https://github.com/yourusername/mlops-crash-course-code</code> của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo <code>https://github.com/MLOpsVN/mlops-crash-course-code</code>, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.</p>
-<p>Bây giờ chúng ta sẽ vào phần <code>Settings</code> ở repo code của chúng ta (<a href="https://github.com/yourusername/mlops-crash-course-code">https://github.com/yourusername/mlops-crash-course-code</a>) và chọn phần <code>Webhooks</code> như bên dưới</p>
+<p>Đầu tiên mọi người push code đã clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a> lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng <code>https://github.com/&lt;yourusername&gt;/mlops-crash-course-code</code>. Ví dụ: nếu Github username là <code>MLOps</code> thi đường link tới repo sẽ là <code>https://github.com/MLOps/mlops-crash-course-code</code>.</p>
+<p>Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về <code>ci-cd</code>, mọi người sẽ làm việc trên repo <code>https://github.com/&lt;yourusername&gt;/mlops-crash-course-code</code> của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo <code>https://github.com/MLOpsVN/mlops-crash-course-code</code>, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.</p>
+<ol>
+<li>
+<p>Vào <code>Settings</code> ở repo code, chọn <code>Webhooks</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"/></a></p>
-<p>Sau đó ấn <code>Add webhook</code> và điền <code>Payload URL</code> là <code>https://a846-183-80-56-103.ngrok.io/github-webhook/</code>, và <code>Content type</code> là <code>application/json</code>
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"/></a></p>
-<p>Mọi người lưu ý phần <code>Which events would you like to trigger this webhook?</code>, ở đây chúng ta chọn <code>Let me select individual events.</code> và sau đó tick vào phần <code>Pushes</code> và <code>Pull requests</code></p>
+</li>
+<li>
+<p>Ấn <code>Add webhook</code>, điền <code>Payload URL</code> là <code>https://a846-183-80-56-103.ngrok.io/github-webhook/</code>, <code>Content type</code> là <code>application/json</code></p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"/></a></p>
+</li>
+<li>
+<p>Ở phần <code>Which events would you like to trigger this webhook?</code>, chọn <code>Let me select individual events.</code>, tick vào phần <code>Pushes</code> và <code>Pull requests</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png"/></a></p>
-<p>Cuối cùng, ấn <code>Add webhook</code> để hoàn tất.</p>
+</li>
+<li>
+<p>Ấn <code>Add webhook</code> để hoàn tất</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png"/></a></p>
+</li>
+</ol>
 <h3 id="them-github-repo-vao-jenkins">Thêm Github repo vào Jenkins</h3>
-<p>Đầu tiên, chúng ta trở lại mà hình home của Jenkins</p>
+<ol>
+<li>
+<p>Trở lại mà hình home của Jenkins qua URL <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"/></a></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Các bạn cần đăng nhập vào Jenkins thông qua URL <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a> thì Github mới chấp nhận quyền truy cập.</p>
-</div>
-<p>Ấn vào phần <code>+ New Item</code>.</p>
-<p>Ở trang mới này, chúng ta điền tên dự án vào phần bên dưới <code>Enter an item name</code>, chọn <code>Multibranch Pipeline</code>, và ấn <code>OK</code></p>
+</li>
+<li>
+<p>Ấn <code>+ New Item</code>, điền tên dự án vào phần bên dưới <code>Enter an item name</code>, chọn <code>Multibranch Pipeline</code>, và ấn <code>OK</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"/></a></p>
-<p>Tiếp theo, chúng ta tìm đến phần <code>Branch Sources</code>, ấn <code>Add source</code> và chọn <code>GitHub</code></p>
+</li>
+<li>
+<p>Ở phần <code>Branch Sources</code>, ấn <code>Add source</code>, chọn <code>GitHub</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"/></a></p>
-<p>Sau đó, chúng ta sẽ thấy màn hình như sau:
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-14.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-14.png"/></a></p>
-<p>Chúng ta sẽ thêm Github repo bằng cách chọn <code>Add repository</code>, và điền vào phần <code>Repository URL</code> theo dạng <code>https://github.com/MLOpsVN/mlops-crash-course-code</code> như bên dưới.</p>
+</li>
+<li>
+<p>Thêm Github repo bằng cách chọn <code>Add repository</code>, điền vào <code>Repository URL</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png"/></a></p>
-<p>Cuối cùng, chúng ta kéo xuống phần cuối cùng, ấn <code>Apply</code> để hoàn tất.</p>
-<h2 id="smoke-test-luong-push-code-e-trigger-jenkins-pipeline">Smoke test luồng push code để trigger Jenkins pipeline</h2>
+</li>
+<li>
+<p>Ấn <code>Apply</code> để hoàn tất</p>
+</li>
+</ol>
+<h2 id="trigger-jenkins-pipeline">Trigger Jenkins pipeline</h2>
 <p>Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có project <code>mlops-demo</code> như bên dưới</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"/></a></p>
 <p>Nếu chúng ta ấn vào project <code>mlops-demo</code>, chúng ta sẽ thấy ở góc tay trái bên dưới có <code>Build History</code>, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.</p>
@@ -609,43 +653,31 @@
 <details class="tip" open="open">
 <summary>Tip</summary>
 <p>Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder <code>data_pipeline/</code>, chúng ta thêm điều kiện <code>when</code> như sau:</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-10-10">10</a></span>
-<span class="normal"><a href="#__codelineno-10-11">11</a></span>
-<span class="normal"><a href="#__codelineno-10-12">12</a></span>
-<span class="normal"><a href="#__codelineno-10-13">13</a></span>
-<span class="normal"><a href="#__codelineno-10-14">14</a></span>
-<span class="normal"><a href="#__codelineno-10-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">pipeline</span> <span class="p">{</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="o">...</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4"></a>            <span class="n">stage</span><span class="p">(</span><span class="s1">'test data pipeline'</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5"></a>                <span class="n">when</span> <span class="p">{</span><span class="n">changeset</span> <span class="s2">"data_pipeline/*.*"</span> <span class="p">}</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a>                <span class="n">steps</span> <span class="p">{</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8"></a>                    <span class="n">echo</span> <span class="s1">'Testing data pipeline..'</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9"></a>                <span class="p">}</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10"></a>            <span class="p">}</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11"></a>
-<a id="__codelineno-10-12" name="__codelineno-10-12"></a>            <span class="o">...</span>
-<a id="__codelineno-10-13" name="__codelineno-10-13"></a>        <span class="p">}</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="p">}</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15"></a>    <span class="err">```</span>
-</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code>````py title="Jenkinsfile" linenums="1"
+pipeline {
+...
+
+            stage('test data pipeline') {
+                when {changeset "data_pipeline/*.*" }
+
+                steps {
+                    echo 'Testing data pipeline..'
+                }
+            }
+
+            ...
+        }
+    }
+    ```
+````
+</code></pre></div>
 </details>
-<details class="tip" open="open">
-<summary>Tip</summary>
-<p>Kiểu viết <code>Jenkinsfile</code> như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là <em>Declarative Pipeline</em>. Ngoài ra còn một cách viết khác dùng <code>Groovy script</code>gọi là <em>Scripted Pipeline</em>, cách này thông thường sử dụng cho những logic phức tạp.</p>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Kiểu viết <code>Jenkinsfile</code> như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là <em>Declarative Pipeline</em>. Ngoài ra còn một cách viết khác dùng <code>Groovy script</code> gọi là <em>Scripted Pipeline</em>, cách này thông thường sử dụng cho những logic phức tạp.</p>
 </details>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không. </p>
+<p>Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.</p>
 <p>Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.</p>
 </article>
 </div>

@@ -407,7 +407,7 @@
 <td>Gitlab CI hoặc Jenkins</td>
 </tr>
 <tr>
-<td>Delivery  (CD)</td>
+<td>Delivery (CD)</td>
 <td>Tự động hóa quá trình deploy serving API</td>
 <td>Gitlab CI hoặc Jenkins</td>
 </tr>
@@ -417,7 +417,7 @@
 <td>Gitlab CI hoặc Jenkins</td>
 </tr>
 <tr>
-<td>Training    (CT)</td>
+<td>Training (CT)</td>
 <td>Tự động hóa quá trình run các data pipeline chuẩn bị feature cho model</td>
 <td>Airflow hoặc Kubeflow Pipelines</td>
 </tr>
@@ -427,7 +427,7 @@
 <td>Airflow hoặc Kubeflow Pipelines</td>
 </tr>
 <tr>
-<td>Monitoring  (CM)</td>
+<td>Monitoring (CM)</td>
 <td>Tự động hóa quá trình theo dõi và cảnh báo hiệu năng model và tài nguyên hệ thống</td>
 <td>Prometheus và Grafana</td>
 </tr>
@@ -443,7 +443,7 @@
 <summary>Example</summary>
 <p>Đầu ra của dự án là 1 model serving API để một team sản phẩm tích hợp vào hệ thống của họ, khi đó chúng ta có thể cân nhắc triển khai theo thứ tự sau:</p>
 <ul>
-<li><strong>CI:</strong> <ul>
+<li><strong>CI:</strong><ul>
 <li>Tự động hóa quá trình kiểm thử model (kết quả dự đoán có <em>reproducible</em> và giống kết quả mà chúng ta chạy ở máy cá nhân không, .v.v.) và code (thực hiện unit test các hàm logic)</li>
 <li>Tự động đóng gói model, code, và môi trường thành Docker image</li>
 </ul>

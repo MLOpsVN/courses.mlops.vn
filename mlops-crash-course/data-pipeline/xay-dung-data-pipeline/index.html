@@ -424,7 +424,7 @@
 <figcaption>Photo by <a href="https://snehamehrin22.medium.com/?source=post_page-----fe14643c67fd--------------------------------">Sneha Mehrin</a> on <a href="https://snehamehrin22.medium.com/how-to-build-a-technical-design-architecture-for-an-analytics-data-pipeline-fe14643c67fd">Medium</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command <code>feast apply</code> để tạo ra feature definition ở đường dẫn <code>data_pipeline/feature_repo/registry/local_registry.db</code>. Trong bài học này chúng ta sẽ sử dụng folder này để config client <code>store</code> giao tiếp với feature store như sau:</p>
+<p>Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command <code>feast apply</code> để tạo ra feature definition ở đường dẫn <code>data_pipeline/feature_repo/registry/local_registry.db</code>. Trong bài học này chúng ta sẽ sử dụng folder này để cấu hình client <code>store</code> giao tiếp với feature store như sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">feast</span> <span class="kn">import</span> <span class="n">FeatureStore</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">store</span> <span class="o">=</span> <span class="n">FeatureStore</span><span class="p">(</span><span class="n">repo_path</span><span class="o">=</span><span class="s2">"../feature_repo"</span><span class="p">)</span>  <span class="c1"># (1)</span>
@@ -640,23 +640,15 @@
 </details>
 </li>
 <li>
-<p>Đăng nhập vào Airflow tại <a href="http://localhost:8088">http://localhost:8088</a>, account <code>airflow</code>, password <code>airflow</code>, các bạn sẽ thấy một DAG với tên chính là dag_id: <em>db_to_offline_store</em>, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).</p>
+<p>Đăng nhập vào Airflow tại <a href="http://localhost:8088">http://localhost:8088</a>, account <code>airflow</code>, password <code>airflow</code>, các bạn sẽ thấy một DAG với tên <em>db_to_offline_store</em>, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"/></a></p>
 </li>
 <li>
-<p>Xem thứ tự các task của pipeline này như sau:</p>
-<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"/></a></p>
-</li>
-<li>
-<p>Để trigger pipeline chạy một cách thủ công (không theo schedule), mọi người ấn vào <em>db_to_offline_store</em>
-<a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow3.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow3.png"/></a>
-    , và ấn vào nút <code>Play</code> như hình dưới</p>
+<p>Kích hoạt training pipeline và đợi kết quả</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png"/></a></p>
-</li>
-</ol>
 <details class="tip" open="open">
 <summary>Tip</summary>
-<p>Nếu mọi người gặp lỗi <code>Permission denied</code> như sau:
+<p>Nếu mọi người gặp lỗi <code>Permission denied</code> như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="o">[</span><span class="m">2022</span>-10-16, <span class="m">14</span>:01:48 UTC<span class="o">]</span> <span class="o">{</span>taskinstance.py:1902<span class="o">}</span> ERROR - Task failed with exception
 <a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
 <a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>File <span class="s2">"/home/airflow/.local/lib/python3.7/site-packages/urllib3/connectionpool.py"</span>, line <span class="m">710</span>, <span class="k">in</span> urlopen
@@ -677,8 +669,14 @@
 <a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a>    sock.connect<span class="o">(</span>self.unix_socket<span class="o">)</span>
 <a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a>PermissionError: <span class="o">[</span>Errno <span class="m">13</span><span class="o">]</span> Permission denied
 </code></pre></div>
-thì có nghĩa là user <code>Airflow</code> thiếu quyền để chạy Docker command, mọi người làm theo cách <a href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue/48957722#48957722">sau</a> để thêm user này vào docker group (recommended), hoặc sử dụng command <code>sudo chmod 666 /var/run/docker.sock</code> để gán quyền cho tất cả user.</p>
+<p>thì có nghĩa là user <code>Airflow</code> thiếu quyền để chạy Docker command, mọi người làm theo cách <a href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue/48957722#48957722">sau</a> để thêm user này vào docker group (recommended), hoặc sử dụng command <code>sudo chmod 666 /var/run/docker.sock</code> để gán quyền cho tất cả user.</p>
 </details>
+</li>
+<li>
+<p>Xem thứ tự các task của pipeline này như sau:</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png"/></a></p>
+</li>
+</ol>
 <p>Tương tự như ETL pipeline, chúng ta sẽ code tiếp <em>Feast materialize pipeline</em> và <em>Stream to stores pipline</em> như bên dưới.</p>
 <h3 id="feast-materialize-pipeline">Feast materialize pipeline</h3>
 <p>Materialize dữ liệu từ <em>offline</em> qua <em>online</em> giúp làm mới dữ liệu ở <em>online store</em></p>

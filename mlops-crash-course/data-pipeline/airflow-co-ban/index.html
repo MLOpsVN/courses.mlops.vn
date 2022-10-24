@@ -417,7 +417,7 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <p>Việc sử dụng DockerOperator thay cho PythonOperator đảm bảo môi trường chạy code được đóng gói và có thể chạy code này ở trên bất kỳ máy nào mà không bị các vấn đề về cài đặt hoặc xung đột thư viện.</p>
 </details>
 <h3 id="dag">DAG</h3>
-<p>Sau khi đã code xong các <em>task</em>, chúng ta sẽ đưa các <em>task</em> này vào trong DAG như ví dụ sau:
+<p>Sau khi đã code xong các <em>task</em>, chúng ta sẽ đưa các <em>task</em> này vào trong DAG như ví dụ sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
@@ -433,7 +433,7 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">clean_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">validate_task</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">explore_task</span><span class="p">,</span> <span class="n">validate_task</span><span class="p">]</span> <span class="c1"># (3)</span>
-</code></pre></div></td></tr></table></div></p>
+</code></pre></div></td></tr></table></div>
 <ol>
 <li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
 <li>Định nghĩa <em>task</em> bằng PythonOperator. Mọi người tự truyền các config vào <code>(...)</code></li>

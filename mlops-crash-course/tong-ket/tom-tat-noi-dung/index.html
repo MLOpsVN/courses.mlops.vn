@@ -363,37 +363,49 @@
 <p>Để dọn dẹp môi trường phát triển, mọi người làm theo các bước sau:</p>
 <ol>
 <li>
-<p>Teardown <code>mlops-platform</code> sử dụng command:
-    <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-platform
+<p>Teardown <code>mlops-platform</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-platform
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>bash run.sh all down --volumes
-</code></pre></div></p>
+</code></pre></div>
 </li>
 <li>
-<p>Stop các service khác
-    <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-code
+<p>Stop các service khác</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-code
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>make -C model_serving compose_down
 <a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>make -C monitoring_serving compose_down
 <a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>bash stream_emitting/deploy.sh start
-</code></pre></div></p>
+</code></pre></div>
 </li>
 </ol>
 <h2 id="cac-huong-phat-trien-tiep-theo">Các hướng phát triển tiếp theo</h2>
 <p>Sau khi hoàn thành khóa học này, mọi người hoàn toàn có thể tự học thêm bằng cách:</p>
 <ul>
-<li><strong>Tập dữ liệu:</strong><ul>
+<li>
+<p><strong>Tập dữ liệu:</strong></p>
+<ul>
 <li>Thử nghiệm với tập dữ liệu phức tạp hơn, với nhiều dòng và nhiều cột hơn</li>
 <li>Cải thiện các bước preprocess/postprocess bằng những xử lý phức tạp hơn</li>
 </ul>
 </li>
-<li><strong>CI/CD:</strong> Thực hiện trên nhiều môi trường khác nhau</li>
-<li><strong>Model serving:</strong><ul>
+<li>
+<p><strong>Model serving:</strong></p>
+<ul>
 <li>Thực hiện các loại deployment khác nhau, ví dụ canary hoặc shadow</li>
 <li>Thực hiện A/B hoặc multi-armed bandits testing</li>
 </ul>
 </li>
-<li><strong>Pipeline:</strong> Thực hiện trigger pipeline thông qua Alert Manager, thay vì chạy định kỳ</li>
-<li><strong>Logging:</strong> Lưu thêm log từ các pipelines, thay vì chỉ model serving</li>
-<li>Triển khai hệ thống trên Kubernetes</li>
+<li>
+<p><strong>Pipeline:</strong> Thực hiện trigger pipeline thông qua Alert Manager, thay vì chạy định kỳ</p>
+</li>
+<li>
+<p><strong>Logging:</strong> Lưu thêm log từ các pipelines, thay vì chỉ model serving</p>
+</li>
+<li>
+<p><strong>CI/CD:</strong> Thực hiện trên nhiều môi trường khác nhau</p>
+</li>
+<li>
+<p><strong>Infrastructure:</strong> Triển khai hệ thống trên Kubernetes</p>
+</li>
 </ul>
 </article>
 </div>

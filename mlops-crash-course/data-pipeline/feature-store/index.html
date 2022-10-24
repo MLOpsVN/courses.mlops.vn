@@ -385,12 +385,24 @@
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"/></a>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời. </p>
+<p>Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.</p>
 <p>Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời mọi người đến với nội dung bài học hôm nay.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Bài học này sẽ sử dụng Feast, mọi người vào repo <code>mlops-crash-course-platform/</code> và start service này như sau:
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
+<ol>
+<li>
+<p>Cài đặt các thư viện cần thiết trong file <code>data_pipeline/dev_requirements.txt</code></p>
+</li>
+<li>
+<p>Feast sẽ được sử dụng trong bài này. Bạn vào repo <code>mlops-crash-course-platform/</code> và chạy:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh feast up
-</code></pre></div></p>
+</code></pre></div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>data_pipeline</code>.</p>
+</div>
 <h2 id="feature-store">Feature store</h2>
 <p>Feature store là một hệ thống giúp lưu trữ, tương tác và quản lý feature. Công cụ này sinh ra để giải quyết vấn đề về:</p>
 <ul>
@@ -407,10 +419,6 @@
 </ul>
 <h2 id="feast">Feast</h2>
 <p>Ở series này chúng ta sẽ tìm hiểu về feature store thông qua <a href="https://feast.dev/">Feast</a>.</p>
-<p>Để sử dụng Feast, trước hết mọi người activate vào conda hoặc virtualenv và cài đặt sử dụng pip</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="go">conda activate my_env</span>
-<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="go">pip install feast</span>
-</code></pre></div>
 <p>Feast có 2 khái niệm stores là:</p>
 <ul>
 <li>
@@ -421,19 +429,108 @@
 </li>
 </ul>
 <p>Tất cả các config cho Feast bao gồm data source cho mỗi loại store, định nghĩa các feature và entity (ID) nằm trong folder sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>data_pipeline/feature_repo
-<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>├── data_sources.py: định nghĩa các data source
-<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>├── entities.py: định nghĩa entity
-<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>├── features.py: định nghĩa các bảng feature, và các feature cùng kiểu dữ liệu trong từng bảng
-<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>└── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>data_pipeline/feature_repo
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>├── data_sources.py: định nghĩa các data source
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>├── entities.py: định nghĩa entity
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>├── features.py: định nghĩa các bảng feature, và các feature cùng kiểu dữ liệu trong từng bảng
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>└── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
 </code></pre></div>
 <p>Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao gồm:</p>
 <ul>
 <li><strong>driver_stats_view:</strong> feature view với data source dạng file</li>
 <li><strong>driver_stats_stream:</strong> stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với <em>driver_stats_view</em></li>
 </ul>
-<p>, được định nghĩa như sau:
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<p>Code định nghĩa các feature view như dưới đây:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/feature_repo/features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">driver_stats_view</span> <span class="o">=</span> <span class="n">FeatureView</span><span class="p">(</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"driver features"</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span> <span class="c1"># (1)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>  <span class="c1"># (2)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span> <span class="c1"># (3)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"avg_daily_trips"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Int32</span><span class="p">),</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="p">],</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># (4)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>  <span class="c1"># (5)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"batch_source_owner@gmail.com"</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="nd">@stream_feature_view</span><span class="p">(</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">mode</span><span class="o">=</span><span class="s2">"spark"</span><span class="p">,</span>  <span class="c1"># (6)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="p">],</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_stream_source</span><span class="p">,</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"stream_source_owner@gmail.com"</span><span class="p">,</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="k">def</span> <span class="nf">driver_stats_stream</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>        <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>        <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"acc_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="s2">"conv_rate"</span><span class="p">)</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Định nghĩa entity cho bảng feature</li>
+<li><strong>Time-to-live:</strong> Thời gian sử dụng của feature trước khi bị stale</li>
+<li>Định nghĩa feature và kiểu dữ liệu</li>
+<li>Cho phép online serving</li>
+<li>Định nghĩa data source cho bảng feature</li>
+<li>Sử dụng Spark để xử lý dữ liệu stream</li>
+</ol>
+<p>Code định nghĩa các data source như sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/feature_repo/data_sources.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -454,117 +551,28 @@
 <span class="normal"><a href="#__codelineno-3-19">19</a></span>
 <span class="normal"><a href="#__codelineno-3-20">20</a></span>
 <span class="normal"><a href="#__codelineno-3-21">21</a></span>
-<span class="normal"><a href="#__codelineno-3-22">22</a></span>
-<span class="normal"><a href="#__codelineno-3-23">23</a></span>
-<span class="normal"><a href="#__codelineno-3-24">24</a></span>
-<span class="normal"><a href="#__codelineno-3-25">25</a></span>
-<span class="normal"><a href="#__codelineno-3-26">26</a></span>
-<span class="normal"><a href="#__codelineno-3-27">27</a></span>
-<span class="normal"><a href="#__codelineno-3-28">28</a></span>
-<span class="normal"><a href="#__codelineno-3-29">29</a></span>
-<span class="normal"><a href="#__codelineno-3-30">30</a></span>
-<span class="normal"><a href="#__codelineno-3-31">31</a></span>
-<span class="normal"><a href="#__codelineno-3-32">32</a></span>
-<span class="normal"><a href="#__codelineno-3-33">33</a></span>
-<span class="normal"><a href="#__codelineno-3-34">34</a></span>
-<span class="normal"><a href="#__codelineno-3-35">35</a></span>
-<span class="normal"><a href="#__codelineno-3-36">36</a></span>
-<span class="normal"><a href="#__codelineno-3-37">37</a></span>
-<span class="normal"><a href="#__codelineno-3-38">38</a></span>
-<span class="normal"><a href="#__codelineno-3-39">39</a></span>
-<span class="normal"><a href="#__codelineno-3-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">driver_stats_view</span> <span class="o">=</span> <span class="n">FeatureView</span><span class="p">(</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"driver features"</span><span class="p">,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span> <span class="c1"># (1)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>  <span class="c1"># (2)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span> <span class="c1"># (3)</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"avg_daily_trips"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Int32</span><span class="p">),</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="p">],</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># (4)</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>  <span class="c1"># (5)</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"batch_source_owner@gmail.com"</span><span class="p">,</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="nd">@stream_feature_view</span><span class="p">(</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">mode</span><span class="o">=</span><span class="s2">"spark"</span><span class="p">,</span>  <span class="c1"># (6)</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="p">],</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_stream_source</span><span class="p">,</span>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"stream_source_owner@gmail.com"</span><span class="p">,</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="p">)</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="k">def</span> <span class="nf">driver_stats_stream</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a>    <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a>
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="k">return</span> <span class="p">(</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"acc_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="s2">"conv_rate"</span><span class="p">)</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="p">)</span>
-</code></pre></div></td></tr></table></div></p>
-<ol>
-<li>Định nghĩa entity cho bảng feature</li>
-<li><strong>Time-to-live:</strong> Thời gian sử dụng của feature trước khi bị stale</li>
-<li>Định nghĩa feature và kiểu dữ liệu</li>
-<li>Cho phép online serving</li>
-<li>Định nghĩa data source cho bảng feature</li>
-<li>Sử dụng Spark để xử lý dữ liệu stream</li>
-</ol>
-<p>với data source như sau:</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_sources.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">driver_stats_parquet_file</span> <span class="o">=</span> <span class="s2">"../data_sources/driver_stats.parquet"</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">driver_stats_batch_source</span> <span class="o">=</span> <span class="n">FileSource</span><span class="p">(</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="n">file_format</span><span class="o">=</span><span class="n">ParquetFormat</span><span class="p">(),</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="n">path</span><span class="o">=</span><span class="n">driver_stats_parquet_file</span><span class="p">,</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="n">created_timestamp_column</span><span class="o">=</span><span class="s2">"created"</span><span class="p">,</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="p">)</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="n">driver_stats_stream_source</span> <span class="o">=</span> <span class="n">KafkaSource</span><span class="p">(</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats_stream"</span><span class="p">,</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="n">kafka_bootstrap_servers</span><span class="o">=</span><span class="s2">"localhost:29092"</span><span class="p">,</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a>    <span class="n">topic</span><span class="o">=</span><span class="s2">"drivers"</span><span class="p">,</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="n">batch_source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="n">message_format</span><span class="o">=</span><span class="n">JsonFormat</span><span class="p">(</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a>        <span class="n">schema_json</span><span class="o">=</span><span class="s2">"driver_id integer, acc_rate double, conv_rate double, datetime timestamp, created timestamp"</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a>    <span class="p">),</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="n">watermark_delay_threshold</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>   <span class="c1"># (1)</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"The Kafka stream containing the driver stats"</span><span class="p">,</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">driver_stats_parquet_file</span> <span class="o">=</span> <span class="s2">"../data_sources/driver_stats.parquet"</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">driver_stats_batch_source</span> <span class="o">=</span> <span class="n">FileSource</span><span class="p">(</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="n">file_format</span><span class="o">=</span><span class="n">ParquetFormat</span><span class="p">(),</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">path</span><span class="o">=</span><span class="n">driver_stats_parquet_file</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">created_timestamp_column</span><span class="o">=</span><span class="s2">"created"</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="n">driver_stats_stream_source</span> <span class="o">=</span> <span class="n">KafkaSource</span><span class="p">(</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats_stream"</span><span class="p">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">kafka_bootstrap_servers</span><span class="o">=</span><span class="s2">"localhost:29092"</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="n">topic</span><span class="o">=</span><span class="s2">"drivers"</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>    <span class="n">batch_source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="n">message_format</span><span class="o">=</span><span class="n">JsonFormat</span><span class="p">(</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>        <span class="n">schema_json</span><span class="o">=</span><span class="s2">"driver_id integer, acc_rate double, conv_rate double, datetime timestamp, created timestamp"</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="p">),</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">watermark_delay_threshold</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>   <span class="c1"># (1)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"The Kafka stream containing the driver stats"</span><span class="p">,</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ</li>
@@ -573,23 +581,34 @@
 <ul>
 <li><strong>FileSource:</strong> đảm bảo đường dẫn tồn tại, file không bị lỗi</li>
 <li>
-<p><strong>KafkaSource:</strong> đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, mọi người truy cập vào thư mục <code>stream_emitting/</code> và chạy command:
-  <div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="go">bash deploy.sh start</span>
+<p><strong>KafkaSource:</strong> đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, các bạn chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>bash deploy.sh start
 </code></pre></div>
-  khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-  <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"/></a></p>
+<p>Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png"/></a></p>
+</li>
+</ul>
 <details class="tip" open="open">
 <summary>Tip</summary>
 <ul>
-<li>Để <strong>stop</strong> server, chúng ta sử dụng command <code>bash deploy.sh stop</code></li>
-<li>Để <strong>teardown</strong> server, nghĩa là vừa stop vừa remove tất cả docker volume liên quan, chúng ta sử dụng command <code>bash deploy.sh teardown</code></li>
-</ul>
-</details>
+<li>
+<p>Để <strong>stop</strong> server, các bạn chạy: <code>bash deploy.sh stop</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>bash deploy.sh stop
+</code></pre></div>
+</li>
+<li>
+<p>Để <strong>teardown</strong> server (stop và remove tất cả docker volume liên quan), các bạn chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>bash deploy.sh teardown
+</code></pre></div>
 </li>
 </ul>
-<p>và cuối cùng chúng ta sẽ apply các thay đổi như sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="go">cd feature_repo</span>
-<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="go">feast apply</span>
+</details>
+<p>Và cuối cùng chúng ta sẽ cập nhật Offline Feature store bằng cách chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cd</span> feature_repo
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>feast apply
 </code></pre></div>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.</p>
