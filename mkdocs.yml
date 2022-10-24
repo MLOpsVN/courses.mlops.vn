@@ -52,7 +52,8 @@ nav:
       - Monitoring:
           - Tổng quan monitoring: mlops-crash-course/monitoring/tong-quan-monitoring.md
           - Metrics hệ thống: mlops-crash-course/monitoring/metrics-he-thong.md
-          - Monitoring service: mlops-crash-course/monitoring/monitoring-service.md
+          - Thiết kế monitoring service: mlops-crash-course/monitoring/thiet-ke-monitoring-service.md
+          - Triển khai monitoring service: mlops-crash-course/monitoring/trien-khai-monitoring-service.md
       - CI/CD:
           - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
           - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md

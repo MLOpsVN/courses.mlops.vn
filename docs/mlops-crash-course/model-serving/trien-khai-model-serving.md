@@ -28,7 +28,6 @@ Các MLOps tools được dùng trong bài này bao gồm:
 1. **Feast:** truy xuất Feature Store
 1. **MLflow:** ML Metadata Store, Model Registry
 1. **Airflow:** điều phối batch serving pipeline
-1. **BentoML:** triển khai online serving
 
 !!! note
 
