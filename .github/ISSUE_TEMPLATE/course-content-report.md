@@ -8,10 +8,13 @@ assignees: ''
 ---
 
 **Khoá học**
-Tên khoá học
+- Tên khoá học
+- Tên bài trong khoá học
 
-## 1. Tên bài trong khoá học
+## 1. Tên lỗi, hoặc tên bài, hoặc tên phần trong bài
 
 - Ảnh chụp đoạn cần chỉnh sửa trong bài
 - Mô tả lỗi hay đóng góp ý kiến về một phần trong bài
 - Giải pháp/cách sửa (nếu có gợi ý nào)
+
+## 2. Tên lỗi, hoặc tên bài, hoặc tên phần trong bài

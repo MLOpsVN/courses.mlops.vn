@@ -8,6 +8,9 @@ assignees: ''
 ---
 
 **Mô tả bug**
+- Tên bug
+- Xảy ra ở bài (link tới bài)
+- Xảy ra ở bước (ảnh của nội dung bài hướng dẫn, tại bước xảy ra bug)
 
 **Cách tạo lại bug**
 1. Đi tới '...'
