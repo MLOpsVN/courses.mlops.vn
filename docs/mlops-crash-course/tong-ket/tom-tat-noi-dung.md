@@ -13,15 +13,18 @@ Feature store cũng là một thành phần thú vị trong chuỗi bài giảng
 Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps platform, có tính tái sử dụng ở nhiều dự án ML khác nhau, đặt ra một quy chuẩn trong việc thiết kế và xây dựng hệ thống ML, đồng thời giảm thiểu tối đa các công việc trùng lặp giữa nhiều team với nhau.
 
 ## Dọn dẹp môi trường phát triển
+
 Để dọn dẹp môi trường phát triển, mọi người làm theo các bước sau:
 
-1. Teardown `mlops-platform` sử dụng command:
+1.  Teardown `mlops-platform`
+
     ```bash
     cd mlops-crash-course-platform
     bash run.sh all down --volumes
     ```
 
-2. Stop các service khác
+2.  Stop các service khác
+
     ```bash
     cd mlops-crash-course-code
     make -C model_serving compose_down
@@ -30,15 +33,23 @@ Nhìn xa hơn nữa, các tool mà chúng ta đã deploy tạo nên một MLOps 
     ```
 
 ## Các hướng phát triển tiếp theo
+
 Sau khi hoàn thành khóa học này, mọi người hoàn toàn có thể tự học thêm bằng cách:
 
 - **Tập dữ liệu:**
-    - Thử nghiệm với tập dữ liệu phức tạp hơn, với nhiều dòng và nhiều cột hơn
-    - Cải thiện các bước preprocess/postprocess bằng những xử lý phức tạp hơn
-- **CI/CD:** Thực hiện trên nhiều môi trường khác nhau
+
+      - Thử nghiệm với tập dữ liệu phức tạp hơn, với nhiều dòng và nhiều cột hơn
+      - Cải thiện các bước preprocess/postprocess bằng những xử lý phức tạp hơn
+
 - **Model serving:**
-    - Thực hiện các loại deployment khác nhau, ví dụ canary hoặc shadow
-    - Thực hiện A/B hoặc multi-armed bandits testing
+
+      - Thực hiện các loại deployment khác nhau, ví dụ canary hoặc shadow
+      - Thực hiện A/B hoặc multi-armed bandits testing
+
 - **Pipeline:** Thực hiện trigger pipeline thông qua Alert Manager, thay vì chạy định kỳ
+
 - **Logging:** Lưu thêm log từ các pipelines, thay vì chỉ model serving
-- Triển khai hệ thống trên Kubernetes
+
+- **CI/CD:** Thực hiện trên nhiều môi trường khác nhau
+
+- **Infrastructure:** Triển khai hệ thống trên Kubernetes

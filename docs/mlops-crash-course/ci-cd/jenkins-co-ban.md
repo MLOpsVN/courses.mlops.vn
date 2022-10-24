@@ -4,68 +4,74 @@
 </figure>
 
 ## Giới thiệu
-Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này. 
+
+Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này.
 
 Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.
 
 ## Cài đặt Jenkins
 
-Trước hết mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
+Các bạn làm các bước sau để cài đặt:
 
-```bash
-bash run.sh jenkins up
-```
+1.  Vào repo `mlops-crash-course-platform/` và chạy:
 
-Chúng ta sử dụng `docker ps` để kiểm tra tình trạng service:
+    ```bash
+    bash run.sh jenkins up
+    ```
 
-```bash
-CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                         PORTS                                                                                      NAMES
-f81b55f1b151   jenkins/jenkins:lts    "/usr/bin/tini -- /u…"   41 minutes ago   Up 41 minutes                  0.0.0.0:50000->50000/tcp, :::50000->50000/tcp, 0.0.0.0:8081->8080/tcp, :::8081->8080/tcp   jenkins
-```
+1.  Kiểm tra tình trạng service:
 
-Service này đã `Up` và được serve tại đường dẫn <http://localhost:8081> như sau:
+    ```bash
+    docker ps
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png" loading="lazy" />
+    CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                         PORTS                                                                                      NAMES
+    f81b55f1b151   jenkins/jenkins:lts    "/usr/bin/tini -- /u…"   41 minutes ago   Up 41 minutes                  0.0.0.0:50000->50000/tcp, :::50000->50000/tcp, 0.0.0.0:8081->8080/tcp, :::8081->8080/tcp   jenkins
+    ```
 
-Để lấy mật khẩu `admin`, chúng ta sẽ kiểm tra logs của jenkins container với câu lệnh:
+1.  Truy cập <http://localhost:8081>, các bạn sẽ thấy:
 
-```bash
-docker logs jenkins
-```
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png" loading="lazy" />
 
-và mọi người sẽ thấy mật khẩu như sau:
+1.  Kiểm tra logs của jenkins container để lấy mật khẩu `admin`:
 
-```bash
-*************************************************************
-*************************************************************
-*************************************************************
+    ```bash
+    docker logs jenkins
+    ```
 
-Jenkins initial setup is required. An admin user has been created and a password generated.
-Please use the following password to proceed to installation:
+    Các bạn sẽ thấy mật khẩu như sau:
 
-e6623e35c18847e7a7ccfd07863feb4a
+    ```bash
+    *************************************************************
+    *************************************************************
+    *************************************************************
 
-This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
-```
+    Jenkins initial setup is required. An admin user has been created and a password generated.
+    Please use the following password to proceed to installation:
 
-Tiếp theo chúng ta sẽ chọn `Install suggested plugins`, và chờ Jenkins cài đặt các plugins.
+    e6623e35c18847e7a7ccfd07863feb4a
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png" loading="lazy" />
+    This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+    ```
 
-Sau đó, chúng ta sẽ tới giao diện đăng ký user sử dụng Jenkins, để cho đơn giản, chúng ta sẽ chọn `Skip and continue as admin`
+1.  Chọn `Install suggested plugins`, và chờ Jenkins cài đặt các plugins.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png" loading="lazy" />
 
-???+ tip
-    Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản `admin` để tránh đi quá sâu vào phần quản trị này.
+1.  Ở giao diện đăng ký user sử dụng Jenkins, chọn `Skip and continue as admin`
 
-Ở bước tiếp theo, các bạn giữ nguyên Jenkins URL như sau:
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png" loading="lazy" />
+    ???+ tip
 
-Sau khi cài xong, chúng ta sẽ nhìn thấy giao diện sau:
+        Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản `admin` để tránh đi quá sâu vào phần quản trị này.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png" loading="lazy" />
+1.  Cấu hình Jenkins URL như sau:
+
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png" loading="lazy" />
+
+1.  Cuối cùng, bạn sẽ thấy giao diện sau:
+
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png" loading="lazy" />
 
 ## Kết nối Jenkins với Github
 
@@ -73,84 +79,79 @@ Bây giờ chúng ta sẽ kết nối Jenkins ở local với Github để mỗi
 
 ### Expose Jenkins với ngrok
 
-Đầu tiên, cài đặt [ngrok](https://ngrok.com/download), và expose Jenkins service tại local với câu lệnh:
+Các bạn làm các bước sau:
 
-```bash
-ngrok http 8081
-```
+1.  Cài đặt _ngrok_, xác nhận email, set token theo hướng dận [tại đây](https://ngrok.com/download)
+1.  Expose Jenkins service tại local với câu lệnh:
 
-Chúng ta sẽ thấy console hiển thị như sau:
+    ```bash
+    ngrok http 8081
+    ```
 
-```bash
-ngrok by @inconshreveable                                       (Ctrl+C to quit)
+    Bạn sẽ thấy console hiển thị như sau:
 
-Session Status                online
-Account                       dangvanquan.xyz@gmail.com (Plan: Free)
-Version                       2.3.40
-Region                        United States (us)
-Web Interface                 http://127.0.0.1:4040
-Forwarding                    http://a846-183-80-56-103.ngrok.io -> http://local
-Forwarding                    https://a846-183-80-56-103.ngrok.io -> http://loca
+    ```bash
+    ngrok by @inconshreveable                                       (Ctrl+C to quit)
 
-Connections                   ttl     opn     rt1     rt5     p50     p90
-                              0       0       0.00    0.00    0.00    0.00
+    Session Status                online
+    Account                       dangvanquan.xyz@gmail.com (Plan: Free)
+    Version                       2.3.40
+    Region                        United States (us)
+    Web Interface                 http://127.0.0.1:4040
+    Forwarding                    http://a846-183-80-56-103.ngrok.io -> http://local
+    Forwarding                    https://a846-183-80-56-103.ngrok.io -> http://loca
 
-```
+    Connections                   ttl     opn     rt1     rt5     p50     p90
+                                0       0       0.00    0.00    0.00    0.00
+    ```
 
-Bây giờ, chúng ta có thể truy cập Jenkins qua link forward ở trên <https://a846-183-80-56-103.ngrok.io>, và sử dụng username `admin`, và password như trên.
+1.  Truy cập Jenkins qua link forward ở trên <https://a846-183-80-56-103.ngrok.io>
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png" loading="lazy" />
 
 ### Thêm Jenkins webhook vào Github
-Đầu tiên mọi người push code đã clone từ [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code) lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng `https://github.com/yourusername/mlops-crash-course-code`. Ví dụ: nếu Github username là `MLOps` thi đường link tới repo sẽ là `https://github.com/MLOps/mlops-crash-course-code`. 
 
-Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về `ci-cd`, mọi người sẽ làm việc trên repo `https://github.com/yourusername/mlops-crash-course-code` của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo `https://github.com/MLOpsVN/mlops-crash-course-code`, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.
+Đầu tiên mọi người push code đã clone từ [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code) lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng `https://github.com/<yourusername>/mlops-crash-course-code`. Ví dụ: nếu Github username là `MLOps` thi đường link tới repo sẽ là `https://github.com/MLOps/mlops-crash-course-code`.
 
-Bây giờ chúng ta sẽ vào phần `Settings` ở repo code của chúng ta (<https://github.com/yourusername/mlops-crash-course-code>) và chọn phần `Webhooks` như bên dưới
+Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về `ci-cd`, mọi người sẽ làm việc trên repo `https://github.com/<yourusername>/mlops-crash-course-code` của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo `https://github.com/MLOpsVN/mlops-crash-course-code`, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png" loading="lazy" />
+1.  Vào `Settings` ở repo code, chọn `Webhooks`
 
-Sau đó ấn `Add webhook` và điền `Payload URL` là `https://a846-183-80-56-103.ngrok.io/github-webhook/`, và `Content type` là `application/json`
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png" loading="lazy" />
 
-Mọi người lưu ý phần `Which events would you like to trigger this webhook?`, ở đây chúng ta chọn `Let me select individual events.` và sau đó tick vào phần `Pushes` và `Pull requests`
+1.  Ấn `Add webhook`, điền `Payload URL` là `https://a846-183-80-56-103.ngrok.io/github-webhook/`, `Content type` là `application/json`
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png" loading="lazy" />
 
-Cuối cùng, ấn `Add webhook` để hoàn tất.
+1.  Ở phần `Which events would you like to trigger this webhook?`, chọn `Let me select individual events.`, tick vào phần `Pushes` và `Pull requests`
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png" loading="lazy" />
+
+1.  Ấn `Add webhook` để hoàn tất
+
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png" loading="lazy" />
 
 ### Thêm Github repo vào Jenkins
 
-Đầu tiên, chúng ta trở lại mà hình home của Jenkins
+1.  Trở lại mà hình home của Jenkins qua URL <https://a846-183-80-56-103.ngrok.io>
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
 
-!!! warning
+1.  Ấn `+ New Item`, điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline`, và ấn `OK`
 
-    Các bạn cần đăng nhập vào Jenkins thông qua URL <https://a846-183-80-56-103.ngrok.io> thì Github mới chấp nhận quyền truy cập.
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
 
-Ấn vào phần `+ New Item`.
+1.  Ở phần `Branch Sources`, ấn `Add source`, chọn `GitHub`
 
-Ở trang mới này, chúng ta điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline`, và ấn `OK`
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
+1.  Thêm Github repo bằng cách chọn `Add repository`, điền vào `Repository URL`
 
-Tiếp theo, chúng ta tìm đến phần `Branch Sources`, ấn `Add source` và chọn `GitHub`
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png" loading="lazy" />
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
+1.  Ấn `Apply` để hoàn tất
 
-Sau đó, chúng ta sẽ thấy màn hình như sau:
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-14.png" loading="lazy" />
-
-Chúng ta sẽ thêm Github repo bằng cách chọn `Add repository`, và điền vào phần `Repository URL` theo dạng `https://github.com/MLOpsVN/mlops-crash-course-code` như bên dưới.
-
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png" loading="lazy" />
-
-Cuối cùng, chúng ta kéo xuống phần cuối cùng, ấn `Apply` để hoàn tất.
-
-## Smoke test luồng push code để trigger Jenkins pipeline
+## Trigger Jenkins pipeline
 
 Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có project `mlops-demo` như bên dưới
 
@@ -253,30 +254,33 @@ Finished: SUCCESS
 ```
 
 ???+ tip
+
     Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
 
-    ````py title="Jenkinsfile" linenums="1"
-    pipeline {
-    ...
+        ````py title="Jenkinsfile" linenums="1"
+        pipeline {
+        ...
 
-                stage('test data pipeline') {
-                    when {changeset "data_pipeline/*.*" }
+                    stage('test data pipeline') {
+                        when {changeset "data_pipeline/*.*" }
 
-                    steps {
-                        echo 'Testing data pipeline..'
+                        steps {
+                            echo 'Testing data pipeline..'
+                        }
                     }
+
+                    ...
                 }
-
-                ...
             }
-        }
-        ```
-    ````
+            ```
+        ````
 
-???+ tip
-    Kiểu viết `Jenkinsfile` như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là _Declarative Pipeline_. Ngoài ra còn một cách viết khác dùng `Groovy script`gọi là _Scripted Pipeline_, cách này thông thường sử dụng cho những logic phức tạp.
+???+ info
+
+    Kiểu viết `Jenkinsfile` như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là _Declarative Pipeline_. Ngoài ra còn một cách viết khác dùng `Groovy script` gọi là _Scripted Pipeline_, cách này thông thường sử dụng cho những logic phức tạp.
 
 ## Tổng kết
-Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không. 
+
+Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
 
 Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.

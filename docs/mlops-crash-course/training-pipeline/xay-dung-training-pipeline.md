@@ -24,8 +24,6 @@ flowchart LR
 
 Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  Vào repo `mlops-crash-course-code` sử dụng command `cd mlops-crash-course-code`
-
 1.  Cài đặt các thư viện cần thiết trong file `training_pipeline/dev_requirements.txt`
 
 1.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline`. Env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.

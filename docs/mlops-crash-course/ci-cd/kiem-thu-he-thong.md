@@ -37,11 +37,12 @@ Thông thường loại này bao gồm:
 2. **Integration testing:** test một module lớn bao gồm nhiều module nhỏ để đảm bảo khi kết hợp không xảy ra vấn đề gì
 
 ???+ tip
+
     Theo nguyên tắc [KISS](https://people.apache.org/~fhanik/kiss.html), hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.
 
     Ví dụ dưới đây được trích từ [Machine learning mastery blog](https://machinelearningmastery.com/machine-learning-in-python-step-by-step/) cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ `train_test_split`, `accuracy_score` và `confusion_matrix`, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.
 
-    ```py title="example.py" linenums="1"
+    ```py linenums="1"
     # make predictions
     from pandas import read_csv
     from sklearn.model_selection import train_test_split

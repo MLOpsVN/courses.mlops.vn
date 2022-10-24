@@ -19,6 +19,7 @@ MLOps platform là nền tảng cung cấp các tool cần thiết để quản 
 | Monitoring          | Theo dõi resource hệ thống, hiệu năng của model và chất lượng dữ liệu trên production | Prometheus & Grafana & ELK         |
 
 ???+ tip
+
     Như mọi người có thể thấy ở trên, chúng ta có thể sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm hướng tới sử dụng ít tool nhất có thể mà vẫn đáp ứng được nhu cầu. Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên cực kỳ phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp trong đống tool do không biết sử dụng như thế nào, và sử dụng như nào cho hiệu quả.
 
 Kiến trúc MLOps platform của chúng ta sẽ như sau:
@@ -52,7 +53,9 @@ Các tương tác chính trong MLOps platform:
 Các tương tác và các tools được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.
 
 ## Sử dụng platform
+
 ### Start
+
 Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người cài Docker theo hướng dẫn tại [đây](https://www.docker.com/) và Docker Compose version v2.10.2 theo hướng dẫn tại [đây](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04).
 
 Cuối cùng, mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):
@@ -60,31 +63,36 @@ Cuối cùng, mọi người start tất cả service một lúc bằng command 
 ```bash
 cd mlops-crash-course-platform && bash run.sh all up
 ```
+
 , hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):
+
 ```bash
 cd mlops-crash-course-platform && bash run.sh feast up
 ```
 
 ???+ info
-    Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
+Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
 
 ### Stop
+
 Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:
 
 - Stop tất cả service:
-    ```bash
-    cd mlops-crash-course-platform && bash run.sh all down
-    ```
+  ```bash
+  cd mlops-crash-course-platform && bash run.sh all down
+  ```
 - Stop một nhóm service
-    ```bash
-    cd mlops-crash-course-platform && bash run.sh feast down
-    ```
+  ```bash
+  cd mlops-crash-course-platform && bash run.sh feast down
+  ```
 
 ???+ tip
+
     Nếu muốn stop các service, đồng thời xóa dữ liệu lưu trữ trong các Docker volume, mọi người thêm argument `--volumes`.
     Ví dụ: `bash run.sh all down --volumes`
 
 ## Cấu trúc code
+
 Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo `mlops-crash-course-platform` và `mlops-crash-course-code` trong cùng 1 folder như sau:
 
 ```python
@@ -95,11 +103,11 @@ mlops-crash-course
 
 , trong đó:
 
-- Repo: `mlops-crash-course-platform` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-platform) chứa các file docker-compose để deploy 
+- Repo: `mlops-crash-course-platform` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-platform) chứa các file docker-compose để deploy
 - Repo: `mlops-crash-course-code` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-code) chứa code của dự án ML sẽ trình bày trong bài học POC
 
 ???+ warning
-    Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
+Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
 
     ```bash
     conda create -n myenv python=3.9

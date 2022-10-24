@@ -3,15 +3,26 @@
 </figure>
 
 ## Giới thiệu
-Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời. 
+
+Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
 
 Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời mọi người đến với nội dung bài học hôm nay.
 
 ## Môi trường phát triển
-Bài học này sẽ sử dụng Feast, mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
-```bash
-bash run.sh feast up
-```
+
+Các bạn làm các bước sau để cài đặt môi trường phát triển:
+
+1.  Cài đặt các thư viện cần thiết trong file `data_pipeline/dev_requirements.txt`
+
+1.  Feast sẽ được sử dụng trong bài này. Bạn vào repo `mlops-crash-course-platform/` và chạy:
+
+    ```bash
+    bash run.sh feast up
+    ```
+
+!!! note
+
+    Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder `data_pipeline`.
 
 ## Feature store
 
@@ -31,13 +42,6 @@ Có rất nhiều feature store ở thời điểm hiện tại, có thể kể 
 ## Feast
 
 Ở series này chúng ta sẽ tìm hiểu về feature store thông qua [Feast](https://feast.dev/).
-
-Để sử dụng Feast, trước hết mọi người activate vào conda hoặc virtualenv và cài đặt sử dụng pip
-
-```console
-conda activate my_env
-pip install feast
-```
 
 Feast có 2 khái niệm stores là:
 
@@ -60,8 +64,9 @@ Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao
 - **driver_stats_view:** feature view với data source dạng file
 - **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với _driver_stats_view_
 
-, được định nghĩa như sau:
-```py title="features.py" linenums="1"
+Code định nghĩa các feature view như dưới đây:
+
+```py title="data_pipeline/feature_repo/features.py" linenums="1"
 driver_stats_view = FeatureView(
     name="driver_stats",
     description="driver features",
@@ -111,9 +116,9 @@ def driver_stats_stream(df: DataFrame):
 5.  Định nghĩa data source cho bảng feature
 6.  Sử dụng Spark để xử lý dữ liệu stream
 
-với data source như sau:
+Code định nghĩa các data source như sau:
 
-```py title="data_sources.py" linenums="1"
+```py title="data_pipeline/feature_repo/data_sources.py" linenums="1"
 driver_stats_parquet_file = "../data_sources/driver_stats.parquet"
 
 driver_stats_batch_source = FileSource(
@@ -143,20 +148,36 @@ driver_stats_stream_source = KafkaSource(
 Sau khi config feature store bằng cách thay đổi các file trong repo `feature_repo/`, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
 - **FileSource:** đảm bảo đường dẫn tồn tại, file không bị lỗi
-- **KafkaSource:** đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, mọi người truy cập vào thư mục `stream_emitting/` và chạy command:
-  ```console
-  bash deploy.sh start
-  ```
-  khi này chúng ta sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-  <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+- **KafkaSource:** đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, các bạn chạy:
 
-    ???+ tip
-        - Để **stop** server, chúng ta sử dụng command `bash deploy.sh stop`
-        - Để **teardown** server, nghĩa là vừa stop vừa remove tất cả docker volume liên quan, chúng ta sử dụng command `bash deploy.sh teardown`
+      ```bash
+      cd ../stream_emitting
+      bash deploy.sh start
+      ```
 
-và cuối cùng chúng ta sẽ apply các thay đổi như sau:
+      Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
 
-```console
+      <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+
+???+ tip
+
+    - Để **stop** server, các bạn chạy: `bash deploy.sh stop`
+
+        ```bash
+        cd ../stream_emitting
+        bash deploy.sh stop
+        ```
+
+    - Để **teardown** server (stop và remove tất cả docker volume liên quan), các bạn chạy:
+
+        ```bash
+        cd ../stream_emitting
+        bash deploy.sh teardown
+        ```
+
+Và cuối cùng chúng ta sẽ cập nhật Offline Feature store bằng cách chạy:
+
+```bash
 cd feature_repo
 feast apply
 ```
@@ -166,4 +187,5 @@ feast apply
 Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
 
 ## Tài liệu tham khảo
+
 - <https://feast.dev/>
