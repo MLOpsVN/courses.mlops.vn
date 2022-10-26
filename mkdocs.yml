@@ -69,3 +69,6 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/mlopsvn/courses.mlops.vn
+  analytics:
+    provider: google
+    property: G-JX2MD05JFT
