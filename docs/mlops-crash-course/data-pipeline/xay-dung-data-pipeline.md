@@ -180,6 +180,8 @@ processor.ingest_stream_feature_view()
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
+1. Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable. 
+
 1.  Kích hoạt training pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
