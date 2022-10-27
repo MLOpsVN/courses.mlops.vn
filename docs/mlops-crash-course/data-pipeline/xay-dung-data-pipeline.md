@@ -131,9 +131,20 @@ processor.ingest_stream_feature_view()
 
     ```bash
     cd data_pipeline
-    make build_image # build Đocker image
-    make deploy_dags # copy DAG
+    make build_image
+    # Đảm bảo Airflow server đã chạy
+    make deploy_dags # (1)
     ```
+
+    1.  Copy `data_pipeline/dags/*` vào folder `dags` của Airflow
+
+    Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server
+
+    ```bash
+    bash run.sh airflow restart
+    ```
+
+    DAG dưới đây thể hiện ETL pipeline.
 
     ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
     with DAG(
@@ -182,33 +193,30 @@ processor.ingest_stream_feature_view()
     ```python linenums="1" title="data_pipeline/dags/utils.py"
     DEFAULT_DOCKER_OPERATOR_ARGS = {
         "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/data_pipeline:latest", # (1)
-        "api_version": "auto",  # (5)
-        "auto_remove": True, # (2)
-        "mounts": [ # (3)
-            # (4)
+        "api_version": "auto",  # (2)
+        "auto_remove": True, # (3)
+        "mounts": [
             Mount(
-                source=AppPath.FEATURE_REPO.absolute().as_posix(), # (6)
-                target="/data_pipeline/feature_repo", # (7)
-                type="bind", # (8)
+                source=AppPath.FEATURE_REPO.absolute().as_posix(), # (4)
+                target="/data_pipeline/feature_repo", # (5)
+                type="bind", # (6)
             ),
         ],
     }
     ```
 
     1. Docker image dùng cho task
-    2. Tự động dọn dẹp container sau khi exit
-    3. Danh sách các folders cần được mount vào container
-    4. Folder `data_pipeline/feature_repo` chứa định nghĩa Feature Store, để chạy task **Cập nhật Feature Store**
-    5. Tự động xác định Docker engine API version
-    6. Folder ở máy local, bắt buộc là đường dẫn tuyệt đối.
-    7. Folder nằm trong docker container
-    8. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
+    2. Tự động xác định Docker engine API version
+    3. Tự động dọn dẹp container sau khi exit
+    4. Folder ở máy local, bắt buộc là đường dẫn tuyệt đối
+    5. Folder nằm trong docker container
+    6. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
 
 1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
-1. Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable. 
+1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable.
 
     !!! info
 
@@ -268,7 +276,7 @@ with DAG(
     materialize_task = DockerOperator(
         task_id="materialize_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' && ./scripts/feast_helper.sh materialize",
+        command="/bin/bash ./scripts/feast_helper.sh materialize",
     )
 ```
 

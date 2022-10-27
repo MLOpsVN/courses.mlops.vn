@@ -207,6 +207,12 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 
     1.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
+    Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server
+
+    ```bash
+    bash run.sh airflow restart
+    ```
+
 1.  Kích hoạt batch serving pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
