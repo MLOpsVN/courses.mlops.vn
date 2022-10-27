@@ -614,7 +614,7 @@
 <a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
 <a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">ingest_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
 <a id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"ingest_task"</span><span class="p">,</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>  <span class="c1"># (8)</span>
 <a id="__codelineno-8-12" name="__codelineno-8-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'cd src/db_to_offline_store &amp;&amp; python ingest.py'"</span><span class="p">,</span>  <span class="c1"># (6)</span>
 <a id="__codelineno-8-13" name="__codelineno-8-13"></a>    <span class="p">)</span>
 <a id="__codelineno-8-14" name="__codelineno-8-14"></a>
@@ -634,21 +634,25 @@
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard</li>
-<li>Định nghĩa image cho các <strong>DockerOperator</strong>, số lần retry pipeline, và khoảng thời gian giữa các lần retry</li>
-<li>Lịch chạy pipeline, ở đây <em>@once</em> là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
+<li>Định nghĩa pipeline owner, số lần retry pipeline, và khoảng thời gian giữa các lần retry</li>
+<li>Lịch chạy pipeline, ở đây <code>@once</code> là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
 <li>Ngày bắt đầu chạy pipeline theo múi giờ UTC</li>
 <li>Nếu <strong>start_date</strong> là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và <strong>schedule_interval</strong> là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa</li>
 <li>Command chạy trong docker container cho bước này</li>
 <li>Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là <strong>ingest</strong> sau đó tới <strong>clean</strong> và cuối cùng là <strong>explore_and_validate</strong></li>
+<li>Định nghĩa image cho các <strong>DockerOperator</strong>, và đường dẫn mount từ máy local (Docker host)</li>
 </ol>
 <details class="info" open="open">
 <summary>Info</summary>
-<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <em>DEFAULT_DAG_ARGS</em> trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại <code>data-pipeline/deployment/Dockerfile</code></p>
+<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại <code>data-pipeline/deployment/Dockerfile</code></p>
 </details>
 </li>
 <li>
 <p>Đăng nhập vào Airflow tại <a href="http://localhost:8088">http://localhost:8088</a>, account <code>airflow</code>, password <code>airflow</code>, các bạn sẽ thấy một DAG với tên <em>db_to_offline_store</em>, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png"/></a></p>
+</li>
+<li>
+<p>Đặt Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> về cách đặt Airflow Variable. </p>
 </li>
 <li>
 <p>Kích hoạt training pipeline và đợi kết quả</p>
@@ -710,7 +714,7 @@
 <a id="__codelineno-10-9" name="__codelineno-10-9"></a>    <span class="n">materialize_task</span> <span class="o">=</span> <span class="n">DockerOperator</span><span class="p">(</span>
 <a id="__codelineno-10-10" name="__codelineno-10-10"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">"materialize_task"</span><span class="p">,</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11"></a>        <span class="o">**</span><span class="n">DefaultConfig</span><span class="o">.</span><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span><span class="p">,</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' &amp;&amp; ./scripts/feast_helper.sh"</span><span class="p">,</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>        <span class="n">command</span><span class="o">=</span><span class="s2">"/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' &amp;&amp; ./scripts/feast_helper.sh materialize"</span><span class="p">,</span>
 <a id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="stream-to-stores-pipline">Stream to stores pipline</h3>
