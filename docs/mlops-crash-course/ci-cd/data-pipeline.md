@@ -27,7 +27,7 @@ flowchart LR
 
     Ở bài học này chúng ta sẽ sử dụng agent lả docker image `python:3.9`, do đó trước hết mọi người phải truy câp <http://localhost:8081/pluginManager/> và cài đặt thêm plugin `Docker Pipeline`.
 
-```py title="Jenkinsfile" linenums="1"
+```py title="Jenkinsfile_data_pipeline" linenums="1"
 pipeline {
     agent {
         docker {
@@ -41,7 +41,7 @@ pipeline {
 
             steps {
                 echo 'Building data pipeline..'
-                sh 'cd data_ppeline && make build_image'  # (2)
+                sh 'cd data_pipeline && make build_image'  # (2)
             }
         }
 
@@ -68,6 +68,11 @@ pipeline {
 2. Build image cho để chạy các bước trong Airflow pipeline
 3. Test code, phần này mọi người sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
 4. Copy script chứa `DAG` qua folder `dags/` của Airflow
+
+???+ warning
+    Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là `Jenkinsfile_data_pipeline`, không phải tên mặc định là `Jenkinsfile`, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <http://localhost:8081/job/mlops-demo/configure> và thay đổi `Script Path` từ `Jenkinsfile` sang `Jenkinsfile_data_pipeline`.
+
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
 
 ???+ warning
 

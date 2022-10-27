@@ -157,6 +157,12 @@ Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có 
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png" loading="lazy" />
 
+???+ warning
+
+    Nếu mọi người không thấy branch nào, thì mọi người ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
+
+    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
+
 Nếu chúng ta ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
