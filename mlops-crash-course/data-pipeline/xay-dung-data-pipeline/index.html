@@ -574,9 +574,10 @@
 <li>Viết các task cho pipeline, ví dụ: <em>ingest_task</em>, <em>clean_task</em> và <em>explore_and_validate_task</em> (line 9-25)</li>
 <li>Viết thứ tự chạy các task (line 27)</li>
 <li>
-<p>Chạy lệnh sau để copy file code DAG sang folder <code>airflow/run_env/dags/data_pipeline</code> của repo clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">MLOps Crash course platform</a></p>
+<p>Chạy lệnh sau để build Docker image cho các pipeline component, và copy file code DAG sang folder <code>airflow/run_env/dags/data_pipeline</code> của repo clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">MLOps Crash course platform</a></p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cd</span> data_pipeline
-<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>make deploy_dags
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>make build_image <span class="c1"># build Đocker image</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>make deploy_dags <span class="c1"># copy DAG</span>
 </code></pre></div>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/db_to_offline_store.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
@@ -643,10 +644,10 @@
 </ol>
 <details class="info" open="open">
 <summary>Info</summary>
-<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại <code>data-pipeline/deployment/Dockerfile</code></p>
+<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại <code>data_pipeline/deployment/Dockerfile</code></p>
 </details>
 <p>Biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code> chứa các config như sau:</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/utils.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/utils.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
@@ -658,38 +659,26 @@
 <span class="normal"><a href="#__codelineno-9-10">10</a></span>
 <span class="normal"><a href="#__codelineno-9-11">11</a></span>
 <span class="normal"><a href="#__codelineno-9-12">12</a></span>
-<span class="normal"><a href="#__codelineno-9-13">13</a></span>
-<span class="normal"><a href="#__codelineno-9-14">14</a></span>
-<span class="normal"><a href="#__codelineno-9-15">15</a></span>
-<span class="normal"><a href="#__codelineno-9-16">16</a></span>
-<span class="normal"><a href="#__codelineno-9-17">17</a></span>
-<span class="normal"><a href="#__codelineno-9-18">18</a></span>
-<span class="normal"><a href="#__codelineno-9-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="s2">"image"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">AppConst</span><span class="o">.</span><span class="n">DOCKER_USER</span><span class="si">}</span><span class="s2">/mlops_crash_course/training_pipeline:latest"</span><span class="p">,</span> <span class="c1"># (1)</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="s2">"network_mode"</span><span class="p">:</span> <span class="s2">"host"</span><span class="p">,</span> <span class="c1"># (2)</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="s2">"mounts"</span><span class="p">:</span> <span class="p">[</span> <span class="c1"># (3)</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a>        <span class="c1"># (4)</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="n">Mount</span><span class="p">(</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/feature_repo"</span><span class="p">,</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>        <span class="p">),</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a>        <span class="c1"># (5)</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12"></a>        <span class="n">Mount</span><span class="p">(</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">ARTIFACTS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span> <span class="c1"># (6)</span>
-<a id="__codelineno-9-14" name="__codelineno-9-14"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/training_pipeline/artifacts"</span><span class="p">,</span> <span class="c1"># (7)</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span> <span class="c1"># (8)</span>
-<a id="__codelineno-9-16" name="__codelineno-9-16"></a>        <span class="p">),</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17"></a>    <span class="p">],</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18"></a>    <span class="c1"># các config khác</span>
-<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">DEFAULT_DOCKER_OPERATOR_ARGS</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="s2">"image"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">AppConst</span><span class="o">.</span><span class="n">DOCKER_USER</span><span class="si">}</span><span class="s2">/mlops_crash_course/data_pipeline:latest"</span><span class="p">,</span> <span class="c1"># (1)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="s2">"api_version"</span><span class="p">:</span> <span class="s2">"auto"</span><span class="p">,</span>  <span class="c1"># (5)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="s2">"auto_remove"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># (2)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="s2">"mounts"</span><span class="p">:</span> <span class="p">[</span> <span class="c1"># (3)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="c1"># (4)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>        <span class="n">Mount</span><span class="p">(</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>            <span class="n">source</span><span class="o">=</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEATURE_REPO</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">as_posix</span><span class="p">(),</span> <span class="c1"># (6)</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>            <span class="n">target</span><span class="o">=</span><span class="s2">"/data_pipeline/feature_repo"</span><span class="p">,</span> <span class="c1"># (7)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>            <span class="nb">type</span><span class="o">=</span><span class="s2">"bind"</span><span class="p">,</span> <span class="c1"># (8)</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>        <span class="p">),</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>    <span class="p">],</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Docker image dùng cho task</li>
-<li><code>network_mode</code> là <code>host</code>, để container ở cùng network với máy local, để có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local. Bạn có thể đọc thêm ở <a href="https://docs.docker.com/network/host/">đây</a> để biết thêm chi tiết</li>
+<li>Tự động dọn dẹp container sau khi exit</li>
 <li>Danh sách các folders cần được mount vào container</li>
-<li>Folder <code>training_pipeline/feature_repo</code> chứa định nghĩa Feature Store, để chạy task <strong>Cập nhật Feature Store</strong></li>
-<li>Folder <code>training_pipeline/artifacts</code> làm nơi lưu các file trong quá trình chạy các task. Ví dụ: training data, kết quả đánh giá model, v.v.</li>
+<li>Folder <code>data_pipeline/feature_repo</code> chứa định nghĩa Feature Store, để chạy task <strong>Cập nhật Feature Store</strong></li>
+<li>Tự động xác định Docker engine API version</li>
 <li>Folder ở máy local, bắt buộc là đường dẫn tuyệt đối.</li>
 <li>Folder nằm trong docker container</li>
 <li>Kiểu bind, đọc thêm <a href="https://docs.docker.com/storage/#choose-the-right-type-of-mount">ở đây</a></li>
@@ -703,11 +692,11 @@
 <p>Đặt Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> bằng đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>. Tham khảo <a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">hướng dẫn này</a> về cách đặt Airflow Variable. </p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> được dùng trong file <code>training_pipeline/dags/utils.py</code>. Variable này chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>, vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối.</p>
+<p>Airflow Variable <code>MLOPS_CRASH_COURSE_CODE_DIR</code> được dùng trong file <code>data_pipeline/dags/utils.py</code>. Variable này chứa đường dẫn tuyệt đối tới folder <code>mlops-crash-course-code/</code>, vì <code>DockerOperator</code> yêu cầu <code>Mount Source</code> phải là đường dẫn tuyệt đối.</p>
 </div>
 </li>
 <li>
-<p>Kích hoạt training pipeline và đợi kết quả</p>
+<p>Kích hoạt data pipeline và đợi kết quả</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png"/></a></p>
 <details class="tip" open="open">
 <summary>Tip</summary>
