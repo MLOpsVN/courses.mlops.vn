@@ -145,7 +145,7 @@ processor.ingest_stream_feature_view()
     ) as dag:
         ingest_task = DockerOperator(
             task_id="ingest_task",
-            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,  # (8)
+            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
             command="/bin/bash -c 'cd src/db_to_offline_store && python ingest.py'",  # (6)
         )
 
@@ -171,17 +171,54 @@ processor.ingest_stream_feature_view()
     5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
     6.  Command chạy trong docker container cho bước này
     7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
-    8. Định nghĩa image cho các **DockerOperator**, và đường dẫn mount từ máy local (Docker host)
 
     ???+ info
 
         Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
+
+
+    Biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS` chứa các config như sau:
+
+    ```python linenums="1" title="training_pipeline/dags/utils.py"
+    DEFAULT_DOCKER_OPERATOR_ARGS = {
+        "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/training_pipeline:latest", # (1)
+        "network_mode": "host", # (2)
+        "mounts": [ # (3)
+            # (4)
+            Mount(
+                source=AppPath.FEATURE_REPO.absolute().as_posix(),
+                target="/training_pipeline/feature_repo",
+                type="bind",
+            ),
+            # (5)
+            Mount(
+                source=AppPath.ARTIFACTS.absolute().as_posix(), # (6)
+                target="/training_pipeline/artifacts", # (7)
+                type="bind", # (8)
+            ),
+        ],
+        # các config khác
+    }
+    ```
+
+    1. Docker image dùng cho task
+    2. `network_mode` là `host`, để container ở cùng network với máy local, để có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local. Bạn có thể đọc thêm ở [đây](https://docs.docker.com/network/host/) để biết thêm chi tiết
+    3. Danh sách các folders cần được mount vào container
+    4. Folder `training_pipeline/feature_repo` chứa định nghĩa Feature Store, để chạy task **Cập nhật Feature Store**
+    5. Folder `training_pipeline/artifacts` làm nơi lưu các file trong quá trình chạy các task. Ví dụ: training data, kết quả đánh giá model, v.v.
+    6. Folder ở máy local, bắt buộc là đường dẫn tuyệt đối.
+    7. Folder nằm trong docker container
+    8. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
 
 1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
 1. Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable. 
+
+    !!! info
+
+        Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` được dùng trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối.
 
 1.  Kích hoạt training pipeline và đợi kết quả
 
