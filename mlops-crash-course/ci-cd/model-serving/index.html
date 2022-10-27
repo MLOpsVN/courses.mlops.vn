@@ -263,8 +263,8 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../pipeline/">
-        CI/CD cho pipeline
+<a class="md-nav__link" href="../data-pipeline/">
+        CI/CD cho data pipeline
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
@@ -374,7 +374,7 @@
 <summary>Tip</summary>
 <p>Ở đây chúng ta sẽ dùng 1 image cho cả <code>online serving API</code> và <code>offline batch serving pipeline</code> để hạn chế sự khác nhau giữa code và môi trường chạy.</p>
 </details>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile_model_serving</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
@@ -460,7 +460,7 @@
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
-<li>Định nghĩa 2 bước chạy song song là <code>serving pipeline</code> và <code>online serving API</code></li>
+<li>Định nghĩa 2 bước chạy song song là <code>serving pipeline</code> và <code>online serving API</code>.</li>
 </ol>
 <p>Sau khi mọi người thay đổi code ở folder <code>model_serving/</code> và push code lên Github, mọi người sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png"/></a></p>
@@ -473,7 +473,7 @@ Mọi người có thể đọc thêm <a href="https://www.jenkins.io/doc/">docu
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CI/CD cho pipeline" class="md-footer__link md-footer__link--prev" href="../pipeline/" rel="prev">
+<a aria-label="Previous: CI/CD cho data pipeline" class="md-footer__link md-footer__link--prev" href="../data-pipeline/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -482,7 +482,7 @@ Mọi người có thể đọc thêm <a href="https://www.jenkins.io/doc/">docu
 <span class="md-footer__direction">
                 Previous
               </span>
-              CI/CD cho pipeline
+              CI/CD cho data pipeline
             </div>
 </div>
 </a>

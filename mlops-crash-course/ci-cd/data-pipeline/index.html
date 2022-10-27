@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://courses.mlops.vn/mlops-crash-course/ci-cd/pipeline/" rel="canonical"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/ci-cd/data-pipeline/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
-<title>CI/CD cho pipeline - MLOpsVN Courses</title>
+<title>CI/CD cho data pipeline - MLOpsVN Courses</title>
 <link href="../../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <meta content="#4cae4f" name="theme-color"/>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              CI/CD cho pipeline
+              CI/CD cho data pipeline
             
           </span>
 </div>
@@ -265,11 +265,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          CI/CD cho pipeline
+          CI/CD cho data pipeline
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        CI/CD cho pipeline
+        CI/CD cho data pipeline
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -357,7 +357,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1>CI/CD cho pipeline</h1>
+<h1>CI/CD cho data pipeline</h1>
 <figure>
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/a-world-without-ci.cd-meme.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/a-world-without-ci.cd-meme.jpg"/></a>
 <figcaption>Photo from <a href="https://flexagon.com/blog/why-the-world-needs-ci-cd/">flexagon.com</a></figcaption>
@@ -379,7 +379,7 @@
 <summary>Info</summary>
 <p>Ở bài học này chúng ta sẽ sử dụng agent lả docker image <code>python:3.9</code>, do đó trước hết mọi người phải truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
 </details>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile_data_pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
@@ -425,7 +425,7 @@
 <a id="__codelineno-0-11" name="__codelineno-0-11"></a>
 <a id="__codelineno-0-12" name="__codelineno-0-12"></a>            <span class="n">steps</span> <span class="p">{</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>                <span class="n">echo</span> <span class="s1">'Building data pipeline..'</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>                <span class="n">sh</span> <span class="s1">'cd data_ppeline &amp;&amp; make build_image'</span>  <span class="c1"># (2)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>                <span class="n">sh</span> <span class="s1">'cd data_pipeline &amp;&amp; make build_image'</span>  <span class="c1"># (2)</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>            <span class="p">}</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16"></a>        <span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17"></a>
@@ -453,6 +453,11 @@
 <li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
 <li>Copy script chứa <code>DAG</code> qua folder <code>dags/</code> của Airflow</li>
 </ol>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là <code>Jenkinsfile_data_pipeline</code>, không phải tên mặc định là <code>Jenkinsfile</code>, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <a href="http://localhost:8081/job/mlops-demo/configure">http://localhost:8081/job/mlops-demo/configure</a> và thay đổi <code>Script Path</code> từ <code>Jenkinsfile</code> sang <code>Jenkinsfile_data_pipeline</code>.</p>
+<p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png"/></a></p>
+</details>
 <details class="warning" open="open">
 <summary>Warning</summary>
 <p>Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:</p>

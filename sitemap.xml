@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/data-pipeline/</loc>
+         <lastmod>2022-10-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/gioi-thieu/</loc>
          <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
@@ -37,11 +42,6 @@
     </url>
     <url>
          <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/model-serving/</loc>
-         <lastmod>2022-10-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://courses.mlops.vn/mlops-crash-course/ci-cd/pipeline/</loc>
          <lastmod>2022-10-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
