@@ -127,11 +127,12 @@ processor.ingest_stream_feature_view()
 1.  Định nghĩa _DAG_ cho pipeline (line 1-8)
 1.  Viết các task cho pipeline, ví dụ: _ingest_task_, _clean_task_ và _explore_and_validate_task_ (line 9-25)
 1.  Viết thứ tự chạy các task (line 27)
-1.  Chạy lệnh sau để copy file code DAG sang folder `airflow/run_env/dags/data_pipeline` của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
+1.  Chạy lệnh sau để build Docker image cho các pipeline component, và copy file code DAG sang folder `airflow/run_env/dags/data_pipeline` của repo clone từ [MLOps Crash course platform](https://github.com/MLOpsVN/mlops-crash-course-platform)
 
     ```bash
     cd data_pipeline
-    make deploy_dags
+    make build_image # build Đocker image
+    make deploy_dags # copy DAG
     ```
 
     ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
@@ -174,38 +175,31 @@ processor.ingest_stream_feature_view()
 
     ???+ info
 
-        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
-
+        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại `data_pipeline/deployment/Dockerfile`
 
     Biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS` chứa các config như sau:
 
-    ```python linenums="1" title="training_pipeline/dags/utils.py"
+    ```python linenums="1" title="data_pipeline/dags/utils.py"
     DEFAULT_DOCKER_OPERATOR_ARGS = {
-        "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/training_pipeline:latest", # (1)
-        "network_mode": "host", # (2)
+        "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/data_pipeline:latest", # (1)
+        "api_version": "auto",  # (5)
+        "auto_remove": True, # (2)
         "mounts": [ # (3)
             # (4)
             Mount(
-                source=AppPath.FEATURE_REPO.absolute().as_posix(),
-                target="/training_pipeline/feature_repo",
-                type="bind",
-            ),
-            # (5)
-            Mount(
-                source=AppPath.ARTIFACTS.absolute().as_posix(), # (6)
-                target="/training_pipeline/artifacts", # (7)
+                source=AppPath.FEATURE_REPO.absolute().as_posix(), # (6)
+                target="/data_pipeline/feature_repo", # (7)
                 type="bind", # (8)
             ),
         ],
-        # các config khác
     }
     ```
 
     1. Docker image dùng cho task
-    2. `network_mode` là `host`, để container ở cùng network với máy local, để có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local. Bạn có thể đọc thêm ở [đây](https://docs.docker.com/network/host/) để biết thêm chi tiết
+    2. Tự động dọn dẹp container sau khi exit
     3. Danh sách các folders cần được mount vào container
-    4. Folder `training_pipeline/feature_repo` chứa định nghĩa Feature Store, để chạy task **Cập nhật Feature Store**
-    5. Folder `training_pipeline/artifacts` làm nơi lưu các file trong quá trình chạy các task. Ví dụ: training data, kết quả đánh giá model, v.v.
+    4. Folder `data_pipeline/feature_repo` chứa định nghĩa Feature Store, để chạy task **Cập nhật Feature Store**
+    5. Tự động xác định Docker engine API version
     6. Folder ở máy local, bắt buộc là đường dẫn tuyệt đối.
     7. Folder nằm trong docker container
     8. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
@@ -218,9 +212,9 @@ processor.ingest_stream_feature_view()
 
     !!! info
 
-        Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` được dùng trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối.
+        Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` được dùng trong file `data_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối.
 
-1.  Kích hoạt training pipeline và đợi kết quả
+1.  Kích hoạt data pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
 
