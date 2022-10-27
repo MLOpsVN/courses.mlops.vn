@@ -145,7 +145,7 @@ processor.ingest_stream_feature_view()
     ) as dag:
         ingest_task = DockerOperator(
             task_id="ingest_task",
-            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
+            **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,  # (8)
             command="/bin/bash -c 'cd src/db_to_offline_store && python ingest.py'",  # (6)
         )
 
@@ -165,20 +165,23 @@ processor.ingest_stream_feature_view()
     ```
 
     1.  Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard
-    2.  Định nghĩa image cho các **DockerOperator**, số lần retry pipeline, và khoảng thời gian giữa các lần retry
-    3.  Lịch chạy pipeline, ở đây _@once_ là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
+    2.  Định nghĩa pipeline owner, số lần retry pipeline, và khoảng thời gian giữa các lần retry
+    3.  Lịch chạy pipeline, ở đây `@once` là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
     4.  Ngày bắt đầu chạy pipeline theo múi giờ UTC
     5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
     6.  Command chạy trong docker container cho bước này
     7.  Định nghĩa thứ tự chạy các bước của pipeline: đầu tiên là **ingest** sau đó tới **clean** và cuối cùng là **explore_and_validate**
+    8. Định nghĩa image cho các **DockerOperator**, và đường dẫn mount từ máy local (Docker host)
 
     ???+ info
 
-        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào _DEFAULT_DAG_ARGS_ trong DAG (line 3). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
+        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại `data-pipeline/deployment/Dockerfile`
 
 1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
+
+1. Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable. 
 
 1.  Kích hoạt training pipeline và đợi kết quả
 
@@ -234,7 +237,7 @@ with DAG(
     materialize_task = DockerOperator(
         task_id="materialize_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS,
-        command="/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' && ./scripts/feast_helper.sh",
+        command="/bin/bash -c 'chmod +x ./scripts/feast_helper.sh' && ./scripts/feast_helper.sh materialize",
     )
 ```
 

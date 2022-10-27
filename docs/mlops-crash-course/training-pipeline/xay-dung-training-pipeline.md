@@ -446,7 +446,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 
 1.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu là `airflow`.
 
-1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để đặt Airflow Variable
+1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để đặt Airflow Variable.
 
     !!! info
 
