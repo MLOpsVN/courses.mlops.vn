@@ -22,7 +22,7 @@ graph LR
 
     Ở đây chúng ta sẽ dùng 1 image cho cả `online serving API` và `offline batch serving pipeline` để hạn chế sự khác nhau giữa code và môi trường chạy.
 
-```py title="Jenkinsfile" linenums="1"
+```py title="Jenkinsfile_model_serving" linenums="1"
 pipeline {
     agent { docker { image 'python:3.9' } }
 
@@ -68,7 +68,7 @@ pipeline {
 ```
 
 1. Test code, phần này mọi người sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
-2. Định nghĩa 2 bước chạy song song là `serving pipeline` và `online serving API`
+2. Định nghĩa 2 bước chạy song song là `serving pipeline` và `online serving API`.
 
 Sau khi mọi người thay đổi code ở folder `model_serving/` và push code lên Github, mọi người sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
 
