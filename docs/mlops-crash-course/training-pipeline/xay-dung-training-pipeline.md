@@ -407,50 +407,13 @@ with DAG(
 1. DAG sẽ chạy một lần khi được bật, sau đó sẽ cần kích hoạt lại bằng tay
 2. Vì các task khác nhau có môi trường chạy và các dependencies khác nhau, nên `DockerOperator` được dùng để cách ly các task trong các docker containers khác nhau. Để đơn giản, chúng ta chỉ dùng một Docker image duy nhất cho tất cả các task
 3. Command sẽ được gọi trong mỗi task. Command này giống với command bạn đã chạy trong quá trình viết code ở trên
-4. Vì chỉ một docker image duy nhất dùng cho các tasks, nên chỉ cần một config chung cho các docker containers được tạo ra ở mỗi task. Config chung này được lưu trong biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`, được giải thích dưới đây.
-
-Biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS` chứa các config cho `DockerOperator` như sau.
-
-```python linenums="1" title="training_pipeline/dags/utils.py"
-DEFAULT_DOCKER_OPERATOR_ARGS = {
-    "image": f"{AppConst.DOCKER_USER}/mlops_crash_course/training_pipeline:latest", # (1)
-    "network_mode": "host", # (2)
-    "mounts": [ # (3)
-        # (4)
-        Mount(
-            source=AppPath.FEATURE_REPO.absolute().as_posix(),
-            target="/training_pipeline/feature_repo",
-            type="bind",
-        ),
-        # (5)
-        Mount(
-            source=AppPath.ARTIFACTS.absolute().as_posix(), # (6)
-            target="/training_pipeline/artifacts", # (7)
-            type="bind", # (8)
-        ),
-    ],
-    # các config khác
-}
-```
-
-1. Docker image dùng cho task
-2. `network_mode` là `host`, để container ở cùng network với máy local, để có thể kết nối tới địa chỉ MLflow server đang chạy ở máy local. Bạn có thể đọc thêm ở [đây](https://docs.docker.com/network/host/) để biết thêm chi tiết
-3. Danh sách các folders cần được mount vào container
-4. Folder `training_pipeline/feature_repo` chứa định nghĩa Feature Store, để chạy task **Cập nhật Feature Store**
-5. Folder `training_pipeline/artifacts` làm nơi lưu các file trong quá trình chạy các task. Ví dụ: training data, kết quả đánh giá model, v.v.
-6. Folder ở máy local, bắt buộc là đường dẫn tuyệt đối.
-7. Folder nằm trong docker container
-8. Kiểu bind, đọc thêm [ở đây](https://docs.docker.com/storage/#choose-the-right-type-of-mount)
+4. Vì chỉ một docker image duy nhất dùng cho các tasks, nên chỉ cần một config chung cho các docker containers được tạo ra ở mỗi task. Config chung này được lưu trong biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS`.
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/training_pipeline:latest` và triển khai Airflow DAG bằng các bước sau.
 
 1.  Đăng nhập vào Airflow UI với tài khoản và mật khẩu là `airflow`.
 
 1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) để đặt Airflow Variable.
-
-    !!! info
-
-        Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` được dùng trong file `training_pipeline/dags/utils.py`. Variable này chứa đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`, vì `DockerOperator` yêu cầu `Mount Source` phải là đường dẫn tuyệt đối.
 
 1.  Chạy lệnh
 
