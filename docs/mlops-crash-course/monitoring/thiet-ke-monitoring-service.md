@@ -15,12 +15,13 @@ Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, the
 
 Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  Cài đặt các thư viện cần thiết trong file `monitoring_service/dev_requirements.txt`
+1.  Cài đặt **môi trường Python 3.9 mới** với các thư viện cần thiết trong file `monitoring_service/dev_requirements.txt`
 
 1.  Đặt environment variable `MONITORING_SERVICE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `monitoring_service`. Env var này hỗ trợ chạy python code ở folder `monitoring_service/src` trong quá trình phát triển.
 
     ```bash
-    export MONITORING_SERVICE_DIR="path/to/mlops-crash-course-code/monitoring_service"
+    cd mlops-crash-course-code/monitoring_service
+    export MONITORING_SERVICE_DIR=$(pwd)
     ```
 
 Các tools sẽ được sử dụng trong bài này bao gồm:

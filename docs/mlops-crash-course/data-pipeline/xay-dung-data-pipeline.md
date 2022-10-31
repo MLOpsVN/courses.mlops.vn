@@ -138,12 +138,6 @@ processor.ingest_stream_feature_view()
 
     1.  Copy `data_pipeline/dags/*` vào folder `dags` của Airflow
 
-    Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server
-
-    ```bash
-    bash run.sh airflow restart
-    ```
-
     DAG dưới đây thể hiện ETL pipeline.
 
     ```py title="data_pipeline/dags/db_to_offline_store.py" linenums="1"
@@ -225,34 +219,6 @@ processor.ingest_stream_feature_view()
 1.  Kích hoạt data pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
-
-    ???+ tip
-
-        Nếu mọi người gặp lỗi `Permission denied` như sau:
-
-        ```bash
-        [2022-10-16, 14:01:48 UTC] {taskinstance.py:1902} ERROR - Task failed with exception
-        Traceback (most recent call last):
-        File "/home/airflow/.local/lib/python3.7/site-packages/urllib3/connectionpool.py", line 710, in urlopen
-            chunked=chunked,
-        File "/home/airflow/.local/lib/python3.7/site-packages/urllib3/connectionpool.py", line 398, in _make_request
-            conn.request(method, url, **httplib_request_kw)
-        File "/usr/local/lib/python3.7/http/client.py", line 1281, in request
-            self._send_request(method, url, body, headers, encode_chunked)
-        File "/usr/local/lib/python3.7/http/client.py", line 1327, in _send_request
-            self.endheaders(body, encode_chunked=encode_chunked)
-        File "/usr/local/lib/python3.7/http/client.py", line 1276, in endheaders
-            self._send_output(message_body, encode_chunked=encode_chunked)
-        File "/usr/local/lib/python3.7/http/client.py", line 1036, in _send_output
-            self.send(msg)
-        File "/usr/local/lib/python3.7/http/client.py", line 976, in send
-            self.connect()
-        File "/home/airflow/.local/lib/python3.7/site-packages/docker/transport/unixconn.py", line 30, in connect
-            sock.connect(self.unix_socket)
-        PermissionError: [Errno 13] Permission denied
-        ```
-
-        thì có nghĩa là user `Airflow` thiếu quyền để chạy Docker command, mọi người làm theo cách [sau](https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue/48957722#48957722) để thêm user này vào docker group (recommended), hoặc sử dụng command `sudo chmod 666 /var/run/docker.sock` để gán quyền cho tất cả user.
 
 1.  Xem thứ tự các task của pipeline này như sau:
 
