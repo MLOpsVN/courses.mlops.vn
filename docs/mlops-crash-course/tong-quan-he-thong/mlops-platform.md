@@ -58,20 +58,29 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
 
 Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người cài Docker theo hướng dẫn tại [đây](https://www.docker.com/) và Docker Compose version v2.10.2 theo hướng dẫn tại [đây](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04).
 
-Cuối cùng, mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):
+Cuối cùng, mọi người start tất cả service một lúc bằng command sau (**nếu máy mọi người có cấu hình mạnh**):
 
 ```bash
 cd mlops-crash-course-platform && bash run.sh all up
 ```
 
-, hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):
+!!! warning
+
+    Nếu sau khi chạy lệnh trên, máy bạn không còn tài nguyên, thì các bạn hãy tắt tất cả service bằng lệnh dưới đây, và chỉ nên chạy service nào được nhắc đến trong bài học.
+
+    ```bash
+    cd mlops-crash-course-platform && bash run.sh all down
+    ```
+
+Hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):
 
 ```bash
 cd mlops-crash-course-platform && bash run.sh feast up
 ```
 
 ???+ info
-Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
+
+    Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
 
 ### Stop
 
@@ -101,13 +110,14 @@ mlops-crash-course
 └── mlops-crash-course-code/
 ```
 
-, trong đó:
+Trong đó:
 
 - Repo: `mlops-crash-course-platform` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-platform) chứa các file docker-compose để deploy
 - Repo: `mlops-crash-course-code` clone từ [đây](https://github.com/MLOpsVN/mlops-crash-course-code) chứa code của dự án ML sẽ trình bày trong bài học POC
 
 ???+ warning
-Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
+
+    Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
 
     ```bash
     conda create -n myenv python=3.9

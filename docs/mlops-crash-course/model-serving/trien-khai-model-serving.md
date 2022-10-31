@@ -15,12 +15,14 @@ Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả ha
 
 Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  Cài đặt các thư viện cần thiết trong file `model_serving/dev_requirements.txt`
+1.  Cài đặt **môi trường Python 3.9 mới** với các thư viện cần thiết trong file `model_serving/dev_requirements.txt`
 
-1.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`. Env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
+1.  Đặt environment variable `MODEL_SERVING_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `model_serving`, và `MLFLOW_TRACKING_URI` bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder `model_serving/src` trong quá trình phát triển.
 
     ```bash
-    export MODEL_SERVING_DIR="path/to/mlops-crash-course-code/model_serving"
+    cd mlops-crash-course-code/model_serving
+    export MODEL_SERVING_DIR=$(pwd)
+    export MLFLOW_TRACKING_URI="http://localhost:5000"
     ```
 
 Các MLOps tools được dùng trong bài này bao gồm:
@@ -200,18 +202,12 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 1.  Chạy lệnh
 
     ```bash
-    make build_image
-    # Đảm bảo Airflow server đã chạy
-    make deploy_dags # (1)
+    make build_image # (1)
+    make deploy_dags # (2)
     ```
 
-    1.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
-
-    Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder `mlops-crash-course-platform` và chạy lệnh sau để restart Airflow server
-
-    ```bash
-    bash run.sh airflow restart
-    ```
+    1.  Quá trình build model serving image sẽ mất khoảng 5 - 10 phút
+    2.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
 1.  Kích hoạt batch serving pipeline và đợi kết quả
 
@@ -309,13 +305,6 @@ def inference(request: InferenceRequest, ctx: bentoml.Context) -> Dict[str, Any]
 
 Bạn làm các bước sau để triển khai Online serving service.
 
-1.  Build docker image và chạy docker compose
-
-    ```bash
-    make build_image
-    make compose_up
-    ```
-
 1.  Chạy Online Feature Store bằng cách vào repo `mlops-crash-course-platform` và chạy lệnh sau
 
     ```bash
@@ -332,6 +321,13 @@ Bạn làm các bước sau để triển khai Online serving service.
     cd feature_repo
     feast materialize-incremental $(date +%Y-%m-%d)
     cd ..
+    ```
+
+1.  Build docker image và chạy docker compose
+
+    ```bash
+    make build_image
+    make compose_up
     ```
 
 1.  Truy cập <http://localhost:8172/>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:

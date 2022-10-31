@@ -12,7 +12,7 @@ Liệu rằng feature store còn có công dụng gì không, và xây dựng fe
 
 Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
-1.  Cài đặt các thư viện cần thiết trong file `data_pipeline/dev_requirements.txt`
+1.  Cài đặt **môi trường Python 3.9 mới** với các thư viện cần thiết trong file `data_pipeline/dev_requirements.txt`
 
 1.  Feast sẽ được sử dụng trong bài này. Bạn vào repo `mlops-crash-course-platform/` và chạy:
 
