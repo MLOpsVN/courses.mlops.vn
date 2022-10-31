@@ -495,24 +495,30 @@
 <h2 id="su-dung-platform">Sử dụng platform</h2>
 <h3 id="start">Start</h3>
 <p>Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a>. Tiếp đó mọi người cài Docker theo hướng dẫn tại <a href="https://www.docker.com/">đây</a> và Docker Compose version v2.10.2 theo hướng dẫn tại <a href="https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04">đây</a>.</p>
-<p>Cuối cùng, mọi người start tất cả service một lúc bằng command sau (nếu máy mọi người có cấu hình mạnh):</p>
+<p>Cuối cùng, mọi người start tất cả service một lúc bằng command sau (<strong>nếu máy mọi người có cấu hình mạnh</strong>):</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all up
 </code></pre></div>
-<p>, hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast up
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Nếu sau khi chạy lệnh trên, máy bạn không còn tài nguyên, thì các bạn hãy tắt tất cả service bằng lệnh dưới đây, và chỉ nên chạy service nào được nhắc đến trong bài học.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
+</code></pre></div>
+</div>
+<p>Hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast up
 </code></pre></div>
 <details class="info" open="open">
 <summary>Info</summary>
-</details>
 <p>Ở mỗi bài học sẽ có phần <strong>Môi trường phát triển</strong> để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: <code>cd mlops-crash-course-platform &amp;&amp; bash run.sh feast up</code> mọi người sẽ thấy lại ở bài học về Feature Store.</p>
+</details>
 <h3 id="stop">Stop</h3>
 <p>Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:</p>
 <ul>
 <li>Stop tất cả service:
-  <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
+  <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
 </code></pre></div></li>
 <li>Stop một nhóm service
-  <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast down
+  <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast down
 </code></pre></div></li>
 </ul>
 <details class="tip" open="open">
@@ -522,26 +528,24 @@ Ví dụ: <code>bash run.sh all down --volumes</code></p>
 </details>
 <h2 id="cau-truc-code">Cấu trúc code</h2>
 <p>Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo <code>mlops-crash-course-platform</code> và <code>mlops-crash-course-code</code> trong cùng 1 folder như sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span>
-<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="err">├──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">platform</span><span class="o">/</span>
-<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="err">└──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">code</span><span class="o">/</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="err">├──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">platform</span><span class="o">/</span>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="err">└──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">code</span><span class="o">/</span>
 </code></pre></div>
-<p>, trong đó:</p>
+<p>Trong đó:</p>
 <ul>
 <li>Repo: <code>mlops-crash-course-platform</code> clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a> chứa các file docker-compose để deploy</li>
 <li>Repo: <code>mlops-crash-course-code</code> clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">đây</a> chứa code của dự án ML sẽ trình bày trong bài học POC</li>
 </ul>
 <details class="warning" open="open">
 <summary>Warning</summary>
-</details>
 <p>Trong mỗi module ở <code>mlops-crash-course-code/</code> ví dụ như: <code>data_pipeline</code> và <code>model_serving</code> sẽ đều có 1 file là <code>dev_requirements.txt</code>. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:</p>
-<div class="highlight"><pre><span></span><code>```bash
-conda create -n myenv python=3.9
-conda activate myenv
-cd data_pipeline
-pip install -r dev_requirements.txt
-```
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>conda create -n myenv <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>conda activate myenv
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">cd</span> data_pipeline
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>pip install -r dev_requirements.txt
 </code></pre></div>
+</details>
 <p>Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder <code>mlops-crash-course/</code> (bằng cách sử dụng command <code>cd mlops-crash-course/</code> )</p>
 <h2 id="infra-layer">Infra layer</h2>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png"/></a></p>

@@ -468,11 +468,13 @@
 <p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
-<p>Cài đặt các thư viện cần thiết trong file <code>training_pipeline/dev_requirements.txt</code></p>
+<p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>training_pipeline/dev_requirements.txt</code></p>
 </li>
 <li>
-<p>Đặt environment variable <code>TRAINING_PIPELINE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>. Env var này hỗ trợ chạy python code ở folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">TRAINING_PIPELINE_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/training_pipeline"</span>
+<p>Đặt environment variable <code>TRAINING_PIPELINE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>, và <code>MLFLOW_TRACKING_URI</code> bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-code/training_pipeline
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">export</span> <span class="nv">TRAINING_PIPELINE_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nb">export</span> <span class="nv">MLFLOW_TRACKING_URI</span><span class="o">=</span><span class="s2">"http://localhost:5000"</span>
 </code></pre></div>
 </li>
 </ol>
@@ -556,10 +558,13 @@
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>python data_extraction.py
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">cd</span> ..
 </code></pre></div>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
 <p>Nếu các bạn gặp lỗi sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>PermissionError: <span class="o">[</span>Errno <span class="m">13</span><span class="o">]</span> Permission denied: <span class="s1">'/training_pipeline'</span>
 </code></pre></div>
 <p>Thì các bạn cần đặt environment variable <code>TRAINING_PIPELINE_DIR</code> như hướng dẫn ở phần <strong>Môi trường phát triển</strong>.</p>
+</div>
 </li>
 <li>
 <p>Kiểm tra folder <code>training_pipeline/artifacts</code>, bạn sẽ thấy file <code>training.parquet</code></p>
@@ -940,26 +945,15 @@
 <li>
 <p>Chạy lệnh</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>make build_image
-<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="c1"># Đảm bảo Airflow server đã chạy</span>
-<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>make deploy_dags <span class="c1"># (1)</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>make deploy_dags <span class="c1"># (1)</span>
 </code></pre></div>
 <ol>
 <li>Copy <code>training_pipeline/dags/*</code> vào folder <code>dags</code> của Airflow</li>
 </ol>
-<p>Nếu bạn không thấy training pipeline trên Airflow UI sau khi đã refresh, thì bạn có thể vào folder <code>mlops-crash-course-platform</code> và chạy lệnh sau để restart Airflow server</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>bash run.sh airflow restart
-</code></pre></div>
 </li>
 <li>
 <p>Kích hoạt training pipeline và đợi kết quả</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png"/></a></p>
-<p>Nếu bạn gặp lỗi sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a>    sock.connect<span class="o">(</span>self.unix_socket<span class="o">)</span>
-<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>PermissionError: <span class="o">[</span>Errno <span class="m">13</span><span class="o">]</span> Permission denied
-</code></pre></div>
-<p>Lỗi này xảy ra vì Airflow không có quyền truy cập vào /var/run/docker.sock ở máy local. Bạn chạy lệnh sau để fix:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a>sudo chmod <span class="m">666</span> /var/run/docker.sock
-</code></pre></div>
 </li>
 <li>
 <p>Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại</p>

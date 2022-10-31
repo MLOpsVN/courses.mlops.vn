@@ -508,11 +508,12 @@
 <p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
 <li>
-<p>Cài đặt các thư viện cần thiết trong file <code>monitoring_service/dev_requirements.txt</code></p>
+<p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>monitoring_service/dev_requirements.txt</code></p>
 </li>
 <li>
 <p>Đặt environment variable <code>MONITORING_SERVICE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>monitoring_service</code>. Env var này hỗ trợ chạy python code ở folder <code>monitoring_service/src</code> trong quá trình phát triển.</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span> <span class="nv">MONITORING_SERVICE_DIR</span><span class="o">=</span><span class="s2">"path/to/mlops-crash-course-code/monitoring_service"</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-code/monitoring_service
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">export</span> <span class="nv">MONITORING_SERVICE_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
 </code></pre></div>
 </li>
 </ol>
