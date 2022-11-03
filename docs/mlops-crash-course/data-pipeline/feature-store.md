@@ -153,7 +153,7 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
       ```bash
       cd ../stream_emitting
       bash deploy.sh start
-      cd ../date_pipeline
+      cd ../data_pipeline
       ```
 
       Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
@@ -167,7 +167,7 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
         ```bash
         cd ../stream_emitting
         bash deploy.sh stop
-        cd ../date_pipeline
+        cd ../data_pipeline
         ```
 
     - Để **teardown** server (stop và remove tất cả docker volume liên quan), các bạn chạy:
@@ -175,7 +175,7 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
         ```bash
         cd ../stream_emitting
         bash deploy.sh teardown
-        cd ../date_pipeline
+        cd ../data_pipeline
         ```
 
 Và cuối cùng chúng ta sẽ cập nhật Offline Feature store bằng cách chạy:
