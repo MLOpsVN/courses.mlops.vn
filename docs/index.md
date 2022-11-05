@@ -8,3 +8,7 @@ MLOpsVN là một tổ chức với cam kết thu ngắn khoảng cách giữa A
 
 - Email: [mlopsvn@gmail.com](maito:mlopsvn@gmail.com)
 - [Facebook group](https://www.facebook.com/groups/mlopsvn)
+
+## Founders
+- [Quân](https://www.linkedin.com/in/quan-dang/)
+- [Tùng](https://www.linkedin.com/in/tungdao17/)
