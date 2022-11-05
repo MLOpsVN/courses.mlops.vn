@@ -453,6 +453,10 @@ def main(data_type: str, n_request: int = 1): # (3)
     make compose_up
     ```
 
+    !!! tip
+
+        Định nghĩa về các env vars được dùng trong quá trình build image được lưu tại `monitoring_service/deployment/.env`. Bạn có thể thay đổi nếu cần.
+
 1.  Gửi 5 requests giả chứa `drift_data`
 
     ```bash

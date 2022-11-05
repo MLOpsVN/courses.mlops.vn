@@ -209,6 +209,10 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
     1.  Quá trình build model serving image sẽ mất khoảng 5 - 10 phút
     2.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
+    !!! tip
+
+        Định nghĩa về các env vars được dùng trong quá trình chạy Airflow DAG được lưu tại `model_serving/.env`. Bạn có thể thay đổi nếu cần.
+
 1.  Kích hoạt batch serving pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
@@ -329,6 +333,10 @@ Bạn làm các bước sau để triển khai Online serving service.
     make build_image
     make compose_up
     ```
+
+    !!! tip
+
+        Định nghĩa về các env vars được dùng trong quá trình build image được lưu tại `model_serving/deployment/.env`. Bạn có thể thay đổi nếu cần.
 
 1.  Truy cập <http://localhost:8172/>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
