@@ -494,16 +494,20 @@
 <p>Các tương tác và các tools được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.</p>
 <h2 id="su-dung-platform">Sử dụng platform</h2>
 <h3 id="start">Start</h3>
-<p>Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a>. Tiếp đó mọi người cài Docker theo hướng dẫn tại <a href="https://www.docker.com/">đây</a> và Docker Compose version v2.10.2 theo hướng dẫn tại <a href="https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04">đây</a>.</p>
+<p>Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">đây</a>. Tiếp đó mọi người cài Docker theo hướng dẫn tại <a href="https://www.docker.com/">đây</a> và <strong>Docker Compose version v2.10.2</strong> theo hướng dẫn tại <a href="https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04">đây</a>.</p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Series bài giảng này sử dụng <strong>docker-compose v2.10.2</strong> với command <code>docker-compose</code> (thay vì compose plugin của Docker với command <code>docker compose</code>). Sử dụng version khác <strong>v2.10.2</strong> có thể gây ra nhiều lỗi không mong muốn.</p>
+</details>
 <p>Cuối cùng, mọi người start tất cả service một lúc bằng command sau (<strong>nếu máy mọi người có cấu hình mạnh</strong>):</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all up
 </code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<details class="warning" open="open">
+<summary>Warning</summary>
 <p>Nếu sau khi chạy lệnh trên, máy bạn không còn tài nguyên, thì các bạn hãy tắt tất cả service bằng lệnh dưới đây, và chỉ nên chạy service nào được nhắc đến trong bài học.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
 </code></pre></div>
-</div>
+</details>
 <p>Hoặc start từng nhóm service một như command dưới đây (command này dùng để start các service liên quan đến feast):</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast up
 </code></pre></div>
@@ -511,14 +515,42 @@
 <summary>Info</summary>
 <p>Ở mỗi bài học sẽ có phần <strong>Môi trường phát triển</strong> để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: <code>cd mlops-crash-course-platform &amp;&amp; bash run.sh feast up</code> mọi người sẽ thấy lại ở bài học về Feature Store.</p>
 </details>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>Khi start các service, nếu mọi người gặp lỗi <code>port is already allocated</code> tương tự như sau:</p>
+<p><div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>Error response from daemon: driver failed programming external connectivity on endpoint mlflow-mlflow-1 <span class="o">(</span>2383a7be19ea5d2449033194211cabbd7ad13902d8d4c2dd215a63ab78038283<span class="o">)</span>: Bind <span class="k">for</span> <span class="m">0</span>.0.0.0:5000 failed: port is already allocated
+</code></pre></div>
+có nghĩa là đang có một service khác chạy ở port <code>5000</code> và <code>mlflow</code> không thể sử dụng port đó nữa, khi đó mọi người sẽ thay bằng port khác như bên dưới đây. Mọi người sẽ xử lý tương tự với các service khác.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">mlops-crash-course-platform/mlflow/mlflow-docker-compose.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span>
+<span class="normal"><a href="#__codelineno-4-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Source: https://hub.docker.com/r/atcommons/mlflow-server</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">version</span><span class="p">:</span> <span class="s1">'3'</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">services</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="n">mlflow</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="o">...</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="n">ports</span><span class="p">:</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="o">-</span> <span class="s2">"5000:5000"</span> <span class="c1"># (1)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Thay bằng <code>"another_port:5000"</code>, ví dụ" <code>"5001:5000"</code>. Khi đó, sau khi start service <code>mlflow</code> mọi người sẽ truy cập service này tại <code>http://localhost:5001</code>. </li>
+</ol>
+</details>
 <h3 id="stop">Stop</h3>
 <p>Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:</p>
 <ul>
 <li>Stop tất cả service:
-  <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
+  <div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh all down
 </code></pre></div></li>
 <li>Stop một nhóm service
-  <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast down
+  <div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">cd</span> mlops-crash-course-platform <span class="o">&amp;&amp;</span> bash run.sh feast down
 </code></pre></div></li>
 </ul>
 <details class="tip" open="open">
@@ -528,9 +560,9 @@ Ví dụ: <code>bash run.sh all down --volumes</code></p>
 </details>
 <h2 id="cau-truc-code">Cấu trúc code</h2>
 <p>Để tiện cho việc code đồng thời quản lý các service trong MLOps platform thì mọi người đặt repo <code>mlops-crash-course-platform</code> và <code>mlops-crash-course-code</code> trong cùng 1 folder như sau:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span>
-<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="err">├──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">platform</span><span class="o">/</span>
-<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="err">└──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">code</span><span class="o">/</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="err">├──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">platform</span><span class="o">/</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="err">└──</span> <span class="n">mlops</span><span class="o">-</span><span class="n">crash</span><span class="o">-</span><span class="n">course</span><span class="o">-</span><span class="n">code</span><span class="o">/</span>
 </code></pre></div>
 <p>Trong đó:</p>
 <ul>
@@ -540,10 +572,10 @@ Ví dụ: <code>bash run.sh all down --volumes</code></p>
 <details class="warning" open="open">
 <summary>Warning</summary>
 <p>Trong mỗi module ở <code>mlops-crash-course-code/</code> ví dụ như: <code>data_pipeline</code> và <code>model_serving</code> sẽ đều có 1 file là <code>dev_requirements.txt</code>. Mọi người hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>conda create -n myenv <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
-<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>conda activate myenv
-<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">cd</span> data_pipeline
-<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>pip install -r dev_requirements.txt
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>conda create -n myenv <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>conda activate myenv
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nb">cd</span> data_pipeline
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a>pip install -r dev_requirements.txt
 </code></pre></div>
 </details>
 <p>Các bài học tiếp theo giả định rằng chúng ta đang ở trong folder <code>mlops-crash-course/</code> (bằng cách sử dụng command <code>cd mlops-crash-course/</code> )</p>
