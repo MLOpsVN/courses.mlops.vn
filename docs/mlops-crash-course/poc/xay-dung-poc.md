@@ -138,7 +138,7 @@ Vì các file data của chúng ta không có feature nào chứa `null`, và đ
 - Giải thích
 
       - Features từ `index 1` ở `df_orig` được lấy ra cho record `index 1` ở `label_orig`, vì feature đó là mới nhất (`2022-12-01`) so với `event_timestamp` của record ở `index 1` (`2022-12-15`) trong `label_orig`
-      - Tương tự, features từ `index 4` ở `df_orig` được lấy ra cho record `index 1` ở `label_orig`, vì feature đó là mới nhất và xảy ra trước (`2022-09-01`) so với `event_timestamp` của record ở `index 1` (`2022-09-15`) trong `label_orig`
+      - Tương tự, features từ `index 4` ở `df_orig` được lấy ra cho record `index 2` ở `label_orig`, vì feature đó là mới nhất và xảy ra trước (`2022-09-01`) so với `event_timestamp` của record ở `index 2` (`2022-09-15`) trong `label_orig`
 
 Code để tổng hợp features và labels như dưới đây.
 

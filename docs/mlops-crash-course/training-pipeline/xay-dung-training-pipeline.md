@@ -428,6 +428,10 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 
     1.  Copy `training_pipeline/dags/*` vào folder `dags` của Airflow
 
+    !!! tip
+
+        Định nghĩa về các env vars được dùng trong quá trình chạy Airflow DAG được lưu tại `training_pipeline/.env`. Bạn có thể thay đổi nếu cần.
+
 1.  Kích hoạt training pipeline và đợi kết quả
 
     <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
