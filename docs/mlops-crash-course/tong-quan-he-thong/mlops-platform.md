@@ -1,4 +1,4 @@
-<figure>
+đ<figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png" loading="lazy"/>
     <figcaption>Photo by <a href="https://coussement-bruno.medium.com/?source=post_page-----69ff5d96b7db--------------------------------">Coussement Bruno</a> on <a href="https://towardsdatascience.com/which-cloud-servicer-provider-ml-platform-do-you-need-69ff5d96b7db">Towards Data Science</a></figcaption>
 </figure>
@@ -56,7 +56,11 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
 
 ### Start
 
-Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người cài Docker theo hướng dẫn tại [đây](https://www.docker.com/) và Docker Compose version v2.10.2 theo hướng dẫn tại [đây](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04).
+Để start platform, đầu tiên mọi người clone code mlops-crash-course-platform tại [đây](https://github.com/MLOpsVN/mlops-crash-course-platform). Tiếp đó mọi người cài Docker theo hướng dẫn tại [đây](https://www.docker.com/) và **Docker Compose version v2.10.2** theo hướng dẫn tại [đây](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04).
+
+???+ warning
+
+    Series bài giảng này sử dụng **docker-compose v2.10.2** với command `docker-compose` (thay vì compose plugin của Docker với command `docker compose`). Sử dụng version khác **v2.10.2** có thể gây ra nhiều lỗi không mong muốn.
 
 Cuối cùng, mọi người start tất cả service một lúc bằng command sau (**nếu máy mọi người có cấu hình mạnh**):
 
@@ -64,7 +68,7 @@ Cuối cùng, mọi người start tất cả service một lúc bằng command 
 cd mlops-crash-course-platform && bash run.sh all up
 ```
 
-!!! warning
+???+ warning
 
     Nếu sau khi chạy lệnh trên, máy bạn không còn tài nguyên, thì các bạn hãy tắt tất cả service bằng lệnh dưới đây, và chỉ nên chạy service nào được nhắc đến trong bài học.
 
@@ -81,6 +85,51 @@ cd mlops-crash-course-platform && bash run.sh feast up
 ???+ info
 
     Ở mỗi bài học sẽ có phần **Môi trường phát triển** để hướng dẫn mọi người start các service liên quan đến bài học, ví dụ command vừa rồi: `cd mlops-crash-course-platform && bash run.sh feast up` mọi người sẽ thấy lại ở bài học về Feature Store.
+
+???+ warning
+
+    Khi start các service, nếu mọi người gặp lỗi `port is already allocated` tương tự như sau:
+    
+    ```bash
+    Error response from daemon: driver failed programming external connectivity on endpoint mlflow-mlflow-1 (2383a7be19ea5d2449033194211cabbd7ad13902d8d4c2dd215a63ab78038283): Bind for 0.0.0.0:5000 failed: port is already allocated
+    ```
+    có nghĩa là đang có một service khác chạy ở port `5000` và `mlflow` không thể sử dụng port đó nữa, khi đó mọi người sẽ thay bằng port khác như bên dưới đây. Mọi người sẽ xử lý tương tự với các service khác.
+
+    ```py title="mlops-crash-course-platform/mlflow/mlflow-docker-compose.yml" linenums="1"
+    # Source: https://hub.docker.com/r/atcommons/mlflow-server
+    version: '3'
+
+    services:
+    mlflow:
+        ...
+        ports:
+        - "5000:5000" # (1)
+        ...
+    ```
+
+    1. Thay bằng `"another_port:5000"`, ví dụ" `"5001:5000"`. Khi đó, sau khi start service `mlflow` mọi người sẽ truy cập service này tại `http://localhost:5001`. 
+
+    Nếu file `*-docker-compose.yml` của service không sử dụng port bindings như `mlflow` mà sử dụng `network_mode: host` tương tự như `prom-graf`, mọi người xử lý như sau:
+
+    ```py title="mlops-crash-course-platform/prom-graf/prom-graf-docker-compose.yml" linenums="1"
+    ...
+    services:
+        node-exporter:
+            ...
+            command:
+                - '--path.procfs=/host/proc'
+                - '--path.rootfs=/rootfs'
+                - '--path.sysfs=/host/sys'
+                - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+            # ports: # (1)
+            #   - 9100:9100 # (2)
+            network_mode: host # (3)
+            ...
+    ```
+
+    1. Uncomment dòng này
+    2. Uncomment dòng này và thay bằng `- another_port:9100` tương tự `mlflow`
+    2. Comment dòng này
 
 ### Stop
 
