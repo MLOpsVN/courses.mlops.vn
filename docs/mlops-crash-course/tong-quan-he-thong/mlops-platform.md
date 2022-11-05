@@ -109,28 +109,6 @@ cd mlops-crash-course-platform && bash run.sh feast up
 
     1. Thay bằng `"another_port:5000"`, ví dụ" `"5001:5000"`. Khi đó, sau khi start service `mlflow` mọi người sẽ truy cập service này tại `http://localhost:5001`. 
 
-    Nếu file `*-docker-compose.yml` của service không sử dụng port bindings như `mlflow` mà sử dụng `network_mode: host` tương tự như `prom-graf`, mọi người xử lý như sau:
-
-    ```py title="mlops-crash-course-platform/prom-graf/prom-graf-docker-compose.yml" linenums="1"
-    ...
-    services:
-        node-exporter:
-            ...
-            command:
-                - '--path.procfs=/host/proc'
-                - '--path.rootfs=/rootfs'
-                - '--path.sysfs=/host/sys'
-                - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-            # ports: # (1)
-            #   - 9100:9100 # (2)
-            network_mode: host # (3)
-            ...
-    ```
-
-    1. Uncomment dòng này
-    2. Uncomment dòng này và thay bằng `- another_port:9100` tương tự `mlflow`
-    2. Comment dòng này
-
 ### Stop
 
 Để stop các service mà không làm mất dữ liệu, mọi người chạy command sau:
