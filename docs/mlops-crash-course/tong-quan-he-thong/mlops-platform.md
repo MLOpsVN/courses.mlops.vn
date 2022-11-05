@@ -1,4 +1,4 @@
-đ<figure>
+<figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png" loading="lazy"/>
     <figcaption>Photo by <a href="https://coussement-bruno.medium.com/?source=post_page-----69ff5d96b7db--------------------------------">Coussement Bruno</a> on <a href="https://towardsdatascience.com/which-cloud-servicer-provider-ml-platform-do-you-need-69ff5d96b7db">Towards Data Science</a></figcaption>
 </figure>
