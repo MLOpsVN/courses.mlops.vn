@@ -661,11 +661,10 @@
 </li>
 <li>
 <p>Chạy lệnh</p>
-<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>make build_image <span class="c1"># (1)</span>
-<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>make deploy_dags <span class="c1"># (2)</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>make build_image
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>make deploy_dags <span class="c1"># (1)</span>
 </code></pre></div>
 <ol>
-<li>Quá trình build model serving image sẽ mất khoảng 5 - 10 phút</li>
 <li>Copy <code>model_serving/dags/*</code> vào folder <code>dags</code> của Airflow</li>
 </ol>
 <div class="admonition tip">
@@ -833,8 +832,9 @@
 <li>
 <p>Cập nhật Online Feature Store. Xem lại bài <a href="../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline">Xây dựng data pipeline</a></p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">cd</span> feature_repo
-<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>feast materialize-incremental <span class="k">$(</span>date +%Y-%m-%d<span class="k">)</span>
-<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nb">cd</span> ..
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>feast apply
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>feast materialize-incremental <span class="k">$(</span>date +%Y-%m-%d<span class="k">)</span>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="nb">cd</span> ..
 </code></pre></div>
 </li>
 <li>
