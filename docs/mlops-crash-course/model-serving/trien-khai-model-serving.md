@@ -202,12 +202,11 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 1.  Chạy lệnh
 
     ```bash
-    make build_image # (1)
-    make deploy_dags # (2)
+    make build_image
+    make deploy_dags # (1)
     ```
 
-    1.  Quá trình build model serving image sẽ mất khoảng 5 - 10 phút
-    2.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
+    1.  Copy `model_serving/dags/*` vào folder `dags` của Airflow
 
     !!! tip
 
@@ -323,6 +322,7 @@ Bạn làm các bước sau để triển khai Online serving service.
 
     ```bash
     cd feature_repo
+    feast apply
     feast materialize-incremental $(date +%Y-%m-%d)
     cd ..
     ```
