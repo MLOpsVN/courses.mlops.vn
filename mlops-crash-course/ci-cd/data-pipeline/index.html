@@ -458,8 +458,8 @@
 <p>Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là <code>Jenkinsfile_data_pipeline</code>, không phải tên mặc định là <code>Jenkinsfile</code>, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <a href="http://localhost:8081/job/mlops-demo/configure">http://localhost:8081/job/mlops-demo/configure</a> và thay đổi <code>Script Path</code> từ <code>Jenkinsfile</code> sang <code>Jenkinsfile_data_pipeline</code>.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png"/></a></p>
 </details>
-<details class="warning" open="open">
-<summary>Warning</summary>
+<details class="bug" open="open">
+<summary>Bug</summary>
 <p>Nếu bạn gặp hiện tượng Github API Rate Limit như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"/></a></p>
 <p>Thì bạn thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới:</p>
