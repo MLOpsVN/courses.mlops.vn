@@ -442,7 +442,7 @@
 <p>Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm <strong>1</strong>, <strong>2</strong>, <strong>3</strong>, <strong>4</strong>, <strong>5</strong> như hình dưới đây:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png"/></a></p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
-<p>Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo <code>mlops-crash-course-platform/</code> và start service này như sau:</p>
+<p>Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, bạn vào repo <code>mlops-crash-course-platform/</code> và start service này như sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>bash run.sh airflow up
 </code></pre></div>
 <h2 id="cac-tuong-tac-chinh-voi-feast">Các tương tác chính với Feast</h2>
@@ -641,7 +641,7 @@
 <ol>
 <li>Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard</li>
 <li>Định nghĩa pipeline owner, số lần retry pipeline, và khoảng thời gian giữa các lần retry</li>
-<li>Lịch chạy pipeline, ở đây <code>@once</code> là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
+<li>Lịch chạy pipeline, ở đây <code>@once</code> là một lần chạy, bạn có thể thay bằng cron expression ví dụ như 0 0 1 * *</li>
 <li>Ngày bắt đầu chạy pipeline theo múi giờ UTC</li>
 <li>Nếu <strong>start_date</strong> là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và <strong>schedule_interval</strong> là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa</li>
 <li>Command chạy trong docker container cho bước này</li>
@@ -649,7 +649,7 @@
 </ol>
 <details class="info" open="open">
 <summary>Info</summary>
-<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại <code>data_pipeline/deployment/Dockerfile</code></p>
+<p>Do chúng ta dùng DockerOperator để tạo <em>task</em> nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào <code>DEFAULT_DOCKER_OPERATOR_ARGS</code> trong từng pipeline component (ví dụ như line 11). Dockerfile để build image bạn có thể tham khảo tại <code>data_pipeline/deployment/Dockerfile</code></p>
 </details>
 <p>Biến <code>DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS</code> chứa các config như sau:</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/utils.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
@@ -735,7 +735,7 @@
 <a id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="stream-to-stores-pipline">Stream to stores pipline</h3>
-<p>Mọi người thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào <em>offline</em> và <em>online store</em></p>
+<p>Bạn thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào <em>offline</em> và <em>online store</em></p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/dags/stream_to_stores.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
@@ -776,7 +776,7 @@
 </code></pre></div></td></tr></table></div>
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store.</p>
-<p>Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.</p>
+<p>Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng bạn có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://feast.dev/">https://feast.dev/</a></li>

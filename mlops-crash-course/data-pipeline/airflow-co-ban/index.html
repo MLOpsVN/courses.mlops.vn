@@ -401,7 +401,7 @@
 <figcaption>Photo from <a href="https://airflow-tutorial.readthedocs.io/en/latest/pipelines.html">airflow-tutorial</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.</p>
+<p>Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp bạn hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.</p>
 <h2 id="cac-khai-niem-co-ban">Các khái niệm cơ bản</h2>
 <p>Airflow là một nền tảng cung cấp SDK và UI để hỗ trợ xây dựng, đặt lịch thực thi và theo dõi các pipeline.
 Một số khái niệm cơ bản trong Airflow:</p>
@@ -416,7 +416,7 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <li><strong>PythonOperator:</strong> thực thi các Python script</li>
 <li><strong>EmailOperator:</strong> gửi email</li>
 <li><strong>DockerOperator:</strong> thực hiện các command bên trong docker container</li>
-<li><strong>MySQLOperator:</strong> thực thi các MySQL query, ngoài ra còn rất nhiều <em>operator</em> khác được phát triển bởi cộng đồng, mọi người xem thêm tại <a href="https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html">đây</a></li>
+<li><strong>MySQLOperator:</strong> thực thi các MySQL query, ngoài ra còn rất nhiều <em>operator</em> khác được phát triển bởi cộng đồng, bạn xem thêm tại <a href="https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html">đây</a></li>
 </ul>
 <p>Ở series này chúng ta sẽ chủ yếu sử dụng 2 loại operators là <em>DockerOperator</em> và <em>BashOperator</em>.</p>
 <details class="tip" open="open">
@@ -443,7 +443,7 @@ Một số khái niệm cơ bản trong Airflow:</p>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
-<li>Định nghĩa <em>task</em> bằng PythonOperator. Mọi người tự truyền các config vào <code>(...)</code></li>
+<li>Định nghĩa <em>task</em> bằng <code>PythonOperator</code>. Bạn tự truyền các config vào <code>(...)</code></li>
 <li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, và cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
 </ol>
 <h2 id="tong-ket">Tổng kết</h2>

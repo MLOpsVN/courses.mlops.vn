@@ -365,7 +365,7 @@
 <h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Ở bài học trước, chúng ta đã cùng nhau xây dựng Jenkins pipeline để tự động hóa quá trình release <code>data pipeline</code>. Trong bài học này chúng ta sẽ sửa Jenkinsfile để phục vụ cho <code>model serving</code>.</p>
 <h2 id="jenkins-pipeline">Jenkins pipeline</h2>
-<p>Luồng CI/CD cho model serving sẽ được thay đổi thành như sau:</p>
+<p>CI/CD pipeline cho model serving sẽ được thay đổi thành như sau:</p>
 <pre class="mermaid"><code>graph LR
     n1[1. Build model serving] --&gt; n2[2. Test model serving]
     n2[2. Test model serving] --&gt; n3[3.1. Deploy offline batch serving pipeline]
@@ -459,14 +459,13 @@
 <a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
+<li>Test code, phần này bạn sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
 <li>Định nghĩa 2 bước chạy song song là <code>serving pipeline</code> và <code>online serving API</code>.</li>
 </ol>
-<p>Sau khi mọi người thay đổi code ở folder <code>model_serving/</code> và push code lên Github, mọi người sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
+<p>Sau khi bạn thay đổi code ở folder <code>model_serving/</code> và push code lên Github, bạn sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png"/></a></p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học này, chúng ta đã cải tiến Jenkinsfile của <code>data pipeline</code> để tự động hóa <code>model serving</code> bằng cách sử dụng từ khóa <code>parallel</code>.
-Mọi người có thể đọc thêm <a href="https://www.jenkins.io/doc/">document</a> của Jenkins và tiếp tục custom luồng CI/CD, ví dụ: biến bước <code>deploy</code> trong CI/CD sang manual, thay vì tự động chạy cả luồng một lúc.</p>
+<p>Ở bài học này, chúng ta đã cải tiến Jenkinsfile của <code>data pipeline</code> để tự động hóa <code>model serving</code> bằng cách sử dụng từ khóa <code>parallel</code>. Bạn có thể đọc thêm <a href="https://www.jenkins.io/doc/">Jenkins document tại đây</a> và tiếp tục tuỳ biến CI/CD pipeline, ví dụ: biến bước <code>deploy</code> trong CI/CD sang manual, thay vì tự động chạy cả pipeline một lúc.</p>
 </article>
 </div>
 </div>

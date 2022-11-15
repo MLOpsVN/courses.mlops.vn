@@ -377,7 +377,7 @@
     n1[1. Build data pipeline] --&gt; n2[2. Test data pipeline] --&gt; n3[3. Deploy data pipeline]</code></pre>
 <details class="info" open="open">
 <summary>Info</summary>
-<p>Ở bài học này chúng ta sẽ sử dụng agent lả docker image <code>python:3.9</code>, do đó trước hết mọi người phải truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
+<p>Ở bài học này chúng ta sẽ sử dụng agent lả docker image <code>python:3.9</code>, do đó trước hết bạn cần truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
 </details>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile_data_pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
@@ -450,7 +450,7 @@
 <ol>
 <li>Định nghĩa agent là docker image <code>python:3.9</code>. Image này được sử dụng mặc định cho tất cả các <code>stage</code> trong pipeline.</li>
 <li>Build image cho để chạy các bước trong Airflow pipeline</li>
-<li>Test code, phần này mọi người sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
+<li>Test code, phần này bạn sẽ bổ sung <code>unit test</code>, <code>integration test</code>, .v.v. dựa vào bài học về <code>kiểm thử hệ thống</code></li>
 <li>Copy script chứa <code>DAG</code> qua folder <code>dags/</code> của Airflow</li>
 </ol>
 <details class="warning" open="open">
@@ -460,15 +460,15 @@
 </details>
 <details class="warning" open="open">
 <summary>Warning</summary>
-<p>Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:</p>
+<p>Nếu bạn gặp hiện tượng Github API Rate Limit như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png"/></a></p>
-<p>Thì mọi người thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới:</p>
+<p>Thì bạn thêm Credentials ở mục Github bằng cách ấn vào <code>Add</code> như hình dưới:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png"/></a></p>
 </details>
-<p>Sau khi mọi người thay đổi code ở folder <code>data-pipeline/</code> và push code lên Github, mọi người sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
+<p>Sau khi bạn thay đổi code ở folder <code>data-pipeline/</code> và push code lên Github, bạn sẽ thấy <code>Console Output</code> tương ứng với commit này hiển thị tương tự như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png"/></a></p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì <code>push</code> lên Github và để luồng CI/CD lo những phần còn lại, thật tiện lợi phải không nào!</p>
+<p>Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì <code>push</code> lên Github và để CI/CD pipeline lo những phần còn lại, thật tiện lợi phải không nào!</p>
 <p>Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho <code>model serving</code>.</p>
 </article>
 </div>
