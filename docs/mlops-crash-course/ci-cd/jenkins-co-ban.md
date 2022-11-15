@@ -7,7 +7,11 @@
 
 Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này.
 
-Ở bài học này, mọi người sẽ cùng nhau cài đặt Jenkins trên máy cá nhân, kết nối Jenkins tới Github, và cuối cùng là chạy thử một CI/CD pipeline đơn giản để smoke test các cài đặt.
+Ở bài học này, bạn sẽ:
+
+1. Cài đặt Jenkins trên máy cá nhân
+1. Kết nối Jenkins tới Github
+1. Và chạy thử một CI/CD pipeline đơn giản
 
 ## Cài đặt Jenkins
 
@@ -111,9 +115,9 @@ Các bạn làm các bước sau:
 
 ### Thêm Jenkins webhook vào Github
 
-Đầu tiên mọi người push code đã clone từ [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code) lên Github repo của mọi người, link repo sau khi đẩy lên sẽ có dạng `https://github.com/<yourusername>/mlops-crash-course-code`. Ví dụ: nếu Github username là `MLOps` thi đường link tới repo sẽ là `https://github.com/MLOps/mlops-crash-course-code`.
+Đầu tiên bạn push code đã clone từ [mlops-crash-course-code](https://github.com/MLOpsVN/mlops-crash-course-code) lên Github repo của bạn, link repo sau khi đẩy lên sẽ có dạng `https://github.com/<yourusername>/mlops-crash-course-code`. Ví dụ: nếu Github username là `MLOps` thi đường link tới repo sẽ là `https://github.com/MLOps/mlops-crash-course-code`.
 
-Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về `ci-cd`, mọi người sẽ làm việc trên repo `https://github.com/<yourusername>/mlops-crash-course-code` của mình. Do đó, khi mà mọi người thấy tác giả đề cập tới repo `https://github.com/MLOpsVN/mlops-crash-course-code`, thì các bạn hãy thực hành trên repo tương ứng của mọi người nhé.
+Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về `ci-cd`, bạn sẽ làm việc trên repo `https://github.com/<yourusername>/mlops-crash-course-code` của mình. Do đó, khi mà bạn thấy tác giả đề cập tới repo `https://github.com/MLOpsVN/mlops-crash-course-code`, thì các bạn hãy thực hành trên repo tương ứng của bạn nhé.
 
 1.  Vào `Settings` ở repo code, chọn `Webhooks`
 
@@ -159,7 +163,7 @@ Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có 
 
 ???+ warning
 
-    Nếu mọi người không thấy branch nào, thì mọi người ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
+    Nếu bạn không thấy branch nào, thì bạn ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
 
@@ -287,6 +291,6 @@ Finished: SUCCESS
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của mọi người. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
+Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của bạn. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
 
 Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.

@@ -20,7 +20,7 @@ Công việc mà cần nhiều sức người và tự động hóa ít thườn
 
 ???+ tip
 
-    Đôi khi mọi người nghe thấy một `CD` khác là `Continous Deployment`. Loại này có mức độ tự động cao hơn `Continous Delivery` , khi mà quá trình từ đóng gói tới deploy được tự động hoàn toàn, thay vì trigger thủ công bước deploy như `Continuous Delivery`.
+    Đôi khi bạn sẽ thấy một khái niệm `CD` khác là `Continous Deployment`. Loại này có mức độ tự động cao hơn `Continous Delivery` , khi mà quá trình từ đóng gói tới deploy được tự động hoàn toàn, thay vì trigger thủ công bước deploy như `Continuous Delivery`.
 
 ## Triển khai tự động hóa theo từng giai đoạn
 

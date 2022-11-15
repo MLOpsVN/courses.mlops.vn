@@ -20,7 +20,7 @@ Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm *
 
 ## Môi trường phát triển
 
-Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, mọi người vào repo `mlops-crash-course-platform/` và start service này như sau:
+Ngoài Feast, bài học này sẽ sử dụng thêm Airflow, bạn vào repo `mlops-crash-course-platform/` và start service này như sau:
 
 ```bash
 bash run.sh airflow up
@@ -172,7 +172,7 @@ processor.ingest_stream_feature_view()
 
     1.  Định nghĩa tên pipeline hiển thị ở trên Airflow dashboard
     2.  Định nghĩa pipeline owner, số lần retry pipeline, và khoảng thời gian giữa các lần retry
-    3.  Lịch chạy pipeline, ở đây `@once` là một lần chạy, mọi người có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
+    3.  Lịch chạy pipeline, ở đây `@once` là một lần chạy, bạn có thể thay bằng cron expression ví dụ như 0 0 1 \* \*
     4.  Ngày bắt đầu chạy pipeline theo múi giờ UTC
     5.  Nếu **start_date** là ngày 01/01/2022, ngày deploy/turn on pipeline là ngày 02/02/2022, và **schedule_interval** là @daily thì sẽ không chạy các ngày trước 02/02/2022 nữa
     6.  Command chạy trong docker container cho bước này
@@ -180,7 +180,7 @@ processor.ingest_stream_feature_view()
 
     ???+ info
 
-        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image mọi người có thể tham khảo tại `data_pipeline/deployment/Dockerfile`
+        Do chúng ta dùng DockerOperator để tạo _task_ nên cần phải build image chứa code và môi trường trước, sau đó sẽ truyền tên image vào `DEFAULT_DOCKER_OPERATOR_ARGS` trong từng pipeline component (ví dụ như line 11). Dockerfile để build image bạn có thể tham khảo tại `data_pipeline/deployment/Dockerfile`
 
     Biến `DefaultConfig.DEFAULT_DOCKER_OPERATOR_ARGS` chứa các config như sau:
 
@@ -248,7 +248,7 @@ with DAG(
 
 ### Stream to stores pipline
 
-Mọi người thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
+Bạn thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
 
 ```py title="data_pipeline/dags/stream_to_stores.py" linenums="1"
 with DAG(
@@ -276,7 +276,7 @@ with DAG(
 
 Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store.
 
-Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng mọi người có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.
+Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng bạn có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.
 
 ## Tài liệu tham khảo
 

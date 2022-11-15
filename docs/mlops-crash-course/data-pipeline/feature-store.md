@@ -6,7 +6,7 @@
 
 Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
 
-Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời mọi người đến với nội dung bài học hôm nay.
+Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.
 
 ## Môi trường phát triển
 

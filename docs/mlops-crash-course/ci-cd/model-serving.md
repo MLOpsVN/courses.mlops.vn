@@ -9,7 +9,7 @@
 
 ## Jenkins pipeline
 
-Luồng CI/CD cho model serving sẽ được thay đổi thành như sau:
+CI/CD pipeline cho model serving sẽ được thay đổi thành như sau:
 
 ```mermaid
 graph LR
@@ -67,14 +67,13 @@ pipeline {
 }
 ```
 
-1. Test code, phần này mọi người sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
+1. Test code, phần này bạn sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
 2. Định nghĩa 2 bước chạy song song là `serving pipeline` và `online serving API`.
 
-Sau khi mọi người thay đổi code ở folder `model_serving/` và push code lên Github, mọi người sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
+Sau khi bạn thay đổi code ở folder `model_serving/` và push code lên Github, bạn sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png" loading="lazy" />
 
 ## Tổng kết
 
-Ở bài học này, chúng ta đã cải tiến Jenkinsfile của `data pipeline` để tự động hóa `model serving` bằng cách sử dụng từ khóa `parallel`.
-Mọi người có thể đọc thêm [document](https://www.jenkins.io/doc/) của Jenkins và tiếp tục custom luồng CI/CD, ví dụ: biến bước `deploy` trong CI/CD sang manual, thay vì tự động chạy cả luồng một lúc.
+Ở bài học này, chúng ta đã cải tiến Jenkinsfile của `data pipeline` để tự động hóa `model serving` bằng cách sử dụng từ khóa `parallel`. Bạn có thể đọc thêm [Jenkins document tại đây](https://www.jenkins.io/doc/) và tiếp tục tuỳ biến CI/CD pipeline, ví dụ: biến bước `deploy` trong CI/CD sang manual, thay vì tự động chạy cả pipeline một lúc.

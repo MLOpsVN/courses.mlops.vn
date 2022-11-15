@@ -139,7 +139,7 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, kiếm thử trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích mọi người trong việc đảm bảo hệ thống ML đáng tin cậy hơn.
+Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, kiếm thử trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.
 
 ## Tài liệu tham khảo
 

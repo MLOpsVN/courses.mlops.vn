@@ -25,7 +25,7 @@ flowchart LR
 
 ???+ info
 
-    Ở bài học này chúng ta sẽ sử dụng agent lả docker image `python:3.9`, do đó trước hết mọi người phải truy câp <http://localhost:8081/pluginManager/> và cài đặt thêm plugin `Docker Pipeline`.
+    Ở bài học này chúng ta sẽ sử dụng agent lả docker image `python:3.9`, do đó trước hết bạn cần truy câp <http://localhost:8081/pluginManager/> và cài đặt thêm plugin `Docker Pipeline`.
 
 ```py title="Jenkinsfile_data_pipeline" linenums="1"
 pipeline {
@@ -66,30 +66,31 @@ pipeline {
 
 1. Định nghĩa agent là docker image `python:3.9`. Image này được sử dụng mặc định cho tất cả các `stage` trong pipeline.
 2. Build image cho để chạy các bước trong Airflow pipeline
-3. Test code, phần này mọi người sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
+3. Test code, phần này bạn sẽ bổ sung `unit test`, `integration test`, .v.v. dựa vào bài học về `kiểm thử hệ thống`
 4. Copy script chứa `DAG` qua folder `dags/` của Airflow
 
 ???+ warning
+
     Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là `Jenkinsfile_data_pipeline`, không phải tên mặc định là `Jenkinsfile`, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <http://localhost:8081/job/mlops-demo/configure> và thay đổi `Script Path` từ `Jenkinsfile` sang `Jenkinsfile_data_pipeline`.
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
 
 ???+ warning
 
-    Nếu mọi người gặp hiện tượng Github API Rate Limit như sau:
+    Nếu bạn gặp hiện tượng Github API Rate Limit như sau:
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png" loading="lazy" />
 
-    Thì mọi người thêm Credentials ở mục Github bằng cách ấn vào `Add` như hình dưới:
+    Thì bạn thêm Credentials ở mục Github bằng cách ấn vào `Add` như hình dưới:
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png" loading="lazy" />
 
-Sau khi mọi người thay đổi code ở folder `data-pipeline/` và push code lên Github, mọi người sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
+Sau khi bạn thay đổi code ở folder `data-pipeline/` và push code lên Github, bạn sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png" loading="lazy" />
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì `push` lên Github và để luồng CI/CD lo những phần còn lại, thật tiện lợi phải không nào!
+Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì `push` lên Github và để CI/CD pipeline lo những phần còn lại, thật tiện lợi phải không nào!
 
 Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho `model serving`.

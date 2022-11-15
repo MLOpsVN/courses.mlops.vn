@@ -7,7 +7,7 @@
 
 Trong khoa học máy tính có khái niệm _garbage in, garbage out_, được hiểu rằng dữ liệu đầu vào mà rác thì kết quả đầu ra cũng không thể dùng được. Như vậy công đoạn chuẩn bị dữ liệu là cực kỳ quan trọng, nhất là đối với các ứng dụng có hiệu năng bị chi phối mạnh mẽ bởi dữ liệu như ML. Theo thống kê của [Forbes](https://www.forbes.com/sites/gilpress/2016/03/23/data-preparation-most-time-consuming-least-enjoyable-data-science-task-survey-says), các Data Scientist dành tới 80% thời gian cho các công việc liên quan tới xử lý dữ liệu, đủ để hiểu rằng data engineering là một quá trình rất phức tạp và tốn nhiều thời gian.
 
-Ở bài học này, chúng ta sẽ cùng nhau tìm hiểu các công việc phổ biến trong xử lý dữ liệu, khái niệm về pipeline dữ liệu, để từ đó mọi người có thể rút ra được những việc cần làm cho bài toán của mình và lên kế hoạch triển khai cho phù hợp.
+Ở bài học này, chúng ta sẽ cùng nhau tìm hiểu các công việc phổ biến trong xử lý dữ liệu, khái niệm về pipeline dữ liệu, từ đó bạn có thể rút ra được những việc cần làm cho bài toán của mình và lên kế hoạch triển khai cho phù hợp.
 
 ## Các công đoạn chính trong xử lý dữ liệu
 

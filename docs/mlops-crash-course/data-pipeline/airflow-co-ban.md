@@ -5,7 +5,7 @@
 
 ## Giới thiệu
 
-Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp mọi người hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.
+Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp bạn hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.
 
 ## Các khái niệm cơ bản
 
@@ -23,7 +23,7 @@ Một số khái niệm cơ bản trong Airflow:
 - **PythonOperator:** thực thi các Python script
 - **EmailOperator:** gửi email
 - **DockerOperator:** thực hiện các command bên trong docker container
-- **MySQLOperator:** thực thi các MySQL query, ngoài ra còn rất nhiều _operator_ khác được phát triển bởi cộng đồng, mọi người xem thêm tại [đây](https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html)
+- **MySQLOperator:** thực thi các MySQL query, ngoài ra còn rất nhiều _operator_ khác được phát triển bởi cộng đồng, bạn xem thêm tại [đây](https://airflow.apache.org/docs/apache-airflow-providers/operators-and-hooks-ref/index.html)
 
 Ở series này chúng ta sẽ chủ yếu sử dụng 2 loại operators là _DockerOperator_ và _BashOperator_.
 
@@ -47,7 +47,7 @@ with DAG(
 ```
 
 1. Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước _start_date_
-2. Định nghĩa _task_ bằng PythonOperator. Mọi người tự truyền các config vào `(...)`
+2. Định nghĩa _task_ bằng `PythonOperator`. Bạn tự truyền các config vào `(...)`
 3. **Thứ tự chạy:** _ingest_task_ tới _clean_task_, và cuối cùng là 2 task song song: _explore_task và \_validate_task_
 
 ## Tổng kết
