@@ -75,7 +75,7 @@ pipeline {
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
 
-???+ warning
+???+ bug
 
     Nếu bạn gặp hiện tượng Github API Rate Limit như sau:
 

@@ -161,7 +161,7 @@ Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có 
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png" loading="lazy" />
 
-???+ warning
+???+ bug
 
     Nếu bạn không thấy branch nào, thì bạn ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
 

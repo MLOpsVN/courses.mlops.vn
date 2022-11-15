@@ -38,7 +38,7 @@ flowchart LR
     n1[ingest_task] --> n2[clean_task] --> n3[explore_and_validate_task]
 ```
 
-???+ warning
+???+ tip
 
     Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
 
