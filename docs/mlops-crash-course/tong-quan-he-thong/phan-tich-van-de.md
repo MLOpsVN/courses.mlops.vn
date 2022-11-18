@@ -4,13 +4,13 @@
 
 ## Giới thiệu
 
-Một hệ thống ML cũng là một hệ thống phần mềm. Khi xây dựng một hệ thống phần mềm, việc đầu tiên cần làm là định nghĩa vấn đề, định lượng hoá định nghĩa đó thành các yêu cầu có thể đánh giá được, và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Vấn đề cốt lõi khi đi xây dựng một hệ thống ML vẫn là vấn đề kinh doanh của một tổ chức.
+Một hệ thống ML được xem như là hệ thống phần mềm. Khi xây dựng hệ thống phần mềm, việc đầu tiên cần làm đó là định nghĩa, định lượng hoá vấn đề thành các yêu cầu có thể đánh giá được và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Cốt lõi của hệ thống ML khi được xây dựng vẫn là đưa ra và xử lý được bài toán kinh doanh của một tổ chức.
 
-Giả sử rằng công ty của bạn có mô hình kinh doanh giống _Grab_, và vấn đề kinh doanh của công ty của bạn là:
+Giả sử rằng công ty của bạn có mô hình kinh doanh tương tự _Grab_ và đã tìm hiểu về ML chọn đó làm giải pháp, vấn đề kinh doanh của công ty của bạn là:
 
 **_Làm thế nào để chọn ra tài xế có khả năng cao nhất sẽ hoàn thành một cuốc xe khi có yêu cầu đặt xe từ khách hàng?_**
 
-Giả sử rằng công ty hiểu về ML và chọn ML làm giải pháp để giải quyết vấn đề kinh doanh này. Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.
+Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.
 
 ```mermaid
 graph LR
@@ -60,11 +60,11 @@ Quá trình định nghĩa vấn đề kinh doanh là quá trình trả lời nh
 | **Ràng buộc kĩ thuật** | Có hệ thống cũ nào cần tích hợp với không?                                       | Không                                                                                                                                                            |
 |                        | Architecture và tools sẽ dùng?                                                   | Được định nghĩa ở bài tiếp theo                                                                                                                                  |
 
-Ngoài các câu hỏi trên, tuỳ vào vấn đề kinh doanh mà sẽ có các vấn đề và các câu hỏi khác. Trong bảng trên, nhiều câu trả lời liên quan tới mảng kinh doanh của công ty đã được trả lời ngắn gọn. Những câu trả lời này thông thường cần được một nhóm các Data Analyst và Business Strategist thảo luận, phân tích và trả lời. Câu trả lời cho các câu hỏi trên sẽ được cập nhật liên tục trong quá trình thực hiện dự án. Chúng ta không mong đợi câu trả lời sẽ đúng từ khi còn chưa bắt đầu thực hiện dự án. Bạn có thể tham khảo thêm [ở đây](https://ml-ops.org/content/phase-zero) về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.
+Ngoài một vài câu hỏi được nêu ở trên, tuỳ vào mục tiêu kinh doanh sẽ có các vấn đề và câu hỏi khác được đưa ra. Trong bảng trên, nhiều câu trả lời liên quan tới mảng kinh doanh của công ty đã được trả lời ngắn gọn. Những câu trả lời này thông thường được một đội ngũ các Data Analyst và Business Strategist thảo luận, phân tích, trả lời. Trong quá trình thực hiện dự án, các câu hỏi trên sẽ được cập nhật liên tục, dựa vào đó mà câu trả lời được bổ sung. Chúng ta không mong đợi câu trả lời sẽ đúng từ khi còn chưa bắt đầu thực hiện dự án. Bạn có thể tham khảo thêm [ở đây](https://ml-ops.org/content/phase-zero) về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.
 
 ## Tổng kết
 
-Trong quá trình phát triển hệ thống ML, mọi thành viên đều cần chú ý tới bốn tính chất cơ bản của một hệ thống ML, bao gồm Reliability, Scalability, Maintainability, và Adaptability. Bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về bốn tính chất này.
+Trong quá trình phát triển hệ thống ML, mọi thành viên đều cần chú ý tới 4 tính chất cơ bản của một hệ thống ML, bao gồm **Reliability, Scalability, Maintainability và Adaptability**. Bạn có thể đọc thêm ở khoá học [CS 329S: Machine Learning Systems Design](https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx) để hiểu rõ hơn về chúng.
 
 Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các architecture, workflows và MLOps platform được dùng trong khoá học.
 
