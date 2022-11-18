@@ -7,7 +7,7 @@
 
 Trong các dự án Machine Learning (ML) thực tế không nhằm mục tiêu nghiên cứu, đích đến cuối cùng là nhanh chóng triển khai hệ thống ML đó ra production. Ở thời điểm hiện tại, có nhiều thách thức mà các kĩ sư gặp phải để tự động hoá các quy trình trong quá trình phát triển và triển khai hệ thống ML. MLOps ra đời như một thuật ngữ để mô tả các vấn đề và hướng tiếp cận để giải quyết các vấn đề đó trong một dự án ML.
 
-Trong bài này, dựa trên kiến thức từ bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu sơ lược lý thuyết về MLOps, các principles (nguyên tắc) trong MLOps, và các workflows điển hình trong MLOps.
+Trong bài này, dựa trên kiến thức từ bài báo [Machine Learning Operations (MLOps): Overview, Definition, and Architecture][mlops-paper], chúng ta sẽ tìm hiểu sơ lược về lý thuyết, các principles (nguyên tắc) và workflows điển hình trong MLOps.
 
 !!! warning
 
@@ -17,18 +17,18 @@ Trong bài này, dựa trên kiến thức từ bài báo [Machine Learning Oper
 
 Theo [bài báo trên][mlops-paper], định nghĩa về MLOps có thể được hiểu và tóm gọn lại vào các ý sau:
 
-- MLOps là một mô hình, bao gồm các best practices, các khái niệm và văn hoá làm việc, trong quá trình phát triển, triển khai, và theo dõi một hệ thống ML
-- MLOps gồm các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps), và data engineering
+- MLOps là một mô hình, bao gồm các best practices, khái niệm, văn hoá làm việc, trong quá trình phát triển, triển khai và theo dõi một hệ thống ML.
+- MLOps gồm các kĩ thuật hội tụ bởi 3 mảng: machine learning, software engineering (đặc biệt là DevOps) và data engineering.
 - MLOps tạo điều kiện thuật lợi cho quá trình phát triển và triển khai các hệ thống ML ra production hiệu quả hơn, thông qua các principles mà chúng ta sẽ xem xét ngay sau đây.
 
-## Các principles
+## Principles
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
-    <figcaption>Photo by <a href="https://unsplash.com/@austindistel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Austin Distel</a> on <a href="https://unsplash.com/s/photos/principle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png" loading="lazy"/>
+    <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
 </figure>
 
-Một principle được xem như là một best practice, hay một hướng dẫn, một gợi ý cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các principles trong MLOps bao gồm:
+Principle được xem như là một best practice hay nói cách khác đó là sự hướng dẫn, gợi ý cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các principles trong MLOps bao gồm:
 
 **1. CI/CD automation**
 
@@ -36,19 +36,19 @@ Principle này đảm bảo việc tích hợp và triển khai code diễn ra t
 
 **2. Workflow orchestration**
 
-Trong quá trình phát triển hệ thống ML, có nhiều pipeline cần được chạy vào những thời điểm nhất định, với các bước trong pipeline phụ thuộc lẫn nhau. Ngoài ra, các thư viện và môi trường chạy cũng khác nhau. Principle này đảm bảo việc tự động hoá điều phối các bước trong một pipeline chạy đúng thứ tự, và đúng thời gian được chỉ định.
+Trong quá trình phát triển hệ thống ML, có nhiều pipeline cần được chạy vào những thời điểm nhất định, với các bước trong pipeline phụ thuộc lẫn nhau. Ngoài ra, thư viện, môi trường chạy cũng khác nhau. Principle này đảm bảo việc tự động hoá điều phối các bước trong một pipeline chạy đúng thứ tự và thời gian được chỉ định.
 
 **3. Reproducibility**
 
-Khả năng reproduce (tái lập lại) một kết quả hay một lần thử nghiệm là một yêu cầu thường thấy khi phát triển một hệ thống ML. Yêu cầu này đảm bảo việc chạy model inference ở production ổn định, và debug quá trình phát triển model hiệu quả hơn.
+Khả năng tái lập lại (reproduce), là kết quả hay lần thử nghiệm yêu cầu thường thấy khi phát triển một hệ thống ML. Việc làm này đảm bảo khi chạy model inference ở production ổn định và debug quá trình phát triển model hiệu quả hơn.
 
 **4. Versioning code, data, model**
 
-Principle này đảm bảo code, data, và model được version, để kiểm tra xem một phiên bản model được train với phiên bản data nào, và sử dụng code ở phiên bản nào để train.
+Principle này đảm bảo được code, data, model đang ở version nào. Việc làm này thuận tiện cho quản lý, kiểm tra phiên bản model được train với phiên bản data nào và sử dụng code ở phiên bản nào để train.
 
 **5. Collaboration**
 
-Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tham gia vào phát triển hệ thống. Principle này đảm bảo việc thiết lập một bộ các quy tắc, các công cụ, và văn hoá làm việc để quá trình cộng tác giữa các cá nhân, ở các vai trò khác nhau với các trách nhiệm khác nhau, diễn ra hiệu quả.
+Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tham gia vào phát triển hệ thống. Principle này đảm bảo việc thiết lập một bộ các quy tắc, công cụ và văn hoá làm việc để quá trình cộng tác giữa các cá nhân, ở các vai trò, trách nhiệm khác nhau, diễn ra hiệu quả.
 
 **6. Continuous ML training & evaluation**
 
@@ -56,7 +56,7 @@ Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tha
 
 **7. ML metadata tracking**
 
-Mỗi bước ở mỗi pipeline trong một hệ thống ML yêu cầu các configurations hay data đầu vào/đầu ra. Principle này được đặt ra dựa trên yêu cầu về việc theo dõi và ghi lại các đầu vào và đầu ra đó, kèm theo thông tin về các lần chạy của các pipeline, ví dụ như:
+Trong một hệ thống ML, các configurations hay data đầu vào/đầu ra được yêu cầu cụ thể, ở mỗi bước của pipeline. Principle này được đặt ra nhằm theo dõi và ghi lại các đầu vào và đầu ra đó, kèm theo thông tin về những lần chạy của các pipeline, ví dụ như:
 
 - Ngày, tháng, thời gian chạy
 - Phiên bản của data đang chạy
@@ -66,7 +66,7 @@ Mỗi bước ở mỗi pipeline trong một hệ thống ML yêu cầu các con
 
 **8. Continuous monitoring**
 
-Principle này đảm bảo việc theo dõi liên tục các thông số liên quan tới data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một số thông số điển hình bao gồm:
+Principle này đảm bảo việc theo dõi liên tục các thông số liên quan tới data, model, infrastructure, để phát hiện và giải quyết các lỗi kịp thời. Một vài thông số điển hình bao gồm:
 
 - Các tính chất thống kê của data ở production
 - Model performance
@@ -84,7 +84,7 @@ Khi phát triển một hệ thống ML, sự phản hồi từ phần đánh gi
 
 Xuyên suốt khoá học, các principles này sẽ được ngầm hiểu và sử dụng trong quá trình phát triển hệ thống. Để biết thêm chi tiết, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
-## Các components
+## Components
 
 <figure>
     <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg" loading="lazy"/>
@@ -103,14 +103,7 @@ Các components trong MLOps là các thành phần trong một hệ thống ML. 
 1. Model serving component
 1. Monitoring component
 
-Tên các components đã giải thích ý nghĩa và công việc của các components đó, đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều principle ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Hình dưới đây thể hiện mối quan hệ của các components với các principles trong MLOps.
-
-<figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png" loading="lazy"/>
-    <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
-</figure>
-
-Để hiểu rõ hơn về các components này, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
+Tên các components đã giải thích ý nghĩa và công việc của các components đó, đồng thời chúng cũng thực hiện nhiệm vụ của một hoặc nhiều principle ở phần trước, nên chúng ta sẽ không đề cập chi tiết ở đây. Để hiểu rõ hơn về mối quan hệ của các components với principles trong MLOps, bạn có thể đọc kĩ hơn ở [bài báo trên][mlops-paper].
 
 ## Các workflows
 
@@ -136,7 +129,7 @@ flowchart TD
 
 Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ yêu cầu về các chức năng của hệ thống ML. Sau đó, dự án _Proof Of Concept_ (POC) sẽ được thực hiện để chứng minh rằng giải pháp đề ra là khả thi, trước khi bắt tay vào xây dựng chi tiết các chức năng phức tạp.
 
-Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá trình thực hiện dự án POC, các data engineer, software engineer, ML engineer, hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, hay monitoring component, và CI/CD cho tất cả pipeline và components đó. Dựa trên các bước xây dựng một hệ thống ML trong thực tế, khoá học này sẽ bao gồm các bài học lần lượt như sau:
+Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá trình thực hiện dự án POC, các data engineer, software engineer, ML engineer hay MLOps engineer cũng thực hiện song song việc xây dựng data pipeline, training pipeline, model serving component, monitoring component và CI/CD cho tất cả pipeline, components đó. Dựa trên các bước xây dựng một hệ thống ML trong thực tế, khoá học này sẽ bao gồm các bài học lần lượt như sau:
 
 1. Phân tích vấn đề
 1. POC
@@ -148,9 +141,9 @@ Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá t
 
 ## Tổng kết
 
-Trong bài này, chúng ta đã tìm hiểu khá nhiều vấn đề và phương hướng giải quyết dựa trên các quy tắc, components, và workflows được định nghĩa trong MLOps. Tuy nhiên, MLOps vẫn còn là một mảng khá mới, còn tồn tại khá nhiều thử thách dành cho các kĩ sư. Hy vọng rằng khoá học **MLOps Crash Course** sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.
+Trong bài này, chúng ta đã tìm hiểu khá nhiều vấn đề cũng như việc đưa ra được phương pháp giải quyết dựa trên các quy tắc, components, workflows được định nghĩa trong MLOps. Tuy nhiên, MLOps vẫn còn là một mảng khá mới, còn tồn tại khá nhiều thử thách và thời gian dành cho các kĩ sư. Hy vọng rằng khoá học **MLOps Crash Course** sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.
 
-Trong bài tiếp theo, chúng ta sẽ bắt đầu bước đầu tiên khi xây dựng một dự án ML, đó là bước **Phân tích vấn đề**.
+Trong bài tiếp theo, chúng ta sẽ bắt đầu các bước đầu tiên khi xây dựng một dự án ML, đó là bước **Phân tích vấn đề**.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
