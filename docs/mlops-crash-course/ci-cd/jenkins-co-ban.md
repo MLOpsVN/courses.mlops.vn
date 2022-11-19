@@ -5,8 +5,7 @@
 
 ## Giới thiệu
 
-Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này.
-
+Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD và các bài học về kiểm thử trong một hệ thống ML. Câu hỏi được đặt ra đó là làm thế nào để triển khai một CI/CD pipeline tự động hóa gồm các bước như build, test, deploy? Jenkins là một open source cho phép hiện thực háo điều này.
 Ở bài học này, bạn sẽ:
 
 1. Cài đặt Jenkins trên máy cá nhân
@@ -57,11 +56,11 @@ Các bạn làm các bước sau để cài đặt:
     This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
     ```
 
-1.  Chọn `Install suggested plugins`, và chờ Jenkins cài đặt các plugins.
+1.  Chọn `Install suggested plugins` và chờ Jenkins cài đặt các plugins.
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png" loading="lazy" />
 
-1.  Ở giao diện đăng ký user sử dụng Jenkins, chọn `Skip and continue as admin`
+1.  Ở giao diện đăng ký user sử dụng Jenkins chọn `Skip and continue as admin`
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
 
@@ -141,11 +140,11 @@ Nội dung bên dưới và các nội dung kế tiếp trong module bài giản
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
 
-1.  Ấn `+ New Item`, điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline`, và ấn `OK`
+1.  Ấn `+ New Item`, điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline` và ấn `OK`
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
 
-1.  Ở phần `Branch Sources`, ấn `Add source`, chọn `GitHub`
+1.  Ở phần `Branch Sources`, ấn `Add source` chọn `GitHub`
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
 
@@ -167,7 +166,7 @@ Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có 
 
     <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
 
-Nếu chúng ta ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
+Nếu ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
 
@@ -224,7 +223,7 @@ git add Jenkinsfile
 git push origin your_branch
 ```
 
-Lúc này chúng ta sẽ thấy có thêm `#2` ở `Build History`, với 3 bước `Build`, `Test` và `Deploy`, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.
+Lúc này chúng ta sẽ thấy có thêm `#2` ở `Build History` với 3 bước `Build`, `Test` và `Deploy`, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png" loading="lazy" />
 
@@ -265,7 +264,7 @@ Finished: SUCCESS
 
 ???+ tip
 
-    Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
+    Nếu muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
 
         ````py title="Jenkinsfile" linenums="1"
         pipeline {
@@ -291,6 +290,6 @@ Finished: SUCCESS
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo `yourusername/mlops-crash-course-code` của bạn. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
+Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có sự thay đổi ở repo `yourusername/mlops-crash-course-code` của bạn. Việc hoàn thành chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
 
 Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.
