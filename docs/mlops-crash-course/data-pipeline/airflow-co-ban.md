@@ -46,13 +46,13 @@ with DAG(
     ingest_task >> clean_task >> [explore_task, validate_task] # (3)
 ```
 
-1. Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước _start_date_
+1. Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily và không catchup, tức là không chạy pipeline trước _start_date_
 2. Định nghĩa _task_ bằng `PythonOperator`. Bạn tự truyền các config vào `(...)`
-3. **Thứ tự chạy:** _ingest_task_ tới _clean_task_, và cuối cùng là 2 task song song: _explore_task và \_validate_task_
+3. **Thứ tự chạy:** _ingest_task_ tới _clean_task_, cuối cùng là 2 task song song: _explore_task và \_validate_task_
 
 ## Tổng kết
 
-Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng _task_ và _DAG_. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.
+Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow và làm quen với Airflow Python SDK để xây dựng _task_ và _DAG_. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.
 
 ## Tài liệu tham khảo
 
