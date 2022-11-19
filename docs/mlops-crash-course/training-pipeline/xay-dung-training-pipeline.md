@@ -13,7 +13,7 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 4. Code train model
 5. Code đánh giá model
 
-Phần 1 và 2 được dùng trong bài [xây dựng data pipeline](../../data-pipeline/tong-quan-data-pipeline). Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
+Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../../data-pipeline/tong-quan-data-pipeline). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
 
 ```mermaid
 flowchart LR
@@ -26,7 +26,7 @@ Các bạn làm các bước sau để cài đặt môi trường phát triển:
 
 1.  Cài đặt **môi trường Python 3.9 mới** với các thư viện cần thiết trong file `training_pipeline/dev_requirements.txt`
 
-1.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline`, và `MLFLOW_TRACKING_URI` bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.
+1.  Đặt environment variable `TRAINING_PIPELINE_DIR` ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder `training_pipeline` và `MLFLOW_TRACKING_URI` bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder `training_pipeline/src` trong quá trình phát triển.
 
     ```bash
     cd mlops-crash-course-code/training_pipeline
@@ -46,7 +46,7 @@ Các MLOps tools được dùng trong bài này bao gồm:
 
 ## Cập nhật Feature Store
 
-Trong khoá học này, Feast được dùng làm Feature Store để version các feature và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature và metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
+Trong khoá học này, Feast được dùng làm Feature Store để version cho features và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature, metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
 
 Trước khi cập nhật Feature Store, cần đảm bảo code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.
 
@@ -96,7 +96,7 @@ to_parquet(training_df, AppPath.TRAINING_PQ) # (7)
 2. Đọc label từ file `driver_orders.csv`
 3. Định dạng lại format cho cột `event_timestamp`
 4. Download features từ Offline Feature Store.
-5. Các feature chúng ta muốn lấy bao gồm `conv_rate`, `acc_rate`, và `avg_daily_trips`. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`
+5. Các feature chúng ta muốn lấy bao gồm `conv_rate`, `acc_rate` và `avg_daily_trips`. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`
 6. Cách mà Feast lấy ra features giống như cách chúng ta chuẩn bị data ở dự án POC. Bạn có thể xem lại [tại đây](../../poc/xay-dung-poc/#chuan-bi-data).
 7. Lưu data vào disk để sử dụng trong các task tiếp theo.
 
@@ -221,14 +221,14 @@ Bạn làm các bước sau để test thử code.
     cd ..
     ```
 
-1.  Kiểm tra folder `training_pipeline/artifacts`, bạn sẽ thấy các files `training.parquet`, `train_x.parquet`, `test_x.parquet`, `train_y.parquet`, và `test_y.parquet`
+1.  Kiểm tra folder `training_pipeline/artifacts`, bạn sẽ thấy các files `training.parquet`, `train_x.parquet`, `test_x.parquet`, `train_y.parquet` và `test_y.parquet`
 
 ## Model training
 
-Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên, trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:
+Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:
 
 - **Đầu vào:** data được chuẩn bị ở task Data preparation
-- **Đầu ra:** model đã được train.
+- **Đầu ra:** model đã được train
 
 Code cho task Model training đã được viết ở dự án POC. Code của task này được lưu tại `training_pipeline/src/model_training.py`.
 
@@ -327,7 +327,7 @@ Kết quả là offline metrics, sẽ được lưu vào disk, để phục vụ
 
 ## Model validation
 
-Trong task này, chúng ta dùng các metrics từ task Model evaluation để đánh giá model. Các baseline về metrics nên được định nghĩa ở bước **Phân tích vấn đề** rồi. Việc đánh giá model dựa trên các metrics để chứng tỏ model mới có performance tốt hơn model cũ trước khi triển khai ra production.
+Trong task này, chúng ta dùng các metrics từ task Model evaluation để đánh giá model. Các baseline về metrics nên được định nghĩa ở bước **Phân tích vấn đề**. Việc đánh giá model dựa trên các metrics để chứng tỏ model mới có performance tốt hơn model cũ trước khi triển khai ra production.
 
 Model performance cần được đánh giá trên các phần khác nhau của dataset. Ví dụ như model mới có Accuracy cao hơn model cũ khi đánh giá trên tất cả khách hàng, nhưng có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.
 
@@ -336,7 +336,7 @@ Ngoài ra, model có thể cần được kiểm tra xem có tương thích vớ
 - Kiểm tra model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra tương thích không
 - Thời gian inference có đảm bảo nằm trong một khoảng yêu cầu của vấn đề kinh doanh không
 
-Trong task này, chúng ta chỉ viết code để so sánh offline metrics với các thresholds được định nghĩa trong file `training_pipeline/.env`. Nếu model thoả mãn các thresholds, chúng ta có thể tự động lưu model vào Model Registry. Thông tin của model được lưu và version của nó cũng được lưu vào disk để sử dụng khi cần, ví dụ để triển khai ra production.
+Trong task này, chúng ta chỉ viết code để so sánh offline metrics với các thresholds được định nghĩa trong file `training_pipeline/.env`. Nếu model thoả mãn các thresholds, có thể tự động lưu model vào Model Registry. Thông tin của model được lưu và version của nó cũng được lưu vào disk để sử dụng khi cần, ví dụ để triển khai ra production.
 
 Code của task này được lưu tại `training_pipeline/src/model_validation.py`.
 
@@ -385,7 +385,7 @@ Bạn làm các bước sau để test thử code.
 
 ## Airflow DAG
 
-Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG, hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py`.
+Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại `training_pipeline/dags/training_dag.py`.
 
 ```python linenums="1" title="training_pipeline/dags/training_dag.py"
 with DAG(
@@ -444,7 +444,7 @@ Chúng ta vừa trải qua quy trình phát triển điển hình cho training p
 
 Trong một dự án ML, trong khi Data Scientist vẫn thực hiện các thử nghiệm trên data và model, ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên yêu cầu từ Data Scientist.
 
-Sau khi tự động hoá training pipeline, trong bài tiếp theo, chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.
+Sau khi tự động hoá training pipeline, trong bài tiếp theo chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.
 
 ## Tài liệu tham khảo
 
