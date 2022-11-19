@@ -5,7 +5,7 @@
 
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics điển hình, và các bộ công cụ được dùng trong quá trình theo dõi.
+Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics điển hình và các bộ công cụ được dùng trong quá trình theo dõi.
 
 Trong bài này, chúng ta sẽ triển khai các giải pháp để theo dõi hệ thống ML trong khoá học này, cụ thể là những công việc sau:
 
@@ -18,7 +18,7 @@ Trong bài này, chúng ta sẽ triển khai các giải pháp để theo dõi h
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
-1. Elasticsearch, Kibana, và Filebeat: thu thập và hiển thị logs tập trung từ Online serving service
+1. Elasticsearch, Kibana và Filebeat: thu thập và hiển thị logs tập trung từ Online serving service
 2. Prometheus và Grafana: theo dõi và hiển thị metrics
 
 ## Logs
@@ -31,7 +31,7 @@ Hình dưới là một pipeline điển hình cho việc thu thập và xử l�
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png" loading="lazy" />
 
-Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích và hiển thị data lên Kibana dashboard.
+Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích, hiển thị data lên Kibana dashboard.
 
 Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebeat_ để thu thập logs từ containers và gửi logs tới Elasticsearch. Trong bài này, Logstash sẽ được thay thế bằng Filebeat để thu thập logs từ containers và gửi tới Elasticsearch.
 
@@ -98,7 +98,7 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
 4.  Kiểm tra Kibana server được triển khai thành công chưa:
 
     1.  Trên browser, truy cập vào Kibana server tại <http://localhost:5601>
-    2.  Đăng nhập với tên user là `elastic`, và mật khẩu là `changeme`
+    2.  Đăng nhập với tên user là `elastic` và mật khẩu là `changeme`
 
         Việc đăng nhập thành công chứng tỏ Kibana server đã triển khai thành công.
 
@@ -106,7 +106,7 @@ Có khá nhiều biến thể của pipeline trên, ví dụ như dùng _Filebea
 
 Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving service hay chưa.
 
-1.  Gửi vài request tới Online serving API bằng cách truy cập <http://localhost:8172>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
+1.  Gửi vài requests tới Online serving API bằng cách truy cập <http://localhost:8172>, mở API `/inference`, click `Try it out`. Ở phần `Request body`, bạn gõ nội dung sau:
 
     ```json
     {
@@ -150,7 +150,7 @@ filebeat.autodiscover:
       hints.enabled: true
 ```
 
-Đoạn config này cấu hình để Filebeat tự động thu thập logs từ các containers và gửi về Elasticsearch. Trong thực tế, chúng ta không muốn thu thập logs từ mọi containers, và chúng ta cũng muốn lọc ra những dòng log nhất định từ service. Để làm điều này, bạn có thể đọc thêm [tại đây](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html).
+Đoạn config này cấu hình để Filebeat tự động thu thập logs từ các containers và gửi về Elasticsearch. Trong thực tế, chúng ta không muốn thu thập logs từ mọi containers và cũng muốn lọc ra những dòng log nhất định từ service. Để làm điều này, bạn có thể đọc thêm [tại đây](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html).
 
 ## Metrics hệ thống
 
@@ -195,7 +195,7 @@ Trong phần này, Prometheus sẽ được dùng để thu thập các metrics 
 
         !!! info
 
-            Một *endpoint*, hoặc một *instance*, trong Prometheus được hiểu là địa chỉ của service mà Prometheus thu thập metrics. Một *job* là một process làm nhiệm vụ thu thập metrics từ một tập hợp các *instance* có chung mục đích. Bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/concepts/jobs_instances/).
+            Một *endpoint* hoặc một *instance*, trong Prometheus được hiểu là địa chỉ của service mà Prometheus thu thập metrics. Một *job* là một process làm nhiệm vụ thu thập metrics từ một tập hợp các *instance* có chung mục đích. Bạn có thể đọc thêm [tại đây](https://prometheus.io/docs/concepts/jobs_instances/).
 
 1.  Kiểm tra xem Grafana server được triển khai thành công chưa
 
@@ -220,7 +220,7 @@ static_configs:
         - "localhost:8172"
 ```
 
-Thiết lập này báo cho Prometheus biết rằng, mỗi 5s, nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
+Thiết lập này báo cho Prometheus biết rằng, mỗi 5s nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
 
 <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png" loading="lazy" />
 
@@ -237,7 +237,7 @@ Thiết lập này báo cho Prometheus biết rằng, mỗi 5s, nó cần phải
             - "localhost:9100"
     ```
 
-1.  Trên giao diện của Grafana Web UI, ở menu bên trái, chọn `Dashboards` > `Browse`
+1.  Trên giao diện của Grafana Web UI, ở menu bên trái chọn `Dashboards` > `Browse`
 1.  Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_, click `Load`
 1.  Chọn datasource là Prometheus, click `Import`. Bạn sẽ nhìn thấy dashboard giống như sau
 
@@ -251,15 +251,15 @@ BentoML dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-cod
 
 1.  Copy file dashboard trên vào `mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards`
 1.  Truy cập vào Grafana server tại <http://localhost:3000>
-1.  Ở sidebar bên phải, chọn **Dashboards**
+1.  Ở sidebar bên phải chọn **Dashboards**
 1.  Ở giao diện của trang Dashboards, bạn sẽ thấy _BentoML Dashboard_, click chọn để mở. BentoML dashboard sẽ giống như sau.
 
     <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
 
     Dashboard này bao gồm 2 panel:
 
-    - `request_in_progress`: Hiển thị số lượng request đang được xử lý
-    - `request_total`: Hiển thị số lượng request trong 1s, được đo trong thời gian mỗi 5 phút
+    - `request_in_progress`: Hiển thị số lượng requests đang được xử lý
+    - `request_total`: Hiển thị số lượng requests trong 1s, được đo trong thời gian mỗi 5 phút
 
 1.  Click vào tên của panel, chọn **Explore** để xem câu truy vấn _PromQL_ được sử dụng để đọc data từ Prometheus.
 
@@ -288,11 +288,11 @@ Ngoài ra, trong file docker-compose của Grafana server tại `prom-graf/prom-
 
 ## Tổng kết
 
-Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus và Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.
+Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus, Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.
 
-Trong thực tế, với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus và Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung _PromQL_ để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+Trong thực tế với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus, Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung _PromQL_ để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại [Querying Prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
-Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data và model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.
+Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data, model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.
 
 ## Tài liệu tham khảo
 
