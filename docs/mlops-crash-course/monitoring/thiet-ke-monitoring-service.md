@@ -300,7 +300,7 @@ model_performance_monitor.execute( # (14)
 
 !!! question
 
-    Tại sao lại kiểm tra model performance bằng cách so sánh `drift_data` hay production data với chính nó?
+    Tại sao lại cần kiểm tra model performance bằng cách so sánh `drift_data` hay production data với chính nó?
 
 Trong Evidently, với loại monitoring là `ClassificationPerformanceMonitor` nếu cả **reference window**, **test window** đều chứa prediction và label thì Evidently sẽ tính toán các metrics của model performance trên cả 2 datasets này, việc thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa **reference window**, **test window**. Vì vậy, chúng ta sẽ truyền vào `drift_data` vào cả `reference_data` và `current_data`. Bạn có thể đọc thêm [tại đây](https://docs.evidentlyai.com/reports/classification-performance#requirements) để hiểu rõ hơn về cách Evidently tính model performance.
 
