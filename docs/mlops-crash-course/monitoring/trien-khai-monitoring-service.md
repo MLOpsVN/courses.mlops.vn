@@ -53,7 +53,7 @@ Quá trình phát triển monitoring service gồm các bước chính sau.
 
 1. Viết code gửi request và response data từ Online serving API sang _Monitoring API_ (một RESTful API) của monitoring service
 2. Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance
-3. Thiết lập Prometheus server và Grafana dashboards để hiển thị các metrics về data drift và model performance
+3. Thiết lập Prometheus server và Grafana dashboards để hiển thị metrics về các data drift, model performance
 
 ### Monitoring API
 
@@ -119,21 +119,21 @@ def _process_curr_data(self, new_rows: pd.DataFrame): # (1)
     return True
 ```
 
-1. Hàm `_process_curr_data` nhận vào data mới, được gửi từ Online serving API sang
-2. Đọc label data, hay chính là `request_data`
+1. Hàm `_process_curr_data` nhận vào data mới được gửi từ Online serving API sang
+2. Đọc label data hay chính là `request_data`
 3. Kết hợp data mới với label data theo `request_id`
 4. Tích luỹ data mới với data hiện tại
-5. Bỏ bớt records nếu như số records vượt quá `WINDOW_SIZE`, chính là kích thước của **test window**
+5. Bỏ bớt records nếu như số records vượt quá `WINDOW_SIZE` chính là kích thước của **test window**
 6. Lưu data mới đã được xử lý vào làm data hiện tại
 7. Kiểm tra xem đã đủ số records cần thiết chưa
 
 !!! question
 
-    Tại sao cần đọc label data, hay `request_data`, mỗi khi có records mới được gửi đến từ Online serving API?
+    Tại sao cần đọc label data hay `request_data` mỗi khi có records mới được gửi đến từ Online serving API?
 
-Chúng ta không cần phải đọc lại `request_data` mỗi khi có records mới, vì `request_data` là không đổi. Sở dĩ code được viết như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.
+Chúng ta không cần phải đọc lại `request_data` mỗi khi có records mới vì `request_data` là không đổi. Sở dĩ code được viết như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.
 
-Sau khi kết hợp data mới với label data theo `request_id`, data được tổng hợp chứa các cột sau:
+Sau khi kết hợp data mới với label data theo `request_id` data được tổng hợp chứa các cột sau:
 
 - Các cột features: dùng để theo dõi data drift
 - Cột `prediction` và cột label `trip_completed`: dùng để theo dõi model performance. Lưu ý, cột `prediction` được biến đổi trong hàm `merge_request_with_label` để luôn có giá trị là `1`
@@ -193,9 +193,9 @@ def _process_metrics(self, evidently_metrics):
 ```
 
 1. Tạo tên metric, phải giống với metric được dùng trong Prometheus query trên Grafana dashboards
-2. `labels` là một `dict` với key và value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ `{'dataset': 'reference', 'metric': 'accuracy'}`. `labels` này có ý nghĩa tương đương với [Prometheus labels](https://prometheus.io/docs/practices/naming/#labels)
+2. `labels` là một `dict` với key, value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ `{'dataset': 'reference', 'metric': 'accuracy'}`. `labels` này có ý nghĩa tương đương với [Prometheus labels](https://prometheus.io/docs/practices/naming/#labels)
 3. `self.metrics` lưu các object `Gauge` của Prometheus. `Gauge` gửi metrics tới Prometheus server. Biến `found` là một object `Gauge`, tương ứng với mỗi metric lấy ra từ Evidently
-4. Gán Prometheus labels và giá trị cho `Gauge` object. `Gauge` object sẽ gửi labels và giá trị của các metrics lên Prometheus server
+4. Gán Prometheus labels và giá trị cho `Gauge` object. `Gauge` object sẽ gửi labels, giá trị của các metrics lên Prometheus server
 
 Ngoài các đoạn code quan trọng nhất của monitoring service ở trên, các đoạn code còn lại khác mà bạn cần lưu ý như dưới đây.
 
@@ -224,7 +224,7 @@ app.run(host="0.0.0.0", port=8309, debug=True) # (7)
 6. Gọi hàm `iterate` để thực hiện đánh giá data drift và model performance
 7. Chạy Flask app tại port `8309` ở máy local
 
-Để Prometheus thu thập được metrics gửi qua endpoint `/metrics`, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform`. Job này đã được tạo sẵn như dưới đây.
+Để Prometheus thu thập được metrics gửi qua endpoint `/metrics`, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform`. Công việc này đã được tạo sẵn như dưới đây.
 
 ```yaml linenums="1" title="prom-graf/prometheus/config/prometheus.yml"
 - job_name: "monitoring_service"
@@ -277,13 +277,13 @@ def monitor_request(df: pd.DataFrame):
 1. Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe
 2. Lấy ra ID của tài xế được chọn
 3. Lấy ra record trong `DataFrame` gốc của tài xế được chọn
-4. Thêm cột `request_id` vào `monitor_df`, với giá trị là `request_id` được gửi tới trong request
+4. Thêm cột `request_id` vào `monitor_df` với giá trị là `request_id` được gửi tới trong request
 5. Thêm cột `best_driver_id` vào `monitor_df`. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc theo dõi data và debug ở production dễ dàng hơn
-6. Gọi tới hàm `monitor_request` để gửi data tới Monitoring API. Data được gửi bao gồm các cột chính: `request_id`, các cột features, `prediction`, và `best_driver_id`
+6. Gọi tới hàm `monitor_request` để gửi data tới Monitoring API. Data được gửi bao gồm các cột chính: `request_id`, các cột features, `prediction` và `best_driver_id`
 7. Biến đổi `DataFrame` thành dạng JSON với sự hỗ trợ của `NumpyEncoder` class, giúp cho việc biến đổi JSON trở lại thành `DataFrame` ở phía Monitoring API dễ dàng hơn
 8. Gửi POST request tới Monitoring API
 
-Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện dự đoán ở Online serving API, data được tổng hợp từ request và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics sau khi đánh giá ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics qua endpoint `/metrics` này. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics.
+Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện dự đoán ở Online serving API, data được tổng hợp từ requests và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics sau khi đánh giá ra API endpoint `/metrics`. Prometheus server sẽ định kì thu thập các metrics qua endpoint `/metrics` này. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics.
 
 ## Grafana dashboards và Alerts
 
@@ -368,7 +368,7 @@ Grafana Alerts cho phép kích hoạt cảnh báo khi một vấn đề về met
 
 !!! info
 
-    Để cấu hình cách mà Alert được gửi đi, bạn vào tab `Notification polices` và thêm policy mới. Trong bài này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.
+    Để cấu hình cách mà Alert được gửi đi, bạn vào tab `Notification polices` và thêm policy mới. Trong bài này, để đơn giản hơn chúng ta sẽ giữ nguyên policy mặc định của Grafana.
 
 ## Thử nghiệm
 
@@ -424,7 +424,7 @@ def main(data_type: str, n_request: int = 1): # (3)
 1. Hàm `construct_request` tạo payload dạng JSON để gửi tới Online serving API
 2. Hàm `send_request` gửi payload trên tới Online serving API
 3. Hàm `main` thực hiện quá trình gửi data
-4. Đọc dataset chứa các features, tuỳ thuộc vào loại data là `normal_data` hay `drift_data`
+4. Đọc dataset chứa các features tuỳ thuộc vào loại data là `normal_data` hay `drift_data`
 5. Đọc `request_data`
 6. Ghi đè dataset chứa các features vào file data source của Feast
 7. Xoá data ở cả Offline Feature Store và Online Feature Store
@@ -493,7 +493,7 @@ Tiếp theo, chúng ta sẽ test trường hợp data không bị drift. Bạn l
     python src/mock_request.py -d normal -n 5
     ```
 
-1.  Kiểm tra **Evidently Data Drift Dashboard**, bạn sẽ thấy thông tin Dataset không bị drift, số features bị drift là 0. Ngoài ra, cảnh báo `Data drift detection` cũng đã ở trạng thái `Normal`
+1.  Kiểm tra **Evidently Data Drift Dashboard**, bạn sẽ thấy thông tin Dataset không bị drift số features bị drift là 0. Ngoài ra, cảnh báo `Data drift detection` cũng đã ở trạng thái `Normal`
 
     <figure>
         <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png" loading="lazy" />
@@ -511,9 +511,9 @@ Tiếp theo, chúng ta sẽ test trường hợp data không bị drift. Bạn l
 
 ## Tổng kết
 
-Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài **Monitoring** này, chúng ta đã biết về các metrics điển hình liên quan tới hệ thống, data, và model mà một hệ thống ML thường theo dõi.
+Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài **Monitoring** này, chúng ta đã biết về các metrics điển hình liên quan tới hệ thống gồm data, model mà một hệ thống ML thường theo dõi.
 
-Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data và model như **Phát hiện Data drift**, **Theo dõi model performance**, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift, hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.
+Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data, model như **Phát hiện Data drift**, **Theo dõi model performance**, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.
 
 Trong bài tiếp theo, chúng ta sẽ thiết lập và triển khai CI/CD cho các phần trong hệ thống ML. CI/CD giúp chúng ta tự động test và tự động triển khai các Airflow DAGs, cũng như là các services như Online serving service hay Monitoring service, thay vì gõ các lệnh thủ công trong terminal.
 
