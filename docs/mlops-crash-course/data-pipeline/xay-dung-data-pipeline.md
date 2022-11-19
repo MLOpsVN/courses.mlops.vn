@@ -5,7 +5,7 @@
 
 ## Giới thiệu
 
-Ở bài học trước, chúng ta đã làm quen với feature store, Feast, và dùng command `feast apply` để tạo ra feature definition ở đường dẫn `data_pipeline/feature_repo/registry/local_registry.db`. Trong bài học này chúng ta sẽ sử dụng folder này để cấu hình client `store` giao tiếp với feature store như sau:
+Ở bài học trước, chúng ta đã làm quen với feature store, Feast và dùng command `feast apply` để tạo ra feature definition ở đường dẫn `data_pipeline/feature_repo/registry/local_registry.db`. Trong bài học này chúng ta sẽ sử dụng folder này để cấu hình client `store` giao tiếp với feature store như sau:
 
 ```py linenums="1"
 from feast import FeatureStore
