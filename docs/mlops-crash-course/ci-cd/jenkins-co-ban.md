@@ -290,6 +290,6 @@ Finished: SUCCESS
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có sự thay đổi ở repo `yourusername/mlops-crash-course-code` của bạn. Việc hoàn thành chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
+Ở bài học vừa rồi, Jenkins đã được cài đặt để có thể tự động chạy CI/CD pipeline mỗi khi có sự thay đổi ở repo `yourusername/mlops-crash-course-code` của bạn. Chúng ta đã xây dựng và chạy thử một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.
 
 Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.

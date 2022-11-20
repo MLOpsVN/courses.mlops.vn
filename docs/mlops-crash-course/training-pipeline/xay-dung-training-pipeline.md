@@ -46,7 +46,7 @@ Các MLOps tools được dùng trong bài này bao gồm:
 
 ## Cập nhật Feature Store
 
-Trong khoá học này, Feast được dùng làm Feature Store để version cho features và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature, metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
+Trong khoá học này, Feast được dùng làm Feature Store để version các features và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature, metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
 
 Trước khi cập nhật Feature Store, cần đảm bảo code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.
 
@@ -336,7 +336,7 @@ Ngoài ra, model có thể cần được kiểm tra xem có tương thích vớ
 - Kiểm tra model mới có nhận vào định dạng đầu vào và trả về định dạng đầu ra tương thích không
 - Thời gian inference có đảm bảo nằm trong một khoảng yêu cầu của vấn đề kinh doanh không
 
-Trong task này, chúng ta chỉ viết code để so sánh offline metrics với các thresholds được định nghĩa trong file `training_pipeline/.env`. Nếu model thoả mãn các thresholds, có thể tự động lưu model vào Model Registry. Thông tin của model được lưu và version của nó cũng được lưu vào disk để sử dụng khi cần, ví dụ để triển khai ra production.
+Trong task này, chúng ta chỉ viết code để so sánh offline metrics với các thresholds được định nghĩa trong file `training_pipeline/.env`. Nếu model thoả mãn các thresholds, chúng ta có thể tự động lưu model vào Model Registry. Thông tin của model được lưu và version của nó cũng được lưu vào disk để sử dụng khi cần, ví dụ để triển khai ra production.
 
 Code của task này được lưu tại `training_pipeline/src/model_validation.py`.
 

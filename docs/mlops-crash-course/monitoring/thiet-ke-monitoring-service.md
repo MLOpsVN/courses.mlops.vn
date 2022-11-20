@@ -243,7 +243,7 @@ request_df['trip_completed'] = y
 9. Tạo ra label cho mỗi request với xác suất 0.3 cho label `0` và 0.7 cho label `1`. 2 con số này được lấy bất kì
 10. Tạo `DataFrame` chứa `request_data`
 
-Đoạn code trên tạo ra `request_data` chứa thông tin về request sẽ được gửi tới Online serving API, label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được tạo ra bằng cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.
+Đoạn code trên tạo ra `request_data` chứa thông tin về request được gửi tới Online serving API. Thông tin về request cũng sẽ chứa label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được tạo ra bằng cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.
 
 ### Test datasets
 
@@ -325,7 +325,7 @@ classification_performance:class_quality | 0.0 | {'dataset': 'reference', 'class
 
 ## Tổng kết
 
-Trong bài này chúng ta đã phân tích, thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data model như **Phát hiện Data drift**, **Theo dõi model performance**. Trong bài tiếp theo, chúng ta sẽ học cách triển khai và thiết lập cảnh báo trên Grafana.
+Trong bài này chúng ta đã phân tích, thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data, model như **Phát hiện Data drift**, **Theo dõi model performance**. Trong bài tiếp theo, chúng ta sẽ học cách triển khai và thiết lập cảnh báo trên Grafana.
 
 ## Tài liệu tham khảo
 

@@ -200,7 +200,7 @@ Trên Infra layer là Application layer hay chính là nơi mà các engineer kh
 
 ## Tổng kết
 
-Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống cần được phát triển. Trong bài tiếp theo, dự án POC sẽ được triển khai.
+Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống cần được phát triển. Trong bài tiếp theo, bạn sẽ được tìm hiểu về các công việc và cách hoạt động cũng như triển khai một dự án POC.
 
 ## Tài liệu tham khảo
 

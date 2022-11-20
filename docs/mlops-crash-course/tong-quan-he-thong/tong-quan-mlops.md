@@ -24,8 +24,8 @@ Theo [bài báo trên][mlops-paper], định nghĩa về MLOps có thể đượ
 ## Principles
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/mlops-principles-and-components.png" loading="lazy"/>
-    <figcaption>Source: <a target="_blank" href="https://arxiv.org/abs/2205.02302">Machine Learning Operations (MLOps): Overview, Definition, and Architecture</a></figcaption>
+    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
+    <figcaption>Photo by <a href="https://unsplash.com/@austindistel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Austin Distel</a> on <a href="https://unsplash.com/s/photos/principle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
 Principle được xem như là một best practice hay nói cách khác đó là sự hướng dẫn, gợi ý cho các quyết định được đưa ra trong quá trình phát triển hệ thống ML. Các principles trong MLOps bao gồm:
@@ -40,11 +40,11 @@ Trong quá trình phát triển hệ thống ML, có nhiều pipeline cần đư
 
 **3. Reproducibility**
 
-Khả năng tái lập lại (reproduce), là kết quả hay lần thử nghiệm yêu cầu thường thấy khi phát triển một hệ thống ML. Việc làm này đảm bảo khi chạy model inference ở production ổn định và debug quá trình phát triển model hiệu quả hơn.
+Khả năng reproduce (tái lập lại) một kết quả hay một lần thử nghiệm là một yêu cầu thường thấy khi phát triển một hệ thống ML. Yêu cầu này đảm bảo việc chạy model inference ở production ổn định và debug quá trình phát triển model hiệu quả hơn.
 
 **4. Versioning code, data, model**
 
-Principle này đảm bảo được code, data, model đang ở version nào. Việc làm này thuận tiện cho quản lý, kiểm tra phiên bản model được train với phiên bản data nào và sử dụng code ở phiên bản nào để train.
+Principle này đảm bảo code, data và model được version. Điều này làm thuận tiện cho việc quản lý, kiểm tra phiên bản model được train với phiên bản data nào và sử dụng code ở phiên bản nào để train.
 
 **5. Collaboration**
 
@@ -141,7 +141,7 @@ Có thể có nhiều dự án POC ở các mức độ khác nhau. Trong quá t
 
 ## Tổng kết
 
-Trong bài này, chúng ta đã tìm hiểu khá nhiều vấn đề cũng như việc đưa ra được phương pháp giải quyết dựa trên các quy tắc, components, workflows được định nghĩa trong MLOps. Tuy nhiên, MLOps vẫn còn là một mảng khá mới, còn tồn tại khá nhiều thử thách và thời gian dành cho các kĩ sư. Hy vọng rằng khoá học **MLOps Crash Course** sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.
+Trong bài này, chúng ta đã tìm hiểu khá nhiều vấn đề cũng như việc đưa ra được phương pháp giải quyết dựa trên các quy tắc, components, workflows được định nghĩa trong MLOps. Tuy nhiên, MLOps vẫn còn là một mảng khá mới, còn tồn tại khá nhiều thử thách dành cho các kĩ sư. Hy vọng rằng khoá học **MLOps Crash Course** sẽ là một bước đệm giúp cho cộng đồng AI/ML tại Việt Nam phát triển mạnh mẽ, góp phần vào sự phát triển chung của AI/ML trên thế giới.
 
 Trong bài tiếp theo, chúng ta sẽ bắt đầu các bước đầu tiên khi xây dựng một dự án ML, đó là bước **Phân tích vấn đề**.
 

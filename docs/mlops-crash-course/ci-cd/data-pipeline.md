@@ -11,7 +11,7 @@
 - Thực hiện kiểm thử code
 - Copy Python script định nghĩa `DAG` sang thư mục `dags/` của `Airflow`
 
-Nếu mà tự động hóa được các bước này thì có thể đẩy nhanh quá trình release version mới cho pipeline mỗi khi developer thay đổi code.
+Nếu tự động hóa được các bước này thì có thể đẩy nhanh quá trình release version mới cho pipeline mỗi khi developer thay đổi code.
 Ở bài học này chúng ta sẽ sử dụng Jenkins để làm điều này.
 
 ## Jenkins pipeline
@@ -25,7 +25,7 @@ flowchart LR
 
 ???+ info
 
-    Ở bài học này, sẽ sử dụng agent lả docker image `python:3.9`, do đó trước hết bạn cần truy câp <http://localhost:8081/pluginManager/> và cài đặt thêm plugin `Docker Pipeline`.
+    Ở bài học này, chúng ta sẽ sử dụng agent lả docker image `python:3.9`, do đó trước hết bạn cần truy câp <http://localhost:8081/pluginManager/> và cài đặt thêm plugin `Docker Pipeline`.
 
 ```py title="Jenkinsfile_data_pipeline" linenums="1"
 pipeline {

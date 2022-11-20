@@ -224,7 +224,7 @@ app.run(host="0.0.0.0", port=8309, debug=True) # (7)
 6. Gọi hàm `iterate` để thực hiện đánh giá data drift và model performance
 7. Chạy Flask app tại port `8309` ở máy local
 
-Để Prometheus thu thập được metrics gửi qua endpoint `/metrics`, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform`. Công việc này đã được tạo sẵn như dưới đây.
+Để Prometheus thu thập được metrics gửi qua endpoint `/metrics`, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại `prom-graf/prometheus/config/prometheus.yml` trong repo `mlops-crash-course-platform`. Prometheus Job này đã được tạo sẵn như dưới đây.
 
 ```yaml linenums="1" title="prom-graf/prometheus/config/prometheus.yml"
 - job_name: "monitoring_service"
@@ -511,7 +511,7 @@ Tiếp theo, chúng ta sẽ test trường hợp data không bị drift. Bạn l
 
 ## Tổng kết
 
-Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài **Monitoring** này, chúng ta đã biết về các metrics điển hình liên quan tới hệ thống gồm data, model mà một hệ thống ML thường theo dõi.
+Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài **Monitoring** này, chúng ta đã biết về các metrics điển hình của hệ thống về data và về model mà một hệ thống ML thường theo dõi.
 
 Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data, model như **Phát hiện Data drift**, **Theo dõi model performance**, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.
 

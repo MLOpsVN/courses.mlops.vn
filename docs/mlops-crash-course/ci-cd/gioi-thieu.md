@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Tự động hóa là công việc mà cần rất nhiều sức người, phải đảm bảo rằng nó ít khi xảy ra sai sót. Nếu việc làm này, lặp lại càng nhiều thì tỉ lệ sai sót càng cao và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùg nhau đi tìm hiểu về tự động hóa trong ML: tự động hóa những gì và như thế nào.
+Tự động hóa là công việc mà cần nhiều sức người và thường xảy ra sai sót. Nếu việc làm này, lặp lại càng nhiều thì tỉ lệ sai sót càng cao và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùg nhau đi tìm hiểu về tự động hóa trong ML: tự động hóa những gì và như thế nào.
 
 ## Tự động hóa những gì
 
