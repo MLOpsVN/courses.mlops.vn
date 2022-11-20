@@ -53,7 +53,7 @@ Quá trình phát triển monitoring service gồm các bước chính sau.
 
 1. Viết code gửi request và response data từ Online serving API sang _Monitoring API_ (một RESTful API) của monitoring service
 2. Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance
-3. Thiết lập Prometheus server và Grafana dashboards để hiển thị metrics về các data drift, model performance
+3. Thiết lập Prometheus server và Grafana dashboards để hiển thị các metrics về data drift và model performance
 
 ### Monitoring API
 
