@@ -20,7 +20,7 @@ MLOps platform là nền tảng cung cấp các tool cần thiết để quản 
 
 ???+ info
 
-    Chúng ta sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm mục đích sử dụng ít tool nhất có thể mà vẫn đảm bảo được **9 MLOps Principles**, **9 MLOps Components**, và **5 MLOps Workflows** được áp dụng (xem lại bài [Tổng quan MLOps](../tong-quan-mlops)). Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp do không biết sử dụng thế nào cho hiệu quả.
+    Chúng ta sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm mục đích sử dụng ít tool nhất có thể mà vẫn đảm bảo được **9 MLOps Principles**, **9 MLOps Components** và **5 MLOps Workflows** được áp dụng (xem lại bài [Tổng quan MLOps](../tong-quan-mlops)). Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp do không biết sử dụng thế nào cho hiệu quả.
 
 ## Architecture
 
@@ -115,7 +115,7 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
 
 ### Stop
 
-Để start các services trong MLOps platform, bạn làm theo các cách sau.
+Để stop các services trong MLOps platform, bạn làm theo các cách sau.
 
 1.  Cách 1: Stop tất cả service mà không làm mất docker volumes liên quan
 
@@ -194,13 +194,13 @@ Trong đó:
 
 Phần này cung cấp cho bạn một cái nhìn tổng quan hơn nữa về MLOps platform khi được đặt trong cơ sở hạ tầng IT của một tổ chức.
 
-Thông thường, một tổ chức sẽ có một nhóm các Infra engineer làm nhiệm vụ xây dựng Infra layer. Chức năng chính của Infra layer là quản lý và cung cấp tài nguyên tính toán và lưu trữ cho các ứng dụng ở các layer trên nó. Infra layer có thể được xây dựng đơn giản sử dụng docker-compose, Docker Swarm, hoặc phức tạp hơn như Kubernetes. Trong khoá học này, giả sử rằng chúng ta sử dụng docker-compose ở Infra layer để quản lý các containers và cung cấp tài nguyên tính toán, lưu trữ cho các service.
+Thông thường, một tổ chức sẽ có một nhóm các Infra engineer làm nhiệm vụ xây dựng Infra layer. Chức năng chính của Infra layer là quản lý, cung cấp tài nguyên tính toán, lưu trữ cho các ứng dụng ở các layer trên nó. Infra layer có thể được xây dựng đơn giản sử dụng docker-compose, Docker Swarm hoặc phức tạp hơn như Kubernetes. Trong khoá học này, giả sử rằng chúng ta sử dụng docker-compose ở Infra layer để quản lý các containers và cung cấp tài nguyên tính toán, lưu trữ cho các service.
 
-Trên Infra layer là Application layer, hay chính là nơi mà các engineer khác xây dựng các ứng dụng cho chính tổ chức đó. Các ứng dụng này có thể là môi trường Jupyter notebook, Gitlab server, Jenkins server, monitoring platform, v.v. MLOps platform mà chúng ta đang xây dựng cũng nằm trên Application layer này.
+Trên Infra layer là Application layer hay chính là nơi mà các engineer khác xây dựng các ứng dụng cho chính tổ chức đó. Các ứng dụng này có thể là môi trường Jupyter notebook, Gitlab server, Jenkins server, monitoring platform, v.v. MLOps platform mà chúng ta đang xây dựng cũng nằm trên Application layer này.
 
 ## Tổng kết
 
-Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống mà chúng ta sẽ phát triển. Trong bài tiếp theo, chúng ta sẽ triển khai dự án POC.
+Sau khi đã trả lời một loạt các câu hỏi về hệ thống ML ở bài trước và định nghĩa MLOps platform ở bài này, chúng ta đã có một cái nhìn kĩ lưỡng hơn về hệ thống cần được phát triển. Trong bài tiếp theo, bạn sẽ được tìm hiểu về các công việc và cách hoạt động cũng như triển khai một dự án POC.
 
 ## Tài liệu tham khảo
 

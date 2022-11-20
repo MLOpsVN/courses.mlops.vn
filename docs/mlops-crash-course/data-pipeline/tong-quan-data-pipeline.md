@@ -29,7 +29,7 @@ Thông thường công việc xử lý dữ liệu bao gồm các công đoạn 
 
 ## Pipeline xử lý dữ liệu
 
-Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: _data ingestion_, _data cleaning_, và _data exploration & validation_, hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.
+Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: _data ingestion_, _data cleaning_, và _data exploration & validation_ hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.
 
 Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipeline xử lý dữ liệu, ví dụ bên dưới:
 
@@ -48,8 +48,7 @@ flowchart LR
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tỉm hiểu về Airflow, một tool giúp xây dựng pipeline.
-
+Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tìm hiểu về Airflow, một tool giúp xây dựng pipeline.
 ## Tài liệu tham khảo
 
 - <https://ml-ops.org/content/three-levels-of-ml-software>

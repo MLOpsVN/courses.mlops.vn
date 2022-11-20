@@ -5,9 +5,9 @@
 
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã thực hiện bước đầu tiên của một dự án phần mềm, đó chính là thu thập các yêu cầu và phân tích vấn đề kinh doanh. Quá trình này giúp hiểu rõ và sâu hơn về vấn đề chúng ta đang gặp, về những giải pháp tiềm năng, và lên kế hoạch để triển khai chúng.
+Trong bài trước, chúng ta đã thực hiện bước đầu tiên của một dự án phần mềm, đó chính là thu thập các yêu cầu, phân tích vấn đề kinh doanh. Quá trình này giúp hiểu rõ và sâu hơn về vấn đề đang gặp phải, về những giải pháp tiềm năng, đồng thời lên kế hoạch để triển khai chúng.
 
-Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên chúng ta sẽ chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform).
+Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên việc cần làm đó là chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform).
 
 ## Môi trường phát triển
 
@@ -34,7 +34,7 @@ Khi định nghĩa dự án POC, chúng ta cần trả lời một câu hỏi qu
 
 **_Thế nào là một dự án POC thành công?_**
 
-Ở những dự án POC đầu tiên, ML model chưa được triển khai ra production để trích xuất ra các metrics cuối cùng để đánh giá giải pháp ML được, nên chúng ta cần sử dụng offline metrics để đánh giá. Cụ thể, cần đặt một threshold cho các metrics này. Ví dụ, sử dụng metric RMSE với threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
+Ở những dự án POC đầu tiên, ML model chưa được triển khai ra production mà chỉ được thử nghiệm offline. Do đó, chúng ta cần sử dụng các offline metrics để đánh giá. Cụ thể, cần đặt một threshold cho các metrics này. Ví dụ, sử dụng metric RMSE với threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
 
 Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng được sử dụng như:
 
@@ -44,7 +44,7 @@ Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng
 
 ## Thu thập data
 
-Ở dự án POC đầu tiên, do data pipeline chưa được hoàn thiện, nên data dùng để thử nghiệm được Data Engineer thu thập từ data sources, rồi chuyển giao data thô này cho Data Scientist. Data Scientist sẽ thực hiện các công việc sau:
+Ở dự án POC đầu tiên, do data pipeline chưa được hoàn thiện, nên data dùng để thử nghiệm được Data Engineer thu thập từ data sources, rồi chuyển giao data thô này cho Data Scientist (DS). DS sẽ thực hiện các công việc sau:
 
 - Phân tích data để định nghĩa các cách biến đổi cho data. Các cách biến đổi này được dùng để xây dựng data pipeline
 - Phân tích data, thử nghiệm và định nghĩa các cách biến đổi feature engineering cho data. Các cách biến đổi feature engineering này được dùng để xây dựng data pipeline
@@ -94,14 +94,14 @@ Tiếp theo, Data Scientist sẽ phân tích data để hiểu data. Quá trình
 
 - Có feature nào chứa `null` không? Nên thay `null` bằng giá trị nào?
 - Có feature nào có data không thống nhất không? Ví dụ: khác đơn vị (km/h, m/s), v.v
-- Có feature nào hay label nào bị bias không? Nếu có thì do quá trình sampling, hay do data quá cũ? Giải quyết thế nào?
+- Có feature hay label nào bị bias không? Nếu có thì do quá trình sampling hay do data quá cũ? Giải quyết thế nào?
 - Các feature có tương quan không? Nếu có thì có cần loại bỏ feature nào không?
 - Data có outlier nào không? Nếu có thì có nên xoá bỏ không?
 - v.v
 
-Mỗi một vấn đề về data trên sẽ có một hoặc nhiều cách giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay chúng có hiệu quả không. Do vậy, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm model. Các metrics khi đánh giá model giúp đánh giá xem các giải pháp được thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data và model, bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp lại nhiều lần.
+Mỗi một vấn đề về data trên sẽ có một hoặc nhiều cách giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay chúng có hiệu quả không. Do vậy, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm model. Các metrics khi đánh giá model giúp đánh giá xem các giải pháp được thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data, model nên bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp lại nhiều lần.
 
-Vì các file data của chúng ta không có feature nào chứa `null`, và để tập trung vào MLOps, chúng ta sẽ tối giản hoá bước phân tích data này và đi vào viết code train model.
+Vì các file data của chúng ta không có feature nào chứa `null` và để tập trung vào MLOps, chúng ta sẽ tối giản hoá bước phân tích data này và đi vào viết code train model.
 
 ## Chuẩn bị data
 
@@ -208,7 +208,7 @@ predicted_qualities = model.predict(test_x) # (4)
 3. Train model
 4. Đánh giá model
 
-Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model architecture với các bộ hyperparameter khác nhau. Để có thể tái lập kết quả training, cần phải biết được thử nghiệm nào dùng bộ feature nào, model architecture nào, với các hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform), và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi các thông tin trên, hay ML metadata của các lần thử nghiệm.
+Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model architecture với các bộ hyperparameter khác nhau. Để có thể tái lập kết quả training, cần phải biết được thử nghiệm nào dùng bộ feature nào, model architecture, với các hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài [MLOps Platform](../../tong-quan-he-thong/mlops-platform) và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi các thông tin trên hay ML metadata của các lần thử nghiệm.
 
 ## Theo dõi thử nghiệm
 
@@ -263,15 +263,15 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
 ## Theo dõi features
 
-Trong phần trước, chúng ta đã coi bộ feature chúng ta sử dụng trong quá trình training như một hyperparameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.
+Trong phần trước, chúng ta đã coi bộ feature mà chúng ta sử dụng trong quá trình training như một hyperparameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.
 
-Mục đích của việc theo dõi các feature là để có thể tái lập kết quả của một thử nghiệm. Chỉ bằng việc lưu lại tên các feature được dùng thì không đảm bảo được sẽ tạo lại được kết quả, vì có thể feature bị đổi tên, hoặc tên vẫn giữ nguyên nhưng cách biến đổi để sinh ra feature đó bị thay đổi. Do đó, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.
+Mục đích của việc theo dõi các feature là để có thể tái lập kết quả của một thử nghiệm. Chỉ bằng việc lưu lại tên các feature được dùng thì không đảm bảo được sẽ tạo lại được kết quả, vì có thể feature bị đổi tên hoặc tên vẫn giữ nguyên nhưng cách biến đổi để sinh ra feature đó bị thay đổi. Do đó, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.
 
 Ở giai đoạn POC, vì chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ việc theo dõi quy trình tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature là đủ. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi version của quy trình biến đổi feature và tích hợp version đó vào quá trình training.
 
 ## Tổng kết
 
-Qua nhiều lần thử nghiệm data và model, ngoài việc chứng minh giải pháp ML là khả thi, chúng ta sẽ hiểu rõ hơn về vấn đề kinh doanh, về giải pháp tiềm năng, và về cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại định nghĩa của vấn đề kinh doanh, định nghĩa các cách biến đổi data để xây dựng data pipeline, định nghĩa training code để xây dựng training pipeline, và định nghĩa serving code để xây dựng model serving component.
+Qua nhiều lần thử nghiệm data và model, ngoài việc chứng minh giải pháp ML là khả thi, chúng ta sẽ hiểu rõ hơn về vấn đề kinh doanh, giải pháp tiềm năng, cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại các định nghĩa của vấn đề kinh doanh, các cách biến đổi data để xây dựng data pipeline, training code để xây dựng training pipeline và serving code để xây dựng model serving component.
 
 Trong bài tiếp theo, chúng ta sẽ xây dựng data pipeline, một trong những pipeline phức tạp nhất của hệ thống.
 

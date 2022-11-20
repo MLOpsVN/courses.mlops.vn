@@ -7,7 +7,7 @@
 
 Sau khi train được một model tốt, chúng ta cần triển khai model đó để thực hiện inference. Có hai hình thức triển khai model phổ biến là _batch serving_ và _online serving_.
 
-Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Trong khi batch serving được tối ưu để xử lý số lượng lớn các requests, thường để chạy các model phức tạp, thì online serving được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và chạy offline. Online serving thường được triển khai lên một server dưới dạng RESTful APIs để người dùng có thể gọi tới.
+Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requests. Trong khi batch serving được tối ưu để xử lý số lượng lớn các requests, thường để chạy các model phức tạp, thì online serving được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và chạy offline. Online serving thường được triển khai lên một server dưới dạng RESTful APIs để người dùng có thể gọi tới.
 
 Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả hai hình thức batch serving và online serving.
 
@@ -37,7 +37,7 @@ Các MLOps tools được dùng trong bài này bao gồm:
 
 ## Batch serving
 
-Batch serving được thiết kế với input là data file ở local hoặc cloud. Bạn có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving. Batch serving pipeline gồm các tasks như hình dưới:
+Batch serving được thiết kế với input là data file ở local hoặc cloud. Bạn có thể chỉ cần viết vài script để load input, load model, chạy predictions và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline, sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving. Batch serving pipeline gồm các tasks như hình dưới:
 
 ```mermaid
 flowchart LR
@@ -95,7 +95,7 @@ to_parquet(batch_input_df, AppPath.BATCH_INPUT_PQ) # (6)
 
 1. Khởi tạo kết nối tới Feature Store
 2. Đọc file data nằm tại `model_serving/data/batch_request.csv` chứa các records mà chúng ta muốn chạy prediction
-3. Lấy ra các features `conv_rate`, `acc_rate`, và `avg_daily_trips`
+3. Lấy ra các features `conv_rate`, `acc_rate` và `avg_daily_trips`
 4. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`
 5. Bỏ các cột không cần thiết
 6. Lưu `batch_input_df` vào disk
@@ -218,7 +218,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 
 ## Online serving
 
-Khi triển khai Online serving, hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _BentoML_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
+Khi triển khai Online serving hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _BentoML_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
@@ -353,9 +353,9 @@ Bạn làm các bước sau để triển khai Online serving service.
 
 ## Tổng kết
 
-Chúng ta vừa thực hiện quy trình điển hình để triển khai batch serving và online serving. Code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó. Do đó, batch serving và online serving code cũng sẽ được cập nhật theo yêu cầu của Data Scientist.
+Chúng ta vừa thực hiện một loạt các quy trình điển hình để triển khai batch serving và online serving. Code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train và các features được yêu cầu cho model đó. Do đó, batch serving và online serving code cũng sẽ được cập nhật theo yêu cầu của Data Scientist.
 
-Sau khi tự động hoá batch serving pipeline và triển khai online serving service, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving service. Hệ thống này rất quan trọng trong việc theo dõi system performance và model performance, giúp chúng ta giải quyết các vấn đề ở production nhanh hơn, và cảnh báo khi có các sự cố về hệ thống và model performance.
+Sau khi tự động hoá batch serving pipeline và triển khai online serving service, trong bài tiếp theo chúng ta sẽ xây dựng hệ thống giám sát online serving service. Hệ thống này rất quan trọng trong việc theo dõi system performance và model performance, giúp chúng ta giải quyết các vấn đề ở production nhanh hơn và cảnh báo khi có các sự cố về hệ thống và model performance.
 
 ## Tài liệu tham khảo
 

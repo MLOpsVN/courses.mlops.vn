@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.
+Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.
 
 Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.
 
@@ -40,7 +40,7 @@ Thông thường loại này bao gồm:
 
     Theo nguyên tắc [KISS](https://people.apache.org/~fhanik/kiss.html), hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.
 
-    Ví dụ dưới đây được trích từ [Machine learning mastery blog](https://machinelearningmastery.com/machine-learning-in-python-step-by-step/) cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ `train_test_split`, `accuracy_score` và `confusion_matrix`, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.
+    Ví dụ dưới đây được trích từ [Machine learning mastery blog](https://machinelearningmastery.com/machine-learning-in-python-step-by-step/) cho thấy tác giả đã áp dụng rất tốt nguyên tắc này, thể hiện qua việc cố gắng sử dụng nhiều hàm nhất có thể, ví dụ `train_test_split`, `accuracy_score` và `confusion_matrix`, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.
 
     ```py linenums="1"
     # make predictions
@@ -84,7 +84,7 @@ Thông thường, các developer tuân thủ một số quy ước sau khi phát
 
 1. Không merge code nếu chưa chạy các test case
 2. Luôn viết code test khi commit logic mới
-3. Khi fix bug, luôn viết code test để bắt bug, và phòng xảy ra trường hợp tương tự trong tương lai
+3. Khi fix bug, luôn viết code test để bắt bug và phòng xảy ra trường hợp tương tự trong tương lai
 
 <img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600" height="150" loading="lazy" />
 <figcaption align="center" font-size="8px"><i>Source: https://www.jeremyjordan.me/testing-ml/</i></figcaption>
@@ -114,7 +114,7 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
     - **Pre-train testing:** tìm bug trước khi train/evaluate
       - Kiểm tra xem có data leakage (leak thông tin), ví dụ observation trong tập train cũng có ở tập validation/test
       - Kiểm tra xem có feature leakage (feature mang thông tin của label)
-      - Kiểm tra model output có shape, hoặc có miền giá trị như ý muốn
+      - Kiểm tra model output có shape hoặc có miền giá trị như ý muốn
     - **Post-train testing:** hoạt động của model (model behavior) có như ý muốn ở các tình huống (scenarios) khác nhau?
 
       - **Invariance testing:** mô tả những thay đổi của input mà không làm thay đổi kết quả dự đoán của model
@@ -122,7 +122,7 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
         - Bộ phim A hay quá!
         - Bộ phim B hay quá!
       - **Directional expectation test:** mô tả những thay đổi của input sẽ làm thay đổi kết quả dự đoán của model một cách có thể lường trước.
-        Ví dụ: trong bài toán dự đoán giá nhà, có thể đoán trước nếu không gian tăng, thì giá nhà sẽ tăng.
+        Ví dụ: trong bài toán dự đoán giá nhà, có thể đoán trước nếu không gian tăng thì giá nhà sẽ tăng.
       - **Bias/Fairness:** kiểm tra xem model có dự đoán công bằng không, ví dụ dự đoán income của người châu Mỹ chính xác hơn người châu Á, chứng tỏ model đang bị bias.
       - **Model Output Consistency:** với cùng 1 dữ liệu đầu vào, model output có bị thay đổi sau nhiều lần chạy khác nhau không?
 
@@ -139,7 +139,7 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, kiếm thử trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.
+Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, cũng như trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.
 
 ## Tài liệu tham khảo
 

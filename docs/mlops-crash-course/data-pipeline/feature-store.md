@@ -4,9 +4,9 @@
 
 ## Giới thiệu
 
-Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
+Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính, ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
 
-Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.
+Liệu rằng feature store còn có công dụng gì không và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.
 
 ## Môi trường phát triển
 
@@ -55,7 +55,7 @@ Tất cả các config cho Feast bao gồm data source cho mỗi loại store, �
 data_pipeline/feature_repo
 ├── data_sources.py: định nghĩa các data source
 ├── entities.py: định nghĩa entity
-├── features.py: định nghĩa các bảng feature, và các feature cùng kiểu dữ liệu trong từng bảng
+├── features.py: định nghĩa các bảng feature và các feature cùng kiểu dữ liệu trong từng bảng
 └── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
 ```
 
@@ -187,7 +187,7 @@ feast apply
 
 ## Tổng kết
 
-Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy là dữ liệu stream về online store, offline store và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
 
 ## Tài liệu tham khảo
 

@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Công việc mà cần nhiều sức người và tự động hóa ít thường rất dễ xảy ra sai sót. Nếu vỉệc này lặp lại càng nhiều thì tỉ lệ sai sót càng cao, và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùg nhau đi tìm hiểu về tự động hóa trong ML: tự động hóa những gì và tự động hóa như thế nào.
+Công việc cần nhiều sức người thường dễ xảy ra sai sót. Nếu việc này lặp lại càng nhiều thì tỉ lệ sai sót càng cao và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùng nhau tìm hiểu về tự động hóa trong ML: tự động hóa những gì và như thế nào. 
 
 ## Tự động hóa những gì
 
@@ -20,27 +20,27 @@ Công việc mà cần nhiều sức người và tự động hóa ít thườn
 
 ???+ tip
 
-    Đôi khi bạn sẽ thấy một khái niệm `CD` khác là `Continous Deployment`. Loại này có mức độ tự động cao hơn `Continous Delivery` , khi mà quá trình từ đóng gói tới deploy được tự động hoàn toàn, thay vì trigger thủ công bước deploy như `Continuous Delivery`.
+    Đôi khi bạn sẽ thấy một khái niệm `CD` khác là `Continous Deployment`. Loại này có mức độ tự động cao hơn `Continous Delivery`, khi mà quá trình từ đóng gói tới deploy được tự động hoàn toàn, thay vì trigger thủ công bước deploy như `Continuous Delivery`.
 
 ## Triển khai tự động hóa theo từng giai đoạn
 
-Tùy từng yêu cầu đầu ra và tiến độ hiện tại của dự án, nhà phát triển cần cân nhắc nên tự động hóa những gì, với thứ tự và độ ưu tiên ra sao.
+Tùy từng yêu cầu đầu ra và tiến độ hiện tại của dự án, nhà phát triển cần cân nhắc nên tự động hóa những gì với thứ tự và độ ưu tiên ra sao.
 
 ???+ example
 
     Đầu ra của dự án là 1 model serving API để một team sản phẩm tích hợp vào hệ thống của họ, khi đó chúng ta có thể cân nhắc triển khai theo thứ tự sau:
 
     - **CI:**
-        - Tự động hóa quá trình kiểm thử model (kết quả dự đoán có _reproducible_ và giống kết quả mà chúng ta chạy ở máy cá nhân không, .v.v.) và code (thực hiện unit test các hàm logic)
-        - Tự động đóng gói model, code, và môi trường thành Docker image
+        - Tự động hóa quá trình kiểm thử model (kết quả dự đoán có _reproducible_ và giống kết quả mà chúng ta chạy ở máy cá nhân không, .v.v.), code (thực hiện unit test các hàm logic)
+        - Tự động đóng gói model, code và môi trường thành Docker image
     - **CD:** Tự động hóa quá trình deploy model serving API
-    - **CM:** Sử dụng Prometheus và Grafana để  kiểm tra mức độ sử dụng tài nguyên hệ thống, kiểm tra model drift, và tự động cảnh báo qua email hoặc Slack khi có những bất thường.
+    - **CM:** Sử dụng Prometheus và Grafana để  kiểm tra mức độ sử dụng tài nguyên của hệ thống và kiểm tra model drift, tự động cảnh báo qua email hoặc Slack khi có những bất thường.
 
 ## Môi trường triển khai dự án
 
 Thông thường có 3 môi trường triển khai dự án bao gồm:
 
-- **Development**/**Dev:** môi trường này thường có cấu hình yếu, với quyền truy cập dữ liệu thật "gần như" bằng 0. Ở môi trường này sẽ dùng dữ liệu giả, với cùng schema với dữ liệu thực tế.
+- **Development**/**Dev:** môi trường này thường có cấu hình yếu, với quyền truy cập dữ liệu thật "gần như" bằng 0. Ở môi trường này sẽ dùng dữ liệu giả, cùng schema với dữ liệu thực tế.
 - **Staging:** môi trường này thường có cấu hình và quyền truy cập dữ liệu giống như môi trường `production`
 - **Production**/**Prod:** môi trường chạy thực tế
 
