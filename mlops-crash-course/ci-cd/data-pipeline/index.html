@@ -369,7 +369,7 @@
 <li>Thực hiện kiểm thử code</li>
 <li>Copy Python script định nghĩa <code>DAG</code> sang thư mục <code>dags/</code> của <code>Airflow</code></li>
 </ul>
-<p>Nếu chúng ta tự động hóa các bước này thì có thể đẩy nhanh quá trình release version mới cho pipeline mỗi khi developer thay đổi code.
+<p>Nếu tự động hóa được các bước này thì có thể đẩy nhanh quá trình release version mới cho pipeline mỗi khi developer thay đổi code.
 Ở bài học này chúng ta sẽ sử dụng Jenkins để làm điều này.</p>
 <h2 id="jenkins-pipeline">Jenkins pipeline</h2>
 <p>Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:</p>
@@ -377,7 +377,7 @@
     n1[1. Build data pipeline] --&gt; n2[2. Test data pipeline] --&gt; n3[3. Deploy data pipeline]</code></pre>
 <details class="info" open="open">
 <summary>Info</summary>
-<p>Ở bài học này chúng ta sẽ sử dụng agent lả docker image <code>python:3.9</code>, do đó trước hết bạn cần truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
+<p>Ở bài học này, chúng ta sẽ sử dụng agent lả docker image <code>python:3.9</code>, do đó trước hết bạn cần truy câp <a href="http://localhost:8081/pluginManager/">http://localhost:8081/pluginManager/</a> và cài đặt thêm plugin <code>Docker Pipeline</code>.</p>
 </details>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile_data_pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>

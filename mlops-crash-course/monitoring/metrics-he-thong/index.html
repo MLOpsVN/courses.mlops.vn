@@ -469,7 +469,7 @@
 <figcaption>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/dashboard?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics điển hình, và các bộ công cụ được dùng trong quá trình theo dõi.</p>
+<p>Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics điển hình và các bộ công cụ được dùng trong quá trình theo dõi.</p>
 <p>Trong bài này, chúng ta sẽ triển khai các giải pháp để theo dõi hệ thống ML trong khoá học này, cụ thể là những công việc sau:</p>
 <ol>
 <li>Triển khai ELK Stack để theo dõi logs của hệ thống</li>
@@ -479,7 +479,7 @@
 <p>Ở bài này, chúng ta không viết code, mà sẽ triển khai ELK Stack, Prometheus và Grafana servers. Do đó, bạn không cần cài đặt môi trường phát triển.</p>
 <p>Các MLOps tools được dùng trong bài này bao gồm:</p>
 <ol>
-<li>Elasticsearch, Kibana, và Filebeat: thu thập và hiển thị logs tập trung từ Online serving service</li>
+<li>Elasticsearch, Kibana và Filebeat: thu thập và hiển thị logs tập trung từ Online serving service</li>
 <li>Prometheus và Grafana: theo dõi và hiển thị metrics</li>
 </ol>
 <h2 id="logs">Logs</h2>
@@ -487,7 +487,7 @@
 <h3 id="cach-elk-stack-hoat-ong">Cách ELK Stack hoạt động</h3>
 <p>Hình dưới là một pipeline điển hình cho việc thu thập và xử lý logs tập trung sử dụng ELK Stack.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png"/></a></p>
-<p>Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích và hiển thị data lên Kibana dashboard.</p>
+<p>Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích, hiển thị data lên Kibana dashboard.</p>
 <p>Có khá nhiều biến thể của pipeline trên, ví dụ như dùng <em>Filebeat</em> để thu thập logs từ containers và gửi logs tới Elasticsearch. Trong bài này, Logstash sẽ được thay thế bằng Filebeat để thu thập logs từ containers và gửi tới Elasticsearch.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -557,7 +557,7 @@
 <ol>
 <li>Trên browser, truy cập vào Kibana server tại <a href="http://localhost:5601">http://localhost:5601</a></li>
 <li>
-<p>Đăng nhập với tên user là <code>elastic</code>, và mật khẩu là <code>changeme</code></p>
+<p>Đăng nhập với tên user là <code>elastic</code> và mật khẩu là <code>changeme</code></p>
 <p>Việc đăng nhập thành công chứng tỏ Kibana server đã triển khai thành công.</p>
 </li>
 </ol>
@@ -567,7 +567,7 @@
 <p>Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving service hay chưa.</p>
 <ol>
 <li>
-<p>Gửi vài request tới Online serving API bằng cách truy cập <a href="http://localhost:8172">http://localhost:8172</a>, mở API <code>/inference</code>, click <code>Try it out</code>. Ở phần <code>Request body</code>, bạn gõ nội dung sau:</p>
+<p>Gửi vài requests tới Online serving API bằng cách truy cập <a href="http://localhost:8172">http://localhost:8172</a>, mở API <code>/inference</code>, click <code>Try it out</code>. Ở phần <code>Request body</code>, bạn gõ nội dung sau:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span><span class="w"></span>
 <a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
 <a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
@@ -608,7 +608,7 @@
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker</span><span class="w"></span>
 <a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">      </span><span class="nt">hints.enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div></td></tr></table></div>
-<p>Đoạn config này cấu hình để Filebeat tự động thu thập logs từ các containers và gửi về Elasticsearch. Trong thực tế, chúng ta không muốn thu thập logs từ mọi containers, và chúng ta cũng muốn lọc ra những dòng log nhất định từ service. Để làm điều này, bạn có thể đọc thêm <a href="https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html">tại đây</a>.</p>
+<p>Đoạn config này cấu hình để Filebeat tự động thu thập logs từ các containers và gửi về Elasticsearch. Trong thực tế, chúng ta không muốn thu thập logs từ mọi containers và cũng muốn lọc ra những dòng log nhất định từ service. Để làm điều này, bạn có thể đọc thêm <a href="https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html">tại đây</a>.</p>
 <h2 id="metrics-he-thong">Metrics hệ thống</h2>
 <p>Trong phần này, Prometheus sẽ được dùng để thu thập các metrics hệ thống và Grafana sẽ được dùng để hiển thị các metrics đó.</p>
 <h3 id="prometheus-va-grafana-servers">Prometheus và Grafana servers</h3>
@@ -654,7 +654,7 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png"/></a></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Một <em>endpoint</em>, hoặc một <em>instance</em>, trong Prometheus được hiểu là địa chỉ của service mà Prometheus thu thập metrics. Một <em>job</em> là một process làm nhiệm vụ thu thập metrics từ một tập hợp các <em>instance</em> có chung mục đích. Bạn có thể đọc thêm <a href="https://prometheus.io/docs/concepts/jobs_instances/">tại đây</a>.</p>
+<p>Một <em>endpoint</em> hoặc một <em>instance</em>, trong Prometheus được hiểu là địa chỉ của service mà Prometheus thu thập metrics. Một <em>job</em> là một process làm nhiệm vụ thu thập metrics từ một tập hợp các <em>instance</em> có chung mục đích. Bạn có thể đọc thêm <a href="https://prometheus.io/docs/concepts/jobs_instances/">tại đây</a>.</p>
 </div>
 </li>
 </ol>
@@ -686,7 +686,7 @@
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"></span>
 <a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"localhost:8172"</span><span class="w"></span>
 </code></pre></div></td></tr></table></div>
-<p>Thiết lập này báo cho Prometheus biết rằng, mỗi 5s, nó cần phải thu thập metrics từ URI <a href="http://localhost:8172/metrics">http://localhost:8172/metrics</a>, với <code>/metrics</code> là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.</p>
+<p>Thiết lập này báo cho Prometheus biết rằng, mỗi 5s nó cần phải thu thập metrics từ URI <a href="http://localhost:8172/metrics">http://localhost:8172/metrics</a>, với <code>/metrics</code> là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"/></a></p>
 <h3 id="node-exporter-full-dashboard">Node Exporter Full dashboard</h3>
 <p>Ở phần này, chúng ta sẽ triển khai Grafana dashboard tên là <a href="https://grafana.com/grafana/dashboards/1860-node-exporter-full/">Node Exporter Full</a>. Dashboard này được xây dựng sẵn bởi cộng đồng sử dụng Prometheus và Grafana. Nó hiển thị các thông tin quan trọng của hệ thống về máy local mà bạn đang chạy. Bạn hãy làm các bước sau để triển khai.</p>
@@ -703,7 +703,7 @@
 </code></pre></div></td></tr></table></div>
 </li>
 <li>
-<p>Trên giao diện của Grafana Web UI, ở menu bên trái, chọn <code>Dashboards</code> &gt; <code>Browse</code></p>
+<p>Trên giao diện của Grafana Web UI, ở menu bên trái chọn <code>Dashboards</code> &gt; <code>Browse</code></p>
 </li>
 <li>Click <code>Import</code>, nhập vào ID của Node Exporter Full dashboard là <em>1860</em>, click <code>Load</code></li>
 <li>
@@ -717,14 +717,14 @@
 <ol>
 <li>Copy file dashboard trên vào <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code></li>
 <li>Truy cập vào Grafana server tại <a href="http://localhost:3000">http://localhost:3000</a></li>
-<li>Ở sidebar bên phải, chọn <strong>Dashboards</strong></li>
+<li>Ở sidebar bên phải chọn <strong>Dashboards</strong></li>
 <li>
 <p>Ở giao diện của trang Dashboards, bạn sẽ thấy <em>BentoML Dashboard</em>, click chọn để mở. BentoML dashboard sẽ giống như sau.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png"/></a></p>
 <p>Dashboard này bao gồm 2 panel:</p>
 <ul>
-<li><code>request_in_progress</code>: Hiển thị số lượng request đang được xử lý</li>
-<li><code>request_total</code>: Hiển thị số lượng request trong 1s, được đo trong thời gian mỗi 5 phút</li>
+<li><code>request_in_progress</code>: Hiển thị số lượng requests đang được xử lý</li>
+<li><code>request_total</code>: Hiển thị số lượng requests trong 1s, được đo trong thời gian mỗi 5 phút</li>
 </ul>
 </li>
 <li>
@@ -753,9 +753,9 @@
 </ol>
 <p>Ngoài ra, trong file docker-compose của Grafana server tại <code>prom-graf/prom-graf-docker-compose.yml</code>, chúng ta đã mount folder <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code> ở máy local vào folder <code>/opt/grafana/dashboards</code> ở trong docker container. Điều này giúp Grafana tự động đọc các file dashboard trong folder <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code>.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus và Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.</p>
-<p>Trong thực tế, với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus và Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung <em>PromQL</em> để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">Querying Prometheus</a>.</p>
-<p>Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data và model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.</p>
+<p>Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus, Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.</p>
+<p>Trong thực tế với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus, Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung <em>PromQL</em> để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">Querying Prometheus</a>.</p>
+<p>Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data, model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://logz.io/blog/docker-logging/">Docker Logs with the ELK Stack</a></li>

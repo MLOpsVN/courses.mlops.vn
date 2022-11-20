@@ -442,7 +442,7 @@
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
 <p>Sau khi train được một model tốt, chúng ta cần triển khai model đó để thực hiện inference. Có hai hình thức triển khai model phổ biến là <em>batch serving</em> và <em>online serving</em>.</p>
-<p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requets. Trong khi batch serving được tối ưu để xử lý số lượng lớn các requests, thường để chạy các model phức tạp, thì online serving được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và chạy offline. Online serving thường được triển khai lên một server dưới dạng RESTful APIs để người dùng có thể gọi tới.</p>
+<p>Cả batch serving và online serving đều có thể xử lý một hoặc nhiều requests. Trong khi batch serving được tối ưu để xử lý số lượng lớn các requests, thường để chạy các model phức tạp, thì online serving được tối ưu để giảm thời gian xử lý trong một lần thực thi. Batch serving thường được lên lịch theo chu kì và chạy offline. Online serving thường được triển khai lên một server dưới dạng RESTful APIs để người dùng có thể gọi tới.</p>
 <p>Trong bài này, chúng ta sẽ tìm hiểu cách triển khai model ở cả hai hình thức batch serving và online serving.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
 <p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
@@ -469,7 +469,7 @@
 <p>Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>model_serving</code>.</p>
 </div>
 <h2 id="batch-serving">Batch serving</h2>
-<p>Batch serving được thiết kế với input là data file ở local hoặc cloud. Bạn có thể chỉ cần viết vài script để load input, load model, chạy predictions, và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline và sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving. Batch serving pipeline gồm các tasks như hình dưới:</p>
+<p>Batch serving được thiết kế với input là data file ở local hoặc cloud. Bạn có thể chỉ cần viết vài script để load input, load model, chạy predictions và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline, sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving. Batch serving pipeline gồm các tasks như hình dưới:</p>
 <pre class="mermaid"><code>flowchart LR
     n1[1. Cập nhật&lt;br&gt;Feature Store] --&gt; n2[2. Data&lt;br&gt;extraction] --&gt; n3[3. Batch&lt;br&gt;prediction]</code></pre>
 <h3 id="cap-nhat-feature-store">Cập nhật Feature Store</h3>
@@ -532,7 +532,7 @@
 <ol>
 <li>Khởi tạo kết nối tới Feature Store</li>
 <li>Đọc file data nằm tại <code>model_serving/data/batch_request.csv</code> chứa các records mà chúng ta muốn chạy prediction</li>
-<li>Lấy ra các features <code>conv_rate</code>, <code>acc_rate</code>, và <code>avg_daily_trips</code></li>
+<li>Lấy ra các features <code>conv_rate</code>, <code>acc_rate</code> và <code>avg_daily_trips</code></li>
 <li><code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code></li>
 <li>Bỏ các cột không cần thiết</li>
 <li>Lưu <code>batch_input_df</code> vào disk</li>
@@ -678,7 +678,7 @@
 </li>
 </ol>
 <h2 id="online-serving">Online serving</h2>
-<p>Khi triển khai Online serving, hay <em>Online serving service</em>, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>BentoML</em>. Code của online serving được lưu tại <code>model_serving/src/bentoml_service.py</code>.</p>
+<p>Khi triển khai Online serving hay <em>Online serving service</em>, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là <em>BentoML</em>. Code của online serving được lưu tại <code>model_serving/src/bentoml_service.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/bentoml_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
@@ -859,8 +859,8 @@
 </li>
 </ol>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Chúng ta vừa thực hiện quy trình điển hình để triển khai batch serving và online serving. Code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train, và các features được yêu cầu cho model đó. Do đó, batch serving và online serving code cũng sẽ được cập nhật theo yêu cầu của Data Scientist.</p>
-<p>Sau khi tự động hoá batch serving pipeline và triển khai online serving service, trong bài tiếp theo, chúng ta sẽ xây dựng hệ thống giám sát online serving service. Hệ thống này rất quan trọng trong việc theo dõi system performance và model performance, giúp chúng ta giải quyết các vấn đề ở production nhanh hơn, và cảnh báo khi có các sự cố về hệ thống và model performance.</p>
+<p>Chúng ta vừa thực hiện một loạt các quy trình điển hình để triển khai batch serving và online serving. Code để chạy cả batch serving và online serving sẽ phụ thuộc vào model mà Data Scientist đã train và các features được yêu cầu cho model đó. Do đó, batch serving và online serving code cũng sẽ được cập nhật theo yêu cầu của Data Scientist.</p>
+<p>Sau khi tự động hoá batch serving pipeline và triển khai online serving service, trong bài tiếp theo chúng ta sẽ xây dựng hệ thống giám sát online serving service. Hệ thống này rất quan trọng trong việc theo dõi system performance và model performance, giúp chúng ta giải quyết các vấn đề ở production nhanh hơn và cảnh báo khi có các sự cố về hệ thống và model performance.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://docs.bentoml.org/en/latest/tutorial.html">BentoML</a></li>

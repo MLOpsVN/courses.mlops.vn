@@ -430,7 +430,7 @@
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"/></a>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule, và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu, hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
+<p>Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
 <p>Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.</p>
 <pre class="mermaid"><code>graph LR
     n01[ ] --"Đầu vào"--&gt; n1[Hệ thống phần mềm&lt;br&gt;truyền thống] --Kết quả--&gt; n02[ ]
@@ -458,7 +458,7 @@
 <details class="tip" open="open">
 <summary>Tip</summary>
 <p>Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.</p>
-<p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả áp dụng rất tốt nguyên tắc này, qua việc tác giả đã cố gắng sử dụng hàm nhiều nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.</p>
+<p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả đã áp dụng rất tốt nguyên tắc này, thể hiện qua việc cố gắng sử dụng nhiều hàm nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -523,7 +523,7 @@
 <ol>
 <li>Không merge code nếu chưa chạy các test case</li>
 <li>Luôn viết code test khi commit logic mới</li>
-<li>Khi fix bug, luôn viết code test để bắt bug, và phòng xảy ra trường hợp tương tự trong tương lai</li>
+<li>Khi fix bug, luôn viết code test để bắt bug và phòng xảy ra trường hợp tương tự trong tương lai</li>
 </ol>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg"><img height="150" loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600"/></a></p>
 <figcaption align="center" font-size="8px"><i>Source: https://www.jeremyjordan.me/testing-ml/</i></figcaption>
@@ -551,7 +551,7 @@
 <li><strong>Pre-train testing:</strong> tìm bug trước khi train/evaluate</li>
 <li>Kiểm tra xem có data leakage (leak thông tin), ví dụ observation trong tập train cũng có ở tập validation/test</li>
 <li>Kiểm tra xem có feature leakage (feature mang thông tin của label)</li>
-<li>Kiểm tra model output có shape, hoặc có miền giá trị như ý muốn</li>
+<li>Kiểm tra model output có shape hoặc có miền giá trị như ý muốn</li>
 <li>
 <p><strong>Post-train testing:</strong> hoạt động của model (model behavior) có như ý muốn ở các tình huống (scenarios) khác nhau?</p>
 </li>
@@ -564,7 +564,7 @@
 </ul>
 </li>
 <li><strong>Directional expectation test:</strong> mô tả những thay đổi của input sẽ làm thay đổi kết quả dự đoán của model một cách có thể lường trước.
-    Ví dụ: trong bài toán dự đoán giá nhà, có thể đoán trước nếu không gian tăng, thì giá nhà sẽ tăng.</li>
+    Ví dụ: trong bài toán dự đoán giá nhà, có thể đoán trước nếu không gian tăng thì giá nhà sẽ tăng.</li>
 <li><strong>Bias/Fairness:</strong> kiểm tra xem model có dự đoán công bằng không, ví dụ dự đoán income của người châu Mỹ chính xác hơn người châu Á, chứng tỏ model đang bị bias.</li>
 <li><strong>Model Output Consistency:</strong> với cùng 1 dữ liệu đầu vào, model output có bị thay đổi sau nhiều lần chạy khác nhau không?</li>
 </ul>
@@ -582,7 +582,7 @@
 <li><a href="https://www.pylint.org/">pylint</a> để kiểm tra lỗi cú pháp/logic</li>
 </ul>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, kiếm thử trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.</p>
+<p>Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, cũng như trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ol>
 <li><a href="https://serokell.io/blog/machine-learning-testing">https://serokell.io/blog/machine-learning-testing</a></li>

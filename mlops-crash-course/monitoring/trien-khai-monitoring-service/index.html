@@ -656,20 +656,20 @@
 <a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="k">return</span> <span class="kc">True</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>Hàm <code>_process_curr_data</code> nhận vào data mới, được gửi từ Online serving API sang</li>
-<li>Đọc label data, hay chính là <code>request_data</code></li>
+<li>Hàm <code>_process_curr_data</code> nhận vào data mới được gửi từ Online serving API sang</li>
+<li>Đọc label data hay chính là <code>request_data</code></li>
 <li>Kết hợp data mới với label data theo <code>request_id</code></li>
 <li>Tích luỹ data mới với data hiện tại</li>
-<li>Bỏ bớt records nếu như số records vượt quá <code>WINDOW_SIZE</code>, chính là kích thước của <strong>test window</strong></li>
+<li>Bỏ bớt records nếu như số records vượt quá <code>WINDOW_SIZE</code> chính là kích thước của <strong>test window</strong></li>
 <li>Lưu data mới đã được xử lý vào làm data hiện tại</li>
 <li>Kiểm tra xem đã đủ số records cần thiết chưa</li>
 </ol>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
-<p>Tại sao cần đọc label data, hay <code>request_data</code>, mỗi khi có records mới được gửi đến từ Online serving API?</p>
+<p>Tại sao cần đọc label data hay <code>request_data</code> mỗi khi có records mới được gửi đến từ Online serving API?</p>
 </div>
-<p>Chúng ta không cần phải đọc lại <code>request_data</code> mỗi khi có records mới, vì <code>request_data</code> là không đổi. Sở dĩ code được viết như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.</p>
-<p>Sau khi kết hợp data mới với label data theo <code>request_id</code>, data được tổng hợp chứa các cột sau:</p>
+<p>Chúng ta không cần phải đọc lại <code>request_data</code> mỗi khi có records mới vì <code>request_data</code> là không đổi. Sở dĩ code được viết như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.</p>
+<p>Sau khi kết hợp data mới với label data theo <code>request_id</code> data được tổng hợp chứa các cột sau:</p>
 <ul>
 <li>Các cột features: dùng để theo dõi data drift</li>
 <li>Cột <code>prediction</code> và cột label <code>trip_completed</code>: dùng để theo dõi model performance. Lưu ý, cột <code>prediction</code> được biến đổi trong hàm <code>merge_request_with_label</code> để luôn có giá trị là <code>1</code></li>
@@ -762,9 +762,9 @@
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Tạo tên metric, phải giống với metric được dùng trong Prometheus query trên Grafana dashboards</li>
-<li><code>labels</code> là một <code>dict</code> với key và value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ <code>{'dataset': 'reference', 'metric': 'accuracy'}</code>. <code>labels</code> này có ý nghĩa tương đương với <a href="https://prometheus.io/docs/practices/naming/#labels">Prometheus labels</a></li>
+<li><code>labels</code> là một <code>dict</code> với key, value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ <code>{'dataset': 'reference', 'metric': 'accuracy'}</code>. <code>labels</code> này có ý nghĩa tương đương với <a href="https://prometheus.io/docs/practices/naming/#labels">Prometheus labels</a></li>
 <li><code>self.metrics</code> lưu các object <code>Gauge</code> của Prometheus. <code>Gauge</code> gửi metrics tới Prometheus server. Biến <code>found</code> là một object <code>Gauge</code>, tương ứng với mỗi metric lấy ra từ Evidently</li>
-<li>Gán Prometheus labels và giá trị cho <code>Gauge</code> object. <code>Gauge</code> object sẽ gửi labels và giá trị của các metrics lên Prometheus server</li>
+<li>Gán Prometheus labels và giá trị cho <code>Gauge</code> object. <code>Gauge</code> object sẽ gửi labels, giá trị của các metrics lên Prometheus server</li>
 </ol>
 <p>Ngoài các đoạn code quan trọng nhất của monitoring service ở trên, các đoạn code còn lại khác mà bạn cần lưu ý như dưới đây.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
@@ -804,7 +804,7 @@
 <li>Gọi hàm <code>iterate</code> để thực hiện đánh giá data drift và model performance</li>
 <li>Chạy Flask app tại port <code>8309</code> ở máy local</li>
 </ol>
-<p>Để Prometheus thu thập được metrics gửi qua endpoint <code>/metrics</code>, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại <code>prom-graf/prometheus/config/prometheus.yml</code> trong repo <code>mlops-crash-course-platform</code>. Job này đã được tạo sẵn như dưới đây.</p>
+<p>Để Prometheus thu thập được metrics gửi qua endpoint <code>/metrics</code>, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại <code>prom-graf/prometheus/config/prometheus.yml</code> trong repo <code>mlops-crash-course-platform</code>. Prometheus Job này đã được tạo sẵn như dưới đây.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">prom-graf/prometheus/config/prometheus.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
 <span class="normal"><a href="#__codelineno-6-2">2</a></span>
 <span class="normal"><a href="#__codelineno-6-3">3</a></span>
@@ -884,13 +884,13 @@
 <li>Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe</li>
 <li>Lấy ra ID của tài xế được chọn</li>
 <li>Lấy ra record trong <code>DataFrame</code> gốc của tài xế được chọn</li>
-<li>Thêm cột <code>request_id</code> vào <code>monitor_df</code>, với giá trị là <code>request_id</code> được gửi tới trong request</li>
+<li>Thêm cột <code>request_id</code> vào <code>monitor_df</code> với giá trị là <code>request_id</code> được gửi tới trong request</li>
 <li>Thêm cột <code>best_driver_id</code> vào <code>monitor_df</code>. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc theo dõi data và debug ở production dễ dàng hơn</li>
-<li>Gọi tới hàm <code>monitor_request</code> để gửi data tới Monitoring API. Data được gửi bao gồm các cột chính: <code>request_id</code>, các cột features, <code>prediction</code>, và <code>best_driver_id</code></li>
+<li>Gọi tới hàm <code>monitor_request</code> để gửi data tới Monitoring API. Data được gửi bao gồm các cột chính: <code>request_id</code>, các cột features, <code>prediction</code> và <code>best_driver_id</code></li>
 <li>Biến đổi <code>DataFrame</code> thành dạng JSON với sự hỗ trợ của <code>NumpyEncoder</code> class, giúp cho việc biến đổi JSON trở lại thành <code>DataFrame</code> ở phía Monitoring API dễ dàng hơn</li>
 <li>Gửi POST request tới Monitoring API</li>
 </ol>
-<p>Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện dự đoán ở Online serving API, data được tổng hợp từ request và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics sau khi đánh giá ra API endpoint <code>/metrics</code>. Prometheus server sẽ định kì thu thập các metrics qua endpoint <code>/metrics</code> này. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics.</p>
+<p>Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện dự đoán ở Online serving API, data được tổng hợp từ requests và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics sau khi đánh giá ra API endpoint <code>/metrics</code>. Prometheus server sẽ định kì thu thập các metrics qua endpoint <code>/metrics</code> này. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics.</p>
 <h2 id="grafana-dashboards-va-alerts">Grafana dashboards và Alerts</h2>
 <p>Có 2 dashboards chúng ta cần thiết lập, bao gồm:</p>
 <ol>
@@ -977,7 +977,7 @@
 </ol>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Để cấu hình cách mà Alert được gửi đi, bạn vào tab <code>Notification polices</code> và thêm policy mới. Trong bài này, để đơn giản, chúng ta sẽ giữ nguyên policy mặc định của Grafana.</p>
+<p>Để cấu hình cách mà Alert được gửi đi, bạn vào tab <code>Notification polices</code> và thêm policy mới. Trong bài này, để đơn giản hơn chúng ta sẽ giữ nguyên policy mặc định của Grafana.</p>
 </div>
 <h2 id="thu-nghiem">Thử nghiệm</h2>
 <h3 id="data-bi-drift">Data bị drift</h3>
@@ -1070,7 +1070,7 @@
 <li>Hàm <code>construct_request</code> tạo payload dạng JSON để gửi tới Online serving API</li>
 <li>Hàm <code>send_request</code> gửi payload trên tới Online serving API</li>
 <li>Hàm <code>main</code> thực hiện quá trình gửi data</li>
-<li>Đọc dataset chứa các features, tuỳ thuộc vào loại data là <code>normal_data</code> hay <code>drift_data</code></li>
+<li>Đọc dataset chứa các features tuỳ thuộc vào loại data là <code>normal_data</code> hay <code>drift_data</code></li>
 <li>Đọc <code>request_data</code></li>
 <li>Ghi đè dataset chứa các features vào file data source của Feast</li>
 <li>Xoá data ở cả Offline Feature Store và Online Feature Store</li>
@@ -1137,7 +1137,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>Kiểm tra <strong>Evidently Data Drift Dashboard</strong>, bạn sẽ thấy thông tin Dataset không bị drift, số features bị drift là 0. Ngoài ra, cảnh báo <code>Data drift detection</code> cũng đã ở trạng thái <code>Normal</code></p>
+<p>Kiểm tra <strong>Evidently Data Drift Dashboard</strong>, bạn sẽ thấy thông tin Dataset không bị drift số features bị drift là 0. Ngoài ra, cảnh báo <code>Data drift detection</code> cũng đã ở trạng thái <code>Normal</code></p>
 <p><figure>
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png"/></a>
 <figcaption>Evidently Data Drift Dashboard - Dataset không drift</figcaption>
@@ -1153,8 +1153,8 @@
 <p>Nếu mở Kibana ra, bạn cũng sẽ thấy logs của Monitoring service được tự động thu thập nhờ chức năng tự động thu thập logs từ các containers của Filebeat</p>
 </div>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài <strong>Monitoring</strong> này, chúng ta đã biết về các metrics điển hình liên quan tới hệ thống, data, và model mà một hệ thống ML thường theo dõi.</p>
-<p>Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data và model như <strong>Phát hiện Data drift</strong>, <strong>Theo dõi model performance</strong>, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift, hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.</p>
+<p>Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài <strong>Monitoring</strong> này, chúng ta đã biết về các metrics điển hình của hệ thống về data và về model mà một hệ thống ML thường theo dõi.</p>
+<p>Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data, model như <strong>Phát hiện Data drift</strong>, <strong>Theo dõi model performance</strong>, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.</p>
 <p>Trong bài tiếp theo, chúng ta sẽ thiết lập và triển khai CI/CD cho các phần trong hệ thống ML. CI/CD giúp chúng ta tự động test và tự động triển khai các Airflow DAGs, cũng như là các services như Online serving service hay Monitoring service, thay vì gõ các lệnh thủ công trong terminal.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>

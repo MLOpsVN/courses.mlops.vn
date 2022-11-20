@@ -392,8 +392,8 @@
 <a class="glightbox" href="../../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"><img loading="lazy" src="../../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"/></a>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính và ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.</p>
-<p>Liệu rằng feature store còn có công dụng gì không, và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.</p>
+<p>Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính, ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.</p>
+<p>Liệu rằng feature store còn có công dụng gì không và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.</p>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
 <p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
 <ol>
@@ -439,7 +439,7 @@
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>data_pipeline/feature_repo
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>├── data_sources.py: định nghĩa các data source
 <a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>├── entities.py: định nghĩa entity
-<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>├── features.py: định nghĩa các bảng feature, và các feature cùng kiểu dữ liệu trong từng bảng
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>├── features.py: định nghĩa các bảng feature và các feature cùng kiểu dữ liệu trong từng bảng
 <a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>└── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
 </code></pre></div>
 <p>Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao gồm:</p>
@@ -621,7 +621,7 @@
 <a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>feast apply
 </code></pre></div>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast, ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy dữ liệu stream về online store và offline store, và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.</p>
+<p>Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy là dữ liệu stream về online store, offline store và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://feast.dev/">https://feast.dev/</a></li>

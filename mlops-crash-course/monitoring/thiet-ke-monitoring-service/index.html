@@ -449,7 +449,7 @@
 <figcaption>Photo by <a href="https://unsplash.com/@ibrahimboran?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ibrahim Boran</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Trong bài trước, chúng ta đã triển khai ELK Stack để thu thập, theo dõi logs từ các services; và Prometheus server, Grafana server để theo dõi các metrics hệ thống như CPU, memory, network, v.v. Trong một hệ thống ML, chúng ta cũng cần theo dõi metrics liên quan tới data và model, để kịp thời phát hiện sự thay đổi của chúng ở production và cập nhật data hay train lại model kịp thời. Trong bài này, chúng ta sẽ thiết kế <em>monitoring service</em> với các công việc cụ thể sau:</p>
+<p>Trong bài trước, chúng ta đã triển khai ELK Stack thu thập, theo dõi logs từ các services, Prometheus và Grafana server để theo dõi các metrics hệ thống như CPU, memory, network, v.v. Trong một hệ thống ML, chúng ta cũng cần theo dõi metrics liên quan tới data, model để kịp thời phát hiện sự thay đổi của chúng ở production, để cập nhật data hay train lại model kịp thời. Trong bài này, chúng ta sẽ thiết kế <em>monitoring service</em> với các công việc cụ thể sau:</p>
 <ol>
 <li>Tạo ra dataset chứa feature bị drift</li>
 <li>Triển khai monitoring service để theo dõi data và model performance</li>
@@ -479,7 +479,7 @@
 <p>Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>monitoring_service</code>.</p>
 </div>
 <h2 id="architecture">Architecture</h2>
-<p>Theo dõi metrics liên quan tới chất lượng data và model performance là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới</p>
+<p>Theo dõi metrics liên quan tới chất lượng data và model performance, là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới</p>
 <pre class="mermaid"><code>    graph LR
         n00[ ]--Training data--&gt;n1[Phát hiện&lt;br&gt;data drift]--Data metrics--&gt;n01[ ]
         n02[ ]--Production data--&gt;n1
@@ -495,7 +495,7 @@
         style n12 height:0px;</code></pre>
 <p>Để biết data thay đổi thế nào, training data sẽ được so sánh với production data dựa trên một thuật toán so sánh. Thuật toán này xem xét các thuộc tính về thống kê của data bị thay đổi nhiều hay ít thế nào. Như vậy, đầu vào của chức năng <strong>Phát hiện data drift</strong> là features ở khi training và features ở production.</p>
 <p>Để biết model performance thay đổi thế nào, label ở production sẽ được so sánh với prediction mà model tạo ra. Model performance ở production cũng có thể được so sánh với model performance ở khi training. Để đơn giản, monitoring service sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của chức năng <strong>Theo dõi model performance</strong> là dự đoán của model và label ở production.</p>
-<p>Trong bài này, thư viện Evidently được dùng để phát hiện data drift và tính toán model performance metrics. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra, và giám sát data và model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như <strong>PSI</strong>, <strong>K-L divergence</strong>, <strong>Jensen-Shannon distance</strong>, <strong>Wasserstein distance</strong>, và các metrics phổ biến của model performance như <strong>Accuracy</strong>, <strong>F1 score</strong>, <strong>RMSE</strong>, <strong>MAE</strong>, v.v. Bạn có thể đọc thêm ở <a href="https://docs.evidentlyai.com/reference/data-drift-algorithm">document của Evidently</a> để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động khi phát hiện data drift.</p>
+<p>Trong bài này, thư viện Evidently được dùng để phát hiện data drift, tính toán model performance metrics. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra và giám sát data, model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như <strong>PSI</strong>, <strong>K-L divergence</strong>, <strong>Jensen-Shannon distance</strong>, <strong>Wasserstein distance</strong> và các metrics phổ biến của model performance như <strong>Accuracy</strong>, <strong>F1 score</strong>, <strong>RMSE</strong>, <strong>MAE</strong>, v.v. Bạn có thể đọc thêm ở <a href="https://docs.evidentlyai.com/reference/data-drift-algorithm">document của Evidently</a> để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động khi phát hiện data drift.</p>
 <h2 id="cach-test">Cách test</h2>
 <p>Trước khi code, chúng ta sẽ phân tích xem làm thế nào để test các chức năng của monitoring service.</p>
 <div class="admonition quote">
@@ -562,8 +562,8 @@
 </tr>
 </tbody>
 </table>
-<p>Ở tình huống 1, production data không bị drift, <code>normal_data</code> vừa là training data, vừa là production data, và được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store sẽ giống với prodution data, tức là sẽ không xảy ra data drift.</p>
-<p>Ở tình huống 2, production data bị drift, <code>normal_data</code> ở trên vẫn là training data, còn <code>drift_data</code> là production data. <code>drift_data</code> được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store (<code>drift_data</code>) để model dự đoán có giá trị nằm xa training data (<code>normal_data</code>), tức là sẽ xảy ra data drift.</p>
+<p>Ở tình huống 1, production data không bị drift <code>normal_data</code> vừa là training data, vừa là production data và được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store sẽ giống với prodution data, tức là sẽ không xảy ra data drift.</p>
+<p>Ở tình huống 2, production data bị drift <code>normal_data</code> ở trên vẫn là training data, còn <code>drift_data</code> là production data. <code>drift_data</code> được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store (<code>drift_data</code>) để model dự đoán có giá trị nằm xa training data (<code>normal_data</code>), tức là sẽ xảy ra data drift.</p>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <p>Cần lấy ra bao nhiêu records từ training data và tích luỹ bao nhiêu records của production data thì mới bắt đầu thực hiện quá trình so sánh?</p>
@@ -573,8 +573,8 @@
 <p class="admonition-title">Tip</p>
 <p>Thuật ngữ <strong><em>reference window</em></strong> chỉ tập hợp các records để so sánh với production data. Thuật ngữ <strong><em>test window</em></strong> chỉ tập hợp các records để so sánh với <strong><em>reference window</em></strong></p>
 </div>
-<p>Để đơn giản, chúng ta sẽ tạo ra 5 records cho mỗi dataset, và chỉ tích luỹ 5 records của production data để thực hiện việc so sánh data.</p>
-<p>Một lý do nữa cho con số 5 là vì ở Online serving API, features được lấy ra sẽ là features mới nhất trong dataset. Do đó, việc tạo ra nhiều records ở nhiều thời điểm là không cần thiết. Chỉ cần đảm bảo rằng trong Feature Store, tồn tại ít nhất 1 record cho mỗi ID của tài xế ở request gửi đến. Và vì dataset gốc chỉ chứa ID của 5 tài xế bao gồm <code>[1001, 1002, 1003, 1004, 1005]</code>, nên chỉ cần 5 records cho mỗi dataset.</p>
+<p>Để đơn giản, chúng ta sẽ tạo ra 5 records cho mỗi dataset và chỉ tích luỹ 5 records của production data để thực hiện việc so sánh data.</p>
+<p>Một lý do nữa cho con số 5 là vì ở Online serving API, features được lấy ra sẽ là features mới nhất trong dataset. Do đó, việc tạo ra nhiều records ở nhiều thời điểm là không cần thiết. Chỉ cần đảm bảo rằng trong Feature Store, tồn tại ít nhất 1 record cho mỗi ID của tài xế ở request gửi đến. Vì dataset gốc chỉ chứa ID của 5 tài xế bao gồm <code>[1001, 1002, 1003, 1004, 1005]</code>, nên chỉ cần 5 records cho mỗi dataset.</p>
 <p>Tóm lại, chúng ta cần tạo ra 2 datasets có khoảng giá trị nằm xa nhau, mỗi dataset có 5 records tương ứng với 5 ID của các tài xế. Để đơn giản hoá quá trình test, phân phối chuẩn sẽ được sử dụng cho các giá trị của features trong cả 2 datasets.</p>
 <p>Bảng dưới đây là một ví dụ của <code>normal_data</code>.</p>
 <table>
@@ -700,7 +700,7 @@
 <a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
 <a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<p>Với mỗi ID của tài xế, model trả về 1 số thực. Số thực này thể hiện khả năng mà tài xế có hoàn thành cuốc xe hay không. Tuy nhiên, ở production, chúng ta không biết chính xác số thực này là bao nhiêu. Chúng ta chỉ biết rằng, khi model trả về ID tài xế có khả năng cao nhất hoàn thành cuốc xe là <code>1001</code>, thì tức là model đang dự đoán tài xế có ID <code>1001</code> sẽ hoàn thành cuốc xe. Bảng dưới đây thể hiện kết quả dự đoán của model của tài xế được chọn, ID của tài xế được chọn, và thông tin cuốc xe có hoàn thành không, với mỗi request được gửi đến Online serving API.</p>
+<p>Với mỗi ID của tài xế, model trả về 1 số thực. Số thực này thể hiện khả năng mà tài xế có hoàn thành cuốc xe hay không. Tuy nhiên ở production, chúng ta không biết chính xác số thực này là bao nhiêu. Chúng ta chỉ biết rằng, khi model trả về ID tài xế có khả năng cao nhất hoàn thành cuốc xe là <code>1001</code>, thì tức là model đang dự đoán tài xế có ID <code>1001</code> sẽ hoàn thành cuốc xe. Bảng dưới đây thể hiện kết quả dự đoán của model và ID của tài xế được chọn, thông tin cuốc xe có hoàn thành không, với mỗi request được gửi đến Online serving API.</p>
 <table>
 <thead>
 <tr>
@@ -746,7 +746,7 @@
 <li><code>driver_ids</code>: danh sách ID các tài xế được gửi đến trong request</li>
 <li><code>trip_completed</code>: label cho request</li>
 </ol>
-<p>Có một vấn đề như sau. Nếu tài xế <code>1001</code> luôn được dự đoán là tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe, thì bộ features của tài xế <code>1001</code> sẽ luôn được gửi về monitoring service, khiến cho tính chất thống kê của production data sẽ không giống với tính chất thống kê của <code>normal_data</code>, hoặc <code>drift_data</code>. Để khắc phục, bạn cần đảm bảo cả 5 bộ features của 5 tài xế trong dataset mà chúng ta dùng (<code>normal_data</code> hoặc <code>drift_data</code>) đều được gửi tới monitoring service. Bảng dưới đây là một ví dụ cho dataset <code>request_data</code>.</p>
+<p>Có một vấn đề như sau. Nếu tài xế <code>1001</code> luôn được dự đoán là tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe, thì bộ features của tài xế <code>1001</code> sẽ luôn được gửi về monitoring service, khiến cho tính chất thống kê của production data sẽ không giống với tính chất thống kê của <code>normal_data</code> hoặc <code>drift_data</code>. Để khắc phục, bạn cần đảm bảo cả 5 bộ features của 5 tài xế trong dataset mà chúng ta dùng (<code>normal_data</code> hoặc <code>drift_data</code>) đều được gửi tới monitoring service. Bảng dưới đây là một ví dụ cho dataset <code>request_data</code>.</p>
 <table>
 <thead>
 <tr>
@@ -784,7 +784,7 @@
 </tbody>
 </table>
 <p>Như các bạn thấy, khi <code>driver_ids</code> chỉ chứa 1 ID, thì chắc chắc ID này sẽ được chọn làm dự đoán của model.</p>
-<p>Như vậy là chúng ta đã phân tích xong cách test monitoring service, với các bộ dataset cần được tạo ra bao gồm <code>normal_data</code>, <code>drift_data</code>, và <code>request_data</code>. Các phần dưới đây sẽ tập trung vào viết code.</p>
+<p>Như vậy là chúng ta đã phân tích xong cách test monitoring service, với các bộ dataset cần được tạo ra bao gồm <code>normal_data</code>, <code>drift_data</code> và <code>request_data</code>. Các phần dưới đây sẽ tập trung vào viết code.</p>
 <h2 id="tao-datasets">Tạo datasets</h2>
 <p>Trong phần này, chúng ta sẽ tạo ra 2 datasets có tính chất và mục đích như bảng dưới đây.</p>
 <table>
@@ -899,7 +899,7 @@
 <li>Tạo ra label cho mỗi request với xác suất 0.3 cho label <code>0</code> và 0.7 cho label <code>1</code>. 2 con số này được lấy bất kì</li>
 <li>Tạo <code>DataFrame</code> chứa <code>request_data</code></li>
 </ol>
-<p>Đoạn code trên tạo ra <code>request_data</code> chứa thông tin về request sẽ được gửi tới Online serving API và label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được tạo ra bằng cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.</p>
+<p>Đoạn code trên tạo ra <code>request_data</code> chứa thông tin về request được gửi tới Online serving API. Thông tin về request cũng sẽ chứa label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được tạo ra bằng cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.</p>
 <h3 id="test-datasets">Test datasets</h3>
 <p>Code của phần này được đặt tại <code>monitoring_service/nbs/test_datasets.ipynb</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/nbs/test_datasets.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
@@ -965,26 +965,26 @@
 <a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>Đọc <code>normal_data</code>, <code>drift_data</code>, và <code>request_data</code></li>
+<li>Đọc <code>normal_data</code>, <code>drift_data</code> và <code>request_data</code></li>
 <li><code>ColumnMapping</code> là 1 class trong Evidently định nghĩa ý nghĩa của các cột trong bộ data</li>
-<li>Định nghĩa cột <code>target</code>, hay chính là label</li>
-<li>Định nghĩa cột <code>prediction</code>, hay chính là dự đoán của model</li>
+<li>Định nghĩa cột <code>target</code> hay chính là label</li>
+<li>Định nghĩa cột <code>prediction</code> hay chính là dự đoán của model</li>
 <li>Định nghĩa các cột là features ở dạng số</li>
 <li>Định nghĩa các cột là features ở dạng categorical</li>
 <li>Định nghĩa object <code>ModelMonitoring</code> để theo dõi data drift. <code>ModelMonitoring</code> là 1 class trong Evidently định nghĩa các loại monitoring mà chúng ta muốn chạy. Có nhiều loại monitoring như <code>DataDriftMonitor</code>, <code>CatTargetDriftMonitor</code>, <code>NumTargetDriftMonitor</code>, v.v.</li>
 <li>Định nghĩa object <code>ModelMonitoring</code> để theo dõi model performance</li>
 <li>Kiểm tra data drift, so sánh <code>drift_data</code> với <code>normal_data</code></li>
-<li>Dùng <code>normal_data</code> làm <strong>reference window</strong>, hay training data. Trong Evidently, <strong>reference window</strong> được gán vào tham số <code>reference_data</code></li>
-<li>Dùng <code>drift_data</code> làm <strong>test window</strong>, hay production data, để so sánh với training data. Trong Evidently, <strong>test window</strong> được gán vào tham số <code>current_data</code></li>
+<li>Dùng <code>normal_data</code> làm <strong>reference window</strong> hay training data. Trong Evidently, <strong>reference window</strong> được gán vào tham số <code>reference_data</code></li>
+<li>Dùng <code>drift_data</code> làm <strong>test window</strong> hay production data để so sánh với training data. Trong Evidently, <strong>test window</strong> được gán vào tham số <code>current_data</code></li>
 <li>Thêm cột <code>prediction</code> vào <code>drift_data</code>, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là <code>1</code></li>
-<li>Thêm cột <code>trip_completed</code> vào <code>drift_data</code>, hay chính là label của mỗi record</li>
-<li>Kiểm tra model performance, so sánh <code>drift_data</code> với chính nó</li>
+<li>Thêm cột <code>trip_completed</code> vào <code>drift_data</code> hay chính là label của mỗi record</li>
+<li>Kiểm tra model performance so sánh <code>drift_data</code> với chính nó</li>
 </ol>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
-<p>Tại sao lại kiểm tra model performance bằng cách so sánh <code>drift_data</code>, hay production data, với chính nó?</p>
+<p>Tại sao lại cần kiểm tra model performance bằng cách so sánh <code>drift_data</code> hay production data với chính nó?</p>
 </div>
-<p>Trong Evidently, với loại monitoring là <code>ClassificationPerformanceMonitor</code>, nếu cả <strong>reference window</strong> và <strong>test window</strong> đều chứa prediction và label, thì Evidently sẽ tính toán các metrics của model performance trên cả 2 datasets này, và thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên, để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa <strong>reference window</strong> và <strong>test window</strong>. Vì vậy, chúng ta sẽ truyền vào <code>drift_data</code> vào cả <code>reference_data</code> và <code>current_data</code>. Bạn có thể đọc thêm <a href="https://docs.evidentlyai.com/reports/classification-performance#requirements">tại đây</a> để hiểu rõ hơn về cách Evidently tính model performance.</p>
+<p>Trong Evidently, với loại monitoring là <code>ClassificationPerformanceMonitor</code> nếu cả <strong>reference window</strong>, <strong>test window</strong> đều chứa prediction và label thì Evidently sẽ tính toán các metrics của model performance trên cả 2 datasets này, việc thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa <strong>reference window</strong>, <strong>test window</strong>. Vì vậy, chúng ta sẽ truyền vào <code>drift_data</code> vào cả <code>reference_data</code> và <code>current_data</code>. Bạn có thể đọc thêm <a href="https://docs.evidentlyai.com/reports/classification-performance#requirements">tại đây</a> để hiểu rõ hơn về cách Evidently tính model performance.</p>
 <p>Kết quả được in ra sau khi chạy giống như sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>data_drift:n_drifted_features <span class="p">|</span> <span class="m">3</span> <span class="p">|</span> None <span class="c1"># (1)</span>
 <a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>data_drift:dataset_drift <span class="p">|</span> True <span class="p">|</span> None <span class="c1"># (2)</span>
@@ -1002,7 +1002,7 @@
 </ol>
 <p>Để tìm hiểu thêm về các loại monitoring khác hay các chức năng khác của Evidently, bạn có thể xem thêm các ví dụ tại <a href="https://docs.evidentlyai.com/examples">website của Evidently</a>.</p>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Trong bài này, chúng ta đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data và model như <strong>Phát hiện Data drift</strong>, và <strong>Theo dõi model performance</strong>. Trong bài tiếp theo, chúng ta sẽ học cách triển khai và thiết lập cảnh báo trên Grafana.</p>
+<p>Trong bài này chúng ta đã phân tích, thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data, model như <strong>Phát hiện Data drift</strong>, <strong>Theo dõi model performance</strong>. Trong bài tiếp theo, chúng ta sẽ học cách triển khai và thiết lập cảnh báo trên Grafana.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://docs.evidentlyai.com/">Evidently</a></li>

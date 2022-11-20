@@ -442,7 +442,7 @@
 </tbody>
 </table>
 <h2 id="pipeline-xu-ly-du-lieu">Pipeline xử lý dữ liệu</h2>
-<p>Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: <em>data ingestion</em>, <em>data cleaning</em>, và <em>data exploration &amp; validation</em>, hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.</p>
+<p>Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia các công việc đó thành các module để các thành viên trong team có thể bắt đầu implement. Việc chia module có thể dựa theo công đoạn như ở phần trên, đó là 3 module: <em>data ingestion</em>, <em>data cleaning</em>, và <em>data exploration &amp; validation</em> hoặc chia nhỏ thêm nữa để dễ maintain và scale hơn.</p>
 <p>Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipeline xử lý dữ liệu, ví dụ bên dưới:</p>
 <pre class="mermaid"><code>flowchart LR
     n1[ingest_task] --&gt; n2[clean_task] --&gt; n3[explore_and_validate_task]</code></pre>
@@ -456,7 +456,7 @@
 </ul>
 </details>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tỉm hiểu về Airflow, một tool giúp xây dựng pipeline.</p>
+<p>Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tìm hiểu về Airflow, một tool giúp xây dựng pipeline.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://ml-ops.org/content/three-levels-of-ml-software">https://ml-ops.org/content/three-levels-of-ml-software</a></li>

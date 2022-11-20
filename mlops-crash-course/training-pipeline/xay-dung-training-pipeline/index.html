@@ -461,7 +461,7 @@
 <li>Code train model</li>
 <li>Code đánh giá model</li>
 </ol>
-<p>Phần 1 và 2 được dùng trong bài <a href="../../data-pipeline/tong-quan-data-pipeline">xây dựng data pipeline</a>. Phần 3, 4, và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.</p>
+<p>Phần 1, 2 được dùng trong bài <a href="../../data-pipeline/tong-quan-data-pipeline">xây dựng data pipeline</a>. Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.</p>
 <pre class="mermaid"><code>flowchart LR
     n1[1. Cập nhật&lt;br&gt;Feature Store] --&gt; n2[2. Data&lt;br&gt;extraction] --&gt; n3[3. Data&lt;br&gt;validation] --&gt; n4[4. Data&lt;br&gt;preparation] --&gt; n5[5. Model&lt;br&gt;training] --&gt; n6[6. Model&lt;br&gt;evaluation] --&gt; n7[7. Model&lt;br&gt;validation]</code></pre>
 <h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
@@ -471,7 +471,7 @@
 <p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>training_pipeline/dev_requirements.txt</code></p>
 </li>
 <li>
-<p>Đặt environment variable <code>TRAINING_PIPELINE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code>, và <code>MLFLOW_TRACKING_URI</code> bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
+<p>Đặt environment variable <code>TRAINING_PIPELINE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>training_pipeline</code> và <code>MLFLOW_TRACKING_URI</code> bằng URL của MLflow server. Hai env var này hỗ trợ chạy python code ở folder <code>training_pipeline/src</code> trong quá trình phát triển.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-code/training_pipeline
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">export</span> <span class="nv">TRAINING_PIPELINE_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
 <a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nb">export</span> <span class="nv">MLFLOW_TRACKING_URI</span><span class="o">=</span><span class="s2">"http://localhost:5000"</span>
@@ -489,7 +489,7 @@
 <p>Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>training_pipeline</code>.</p>
 </div>
 <h2 id="cap-nhat-feature-store">Cập nhật Feature Store</h2>
-<p>Trong khoá học này, Feast được dùng làm Feature Store để version các feature và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature và metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.</p>
+<p>Trong khoá học này, Feast được dùng làm Feature Store để version các features và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature, metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.</p>
 <p>Trước khi cập nhật Feature Store, cần đảm bảo code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.</p>
 <p>Code của Feature Store nằm tại <code>data_pipeline/feature_repo</code>. Để triển khai sang training pipeline, chúng ta sẽ copy code từ <code>data_pipeline/feature_repo</code> sang <code>training_pipeline/feature_repo</code>. Bạn hãy chạy các lệnh sau.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cd</span> ../data_pipeline
@@ -546,7 +546,7 @@
 <li>Đọc label từ file <code>driver_orders.csv</code></li>
 <li>Định dạng lại format cho cột <code>event_timestamp</code></li>
 <li>Download features từ Offline Feature Store.</li>
-<li>Các feature chúng ta muốn lấy bao gồm <code>conv_rate</code>, <code>acc_rate</code>, và <code>avg_daily_trips</code>. <code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code></li>
+<li>Các feature chúng ta muốn lấy bao gồm <code>conv_rate</code>, <code>acc_rate</code> và <code>avg_daily_trips</code>. <code>driver_stats</code> là tên <code>FeatureView</code> mà chúng ta đã định nghĩa tại <code>data_pipeline/feature_repo/features.py</code></li>
 <li>Cách mà Feast lấy ra features giống như cách chúng ta chuẩn bị data ở dự án POC. Bạn có thể xem lại <a href="../../poc/xay-dung-poc/#chuan-bi-data">tại đây</a>.</li>
 <li>Lưu data vào disk để sử dụng trong các task tiếp theo.</li>
 </ol>
@@ -695,14 +695,14 @@
 </code></pre></div>
 </li>
 <li>
-<p>Kiểm tra folder <code>training_pipeline/artifacts</code>, bạn sẽ thấy các files <code>training.parquet</code>, <code>train_x.parquet</code>, <code>test_x.parquet</code>, <code>train_y.parquet</code>, và <code>test_y.parquet</code></p>
+<p>Kiểm tra folder <code>training_pipeline/artifacts</code>, bạn sẽ thấy các files <code>training.parquet</code>, <code>train_x.parquet</code>, <code>test_x.parquet</code>, <code>train_y.parquet</code> và <code>test_y.parquet</code></p>
 </li>
 </ol>
 <h2 id="model-training">Model training</h2>
-<p>Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên, trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:</p>
+<p>Task Model training sẽ train model và thực hiện hyperparameter tuning để train model tốt nhất. Tuy nhiên trong bài này, chúng ta sẽ không thực hiện hyperparameter tuning. Task này có:</p>
 <ul>
 <li><strong>Đầu vào:</strong> data được chuẩn bị ở task Data preparation</li>
-<li><strong>Đầu ra:</strong> model đã được train.</li>
+<li><strong>Đầu ra:</strong> model đã được train</li>
 </ul>
 <p>Code cho task Model training đã được viết ở dự án POC. Code của task này được lưu tại <code>training_pipeline/src/model_training.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/src/model_training.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
@@ -826,7 +826,7 @@
 </li>
 </ol>
 <h2 id="model-validation">Model validation</h2>
-<p>Trong task này, chúng ta dùng các metrics từ task Model evaluation để đánh giá model. Các baseline về metrics nên được định nghĩa ở bước <strong>Phân tích vấn đề</strong> rồi. Việc đánh giá model dựa trên các metrics để chứng tỏ model mới có performance tốt hơn model cũ trước khi triển khai ra production.</p>
+<p>Trong task này, chúng ta dùng các metrics từ task Model evaluation để đánh giá model. Các baseline về metrics nên được định nghĩa ở bước <strong>Phân tích vấn đề</strong>. Việc đánh giá model dựa trên các metrics để chứng tỏ model mới có performance tốt hơn model cũ trước khi triển khai ra production.</p>
 <p>Model performance cần được đánh giá trên các phần khác nhau của dataset. Ví dụ như model mới có Accuracy cao hơn model cũ khi đánh giá trên tất cả khách hàng, nhưng có Accuracy trên data của khách hàng ở vài khu vực địa lý thấp hơn model cũ.</p>
 <p>Ngoài ra, model có thể cần được kiểm tra xem có tương thích với hệ thống ở production không. Ví dụ:</p>
 <ul>
@@ -891,7 +891,7 @@
 </li>
 </ol>
 <h2 id="airflow-dag">Airflow DAG</h2>
-<p>Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG, hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
+<p>Ở phần này, Airflow DAG được dùng để kết nối các task trên lại thành một DAG hay một pipeline hoàn chỉnh. Code định nghĩa Airflow DAG được lưu tại <code>training_pipeline/dags/training_dag.py</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/dags/training_dag.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
@@ -966,7 +966,7 @@
 <h2 id="tong-ket">Tổng kết</h2>
 <p>Chúng ta vừa trải qua quy trình phát triển điển hình cho training pipeline. Tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà có thể bỏ bớt hoặc thêm vào các task khác. Các task cũng có thể được chia nhỏ ra để thực hiện các công việc đòi hỏi tính toán nặng, tránh việc phải chạy lại nhiều lần.</p>
 <p>Trong một dự án ML, trong khi Data Scientist vẫn thực hiện các thử nghiệm trên data và model, ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên yêu cầu từ Data Scientist.</p>
-<p>Sau khi tự động hoá training pipeline, trong bài tiếp theo, chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.</p>
+<p>Sau khi tự động hoá training pipeline, trong bài tiếp theo chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://docs.google.com/document/d/1UqrR4QP_RMZErC7uLMoLvPtzLys6ikgeUXiylS1WWPE/edit#heading=h.ozmqmwituoup">CS 329S. Lecture 5. Model Development</a></li>

@@ -421,8 +421,8 @@
 <figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
 </figure>
 <h2 id="gioi-thieu">Giới thiệu</h2>
-<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD, và các bài học về kiểm thử trong một hệ thống ML. Nhưng làm thế nào để triển khai một CI/CD pipeline tự động hóa các bước build, test và deploy? Jenkins là một open source tool cho phép hiện thực hóa điều này.</p>
-<p>Ở bài học này, bạn sẽ:</p>
+<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD và các bài học về kiểm thử trong một hệ thống ML. Câu hỏi được đặt ra đó là làm thế nào để triển khai một CI/CD pipeline tự động hóa gồm các bước như build, test, deploy? Jenkins là một open source cho phép hiện thực háo điều này.
+Ở bài học này, bạn sẽ:</p>
 <ol>
 <li>Cài đặt Jenkins trên máy cá nhân</li>
 <li>Kết nối Jenkins tới Github</li>
@@ -466,11 +466,11 @@
 </code></pre></div>
 </li>
 <li>
-<p>Chọn <code>Install suggested plugins</code>, và chờ Jenkins cài đặt các plugins.</p>
+<p>Chọn <code>Install suggested plugins</code> và chờ Jenkins cài đặt các plugins.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"/></a></p>
 </li>
 <li>
-<p>Ở giao diện đăng ký user sử dụng Jenkins, chọn <code>Skip and continue as admin</code></p>
+<p>Ở giao diện đăng ký user sử dụng Jenkins chọn <code>Skip and continue as admin</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"/></a></p>
 <details class="tip" open="open">
 <summary>Tip</summary>
@@ -544,11 +544,11 @@
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"/></a></p>
 </li>
 <li>
-<p>Ấn <code>+ New Item</code>, điền tên dự án vào phần bên dưới <code>Enter an item name</code>, chọn <code>Multibranch Pipeline</code>, và ấn <code>OK</code></p>
+<p>Ấn <code>+ New Item</code>, điền tên dự án vào phần bên dưới <code>Enter an item name</code>, chọn <code>Multibranch Pipeline</code> và ấn <code>OK</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"/></a></p>
 </li>
 <li>
-<p>Ở phần <code>Branch Sources</code>, ấn <code>Add source</code>, chọn <code>GitHub</code></p>
+<p>Ở phần <code>Branch Sources</code>, ấn <code>Add source</code> chọn <code>GitHub</code></p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"/></a></p>
 </li>
 <li>
@@ -567,7 +567,7 @@
 <p>Nếu bạn không thấy branch nào, thì bạn ấn <code>Scan Repository Now</code> như bên dưới và reload lại trang là được.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png"/></a></p>
 </details>
-<p>Nếu chúng ta ấn vào project <code>mlops-demo</code>, chúng ta sẽ thấy ở góc tay trái bên dưới có <code>Build History</code>, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.</p>
+<p>Nếu ấn vào project <code>mlops-demo</code>, chúng ta sẽ thấy ở góc tay trái bên dưới có <code>Build History</code>, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"/></a></p>
 <p>Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file <code>Jenkinsfile</code> đơn giản ở trong folder <code>mlops-crash-course-code/</code></p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>mlops-crash-course-code/
@@ -634,7 +634,7 @@
 <a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>git add Jenkinsfile
 <a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>git push origin your_branch
 </code></pre></div>
-<p>Lúc này chúng ta sẽ thấy có thêm <code>#2</code> ở <code>Build History</code>, với 3 bước <code>Build</code>, <code>Test</code> và <code>Deploy</code>, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.</p>
+<p>Lúc này chúng ta sẽ thấy có thêm <code>#2</code> ở <code>Build History</code> với 3 bước <code>Build</code>, <code>Test</code> và <code>Deploy</code>, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png"/></a></p>
 <p>Nếu chúng ta ấn vào <code>#2</code>, chọn <code>Console Output</code>, chúng ta sẽ thấy hiển thị như sau:</p>
 <p><a class="glightbox" href="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png"><img loading="lazy" src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png"/></a></p>
@@ -669,7 +669,7 @@
 </code></pre></div>
 <details class="tip" open="open">
 <summary>Tip</summary>
-<p>Nếu chúng ta muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder <code>data_pipeline/</code>, chúng ta thêm điều kiện <code>when</code> như sau:</p>
+<p>Nếu muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder <code>data_pipeline/</code>, chúng ta thêm điều kiện <code>when</code> như sau:</p>
 <div class="highlight"><pre><span></span><code>````py title="Jenkinsfile" linenums="1"
 pipeline {
 ...
@@ -694,7 +694,7 @@ pipeline {
 <p>Kiểu viết <code>Jenkinsfile</code> như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là <em>Declarative Pipeline</em>. Ngoài ra còn một cách viết khác dùng <code>Groovy script</code> gọi là <em>Scripted Pipeline</em>, cách này thông thường sử dụng cho những logic phức tạp.</p>
 </details>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học vừa rồi, chúng ta đã cùng nhau cài đặt Jenkins để có thể tự động chạy CI/CD pipeline mỗi khi có thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của bạn. Chúng ta cũng đã chạy thử xây dựng một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.</p>
+<p>Ở bài học vừa rồi, Jenkins đã được cài đặt để có thể tự động chạy CI/CD pipeline mỗi khi có sự thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của bạn. Chúng ta đã xây dựng và chạy thử một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.</p>
 <p>Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.</p>
 </article>
 </div>

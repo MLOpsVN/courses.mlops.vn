@@ -442,12 +442,12 @@ Một số khái niệm cơ bản trong Airflow:</p>
 <a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">ingest_task</span> <span class="o">&gt;&gt;</span> <span class="n">clean_task</span> <span class="o">&gt;&gt;</span> <span class="p">[</span><span class="n">explore_task</span><span class="p">,</span> <span class="n">validate_task</span><span class="p">]</span> <span class="c1"># (3)</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily, và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
+<li>Định nghĩa thời gian bắt đầu chạy pipeline từ 1/1/2021, lịch chạy là daily và không catchup, tức là không chạy pipeline trước <em>start_date</em></li>
 <li>Định nghĩa <em>task</em> bằng <code>PythonOperator</code>. Bạn tự truyền các config vào <code>(...)</code></li>
-<li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, và cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
+<li><strong>Thứ tự chạy:</strong> <em>ingest_task</em> tới <em>clean_task</em>, cuối cùng là 2 task song song: <em>explore_task và _validate_task</em></li>
 </ol>
 <h2 id="tong-ket">Tổng kết</h2>
-<p>Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow, và làm quen với Airflow Python SDK để xây dựng <em>task</em> và <em>DAG</em>. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.</p>
+<p>Ở bài học hôm nay, chúng ta đã tìm hiểu về một số khái niệm cơ bản trong Airflow và làm quen với Airflow Python SDK để xây dựng <em>task</em> và <em>DAG</em>. Bài học tiếp theo, chúng ta sẽ cụ thể hóa việc xây dựng pipeline bằng cách ứng dụng vào một bài toán cụ thể.</p>
 <h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
 <ul>
 <li><a href="https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html">https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html</a></li>
