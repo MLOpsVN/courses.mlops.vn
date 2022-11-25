@@ -21,6 +21,11 @@ plugins:
       draggable: true
   - section-index
   - search
+  - pdf-export:
+      verbose: true
+      media_type: print
+      enabled_if_env: ENABLE_PDF_EXPORT
+      combined: true
 markdown_extensions:
   - admonition
   - pymdownx.highlight:
