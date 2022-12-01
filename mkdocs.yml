@@ -60,7 +60,7 @@ plugins:
       verbose: true
 
   - encryptcontent:
-#      global_password: ${CONTENT_PASSWORD}
+      global_password: ${CONTENT_PASSWORD}
       title_prefix: ''
       summary: 'This content requires password. Use your code to gain the access.'
       placeholder: 'Provide password and press CTRL + ENTER'
