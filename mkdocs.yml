@@ -9,7 +9,9 @@ theme:
     accent: green
   features:
     - content.code.annotate
-extra_css: [assets/stylesheets/styles.css]
+extra_css:
+    - docs/assets/stylesheets/styles.css
+    - docs/assets/stylesheets/extra.css
 plugins:
   - glightbox:
       touchNavigation: true
@@ -21,13 +23,44 @@ plugins:
       draggable: true
   - section-index
   - search
-  - pdf-export:
-      verbose: true
-      media_type: print
+
+# RENDER PDF WITH mkdocs-pdf-with-js-plugin
+#  - pdf-with-js:
+#      enable: true # should enable only when need PDF files
+#      add_download_button: false
+#      display_header_footer: true
+#      header_template: >-
+#        <div style="font-size:8px; margin:auto; color:lightgray;">
+#            <span class="title">MLOpsVN</span>
+#        </div>
+#      footer_template: >-
+#        <div style="font-size:8px; margin:auto; color:lightgray;">
+#        </div>
+
+# RENDER PDF WITH mkdocs-with-pdf
+  - extra-sass
+  - with-pdf:
+      author: Quan Dang & Tung Dao
+      copyright: MLopsVN
+      cover: yes
+      back_cover: true
+      cover_title: MLOPS CRASH COURSE
+      cover_subtitle: An elegant way to do AI projects at a reasonable scale # + cover_logo
+      custom_template_path: TEMPLATES PATH
+      toc_title: Table of Contents
+      heading_shift: true
+      toc_level: 3
+      ordered_chapter_level: 2
+      output_path: custom_pdfs/book.pdf
+      show_anchors: true
+      render_js: true
+      headless_chrome_path: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
       enabled_if_env: ENABLE_PDF_EXPORT
-      combined: true
+      debug_html: true
+      verbose: true
+
   - encryptcontent:
-      global_password: 'MLOpsVN'
+#      global_password: ${CONTENT_PASSWORD}
       title_prefix: ''
       summary: 'This content requires password. Use your code to gain the access.'
       placeholder: 'Provide password and press CTRL + ENTER'
@@ -48,7 +81,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - MLOps Crash Course:
-      - mlops-crash-course/index.md
+      - MLOps Crash Course: mlops-crash-course/index.md  # https://github.com/orzih/mkdocs-with-pdf/issues/110
       - Tổng quan hệ thống:
           - Tổng quan MLOps: mlops-crash-course/tong-quan-he-thong/tong-quan-mlops.md
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md

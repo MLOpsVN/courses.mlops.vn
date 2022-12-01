@@ -1,6 +1,20 @@
 mkdocs==1.3.1
-mkdocs-material==8.4.1
+mkdocs-material==8.5.7
 mkdocs-glightbox==0.2.1
 mkdocs-section-index==0.3.4
-mkdocs-pdf-export-plugin==0.5.8
+
+# mkdocs-pdf-with-js-plugin
+# However, I use this package for header and footer integration
+# pip install -U git+https://github.com/vuquangtrong/mkdocs-pdf-with-js-plugin.git
+
+# CURRENT USE
+mkdocs-with-pdf==0.9.3
+# But it doesn't render mermaid as https://github.com/orzih/mkdocs-with-pdf/issues/34
+# And have alignment issue https://github.com/orzih/mkdocs-with-pdf/issues/135
+
+qrcode  # mkdocs-with-pdf dependencies
+mkdocs-extra-sass-plugin  # https://github.com/orzih/mkdocs-with-pdf/issues/89#issuecomment-1219528660
+livereload  # ModuleNotFoundError: No module named 'livereload'
+beautifulsoup4==4.9.3  # Temp solution for this issue https://github.com/orzih/mkdocs-with-pdf/issues/79#issue-1006388806s
+
 mkdocs-encryptcontent-plugin
