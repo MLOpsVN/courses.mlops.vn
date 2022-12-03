@@ -12,16 +12,30 @@ Giả sử rằng công ty của bạn có mô hình kinh doanh tương tự _Gr
 
 Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.
 
-```mermaid
-graph LR
-    n01[ ] --Thông tin tài xế 1--> n1[Hệ thống ML] --Tài xế có khả năng cao nhất<br>hoàn thành cuốc xe--> n02[ ]
-    n03[ ] --Thông tin tài xế 2--> n1
-    n04[ ] --Thông tin tài xế 3--> n1
-    style n01 height:0px;
-    style n02 height:0px;
-    style n03 height:0px;
-    style n04 height:0px;
-```
+[//]: # (```mermaid)
+
+[//]: # (graph LR)
+
+[//]: # (    n01[ ] --Thông tin tài xế 1--> n1[Hệ thống ML] --Tài xế có khả năng cao nhất<br>hoàn thành cuốc xe--> n02[ ])
+
+[//]: # (    n03[ ] --Thông tin tài xế 2--> n1)
+
+[//]: # (    n04[ ] --Thông tin tài xế 3--> n1)
+
+[//]: # (    style n01 height:0px;)
+
+[//]: # (    style n02 height:0px;)
+
+[//]: # (    style n03 height:0px;)
+
+[//]: # (    style n04 height:0px;)
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/gioi-thieu-phan-tich-van-de.png" loading="lazy"/>
+</figure>
+
 
 ## Phân tích vấn đề
 

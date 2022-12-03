@@ -40,14 +40,24 @@ Các tools sẽ được sử dụng trong bài này bao gồm:
 
 Trong phần này, chúng ta sẽ thực hiện code monitoring service. Hình dưới đây thể hiện các luồng data của monitoring service.
 
-```mermaid
-    flowchart LR
-        n01[ ] --Label--> n2
-        n0[Client] --Request--> n1[Online serving<br>service] --Features &<br>prediction--> n2[Monitoring<br>service] --Metrics--> n3[Prometheus<br>& Grafana]
-        n1 --Response--> n0
+[//]: # (```mermaid)
 
-        style n01 height:0px;
-```
+[//]: # (    flowchart LR)
+
+[//]: # (        n01[ ] --Label--> n2)
+
+[//]: # (        n0[Client] --Request--> n1[Online serving<br>service] --Features &<br>prediction--> n2[Monitoring<br>service] --Metrics--> n3[Prometheus<br>& Grafana])
+
+[//]: # (        n1 --Response--> n0)
+
+[//]: # ()
+[//]: # (        style n01 height:0px;)
+
+[//]: # (```)
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/trien-khai-monitoring.png" loading="lazy"/>
+</figure>
+
 
 Quá trình phát triển monitoring service gồm các bước chính sau.
 

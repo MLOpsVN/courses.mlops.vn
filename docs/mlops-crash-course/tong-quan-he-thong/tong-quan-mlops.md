@@ -119,13 +119,23 @@ Trong phần này, chúng ta sẽ tìm hiểu về các workflows điển hình 
 
 Các workflows trên không phải là thứ tự chính xác về các công việc khi xây dựng một hệ thống ML. Hình dưới đây là một ví dụ về thứ tự trong thực tế.
 
-```mermaid
-flowchart TD
-    n1[Khởi động dự án] --> n2[Định nghĩa vấn đề] --> n3[POC 1] --> n4[POC 2] --> n5[Xây dựng các pipelines] --> n6[Tự động hoá các pipelines] --> n7[Production]
-    n3 --Định nghĩa lại<br>vấn đề--> n2
-    n4 --Cập nhật cách<br>biến đổi data--> n2
-    n7 --Cập nhật cách<br>train model--> n2
-```
+[//]: # (```mermaid)
+
+[//]: # (flowchart TD)
+
+[//]: # (    n1[Khởi động dự án] --> n2[Định nghĩa vấn đề] --> n3[POC 1] --> n4[POC 2] --> n5[Xây dựng các pipelines] --> n6[Tự động hoá các pipelines] --> n7[Production])
+
+[//]: # (    n3 --Định nghĩa lại<br>vấn đề--> n2)
+
+[//]: # (    n4 --Cập nhật cách<br>biến đổi data--> n2)
+
+[//]: # (    n7 --Cập nhật cách<br>train model--> n2)
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/tonq-quan-mlops.png" loading="lazy"/>
+</figure>
 
 Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ yêu cầu về các chức năng của hệ thống ML. Sau đó, dự án _Proof Of Concept_ (POC) sẽ được thực hiện để chứng minh rằng giải pháp đề ra là khả thi, trước khi bắt tay vào xây dựng chi tiết các chức năng phức tạp.
 

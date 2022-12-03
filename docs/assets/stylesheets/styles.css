@@ -2,6 +2,7 @@ div.mermaid {
   text-align: center;
 }
 
+
 :root > * {
   --md-primary-fg-color: green;
   /* --md-accent-fg-color: #63d297ff; */
@@ -14,4 +15,13 @@ figure {
 
 img {
   width: 100%;
+}
+
+/* https://github.com/orzih/mkdocs-with-pdf/issues/89#issuecomment-1317730124 */
+@media print {
+  /* Adjusts positioning of admonition icon */
+  .md-typeset :is(.admonition-title,summary):before {
+    top: 0.6rem;
+    left: 0.6rem;
+  }
 }

@@ -33,10 +33,17 @@ Sau khi đã nắm rõ các đầu việc cần phải làm, chúng ta sẽ chia
 
 Các module xử lý dữ liệu chạy theo tuần tự tạo thành một pipeline xử lý dữ liệu, ví dụ bên dưới:
 
-```mermaid
-flowchart LR
-    n1[ingest_task] --> n2[clean_task] --> n3[explore_and_validate_task]
-```
+[//]: # (```mermaid)
+
+[//]: # (flowchart LR)
+
+[//]: # (    n1[ingest_task] --> n2[clean_task] --> n3[explore_and_validate_task])
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/tong-quan-pipeline.png" loading="lazy"/>
+</figure>
 
 ???+ tip
 

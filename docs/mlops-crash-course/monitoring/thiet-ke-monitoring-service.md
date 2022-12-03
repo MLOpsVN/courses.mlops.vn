@@ -38,21 +38,37 @@ Các tools sẽ được sử dụng trong bài này bao gồm:
 
 Theo dõi metrics liên quan tới chất lượng data và model performance, là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới
 
-```mermaid
-    graph LR
-        n00[ ]--Training data-->n1[Phát hiện<br>data drift]--Data metrics-->n01[ ]
-        n02[ ]--Production data-->n1
+[//]: # (```mermaid)
 
-        n10[ ]--Prediction-->n2[Theo dõi model<br>performance]--Model performance-->n11[ ]
-        n12[ ]--Label-->n2
+[//]: # (    graph LR)
 
-        style n00 height:0px;
-        style n01 height:0px;
-        style n02 height:0px;
-        style n10 height:0px;
-        style n11 height:0px;
-        style n12 height:0px;
-```
+[//]: # (        n00[ ]--Training data-->n1[Phát hiện<br>data drift]--Data metrics-->n01[ ])
+
+[//]: # (        n02[ ]--Production data-->n1)
+
+[//]: # ()
+[//]: # (        n10[ ]--Prediction-->n2[Theo dõi model<br>performance]--Model performance-->n11[ ])
+
+[//]: # (        n12[ ]--Label-->n2)
+
+[//]: # ()
+[//]: # (        style n00 height:0px;)
+
+[//]: # (        style n01 height:0px;)
+
+[//]: # (        style n02 height:0px;)
+
+[//]: # (        style n10 height:0px;)
+
+[//]: # (        style n11 height:0px;)
+
+[//]: # (        style n12 height:0px;)
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/thiet-ke-monitoring.png" loading="lazy"/>
+</figure>
 
 Để biết data thay đổi thế nào, training data sẽ được so sánh với production data dựa trên một thuật toán so sánh. Thuật toán này xem xét các thuộc tính về thống kê của data bị thay đổi nhiều hay ít thế nào. Như vậy, đầu vào của chức năng **Phát hiện data drift** là features ở khi training và features ở production.
 

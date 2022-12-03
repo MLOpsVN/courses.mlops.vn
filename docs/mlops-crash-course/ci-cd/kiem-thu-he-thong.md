@@ -8,19 +8,36 @@ Khác với các hệ thống phần mềm truyển thống: một ông develope
 
 Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.
 
-```mermaid
-graph LR
-    n01[ ] --"Đầu vào"--> n1[Hệ thống phần mềm<br>truyền thống] --Kết quả--> n02[ ]
-    n03[ ] --Thuật toán--> n1
-    n04[ ] --"Đầu vào"--> n2[Hệ thống<br>Machine Learning] --"Thuật toán<br>(model)"--> n05[ ]
-    n06[ ] --Kết quả<br>mong muốn--> n2
-    style n01 height:0px;
-    style n02 height:0px;
-    style n03 height:0px;
-    style n04 height:0px;
-    style n05 height:0px;
-    style n06 height:0px;
-```
+[//]: # (```mermaid)
+
+[//]: # (graph LR)
+
+[//]: # (    n01[ ] --"Đầu vào"--> n1[Hệ thống phần mềm<br>truyền thống] --Kết quả--> n02[ ])
+
+[//]: # (    n03[ ] --Thuật toán--> n1)
+
+[//]: # (    n04[ ] --"Đầu vào"--> n2[Hệ thống<br>Machine Learning] --"Thuật toán<br>&#40;model&#41;"--> n05[ ])
+
+[//]: # (    n06[ ] --Kết quả<br>mong muốn--> n2)
+
+[//]: # (    style n01 height:0px;)
+
+[//]: # (    style n02 height:0px;)
+
+[//]: # (    style n03 height:0px;)
+
+[//]: # (    style n04 height:0px;)
+
+[//]: # (    style n05 height:0px;)
+
+[//]: # (    style n06 height:0px;)
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/kiem-thu-he-thong.png" loading="lazy"/>
+</figure>
+
 
 ## Kiểm thử hệ thống phần mềm truyền thống
 

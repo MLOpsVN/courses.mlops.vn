@@ -10,8 +10,7 @@ theme:
   features:
     - content.code.annotate
 extra_css:
-    - docs/assets/stylesheets/styles.css
-    - docs/assets/stylesheets/extra.css
+  - assets/stylesheets/styles.css
 plugins:
   - glightbox:
       touchNavigation: true
@@ -57,7 +56,7 @@ plugins:
       headless_chrome_path: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
       enabled_if_env: ENABLE_PDF_EXPORT
       debug_html: true
-      verbose: true
+      verbose: false
 
   - encryptcontent:
       global_password: ${CONTENT_PASSWORD}

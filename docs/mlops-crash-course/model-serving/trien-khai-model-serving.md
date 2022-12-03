@@ -39,10 +39,17 @@ Các MLOps tools được dùng trong bài này bao gồm:
 
 Batch serving được thiết kế với input là data file ở local hoặc cloud. Bạn có thể chỉ cần viết vài script để load input, load model, chạy predictions và lưu lại chúng. Tuy nhiên, chúng ta cũng có thể coi batch serving là một pipeline, sử dụng Airflow để quản lý và lên lịch cho quá trình chạy batch serving. Batch serving pipeline gồm các tasks như hình dưới:
 
-```mermaid
-flowchart LR
-    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Batch<br>prediction]
-```
+[//]: # (```mermaid)
+
+[//]: # (flowchart LR)
+
+[//]: # (    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Batch<br>prediction])
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/batch-serving.png" loading="lazy"/>
+</figure>
 
 ### Cập nhật Feature Store
 

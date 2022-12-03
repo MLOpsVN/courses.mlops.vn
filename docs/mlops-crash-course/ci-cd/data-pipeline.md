@@ -18,10 +18,17 @@ Nếu tự động hóa được các bước này thì có thể đẩy nhanh q
 
 Chúng ta sẽ viết Jenkinsfile cho 3 bước trên như sau:
 
-```mermaid
-flowchart LR
-    n1[1. Build data pipeline] --> n2[2. Test data pipeline] --> n3[3. Deploy data pipeline]
-```
+[//]: # (```mermaid)
+
+[//]: # (flowchart LR)
+
+[//]: # (    n1[1. Build data pipeline] --> n2[2. Test data pipeline] --> n3[3. Deploy data pipeline])
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/ci-cd-cho-data-pipeline.png" loading="lazy"/>
+</figure>
 
 ???+ info
 

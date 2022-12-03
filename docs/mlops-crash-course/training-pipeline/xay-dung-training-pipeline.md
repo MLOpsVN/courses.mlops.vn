@@ -15,10 +15,17 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 
 Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../../data-pipeline/tong-quan-data-pipeline). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
 
-```mermaid
-flowchart LR
-    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Data<br>validation] --> n4[4. Data<br>preparation] --> n5[5. Model<br>training] --> n6[6. Model<br>evaluation] --> n7[7. Model<br>validation]
-```
+[//]: # (```mermaid)
+
+[//]: # (flowchart LR)
+
+[//]: # (    n1[1. Cập nhật<br>Feature Store] --> n2[2. Data<br>extraction] --> n3[3. Data<br>validation] --> n4[4. Data<br>preparation] --> n5[5. Model<br>training] --> n6[6. Model<br>evaluation] --> n7[7. Model<br>validation])
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/training-pipeline.png" loading="lazy"/>
+</figure>
 
 ## Môi trường phát triển
 

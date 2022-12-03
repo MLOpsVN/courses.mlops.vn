@@ -11,12 +11,21 @@
 
 CI/CD pipeline cho model serving sẽ được thay đổi thành như sau:
 
-```mermaid
-graph LR
-    n1[1. Build model serving] --> n2[2. Test model serving]
-    n2[2. Test model serving] --> n3[3.1. Deploy offline batch serving pipeline]
-    n2[2. Test model serving] --> n4[3.2. Deploy online serving API]
-```
+[//]: # (```mermaid)
+
+[//]: # (graph LR)
+
+[//]: # (    n1[1. Build model serving] --> n2[2. Test model serving])
+
+[//]: # (    n2[2. Test model serving] --> n3[3.1. Deploy offline batch serving pipeline])
+
+[//]: # (    n2[2. Test model serving] --> n4[3.2. Deploy online serving API])
+
+[//]: # (```)
+
+<figure>
+    <img src="../../../assets/images/mermaid-diagrams/ci-cd-cho-model-serving.png" loading="lazy"/>
+</figure>
 
 ???+ tip
 
