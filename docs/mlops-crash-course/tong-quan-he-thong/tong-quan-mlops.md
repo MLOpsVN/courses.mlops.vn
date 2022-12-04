@@ -134,7 +134,7 @@ Các workflows trên không phải là thứ tự chính xác về các công vi
 [//]: # (```)
 
 <figure>
-    <img src="../../../assets/images/mermaid-diagrams/tonq-quan-mlops.png" loading="lazy"/>
+    <img src="../../../assets/images/mermaid-diagrams/tong-quan-mlops.png" loading="lazy"/>
 </figure>
 
 Đầu tiên, chúng ta cần định nghĩa và phân tích vấn đề kinh doanh để hiểu rõ yêu cầu về các chức năng của hệ thống ML. Sau đó, dự án _Proof Of Concept_ (POC) sẽ được thực hiện để chứng minh rằng giải pháp đề ra là khả thi, trước khi bắt tay vào xây dựng chi tiết các chức năng phức tạp.

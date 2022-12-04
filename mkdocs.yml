@@ -85,28 +85,28 @@ nav:
           - Tổng quan MLOps: mlops-crash-course/tong-quan-he-thong/tong-quan-mlops.md
           - Phân tích vấn đề: mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.md
           - MLOps platform: mlops-crash-course/tong-quan-he-thong/mlops-platform.md
-      - POC: mlops-crash-course/poc/xay-dung-poc.md
-      - Data pipeline:
-          - Tổng quan pipeline: mlops-crash-course/data-pipeline/tong-quan-data-pipeline.md
-          - Airflow cơ bản: mlops-crash-course/data-pipeline/airflow-co-ban.md
-          - Feature store: mlops-crash-course/data-pipeline/feature-store.md
-          - Xây dựng pipeline: mlops-crash-course/data-pipeline/xay-dung-data-pipeline.md
-      - Training pipeline: mlops-crash-course/training-pipeline/xay-dung-training-pipeline.md
-      - Model serving: mlops-crash-course/model-serving/trien-khai-model-serving.md
-      - Monitoring:
-          - Tổng quan monitoring: mlops-crash-course/monitoring/tong-quan-monitoring.md
-          - Metrics hệ thống: mlops-crash-course/monitoring/metrics-he-thong.md
-          - Thiết kế monitoring service: mlops-crash-course/monitoring/thiet-ke-monitoring-service.md
-          - Triển khai monitoring service: mlops-crash-course/monitoring/trien-khai-monitoring-service.md
-      - CI/CD:
-          - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
-          - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md
-          - Jenkins cơ bản: mlops-crash-course/ci-cd/jenkins-co-ban.md
-          - CI/CD cho data pipeline: mlops-crash-course/ci-cd/data-pipeline.md
-          - CI/CD cho model serving: mlops-crash-course/ci-cd/model-serving.md
-      - Tổng kết: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
-      - Contributing: CONTRIBUTING.md
-      - Code of Conduct: CODE_OF_CONDUCT.md
+#      - POC: mlops-crash-course/poc/xay-dung-poc.md
+#      - Data pipeline:
+#          - Tổng quan pipeline: mlops-crash-course/data-pipeline/tong-quan-data-pipeline.md
+#          - Airflow cơ bản: mlops-crash-course/data-pipeline/airflow-co-ban.md
+#          - Feature store: mlops-crash-course/data-pipeline/feature-store.md
+#          - Xây dựng pipeline: mlops-crash-course/data-pipeline/xay-dung-data-pipeline.md
+#      - Training pipeline: mlops-crash-course/training-pipeline/xay-dung-training-pipeline.md
+#      - Model serving: mlops-crash-course/model-serving/trien-khai-model-serving.md
+#      - Monitoring:
+#          - Tổng quan monitoring: mlops-crash-course/monitoring/tong-quan-monitoring.md
+#          - Metrics hệ thống: mlops-crash-course/monitoring/metrics-he-thong.md
+#          - Thiết kế monitoring service: mlops-crash-course/monitoring/thiet-ke-monitoring-service.md
+#          - Triển khai monitoring service: mlops-crash-course/monitoring/trien-khai-monitoring-service.md
+#      - CI/CD:
+#          - Giới thiệu: mlops-crash-course/ci-cd/gioi-thieu.md
+#          - Kiểm thử hệ thống: mlops-crash-course/ci-cd/kiem-thu-he-thong.md
+#          - Jenkins cơ bản: mlops-crash-course/ci-cd/jenkins-co-ban.md
+#          - CI/CD cho data pipeline: mlops-crash-course/ci-cd/data-pipeline.md
+#          - CI/CD cho model serving: mlops-crash-course/ci-cd/model-serving.md
+#      - Tổng kết: mlops-crash-course/tong-ket/tom-tat-noi-dung.md
+#      - Contributing: CONTRIBUTING.md
+#      - Code of Conduct: CODE_OF_CONDUCT.md
 
 copyright: "Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License"
 extra:
