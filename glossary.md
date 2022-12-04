@@ -49,7 +49,7 @@
 | Offline           | _giữ nguyên_      |               | 
 | Online            | _giữ nguyên_      |               | 
 | Prediction        | _giữ nguyên_      |               | 
-| Privacy           | Quyển riêng tư    |               | 
+| Privacy           | Quyền riêng tư    |               | 
 | Production        | _giữ nguyên_      |               | 
 | Product owner     | _giữ nguyên_      |               | 
 | Project manager   | _giữ nguyên_      |               | 
