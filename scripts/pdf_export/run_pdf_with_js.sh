@@ -10,7 +10,7 @@ cd scripts/pdf_export/pdfs
 
 # Merge all pdfs into one single pdf file wrt the file name's order in chapters.txt
 # Install: https://www.pdflabs.com/tools/pdftk-server/
-# M1 only: https://stackoverflow.com/a/60889993/6563277 to avoid the "pdftk: Bad CPU type in executable" on Mac
+# Install for M1 only: https://stackoverflow.com/a/60889993/6563277 to avoid the "pdftk: Bad CPU type in executable" on Mac
 pdftk $(cat chapters.txt) cat output book.pdf
 
 # Count pages https://stackoverflow.com/a/27132157/6563277
@@ -36,7 +36,7 @@ gs -o pagenumbers.pdf    \
        showpage             \
        } for"
 
-# Merge pagenumbers.pdf with the original pdf file
+# Blend pagenumbers.pdf with the original pdf file
 pdftk pdfs/book.pdf              \
   multistamp pagenumbers.pdf \
   output final_book.pdf
