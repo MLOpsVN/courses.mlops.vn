@@ -1,6 +1,7 @@
 site_url: https://courses.mlops.vn/
 site_name: MLOpsVN Courses
 docs_dir: docs
+use_directory_urls: false
 theme:
   name: material
   custom_dir: overrides
@@ -22,7 +23,7 @@ plugins:
   - section-index
   - search
   - encryptcontent:
-      global_password: ${SITE_PASSWORD}
+      global_password: SITE_PASSWD_HERE
       title_prefix: ''
       summary: 'This content requires password. Use your code to gain the access.'
       placeholder: 'Provide password and press CTRL + ENTER'

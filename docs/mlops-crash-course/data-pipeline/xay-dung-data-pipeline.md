@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/pipeline-everywhere.jpeg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/pipeline-everywhere.jpeg" loading="lazy"/>
     <figcaption>Photo by <a href="https://snehamehrin22.medium.com/?source=post_page-----fe14643c67fd--------------------------------">Sneha Mehrin</a> on <a href="https://snehamehrin22.medium.com/how-to-build-a-technical-design-architecture-for-an-analytics-data-pipeline-fe14643c67fd">Medium</a></figcaption>
 </figure>
 
@@ -16,7 +16,7 @@ store = FeatureStore(repo_path="../feature_repo")  # (1)
 
 Client này sẽ được sử dụng ở nhiều bước khác nhau bao gồm **1**, **2**, **3**, **4**, **5** như hình dưới đây:
 
-<img src="../../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/data-pipeline/Feast_architecture.png" loading="lazy" />
 
 ## Môi trường phát triển
 
@@ -225,7 +225,7 @@ processor.ingest_stream_feature_view()
 
 1.  Đăng nhập vào Airflow tại <http://localhost:8088>, account `airflow`, password `airflow`, các bạn sẽ thấy một DAG với tên _db_to_offline_store_, 2 DAG bên dưới chính là những pipeline còn lại trong data pipelines (đề cập ở bên dưới).
 
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/airflow1.png" loading="lazy" />
 
 1.  Đặt Airflow Variable `MLOPS_CRASH_COURSE_CODE_DIR` bằng đường dẫn tuyệt đối tới folder `mlops-crash-course-code/`. Tham khảo [hướng dẫn này](https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html) về cách đặt Airflow Variable.
 
@@ -235,11 +235,11 @@ processor.ingest_stream_feature_view()
 
 1.  Kích hoạt data pipeline và đợi kết quả
 
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/airflow4.png" loading="lazy" />
 
 1.  Xem thứ tự các task của pipeline này như sau:
 
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
 
 Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipeline_ như bên dưới.
 

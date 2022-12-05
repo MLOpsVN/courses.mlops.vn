@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/s/photos/problem?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -106,7 +106,7 @@ Vì các file data của chúng ta không có feature nào chứa `null` và đ�
 ## Chuẩn bị data
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@lukechesser?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Luke Chesser</a> on <a href="https://unsplash.com/s/photos/analysis?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -257,7 +257,7 @@ Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model archite
 
 1.  Mở MLflow trên browser, bạn sẽ thấy giao diện như sau.
 
-    <img src="../../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png" loading="lazy" />
 
     Mọi thông tin chúng ta log lại mỗi lần thử nghiệm đã được lưu lại. Bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột `Start time` của lần chạy đó.
 

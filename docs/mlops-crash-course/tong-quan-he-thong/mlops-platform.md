@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/platform-meme.png" loading="lazy"/>
     <figcaption>Photo by <a href="https://coussement-bruno.medium.com/?source=post_page-----69ff5d96b7db--------------------------------">Coussement Bruno</a> on <a href="https://towardsdatascience.com/which-cloud-servicer-provider-ml-platform-do-you-need-69ff5d96b7db">Towards Data Science</a></figcaption>
 </figure>
 
@@ -26,7 +26,7 @@ MLOps platform là nền tảng cung cấp các tool cần thiết để quản 
 
 Kiến trúc MLOps platform của chúng ta sẽ như sau:
 
-<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/architecture.png" loading="lazy" />
 
 Các tương tác chính trong MLOps platform:
 
@@ -190,7 +190,7 @@ Trong đó:
 
 ## Infra layer
 
-<img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/mlops-platform/enterprise-architecture.png" loading="lazy" />
 
 Phần này cung cấp cho bạn một cái nhìn tổng quan hơn nữa về MLOps platform khi được đặt trong cơ sở hạ tầng IT của một tổ chức.
 

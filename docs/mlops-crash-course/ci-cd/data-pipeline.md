@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/a-world-without-ci.cd-meme.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/ci-cd/a-world-without-ci.cd-meme.jpg" loading="lazy"/>
     <figcaption>Photo from <a href="https://flexagon.com/blog/why-the-world-needs-ci-cd/">flexagon.com</a></figcaption>
 </figure>
 
@@ -73,21 +73,21 @@ pipeline {
 
     Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là `Jenkinsfile_data_pipeline`, không phải tên mặc định là `Jenkinsfile`, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <http://localhost:8081/job/mlops-demo/configure> và thay đổi `Script Path` từ `Jenkinsfile` sang `Jenkinsfile_data_pipeline`.
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
 
 ???+ bug
 
     Nếu bạn gặp hiện tượng Github API Rate Limit như sau:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png" loading="lazy" />
 
     Thì bạn thêm Credentials ở mục Github bằng cách ấn vào `Add` như hình dưới:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png" loading="lazy" />
 
 Sau khi bạn thay đổi code ở folder `data-pipeline/` và push code lên Github, bạn sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-output-data-pipeline.png" loading="lazy" />
 
 ## Tổng kết
 

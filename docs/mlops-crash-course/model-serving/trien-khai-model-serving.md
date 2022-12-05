@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/serving.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/serving.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@jaywennington?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jay Wennington</a> on <a href="https://unsplash.com/s/photos/serve?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -214,7 +214,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 
 1.  Kích hoạt batch serving pipeline và đợi kết quả
 
-    <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/batch-serving-pipeline-airflow.png" loading="lazy" />
 
 ## Online serving
 
@@ -349,7 +349,7 @@ Bạn làm các bước sau để triển khai Online serving service.
 
     Kết quả của response trả về sẽ giống như sau.
 
-    <img src="../../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/model-serving/trien-khai-model-serving/bentoml-inference-response.png" loading="lazy" />
 
 ## Tổng kết
 

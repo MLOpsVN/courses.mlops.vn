@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner-2.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner-2.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@dawson2406?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Stephen Dawson</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -302,7 +302,7 @@ Bạn cần làm các bước sau để triển khai các dashboards này lên G
 
 Dashboard **Evidently Data Drift Dashboard** sẽ giống như hình dưới đây.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-no-data.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-no-data.png" loading="lazy" />
 
 Dashboard này chứa các panels về data drift bao gồm:
 
@@ -321,7 +321,7 @@ Dashboard này chứa các panels về data drift bao gồm:
 
 Dashboard **Evidently Classification Performance Dashboard** sẽ giống như hình dưới đây.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-no-data.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-no-data.png" loading="lazy" />
 
 Dashboard này chứa các panels về model performance bao gồm:
 
@@ -346,11 +346,11 @@ Grafana Alerts cho phép kích hoạt cảnh báo khi một vấn đề về met
 
 1.  Ở sidebar bên phải của Grafana, click `Dashabords`. Ở trang Dashboard, tạo Folder tên là `Alerts`. Folder này được dùng để lưu cảnh báo chúng ta sẽ tạo
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png" loading="lazy" />
 
 2.  Ở sidebar bên phải của Grafana, bạn click vào `Alerting`. Ở trang `Alerting`, tab `Alert rules`, click nút `New alert rule`.
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png" loading="lazy" />
 
 3.  Trong trang tạo cảnh báo, tạo cảnh báo mới tên là `Data drift detection`, điền các thông tin trong phần `1. Set a query and alert condition` như ảnh dưới, với query `A` là:
 
@@ -358,11 +358,11 @@ Grafana Alerts cho phép kích hoạt cảnh báo khi một vấn đề về met
     evidently:data_drift:dataset_drift{dataset_name="drivers"}
     ```
 
-     <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png" loading="lazy" />
+     <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png" loading="lazy" />
 
 4.  Phần `2. Alert evaluation behavior` và `3. Add details for your alert`
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png" loading="lazy" />
 
 5.  Click `Save and exit`
 
@@ -466,22 +466,22 @@ def main(data_type: str, n_request: int = 1): # (3)
 1.  Đợi 30s, kiểm tra **Evidently Data Drift Dashboard** và **Evidently Classification Performance Dashboard**, kết quả sẽ giống như sau.
 
     <figure>
-        <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png" loading="lazy" />
+        <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png" loading="lazy" />
         <figcaption>Evidently Data Drift Dashboard - Dataset drift</figcaption>
     </figure>
 
     <figure>
-        <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-with-data.png" loading="lazy" />
+        <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-with-data.png" loading="lazy" />
         <figcaption>Evidently Classification Performance Dashboard</figcaption>
     </figure>
 
 1.  Mở trang Grafana Alerting, bạn sẽ thấy cảnh báo `Data drift detection` đang ở trạng thái `Firing`
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-firing.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-firing.png" loading="lazy"/>
 
 1.  Click nút `Show state history` để xem thời điểm của các trạng thái trong cảnh báo này.
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png" loading="lazy"/>
 
 ### Data không bị drift
 
@@ -496,12 +496,12 @@ Tiếp theo, chúng ta sẽ test trường hợp data không bị drift. Bạn l
 1.  Kiểm tra **Evidently Data Drift Dashboard**, bạn sẽ thấy thông tin Dataset không bị drift số features bị drift là 0. Ngoài ra, cảnh báo `Data drift detection` cũng đã ở trạng thái `Normal`
 
     <figure>
-        <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png" loading="lazy" />
+        <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png" loading="lazy" />
         <figcaption>Evidently Data Drift Dashboard - Dataset không drift</figcaption>
     </figure>
 
     <figure>
-        <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-normal.png" loading="lazy" />
+        <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-normal.png" loading="lazy" />
         <figcaption>Alert Data drift detection ở trạng thái Normal</figcaption>
     </figure>
 

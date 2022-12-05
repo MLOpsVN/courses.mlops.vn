@@ -8,7 +8,7 @@ Contributing Guidelines
 Ensure that you adhere to the following guidelines:
 
 - Should be about principles and concepts that can be applied in any company or individual project. Do not focus on particular tools or tech stack (which usually change over time).
-- Adhere to the [Code of Conduct](../CODE_OF_CONDUCT).
+- Adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).
 - Should be relevant to MLOps.
 - Should be locally tested (see steps for testing) and well formatted.
 - It is good practice to open an issue first and discuss your changes before submitting a pull request. This way, you can incorporate ideas from others before you even start.

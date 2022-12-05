@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg" loading="lazy"/>
 </figure>
 
 ## Giới thiệu

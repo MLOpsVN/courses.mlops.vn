@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-ket/ending_meme.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-ket/ending_meme.jpg" loading="lazy"/>
 </figure>
 
 ## Tóm tắt nội dung khóa học

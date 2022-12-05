@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/build-pipeline.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/build-pipeline.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@selimarda?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">SELİM ARDA ERYILMAZ</a> on <a href="https://unsplash.com/s/photos/pipeline?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -125,7 +125,7 @@ Bạn làm các bước sau để test thử code.
 ## Data validation
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/validation.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/validation.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@amelune?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Diane Serik</a> on <a href="https://unsplash.com/s/photos/test?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -285,7 +285,7 @@ Bạn làm các bước sau để test thử code.
 
 1.  Mở MLflow server, bạn sẽ thấy một experiment được tạo ra
 
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-training.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-training.png" loading="lazy" />
 
 ## Model evaluation
 
@@ -373,11 +373,11 @@ Bạn làm các bước sau để test thử code.
 
 1.  Mở MLflow server, bạn sẽ thấy model đã được lưu vào Model Registry
 
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-register.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-register.png" loading="lazy" />
 
 1.  Click vào model để xem thêm thông tin model. Như hình dưới, MLflow đã ghi lại cả định dạng hợp lệ cho input và output của model
 
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-model-version.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/mlflow-model-version.png" loading="lazy" />
 
     !!! tip
 
@@ -434,7 +434,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 
 1.  Kích hoạt training pipeline và đợi kết quả
 
-    <img src="../../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/training-pipeline/xay-dung-training-pipeline/training-pipeline-airflow.png" loading="lazy" />
 
 1.  Sau khi Airflow DAG hoàn thành, kiểm tra MLflow server, bạn sẽ thấy metadata của lần chạy experiment mới và model train xong đã được log lại
 

@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/testing_meme.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/ci-cd/testing_meme.png" loading="lazy"/>
 </figure>
 
 ## Giới thiệu
@@ -86,14 +86,14 @@ Thông thường, các developer tuân thủ một số quy ước sau khi phát
 2. Luôn viết code test khi commit logic mới
 3. Khi fix bug, luôn viết code test để bắt bug và phòng xảy ra trường hợp tương tự trong tương lai
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600" height="150" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600" height="150" loading="lazy" />
 <figcaption align="center" font-size="8px"><i>Source: https://www.jeremyjordan.me/testing-ml/</i></figcaption>
 
 ## Hệ thống ML cần kiểm thử những gì?
 
 Những bài test cho hệ thống phần mềm có thể ứng dụng cho hầu hết ML code, tuy nhiên vẫn chưa để đủ đảm bảo hệ thống ML có thể hoạt động với độ tin cậy cao.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png" width="600" height="300" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png" width="600" height="300" loading="lazy" />
 <figcaption align="center" font-size="8px"><i>Source: https://learning.oreilly.com/library/view/building-machine-learning</i></figcaption>
 
 OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thêm những gì?
@@ -103,7 +103,7 @@ OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thê
       Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
       Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:
 
-      <img src="../../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" />
+      <img src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" />
 
 - **Model testing:** đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...
 

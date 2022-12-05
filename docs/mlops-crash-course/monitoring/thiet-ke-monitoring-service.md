@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@ibrahimboran?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ibrahim Boran</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
