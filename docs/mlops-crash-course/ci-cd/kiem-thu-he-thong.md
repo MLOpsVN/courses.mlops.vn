@@ -27,7 +27,7 @@ graph LR
 Thông thường có 2 loại kiểm thử phần mềm:
 
 - **Functional Testing:** kiểm tra xem hệ thống đã đảm bảo yêu cầu về chức năng chưa, ví dụ ấn tắt windows update mãi mà nó vẫn update thì là fail rồi :)
-- **Non-functional Testing:** kiểm tra xem hệ thống có đáp ứng được kỳ vọng của khách hàng không, ví dụ tất cả người trên thế giới cùng ấn nút tham gia group MLOps VN thì group không được sập chả hạn.
+- **Non-functional Testing:** kiểm tra xem hệ thống có đáp ứng được kỳ vọng của khách hàng không, ví dụ tất cả người trên thế giới cùng ấn nút tham gia group MLOpsVN thì group không được sập chả hạn.
 
 ### Functional Testing
 
