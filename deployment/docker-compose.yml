@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  courses_server:
+  mlopsvn_courses_server:
     image: mlopsvn/courses.mlops.vn:latest
-    container_name: courses_container
-    restart: on-failure
+    container_name: mlopsvn_courses_container
+    restart: "no"
     ports:
       - 8989:80
