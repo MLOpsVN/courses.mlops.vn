@@ -434,7 +434,7 @@ def main(data_type: str, n_request: int = 1): # (3)
 
 Để tiến hành thử nghiệm, bạn làm theo các bước sau.
 
-1.  Đảm bảo [Online serving service](../../model-serving/trien-khai-model-serving/#online-serving) đã chạy
+1.  Đảm bảo [Online serving service](../model-serving/trien-khai-model-serving.html#online-serving) đã chạy
 
 1.  Cập nhật Feature Store
 

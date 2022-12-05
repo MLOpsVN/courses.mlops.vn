@@ -13,7 +13,7 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 4. Code train model
 5. Code đánh giá model
 
-Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../../data-pipeline/tong-quan-data-pipeline). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
+Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../data-pipeline/tong-quan-data-pipeline). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
 
 ```mermaid
 flowchart LR
@@ -97,7 +97,7 @@ to_parquet(training_df, AppPath.TRAINING_PQ) # (7)
 3. Định dạng lại format cho cột `event_timestamp`
 4. Download features từ Offline Feature Store.
 5. Các feature chúng ta muốn lấy bao gồm `conv_rate`, `acc_rate` và `avg_daily_trips`. `driver_stats` là tên `FeatureView` mà chúng ta đã định nghĩa tại `data_pipeline/feature_repo/features.py`
-6. Cách mà Feast lấy ra features giống như cách chúng ta chuẩn bị data ở dự án POC. Bạn có thể xem lại [tại đây](../../poc/xay-dung-poc/#chuan-bi-data).
+6. Cách mà Feast lấy ra features giống như cách chúng ta chuẩn bị data ở dự án POC. Bạn có thể xem lại [tại đây](../poc/xay-dung-poc.html#chuan-bi-data).
 7. Lưu data vào disk để sử dụng trong các task tiếp theo.
 
 Bạn làm các bước sau để test thử code.

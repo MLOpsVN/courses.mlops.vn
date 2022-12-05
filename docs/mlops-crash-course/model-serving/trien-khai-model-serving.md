@@ -48,7 +48,7 @@ flowchart LR
 
 Giả sử nơi chạy Batch serving là ở một server với infrastructure đủ mạnh cho việc tối ưu batch serving. Khi chạy batch serving, data được lấy từ Feature Store để phục vụ cho inference. Do đó, Feature Store cần được cập nhật trên server nơi batch serving được triển khai.
 
-Task này được thực hiện giống như task **Cập nhật Feature Store** ở training pipeline. Bạn có thể xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#cap-nhat-feature-store). Bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
+Task này được thực hiện giống như task **Cập nhật Feature Store** ở training pipeline. Bạn có thể xem lại bài [Xây dựng training pipeline](../training-pipeline/xay-dung-training-pipeline.html#cap-nhat-feature-store). Bạn hãy làm theo các bước dưới đây để cập nhật Feature Store.
 
 1.  Code của Feature Store nằm tại `data_pipeline/feature_repo`. Để triển khai sang batch serving pipeline, chúng ta sẽ copy code từ `data_pipeline/feature_repo` sang `model_serving/feature_repo`. Bạn hãy chạy các lệnh sau.
 
@@ -119,7 +119,7 @@ Task Batch prediction có đầu vào và đầu ra như sau:
 - **Đầu vào:** config file chứa thông tin về model được dùng
 - **Đầu ra:** kết quả predictions được lưu vào disk
 
-Model được dùng là model đã được lưu vào MLflow Model Registry ở task **Model validation** trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-validation). Trong task **Model validation** đó, thông tin về model đã đăng ký được lưu tại file `training_pipeline/artifacts/registered_model_version.json`. File này cần được upload vào một Storage nào đó trong tổ chức để các task khác, cụ thể là cho batch serving và online serving ở trong bài này, có thể biết được model nào là tốt nhất.
+Model được dùng là model đã được lưu vào MLflow Model Registry ở task **Model validation** trong bài [Xây dựng training pipeline](../training-pipeline/xay-dung-training-pipeline.html#model-validation). Trong task **Model validation** đó, thông tin về model đã đăng ký được lưu tại file `training_pipeline/artifacts/registered_model_version.json`. File này cần được upload vào một Storage nào đó trong tổ chức để các task khác, cụ thể là cho batch serving và online serving ở trong bài này, có thể biết được model nào là tốt nhất.
 
 Vì chúng ta đang phát triển cả training pipeline và model serving ở local, nên bạn chỉ cần copy file `training_pipeline/artifacts/registered_model_version.json` sang `model_serving/artifacts/registered_model_version.json`. Để làm điều này, bạn hãy chạy lệnh sau.
 
@@ -129,7 +129,7 @@ make deploy_registered_model_file
 cd ../model_serving
 ```
 
-Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Đoạn code này giống như ở task **Model evaluation** trong bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#model-evaluation). Code của task này được lưu tại `model_serving/src/batch_prediction.py`.
+Tiếp theo, chúng ta sẽ viết code cho task batch prediction. Đoạn code này giống như ở task **Model evaluation** trong bài [Xây dựng training pipeline](../training-pipeline/xay-dung-training-pipeline.html#model-evaluation). Code của task này được lưu tại `model_serving/src/batch_prediction.py`.
 
 ```python linenums="1" title="model_serving/src/batch_prediction.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)
@@ -191,7 +191,7 @@ with DAG(
     # các task khác
 ```
 
-1. Chi tiết về những điểm quan trọng cần lưu ý, mời bạn xem lại bài [Xây dựng training pipeline](../../training-pipeline/xay-dung-training-pipeline/#airflow-dag).
+1. Chi tiết về những điểm quan trọng cần lưu ý, mời bạn xem lại bài [Xây dựng training pipeline](../training-pipeline/xay-dung-training-pipeline.html#airflow-dag).
 
 Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/model_serving:latest` và triển khai Airflow DAGs bằng cách các bước sau.
 
@@ -318,7 +318,7 @@ Bạn làm các bước sau để triển khai Online serving service.
 
         Online Feature Store thực chất là một Redis database. Các bạn xem file `feast/feast-docker-compose.yml` trong repo `mlops-crash-course-platform`
 
-1.  Cập nhật Online Feature Store. Xem lại bài [Xây dựng data pipeline](../../data-pipeline/xay-dung-data-pipeline/#feast-materialize-pipeline)
+1.  Cập nhật Online Feature Store. Xem lại bài [Xây dựng data pipeline](../data-pipeline/xay-dung-data-pipeline.html#feast-materialize-pipeline)
 
     ```bash
     cd feature_repo

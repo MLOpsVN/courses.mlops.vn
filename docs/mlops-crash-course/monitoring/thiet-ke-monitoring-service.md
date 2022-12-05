@@ -130,7 +130,7 @@ Bảng dưới đây là một ví dụ của `drift_data`.
 
 Để test chức năng **Theo dõi model performance**, label của mỗi request được gửi tới Online serving API cần được biết, thì mới đánh giá được dự đoán của model là đúng hay sai.
 
-Ở [phần Online serving của bài Triển khai model serving](../../model-serving/trien-khai-model-serving/#online-serving), request và response được gửi tới Online serving API có dạng như sau.
+Ở [phần Online serving của bài Triển khai model serving](../model-serving/trien-khai-model-serving.html#online-serving), request và response được gửi tới Online serving API có dạng như sau.
 
 ```json
 // Request
