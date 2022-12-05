@@ -37,6 +37,23 @@ cd feature_repo
 feast materialize-incremental $(date +%Y-%m-%d)
 ```
 
+???+tip
+
+    Để hiểu rõ hơn về `materialize`, giả sử rằng ở offline store chúng ta có 3 record của ID 1001 như sau:
+
+    | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
+    | ------     | ------    | ------    | ------   | ------          | ------    |
+    | 2021-07-13 11:00:00+00:00   |    1001 |  0.852406 | 0.059147       |       340 | 2021-07-28 11:08:04.802 |
+    | 2021-08-10 12:00:00+00:00   |    1001 |  0.571599 | 0.244896       |       752 | 2021-07-28 11:08:04.802 |
+    | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821       |       716 | 2021-07-28 11:08:04.802 |
+
+    Khi chúng ta chạy command `feast materialize 2021-08-07T00:00:00`, thì dữ liệu có `datetime` mới nhất mà trước thời điểm `2021-08-07T00:00:00` sẽ được cập nhật vào online store. Đó chính là record thứ 3 ở bảng trên.
+
+    | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
+    | ------     | ------    | ------    | ------   | ------          | ------    |
+    | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821    |       716 | 2021-07-28 11:08:04.802 |                                                                                        
+
+
 2\. Data scientist, training pipeline hoặc offline batch serving pipeline kéo features về để train model
 
 ```py title="data_pipeline/examples/get_historical_features.py" linenums="1"
@@ -224,7 +241,7 @@ processor.ingest_stream_feature_view()
 
     <img src="../../../assets/images/mlops-crash-course/data-pipeline/airflow2.png" loading="lazy" />
 
-Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipline_ như bên dưới.
+Tương tự như ETL pipeline, chúng ta sẽ code tiếp _Feast materialize pipeline_ và _Stream to stores pipeline_ như bên dưới.
 
 ### Feast materialize pipeline
 
@@ -246,7 +263,7 @@ with DAG(
     )
 ```
 
-### Stream to stores pipline
+### Stream to stores pipeline
 
 Bạn thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
 
