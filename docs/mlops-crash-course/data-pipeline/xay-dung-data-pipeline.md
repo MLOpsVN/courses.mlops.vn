@@ -47,7 +47,7 @@ feast materialize-incremental $(date +%Y-%m-%d)
     | 2021-08-10 12:00:00+00:00   |    1001 |  0.571599 | 0.244896       |       752 | 2021-07-28 11:08:04.802 |
     | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821       |       716 | 2021-07-28 11:08:04.802 |
 
-    Khi chúng ta chạy command `feast materialize 2021-08-07T00:00:00`, thì dữ liệu có `datetime` mới nhất mà trước thời điểm `2021-08-07T00:00:00` sẽ được cập nhật vào online store. Đó chính là record thứ 3 ở bảng trên.
+    Khi chúng ta chạy command `feast materialize 2021-08-07T00:00:00`, thì dữ liệu có `datetime` mới nhất mà trước thời điểm `2021-08-07T00:00:00` sẽ được cập nhật vào online store. Đó chính là record **thứ 3** ở bảng trên.
 
     | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
     | ------     | ------    | ------    | ------   | ------          | ------    |
