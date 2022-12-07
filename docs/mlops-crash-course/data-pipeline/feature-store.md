@@ -121,6 +121,7 @@ Code định nghĩa các data source như sau:
 ```py title="data_pipeline/feature_repo/data_sources.py" linenums="1"
 driver_stats_parquet_file = "../data_sources/driver_stats.parquet"
 
+# local Parquet file as data source
 driver_stats_batch_source = FileSource(
     name="driver_stats",
     file_format=ParquetFormat(),
@@ -129,6 +130,7 @@ driver_stats_batch_source = FileSource(
     created_timestamp_column="created",
 )
 
+# Kafka for stream source
 driver_stats_stream_source = KafkaSource(
     name="driver_stats_stream",
     kafka_bootstrap_servers="localhost:29092",
@@ -187,7 +189,12 @@ feast apply
 
 ## Tổng kết
 
-Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ lấy feature từ Feast, materialize feature từ offline qua online store, đấy là dữ liệu stream về online store, offline store và cuối cùng là xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ:
+
+- lấy feature từ Feast
+- materialize feature từ offline qua online store
+- đẩy dữ liệu stream về online store và offline store
+- xây dựng các Airflow pipeline để tự động hóa các công việc trên.
 
 ## Tài liệu tham khảo
 
