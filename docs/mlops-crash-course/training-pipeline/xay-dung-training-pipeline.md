@@ -13,7 +13,7 @@ Sau khi thực hiện ít nhất một dự án POC thành công, chúng ta đã
 4. Code train model
 5. Code đánh giá model
 
-Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../data-pipeline/tong-quan-data-pipeline). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
+Phần 1, 2 được dùng trong bài [xây dựng data pipeline](../data-pipeline/tong-quan-data-pipeline.html). Phần 3, 4 và 5 sẽ được dùng trong bài này để xây dựng training pipeline với các task như hình dưới.
 
 ```mermaid
 flowchart LR
