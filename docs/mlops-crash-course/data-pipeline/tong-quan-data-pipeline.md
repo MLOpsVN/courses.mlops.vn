@@ -41,14 +41,14 @@ flowchart LR
 ???+ tip
 
     Số lượng module quá nhiều có thể dẫn tới một số vấn đề như:
-
-    - Pipeline trở nên cực kỳ phức tạp và khó debug
+    
+    - Pipeline trở nên phức tạp và khó debug
     - Việc pass dữ liệu qua lại giữa các module xảy ra nhiều lên làm tăng thời gian hoàn thành của pipeline
     - Dễ gây lãng phí computing resource nếu không xử lý scale hợp lý
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tìm hiểu về Airflow, một tool giúp xây dựng pipeline.
+Ở bài học vừa rồi, chúng ta đã cùng nhau tìm hiểu về các công việc xử lý dữ liệu cho model và ý tưởng chia nhỏ các công việc đó thành các thành phần của pipeline. Ở bài tiếp theo, chúng ta sẽ tìm hiểu về Airflow, một công cụ giúp xây dựng pipeline.
 ## Tài liệu tham khảo
 
 - <https://ml-ops.org/content/three-levels-of-ml-software>

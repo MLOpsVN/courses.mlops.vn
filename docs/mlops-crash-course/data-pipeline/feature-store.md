@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một đống demographics feature (feature về độ tuổi, giới tính, ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
+Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một tập hợp các tính năng về demographics (như độ tuổi, giới tính, ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.
 
 Liệu rằng feature store còn có công dụng gì không và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.
 
@@ -31,8 +31,8 @@ Feature store là một hệ thống giúp lưu trữ, tương tác và quản l
 - **Feature reuse:** lưu trữ các feature đã được tạo ra để tái sử dụng khi cần thiết
 - **Feature sharing:** chia sẻ feature giữa các thành viên trong team hoặc với nhiều team khác nhau
 - **Feature consistency:** một nguồn dữ liệu cho cả mục đích training và serving
-- **Feature monitoring:** theo dõi drift và chất lượng dữ liệu trước khi đưa qua model sử dụng
-- **Data leakage:** đảm bảo không xảy ra hiện tượng leak dữ liệu trong tập training. Ví dụ: dữ liệu training vào thời điểm bất kỳ không được bao gồm dữ liệu mà có timestamp sau đó.
+- **Feature monitoring:** theo dõi thay đổi (drift) và chất lượng dữ liệu trước khi đưa qua model sử dụng
+- **Data leakage:** đảm bảo không xảy ra hiện tượng rò rỉ (leak) dữ liệu trong tập training. Ví dụ: dữ liệu training vào thời điểm bất kỳ không được bao gồm dữ liệu mà có timestamp sau đó.
 
 Có rất nhiều feature store ở thời điểm hiện tại, có thể kể tới một số như:
 
@@ -157,23 +157,23 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
       bash deploy.sh start
       cd ../data_pipeline
       ```
-
+      
       Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-
+      
       <img src="../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
 
 ???+ tip
 
     - Để **stop** server, các bạn chạy: `bash deploy.sh stop`
-
+    
         ```bash
         cd ../stream_emitting
         bash deploy.sh stop
         cd ../data_pipeline
         ```
-
+    
     - Để **teardown** server (stop và remove tất cả docker volume liên quan), các bạn chạy:
-
+    
         ```bash
         cd ../stream_emitting
         bash deploy.sh teardown
@@ -191,10 +191,10 @@ feast apply
 
 Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ:
 
-- lấy feature từ Feast
-- materialize feature từ offline qua online store
-- đẩy dữ liệu stream về online store và offline store
-- xây dựng các Airflow pipeline để tự động hóa các công việc trên.
+- Lấy feature từ Feast
+- aterialize feature từ offline qua online store
+- Đẩy dữ liệu stream về online store và offline store
+- Xây dựng các Airflow pipeline để tự động hóa các công việc trên.
 
 ## Tài liệu tham khảo
 
