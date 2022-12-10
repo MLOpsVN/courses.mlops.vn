@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/ci-cd-meo.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/ci-cd/ci-cd-meo.jpg" loading="lazy"/>
     <figcaption>Photo from <a href="https://www.mabl.com/blog/using-mocks-for-testing-development-cicd-pipeline/">www.mabl.com</a></figcaption>
 </figure>
 
@@ -72,7 +72,7 @@ pipeline {
 
 Sau khi bạn thay đổi code ở folder `model_serving/` và push code lên Github, bạn sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-output-model-serving.png" loading="lazy" />
 
 ## Tổng kết
 

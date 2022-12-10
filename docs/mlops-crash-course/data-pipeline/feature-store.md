@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg" loading="lazy"/>
 </figure>
 
 ## Giới thiệu
@@ -160,7 +160,7 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
 
       Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
 
-      <img src="../../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
+      <img src="../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
 
 ???+ tip
 

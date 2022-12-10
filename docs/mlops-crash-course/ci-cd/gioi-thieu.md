@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/why-cicd.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/ci-cd/why-cicd.jpg" loading="lazy"/>
 </figure>
 
 ## Giới thiệu

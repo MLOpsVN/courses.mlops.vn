@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/speed-scale.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/speed-scale.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/dashboard?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -29,7 +29,7 @@ Việc sử dụng công nghệ container có nhiều ưu điểm, nhưng cũng 
 
 Hình dưới là một pipeline điển hình cho việc thu thập và xử lý logs tập trung sử dụng ELK Stack.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png" loading="lazy" />
 
 Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích, hiển thị data lên Kibana dashboard.
 
@@ -117,7 +117,7 @@ Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xe
 
 1.  Đăng nhập vào Kibana server <http://localhost:5601>. Ở sidebar bên phải, chọn **Discover**.
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png" loading="lazy" />
 
 1.  Trên UI của page **Discover**, trong phần gõ câu truy vấn, gõ truy vấn sau:
 
@@ -131,7 +131,7 @@ Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xe
 
     Bảng hiển thị logs của Online Serving service sẽ giống như sau
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png" loading="lazy" />
 
     Bạn có thể lưu lại lần _discover_ này bằng cách click vào nút `Save` ở góc trên bên phải.
 
@@ -191,7 +191,7 @@ Trong phần này, Prometheus sẽ được dùng để thu thập các metrics 
     1.  Trên Navbar, click **Status**, chọn **Targets**
     1.  Kiểm tra xem các endpoints của các job **prometheus**, **node**, **online_serving** có ở trạng thái **UP** không. Bạn có thể cần đợi 30s cho tới khi các endpoints đạt trạng thái này. Hình dưới cho thấy endpoints của các targets trên đã ở trạng thái **UP**.
 
-        <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png" loading="lazy" />
+        <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png" loading="lazy" />
 
         !!! info
 
@@ -222,7 +222,7 @@ static_configs:
 
 Thiết lập này báo cho Prometheus biết rằng, mỗi 5s nó cần phải thu thập metrics từ URI <http://localhost:8172/metrics>, với `/metrics` là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.
 
-<img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png" loading="lazy" />
 
 ### Node Exporter Full dashboard
 
@@ -241,7 +241,7 @@ Thiết lập này báo cho Prometheus biết rằng, mỗi 5s nó cần phải 
 1.  Click `Import`, nhập vào ID của Node Exporter Full dashboard là _1860_, click `Load`
 1.  Chọn datasource là Prometheus, click `Import`. Bạn sẽ nhìn thấy dashboard giống như sau
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png" loading="lazy" />
 
     Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose `prom-graf/prom-graf-docker-compose.yml` mà một vài phần của dashboard sẽ không được hiển thị hết. Bạn có thể xem thêm [tại đây](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.
 
@@ -254,7 +254,7 @@ BentoML dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-cod
 1.  Ở sidebar bên phải chọn **Dashboards**
 1.  Ở giao diện của trang Dashboards, bạn sẽ thấy _BentoML Dashboard_, click chọn để mở. BentoML dashboard sẽ giống như sau.
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png" loading="lazy" />
 
     Dashboard này bao gồm 2 panel:
 
@@ -263,7 +263,7 @@ BentoML dashboard đã được chuẩn bị sẵn tại `mlops-crash-course-cod
 
 1.  Click vào tên của panel, chọn **Explore** để xem câu truy vấn _PromQL_ được sử dụng để đọc data từ Prometheus.
 
-    <img src="../../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png" loading="lazy" />
 
     !!! info
 

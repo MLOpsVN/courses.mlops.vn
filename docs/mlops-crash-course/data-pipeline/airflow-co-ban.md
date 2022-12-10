@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/automation.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/automation.jpg" loading="lazy"/>
     <figcaption>Photo from <a href="https://airflow-tutorial.readthedocs.io/en/latest/pipelines.html">airflow-tutorial</a></figcaption>
 </figure>
 

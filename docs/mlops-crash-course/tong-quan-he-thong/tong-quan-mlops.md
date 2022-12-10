@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/ml-system-in-production.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/ml-system-in-production.png" loading="lazy"/>
     <figcaption><i>Sculley, et al. 2015. Hidden technical debt in machine learning systems. Proceedings of the 28th International Conference on Neural Information Processing Systems, Volume 2 (NIPS 2015)</i></figcaption>
 </figure>
 
@@ -24,7 +24,7 @@ Theo [bài báo trên][mlops-paper], định nghĩa về MLOps có thể đượ
 ## Principles
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/principles.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@austindistel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Austin Distel</a> on <a href="https://unsplash.com/s/photos/principle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 
@@ -87,7 +87,7 @@ Xuyên suốt khoá học, các principles này sẽ được ngầm hiểu và 
 ## Components
 
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/tong-quan-he-thong/tong-quan-mlops/components.jpg" loading="lazy"/>
     <figcaption>Photo by <a href="https://unsplash.com/@jorgedevs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jorge Ramirez</a> on <a href="https://unsplash.com/s/photos/component?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></figcaption>
 </figure>
 

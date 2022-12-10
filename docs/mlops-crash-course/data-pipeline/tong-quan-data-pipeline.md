@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/data-pipeline/broken-data-pipeline.jpeg" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/data-pipeline/broken-data-pipeline.jpeg" loading="lazy"/>
     <figcaption>Photo by <a href="https://barrmoses.medium.com/?source=post_page-----4d42c2a8f054--------------------------------">Barr Moses</a> on <a href="https://barrmoses.medium.com/the-broken-data-pipeline-before-christmas-4d42c2a8f054">Medium</a></figcaption>
 </figure>
 

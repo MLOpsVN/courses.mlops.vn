@@ -1,5 +1,5 @@
 <figure>
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png" loading="lazy"/>
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png" loading="lazy"/>
     <figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
 </figure>
 
@@ -33,7 +33,7 @@ Các bạn làm các bước sau để cài đặt:
 
 1.  Truy cập <http://localhost:8081>, các bạn sẽ thấy:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png" loading="lazy" />
 
 1.  Kiểm tra logs của jenkins container để lấy mật khẩu `admin`:
 
@@ -58,11 +58,11 @@ Các bạn làm các bước sau để cài đặt:
 
 1.  Chọn `Install suggested plugins` và chờ Jenkins cài đặt các plugins.
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png" loading="lazy" />
 
 1.  Ở giao diện đăng ký user sử dụng Jenkins chọn `Skip and continue as admin`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png" loading="lazy" />
 
     ???+ tip
 
@@ -70,11 +70,11 @@ Các bạn làm các bước sau để cài đặt:
 
 1.  Cấu hình Jenkins URL như sau:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png" loading="lazy" />
 
 1.  Cuối cùng, bạn sẽ thấy giao diện sau:
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png" loading="lazy" />
 
 ## Kết nối Jenkins với Github
 
@@ -110,7 +110,7 @@ Các bạn làm các bước sau:
 
 1.  Truy cập Jenkins qua link forward ở trên <https://a846-183-80-56-103.ngrok.io>
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png" loading="lazy" />
 
 ### Thêm Jenkins webhook vào Github
 
@@ -120,37 +120,37 @@ Nội dung bên dưới và các nội dung kế tiếp trong module bài giản
 
 1.  Vào `Settings` ở repo code, chọn `Webhooks`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png" loading="lazy" />
 
 1.  Ấn `Add webhook`, điền `Payload URL` là `https://a846-183-80-56-103.ngrok.io/github-webhook/`, `Content type` là `application/json`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png" loading="lazy" />
 
 1.  Ở phần `Which events would you like to trigger this webhook?`, chọn `Let me select individual events.`, tick vào phần `Pushes` và `Pull requests`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png" loading="lazy" />
 
 1.  Ấn `Add webhook` để hoàn tất
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png" loading="lazy" />
 
 ### Thêm Github repo vào Jenkins
 
 1.  Trở lại mà hình home của Jenkins qua URL <https://a846-183-80-56-103.ngrok.io>
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png" loading="lazy" />
 
 1.  Ấn `+ New Item`, điền tên dự án vào phần bên dưới `Enter an item name`, chọn `Multibranch Pipeline` và ấn `OK`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png" loading="lazy" />
 
 1.  Ở phần `Branch Sources`, ấn `Add source` chọn `GitHub`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png" loading="lazy" />
 
 1.  Thêm Github repo bằng cách chọn `Add repository`, điền vào `Repository URL`
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png" loading="lazy" />
 
 1.  Ấn `Apply` để hoàn tất
 
@@ -158,17 +158,17 @@ Nội dung bên dưới và các nội dung kế tiếp trong module bài giản
 
 Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có project `mlops-demo` như bên dưới
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png" loading="lazy" />
 
 ???+ bug
 
     Nếu bạn không thấy branch nào, thì bạn ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
 
-    <img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
+    <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
 
 Nếu ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png" loading="lazy" />
 
 Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file `Jenkinsfile` đơn giản ở trong folder `mlops-crash-course-code/`
 
@@ -225,11 +225,11 @@ git push origin your_branch
 
 Lúc này chúng ta sẽ thấy có thêm `#2` ở `Build History` với 3 bước `Build`, `Test` và `Deploy`, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png" loading="lazy" />
 
 Nếu chúng ta ấn vào `#2`, chọn `Console Output`, chúng ta sẽ thấy hiển thị như sau:
 
-<img src="../../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png" loading="lazy" />
+<img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png" loading="lazy" />
 
 ```bash
 [Pipeline] }
