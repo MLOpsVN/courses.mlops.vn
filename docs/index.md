@@ -6,5 +6,5 @@ MLOpsVN là một tổ chức với cam kết thu ngắn khoảng cách giữa A
 
 ## Liên hệ
 
-- Email: [mlopsvn@gmail.com](maito:mlopsvn@gmail.com)
+- Email: [mlopsvn@openfactor.org](maito:mlopsvn@openfactor.org)
 - [Facebook group](https://www.facebook.com/groups/mlopsvn)
