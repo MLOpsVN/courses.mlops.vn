@@ -23,10 +23,10 @@ plugins:
   - section-index
   - search
   - encryptcontent:
-#      global_password: SITE_PASSWD_HERE
-      title_prefix: ''
-      summary: 'This content requires password. Use your code to gain the access.'
-      placeholder: 'Provide password and press CTRL + ENTER'
+      # global_password: SITE_PASSWORD_HERE
+      title_prefix: ""
+      summary: "This content requires password. Use your code to gain the access."
+      placeholder: "Provide password and press CTRL + ENTER"
       remember_password: True
       default_expire_delay: 24
 markdown_extensions:
