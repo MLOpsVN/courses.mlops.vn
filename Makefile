@@ -1,5 +1,6 @@
 SHELL=/bin/bash
 
+# export SITE_PASSWORD="site-password" to build with password
 build_image:
 	bash deployment/deploy.sh build
 

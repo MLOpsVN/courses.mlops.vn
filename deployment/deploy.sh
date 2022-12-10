@@ -14,7 +14,12 @@ gen_image_info() {
 
 build() {
     gen_image_info
-    docker build --tag $IMAGE_PATH:$IMAGE_TAG -f deployment/Dockerfile .
+    if [[ -z "$SITE_PASSWORD" ]]; then
+        echo "Build without password"
+    else
+        echo "Build with password '$SITE_PASSWORD'"
+    fi
+    docker build --build-arg SITE_PASSWORD=$SITE_PASSWORD --tag $IMAGE_PATH:$IMAGE_TAG -f deployment/Dockerfile .
     docker tag $IMAGE_PATH:$IMAGE_TAG $IMAGE_PATH:latest
 }
 

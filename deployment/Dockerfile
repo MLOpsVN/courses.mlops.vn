@@ -1,6 +1,5 @@
 FROM python:3.9-slim AS build
 
-
 RUN apt-get update
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -10,6 +9,10 @@ RUN pip install -r requirements.txt
 
 WORKDIR /app
 COPY . .
+
+ARG SITE_PASSWORD
+ENV SITE_PASSWORD $SITE_PASSWORD
+RUN bash -c deployment/insert_site_pw.sh
 RUN mkdocs build
 
 
