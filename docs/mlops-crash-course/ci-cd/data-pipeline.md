@@ -72,17 +72,17 @@ pipeline {
 ???+ warning
 
     Ở đây, chúng ta để ý file định nghĩa Jenkins CI/CD là `Jenkinsfile_data_pipeline`, không phải tên mặc định là `Jenkinsfile`, do đó chúng ta phải thêm một bước cài đặt trên Jenkins để khai báo file này. Để làm điều này, chúng ta truy cập đường dẫn <http://localhost:8081/job/mlops-demo/configure> và thay đổi `Script Path` từ `Jenkinsfile` sang `Jenkinsfile_data_pipeline`.
-
+    
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins_configure.png" loading="lazy" />
 
 ???+ bug
 
     Nếu bạn gặp hiện tượng Github API Rate Limit như sau:
-
+    
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-error-rate-limit.png" loading="lazy" />
-
+    
     Thì bạn thêm Credentials ở mục Github bằng cách ấn vào `Add` như hình dưới:
-
+    
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins-rate-limit.png" loading="lazy" />
 
 Sau khi bạn thay đổi code ở folder `data-pipeline/` và push code lên Github, bạn sẽ thấy `Console Output` tương ứng với commit này hiển thị tương tự như sau:
@@ -91,6 +91,6 @@ Sau khi bạn thay đổi code ở folder `data-pipeline/` và push code lên Gi
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì `push` lên Github và để CI/CD pipeline lo những phần còn lại, thật tiện lợi phải không nào!
+Ở bài học vừa rồi, chúng ta đã sử dụng Jenkins để xây dựng một CI/CD pipeline với 3 bước: buid image, test code và deploy Airflow pipeline. Developer bây giờ chỉ cần tập trung vào code, khi nào code xong thì `push` lên Github và để CI/CD pipeline lo những phần còn lại một cách tiện lợi.
 
 Ở bài học tiếp theo, chúng ta sẽ xây dựng một CI/CD pipeline phức tạp hơn một chút cho `model serving`.

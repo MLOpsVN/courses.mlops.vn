@@ -5,7 +5,7 @@
 
 ## Giới thiệu
 
-Trong bài trước, chúng ta đã triển khai model lên Batch serving pipeline và Online serving service. Triển khai model xong không phải là kết thúc dự án. Model performance cần được theo dõi sau khi triển khai để cải thiện model kịp thời. Có khá nhiều lý do khi model performance giảm, tiêu biểu như:
+Trong bài trước, chúng ta đã triển khai model lên batch serving pipeline và online serving service; tuy vậy, triển khai model xong chưa phải là kết thúc dự án. Model performance cần được theo dõi sau khi triển khai để cải thiện model kịp thời. Có khá nhiều lý do gây ra ảnh hưởng tới model performance, tiêu biểu như:
 
 - Tính chất thống kê của features, labels ở production khác với khi training
 - Tính chất thống kê của labels ở production không đổi so với khi training, nhưng cách data được label bị thay đổi
@@ -37,7 +37,7 @@ Một số ví dụ về metrics trong các mảng trên như:
 - Số requests trong một phút, tỉ lệ số requests có status code là 200
 - Mức độ sử dụng CPU, GPU và memory, v.v.
 
-Những metrics này được gọi là _operational metrics_, tạm dịch là _metrics hệ thống_.
+Những metrics này được gọi là _operational metrics_, tạm dịch là _metrics vận hành hệ thống_.
 
 Trong bài sau, chúng ta sẽ dùng Prometheus để thu thập các metrics trên từ máy local và BentoML để thu thập các metrics liên quan tới Online serving API.
 

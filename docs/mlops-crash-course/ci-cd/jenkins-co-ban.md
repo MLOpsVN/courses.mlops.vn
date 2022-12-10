@@ -6,6 +6,7 @@
 ## Giới thiệu
 
 Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD và các bài học về kiểm thử trong một hệ thống ML. Câu hỏi được đặt ra đó là làm thế nào để triển khai một CI/CD pipeline tự động hóa gồm các bước như build, test, deploy? Jenkins là một open source cho phép hiện thực háo điều này.
+
 Ở bài học này, bạn sẽ:
 
 1. Cài đặt Jenkins trên máy cá nhân
@@ -72,7 +73,7 @@ Các bạn làm các bước sau để cài đặt:
 
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png" loading="lazy" />
 
-1.  Cuối cùng, bạn sẽ thấy giao diện sau:
+1.  Cuối cùng, giao diện sẽ như sau:
 
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png" loading="lazy" />
 
@@ -163,7 +164,7 @@ Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có 
 ???+ bug
 
     Nếu bạn không thấy branch nào, thì bạn ấn `Scan Repository Now` như bên dưới và reload lại trang là được.
-
+    
     <img src="../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png" loading="lazy" />
 
 Nếu ấn vào project `mlops-demo`, chúng ta sẽ thấy ở góc tay trái bên dưới có `Build History`, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.
@@ -265,19 +266,19 @@ Finished: SUCCESS
 ???+ tip
 
     Nếu muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder `data_pipeline/`, chúng ta thêm điều kiện `when` như sau:
-
+    
         ````py title="Jenkinsfile" linenums="1"
         pipeline {
         ...
-
+    
                     stage('test data pipeline') {
                         when {changeset "data_pipeline/*.*" }
-
+    
                         steps {
                             echo 'Testing data pipeline..'
                         }
                     }
-
+    
                     ...
                 }
             }
