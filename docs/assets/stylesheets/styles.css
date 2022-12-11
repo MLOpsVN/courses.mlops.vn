@@ -1,7 +1,3 @@
-div.mermaid {
-  text-align: center;
-}
-
 :root > * {
   --md-primary-fg-color: green;
   /* --md-accent-fg-color: #63d297ff; */
@@ -14,4 +10,59 @@ figure {
 
 img {
   width: 100%;
+}
+
+div.mermaid {
+  text-align: center;
+}
+
+/* start: make table full width */
+.md-typeset__table {
+  min-width: 100%;
+}
+
+.md-typeset table:not([class]) {
+  display: table;
+}
+/* end: make table full width */
+
+.multi-bio-cards {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.bio-card {
+  text-align: center;
+  margin: 0 min(5rem, 10%);
+}
+
+.bio-avatar {
+  width: auto;
+  max-height: 7rem !important;
+  border-radius: 100rem;
+  border: 3px solid #e6e6e6;
+  box-shadow: 0 40px 25px -25px #999;
+}
+
+.bio-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.bio-sub-title {
+  font-size: 0.75rem;
+  font-weight: 300;
+}
+
+.bio-social-link {
+  margin: 0 0.1rem;
+}
+
+.bio-social-icon {
+  width: 0.9rem;
+  vertical-align: text-top;
+  position: relative;
+  z-index: -1;
 }
