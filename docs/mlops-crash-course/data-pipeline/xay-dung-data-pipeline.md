@@ -40,15 +40,15 @@ feast materialize-incremental $(date +%Y-%m-%d)
 ???+tip
 
     Để hiểu rõ hơn về `materialize`, giả sử rằng ở offline store chúng ta có 3 record của ID 1001 như sau:
-
+    
     | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
     | ------     | ------    | ------    | ------   | ------          | ------    |
     | 2021-07-13 11:00:00+00:00   |    1001 |  0.852406 | 0.059147       |       340 | 2021-07-28 11:08:04.802 |
     | 2021-08-10 12:00:00+00:00   |    1001 |  0.571599 | 0.244896       |       752 | 2021-07-28 11:08:04.802 |
     | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821       |       716 | 2021-07-28 11:08:04.802 |
-
+    
     Khi chúng ta chạy command `feast materialize 2021-08-07T00:00:00`, thì dữ liệu có `datetime` mới nhất mà trước thời điểm `2021-08-07T00:00:00` sẽ được cập nhật vào online store. Đó chính là record **thứ 3** ở bảng trên.
-
+    
     | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
     | ------     | ------    | ------    | ------   | ------          | ------    |
     | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821    |       716 | 2021-07-28 11:08:04.802 |                                                                                        
@@ -124,12 +124,12 @@ processor.ingest_stream_feature_view(PushMode.OFFLINE)
 processor.ingest_stream_feature_view()
 ```
 
-7\. ETL pipeline cập nhật dữ liệu của offline store
+7\. ETL (Extract, Transform, Load) pipeline cập nhật dữ liệu của offline store
 
 ???+ tip
 
     Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
-
+    
     - thực hiện POC
     - thử nghiệm với các feature khác nhằm mục đích cải thiện model
 
@@ -291,9 +291,9 @@ with DAG(
 
 ## Tổng kết
 
-Ở bài học vừa rồi, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store.
+Ở bài học này, chúng ta đã sử dụng Feast SDK để lưu trữ và lấy feature từ feature store. Để đảm bảo feature luôn ở trạng thái mới nhất có thể, chúng ta cũng đã xây dựng các Airflow pipeline để cập nhật dữ liệu định kỳ cho các store.
 
-Bài học này đồng thời cũng khép lại chuỗi bài về data pipeline, hy vọng bạn có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.
+Chúng ta cũng hoàn thành chuỗi bài về data pipeline, hy vọng bạn có thể vận dụng các kiến thức đã học để vận hành hiệu quả các luồng dữ liệu và luồng feature của mình.
 
 ## Tài liệu tham khảo
 

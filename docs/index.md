@@ -2,7 +2,7 @@
 
 ## Tầm nhìn
 
-MLOpsVN là một tổ chức với cam kết thu ngắn khoảng cách giữa AI trong lý thuyết và AI trong production bằng cách cân bằng các cơ hội trong ngành AI cho những người trẻ nhiệt huyết với AI và các tổ chức tại Việt Nam, đồng thời có mong muốn thúc đẩy quá trình phát triển của AI tại Việt Nam thông qua các hoạt động định hướng cộng đồng.
+MLOpsVN là một tổ chức với mong muốn thu ngắn khoảng cách giữa trí tuệ nhân tạo (Artificial Intelligence - AI) và học máy (Machine Learning - ML) trong lý thuyết và ứng dụng thực tế trong production. Kiến thức là chìa khoá đến cơ hội trong ngành AI/ML với những con người nhiệt huyết. Chúng tôi hi vọng thúc đẩy quá trình phát triển của AI/ML tại Việt Nam thông qua các hoạt động định hướng cộng đồng.
 
 ## Liên hệ
 

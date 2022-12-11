@@ -218,7 +218,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/mode
 
 ## Online serving
 
-Khi triển khai Online serving hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask, FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _BentoML_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
+Khi triển khai Online serving hay _Online serving service_, thường thì bạn sẽ dùng một library để xây dựng RESTful API, ví dụ như Flask hoặc FastAPI trong Python. Trong phần này, chúng ta sẽ dùng một library chuyên được dùng cho việc xây dựng online serving cho ML models, đó là _BentoML_. Code của online serving được lưu tại `model_serving/src/bentoml_service.py`.
 
 ```python linenums="1" title="model_serving/src/bentoml_service.py"
 mlflow_model = mlflow.pyfunc.load_model(model_uri=model_uri) # (1)

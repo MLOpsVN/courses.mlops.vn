@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Công việc cần nhiều sức người thường dễ xảy ra sai sót. Nếu việc này lặp lại càng nhiều thì tỉ lệ sai sót càng cao và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùng nhau tìm hiểu về tự động hóa trong ML: tự động hóa những gì và như thế nào. 
+Các công việc cần nhiều thao tác thủ công của con người thường dễ xảy ra sai sót, và nếu những việc này lặp lại càng nhiều thì tỉ lệ sai sót càng cao và hậu quả càng nghiêm trọng. Trong bài học này, chúng ta sẽ cùng nhau tìm hiểu về tự động hóa trong ML: tự động hóa những gì và như thế nào. 
 
 ## Tự động hóa những gì
 
@@ -29,7 +29,7 @@ Tùy từng yêu cầu đầu ra và tiến độ hiện tại của dự án, n
 ???+ example
 
     Đầu ra của dự án là 1 model serving API để một team sản phẩm tích hợp vào hệ thống của họ, khi đó chúng ta có thể cân nhắc triển khai theo thứ tự sau:
-
+    
     - **CI:**
         - Tự động hóa quá trình kiểm thử model (kết quả dự đoán có _reproducible_ và giống kết quả mà chúng ta chạy ở máy cá nhân không, .v.v.), code (thực hiện unit test các hàm logic)
         - Tự động đóng gói model, code và môi trường thành Docker image

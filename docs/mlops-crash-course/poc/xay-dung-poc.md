@@ -7,11 +7,11 @@
 
 Trong bài trước, chúng ta đã thực hiện bước đầu tiên của một dự án phần mềm, đó chính là thu thập các yêu cầu, phân tích vấn đề kinh doanh. Quá trình này giúp hiểu rõ và sâu hơn về vấn đề đang gặp phải, về những giải pháp tiềm năng, đồng thời lên kế hoạch để triển khai chúng.
 
-Trong bài này, chúng ta sẽ xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên việc cần làm đó là chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../tong-quan-he-thong/mlops-platform.html).
+Trong bài này, chúng ta bắt tay vào xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên việc cần làm đó là chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài [MLOps Platform](../tong-quan-he-thong/mlops-platform.html).
 
 ## Môi trường phát triển
 
-Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, hoặc bất kì tool nào để cài đặt. Phiên bản Python được sử dụng trong cả khoá học là `3.9`.
+Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại `training_pipeline/dev_requirements.txt`. Bạn có thể dùng `virtualenv`, `conda`, hoặc bất kì công cụ nào để cài đặt. Phiên bản Python được sử dụng trong cả khoá học là `3.9`.
 
 Các MLOps tools được dùng trong bài này bao gồm:
 
@@ -34,7 +34,7 @@ Khi định nghĩa dự án POC, chúng ta cần trả lời một câu hỏi qu
 
 **_Thế nào là một dự án POC thành công?_**
 
-Ở những dự án POC đầu tiên, ML model chưa được triển khai ra production mà chỉ được thử nghiệm offline. Do đó, chúng ta cần sử dụng các offline metrics để đánh giá. Cụ thể, cần đặt một threshold cho các metrics này. Ví dụ, sử dụng metric RMSE với threshold để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
+Ở những dự án POC đầu tiên, ML model chưa được triển khai ra production mà chỉ được thử nghiệm offline. Do đó, chúng ta cần sử dụng các offline metrics để đánh giá. Cụ thể, cần đặt một threshold cho các metrics này. Ví dụ, sử dụng metric RMSE với một hạn mức (threshold) để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn **0.5**.
 
 Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng được sử dụng như:
 
@@ -99,7 +99,7 @@ Tiếp theo, Data Scientist sẽ phân tích data để hiểu data. Quá trình
 - Data có outlier nào không? Nếu có thì có nên xoá bỏ không?
 - v.v
 
-Mỗi một vấn đề về data trên sẽ có một hoặc nhiều cách giải quyết. Trong đa số các giải pháp, chúng ta sẽ không biết được ngay chúng có hiệu quả không. Do vậy, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm model. Các metrics khi đánh giá model giúp đánh giá xem các giải pháp được thực hiện trên data có hiệu quả không. Vì bản chất tự nhiên của Machine Learning là thử nghiệm với data, model nên bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp lại nhiều lần.
+Mỗi một vấn đề về data trên sẽ có một hoặc nhiều cách giải quyết. Tuy nhiên, chúng ta sẽ không biết được ngay các cách giải quyết có hiệu quả hay không. Do vậy, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm đánh giá model. Các metrics khi đánh giá model giúp đánh giá xem các giải pháp được thực hiện trên data có hiệu quả không. Vì tiến trình thường gặp của Machine Learning là thử nghiệm với data, model nên bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp lại nhiều lần.
 
 Vì các file data của chúng ta không có feature nào chứa `null` và để tập trung vào MLOps, chúng ta sẽ tối giản hoá bước phân tích data này và đi vào viết code train model.
 

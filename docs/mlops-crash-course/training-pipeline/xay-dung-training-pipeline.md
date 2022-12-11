@@ -46,9 +46,9 @@ Các MLOps tools được dùng trong bài này bao gồm:
 
 ## Cập nhật Feature Store
 
-Trong khoá học này, Feast được dùng làm Feature Store để version các features và các bộ feature. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature, metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
+Trong khoá học này, Feast được dùng làm Feature Store để quản lý phiên bản các features và các bộ features. Feast sử dụng Feature Registry để tập trung lưu trữ định nghĩa về các feature và metadata. Do Feature Registry này được lưu ở dạng file ở máy local, nên mỗi Data Scientist cần tự update Feature Registry trên máy của mình.
 
-Trước khi cập nhật Feature Store, cần đảm bảo code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library. ML engineer sẽ download về và sử dụng.
+Trước khi cập nhật Feature Store, cần đảm bảo code của Feature Store đã được triển khai lên máy của bạn. Trong thực tế, code của Feature Store sẽ được Data Engineer build và release như một library cho phép ML engineer download về và sử dụng.
 
 Code của Feature Store nằm tại `data_pipeline/feature_repo`. Để triển khai sang training pipeline, chúng ta sẽ copy code từ `data_pipeline/feature_repo` sang `training_pipeline/feature_repo`. Bạn hãy chạy các lệnh sau.
 
@@ -113,11 +113,11 @@ Bạn làm các bước sau để test thử code.
     !!! bug
 
         Nếu các bạn gặp lỗi sau:
-
+    
         ```bash
         PermissionError: [Errno 13] Permission denied: '/training_pipeline'
         ```
-
+    
         Thì các bạn cần đặt environment variable `TRAINING_PIPELINE_DIR` như hướng dẫn ở phần **Môi trường phát triển**.
 
 1.  Kiểm tra folder `training_pipeline/artifacts`, bạn sẽ thấy file `training.parquet`
@@ -442,7 +442,7 @@ Tiếp theo, chúng ta cần build docker image `mlopsvn/mlops_crash_course/trai
 
 Chúng ta vừa trải qua quy trình phát triển điển hình cho training pipeline. Tuỳ thuộc vào mức độ phức tạp của dự án và các chức năng của dự án mà có thể bỏ bớt hoặc thêm vào các task khác. Các task cũng có thể được chia nhỏ ra để thực hiện các công việc đòi hỏi tính toán nặng, tránh việc phải chạy lại nhiều lần.
 
-Trong một dự án ML, trong khi Data Scientist vẫn thực hiện các thử nghiệm trên data và model, ML engineer/MLOps engineer sẽ xây dựng training pipeline. Training pipeline sẽ được cập nhật liên tục dựa trên yêu cầu từ Data Scientist.
+Trong một dự án ML, trong khi Data Scientist vẫn thực hiện các thử nghiệm trên data và model, ML engineer/MLOps engineer có thể xây dựng training pipeline được cập nhật liên tục dựa trên yêu cầu từ Data Scientist.
 
 Sau khi tự động hoá training pipeline, trong bài tiếp theo chúng ta sẽ xây dựng và tự động hoá quá trình triển khai model.
 

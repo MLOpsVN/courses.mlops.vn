@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-Khác với các hệ thống phần mềm truyển thống: một ông developer ngồi nghĩ ra các rule và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào ông developer cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu hoặc bị BUG rồi các ông ạ :). Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.
+Khác với các hệ thống phần mềm truyển thống: một developer ngồi nghĩ ra các rule và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào con người cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu hoặc bị BUG. Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.
 
 Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.
 
@@ -26,8 +26,8 @@ graph LR
 
 Thông thường có 2 loại kiểm thử phần mềm:
 
-- **Functional Testing:** kiểm tra xem hệ thống đã đảm bảo yêu cầu về chức năng chưa, ví dụ ấn tắt windows update mãi mà nó vẫn update thì là fail rồi :)
-- **Non-functional Testing:** kiểm tra xem hệ thống có đáp ứng được kỳ vọng của khách hàng không, ví dụ tất cả người trên thế giới cùng ấn nút tham gia group MLOpsVN thì group không được sập chả hạn.
+- **Functional Testing:** kiểm tra xem hệ thống đã đảm bảo yêu cầu về chức năng chưa, ví dụ ấn tắt windows update mãi mà nó vẫn update thì không được
+- **Non-functional Testing:** kiểm tra xem hệ thống có đáp ứng được kỳ vọng của khách hàng không, ví dụ tất cả người trên thế giới cùng ấn nút tham gia group MLOpsVN thì group cũng không được sập
 
 ### Functional Testing
 
@@ -39,9 +39,9 @@ Thông thường loại này bao gồm:
 ???+ tip
 
     Theo nguyên tắc [KISS](https://people.apache.org/~fhanik/kiss.html), hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.
-
+    
     Ví dụ dưới đây được trích từ [Machine learning mastery blog](https://machinelearningmastery.com/machine-learning-in-python-step-by-step/) cho thấy tác giả đã áp dụng rất tốt nguyên tắc này, thể hiện qua việc cố gắng sử dụng nhiều hàm nhất có thể, ví dụ `train_test_split`, `accuracy_score` và `confusion_matrix`, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.
-
+    
     ```py linenums="1"
     # make predictions
     from pandas import read_csv
@@ -71,11 +71,11 @@ Thông thường loại này bao gồm:
 
 3. **Regression testing:** kiểm tra lại toàn bộ chức năng của hệ thống mỗi khi có thay đổi của một hoặc vài chức năng nào đó
 4. **Smoke testing:** chạy một bài test cơ bản với chức năng tối thiểu để xem hệ thống sẵn sàng cho việc test chưa
-   Một ví dụ đơn giản: Bắt đầu kiểm tra một hệ thống bóng đèn, vừa ấn nút xong khói (smoke) bốc lên nghi ngút thì khỏi test tiếc gì thêm.
+   Một ví dụ đơn giản: Bắt đầu kiểm tra một hệ thống bóng đèn, vừa ấn nút xong khói (smoke) bốc lên nghi ngút thì không được
 
 ### Non-functional Testing
 
-1. **Load testing:** xác định độ chịu tải, SLA của hệ thống
+1. **Load testing:** xác định độ chịu tải, SLA (Service Level Agreement) của hệ thống
 2. **Stress testing:** đánh giá hành vi của hệ thống tại các điều kiện không lường trước, ví dụ một phần hệ thống đột nhiên shutdown thì phản hồi có chấp nhận được không
 
 ### Luồng phát triển phần mềm cơ bản
@@ -96,13 +96,13 @@ Những bài test cho hệ thống phần mềm có thể ứng dụng cho hầu
 <img src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png" width="600" height="300" loading="lazy" />
 <figcaption align="center" font-size="8px"><i>Source: https://learning.oreilly.com/library/view/building-machine-learning</i></figcaption>
 
-OK! Thế để hệ thống ML tin tưởng được thì cần kiểm tra thêm những gì?
+Để hệ thống ML tin tưởng được thì cần kiểm tra thêm những phần sau:
 
 - **Data pipeline testing:** đảm bảo dữ liệu không bị corrupt, đúng format và đúng schema (kiểu dữ liệu), ...
 
       Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
       Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:
-
+    
       <img src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600" height="300" loading="lazy" />
 
 - **Model testing:** đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...

@@ -5,7 +5,7 @@
 
 ## Giới thiệu
 
-Nếu ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, thì bài học này sẽ giúp bạn hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.
+Ở bài trước, chúng ta đi vào tìm hiểu tại sao phải xây dựng pipeline, và ở bài học này sẽ giúp bạn hình dung rõ hơn về cách xây dựng pipeline thông qua Airflow.
 
 ## Các khái niệm cơ bản
 
@@ -13,7 +13,7 @@ Airflow là một nền tảng cung cấp SDK và UI để hỗ trợ xây dựn
 Một số khái niệm cơ bản trong Airflow:
 
 - **task:** một thành phần (hoặc một bước) trong pipeline
-- **DAG:** định nghĩa thứ tự thực thi, lịch chạy và số lượng lần retry.v.v. cho các _task_
+- **DAG (Directed Acyclic Graph):** định nghĩa thứ tự thực thi, lịch chạy và số lượng lần retry.v.v. cho các _task_
 
 ### Task
 

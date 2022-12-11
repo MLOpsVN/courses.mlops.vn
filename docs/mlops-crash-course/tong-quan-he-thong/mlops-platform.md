@@ -5,22 +5,22 @@
 
 ## Giới thiệu
 
-MLOps platform là nền tảng cung cấp các tool cần thiết để quản lý và triển khai các dự án ML. Trong một số tài liệu khác MLOps platform còn có tên là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và tool tương ứng như sau:
+MLOps platform là nền tảng cung cấp các công cụ cần thiết để phát triển, quản lý và triển khai các dự án ML. Trong một số tài liệu khác MLOps platform còn có tên là AI platform hoặc ML platform. Ở khóa học này chúng ta sẽ sử dụng một MLOps platform với các thành phần và công cụ tương ứng như sau:
 
-| Tên thành phần        | Ý nghĩa                                                                               | Tool sử dụng                       |
-| --------------------- | ------------------------------------------------------------------------------------- | ---------------------------------- |
-| Source control        | Data và code version control                                                          | Git & Github                       |
-| Feature store         | Lưu trữ, quản lý và tương tác với các feature                                         | Feast (PostgreSQL & Redis backend) |
-| Experiment tracking   | Lưu trữ thông tin và quản lý các experiment                                           | MLFlow                             |
-| Model registry        | Lưu trữ và quản lý các model                                                          | MLFlow                             |
-| ML metadata Store     | Lưu trữ artifact của các pipeline                                                     | MLFlow                             |
-| Workflow orchestrator | Xây dựng và quản lý các pipeline                                                      | Airflow                            |
-| Monitoring            | Theo dõi resource hệ thống, hiệu năng của model và chất lượng dữ liệu trên production | Prometheus & Grafana & ELK         |
-| CI/CD                 | Tự động hóa quá trình test và deploy                                                  | Jenkins                            |
+| Tên thành phần        | Ý nghĩa                                                      | Tool sử dụng                       |
+| --------------------- | ------------------------------------------------------------ | ---------------------------------- |
+| Source control        | Quản lý các phiên bản về mã nguồn và dữ liệu                 | Git & Github                       |
+| Feature store         | Lưu trữ, quản lý và tương tác với các tính năng (feature)    | Feast (PostgreSQL & Redis backend) |
+| Experiment tracking   | Lưu trữ thông tin và quản lý các thí nghiệm (experiments)    | MLFlow                             |
+| Model registry        | Lưu trữ và quản lý các mô hình                               | MLFlow                             |
+| ML metadata Store     | Lưu trữ thông tin (artifact) của các luồng (pipeline)        | MLFlow                             |
+| Workflow orchestrator | Xây dựng và quản lý các luồng quy trình                      | Airflow                            |
+| Monitoring            | Theo dõi tài nguyên hệ thống, hiệu năng của mô hình và chất lượng dữ liệu trên production | Prometheus & Grafana & ELK         |
+| CI/CD                 | Tự động hóa quá trình test và deploy                         | Jenkins                            |
 
 ???+ info
 
-    Chúng ta sử dụng một tool cho nhiều mục đích khác nhau, ví dụ MLFlow, nhằm mục đích sử dụng ít tool nhất có thể mà vẫn đảm bảo được **9 MLOps Principles**, **9 MLOps Components** và **5 MLOps Workflows** được áp dụng (xem lại bài [Tổng quan MLOps](../tong-quan-mlops)). Việc sử dụng quá nhiều tool có thể dẫn tới việc vận hành MLOps platform trở nên phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp do không biết sử dụng thế nào cho hiệu quả.
+    Chúng ta có thể sử dụng một công cụ cho nhiều mục đích khác nhau, ví dụ MLFlow, với mục đích sử dụng tối thiểu các công cụ cần thiết mà vẫn đảm bảo được **9 MLOps Principles**, **9 MLOps Components** và **5 MLOps Workflows** được áp dụng (xem lại bài [Tổng quan MLOps](../tong-quan-mlops)). Việc sử dụng quá nhiều công cụ có thể dẫn tới việc vận hành MLOps platform trở nên phức tạp, đồng thời khiến người dùng dễ bị choáng ngợp do không biết sử dụng và quản lý một cách hiệu quả.
 
 ## Architecture
 
@@ -52,7 +52,7 @@ Các tương tác chính trong MLOps platform:
 
 14\. Ngoài data source ở dạng tĩnh (static data), streaming data từ _Kafka_ sẽ ghi liên tục vào Feature Store để cập nhật feature
 
-Các tương tác và các tools được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.
+Các tương tác và các công cụ được nhắc đến ở trên sẽ được hướng dẫn cụ thể xuyên suốt cả khoá học.
 
 ## Sử dụng platform
 
@@ -93,16 +93,16 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
     ??? bug
 
         Khi start các service, nếu bạn gặp lỗi `port is already allocated` tương tự như sau:
-
+        
         ```bash
         Error response from daemon: driver failed programming external connectivity on endpoint mlflow-mlflow-1 (2383a7be19ea5d2449033194211cabbd7ad13902d8d4c2dd215a63ab78038283): Bind for 0.0.0.0:5000 failed: port is already allocated
         ```
         có nghĩa là đang có một service khác chạy ở port `5000` và `mlflow` không thể sử dụng port đó nữa, khi đó bạn sẽ thay bằng port khác như bên dưới đây. Bạn sẽ xử lý tương tự với các service khác.
-
+        
         ```py title="mlops-crash-course-platform/mlflow/mlflow-docker-compose.yml" linenums="1"
         # Source: https://hub.docker.com/r/atcommons/mlflow-server
         version: '3'
-
+        
         services:
         mlflow:
             ...
@@ -110,7 +110,7 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
             - "5000:5000" # (1)
             ...
         ```
-
+        
         1. Thay bằng `"another_port:5000"`, ví dụ" `"5001:5000"`. Khi đó, sau khi start service `mlflow` bạn sẽ truy cập service này tại `http://localhost:5001`.
 
 ### Stop
@@ -145,7 +145,7 @@ Các tương tác và các tools được nhắc đến ở trên sẽ được 
 ???+ warning
 
     Sử dụng cách 3 sẽ không xoá data nằm trong các local folders mà được mount với các docker containers của các services. Để xoá hoàn toàn data liên quan tới services, bạn cần xoá các local folders này thủ công. Các bạn làm các bước sau:
-
+    
     1. Trong repo `mlops-crash-course-platform`, mở folder tương ứng với service bạn muốn xoá data, ví dụ folder `airflow`
     1. Xoá toàn bộ folders/files trong folder `airflow/run_env`, trừ file `.gitkeep`
 
@@ -180,7 +180,7 @@ Trong đó:
 ???+ warning
 
     Trong mỗi module ở `mlops-crash-course-code/` ví dụ như: `data_pipeline` và `model_serving` sẽ đều có 1 file là `dev_requirements.txt`. Bạn hãy tạo một môi trường mới tương tự như bên dưới trước khi cài đặt các thư viện để tránh xung đột thư viện với các dự án khác:
-
+    
     ```bash
     conda create -n myenv python=3.9
     conda activate myenv
@@ -194,7 +194,7 @@ Trong đó:
 
 Phần này cung cấp cho bạn một cái nhìn tổng quan hơn nữa về MLOps platform khi được đặt trong cơ sở hạ tầng IT của một tổ chức.
 
-Thông thường, một tổ chức sẽ có một nhóm các Infra engineer làm nhiệm vụ xây dựng Infra layer. Chức năng chính của Infra layer là quản lý, cung cấp tài nguyên tính toán, lưu trữ cho các ứng dụng ở các layer trên nó. Infra layer có thể được xây dựng đơn giản sử dụng docker-compose, Docker Swarm hoặc phức tạp hơn như Kubernetes. Trong khoá học này, giả sử rằng chúng ta sử dụng docker-compose ở Infra layer để quản lý các containers và cung cấp tài nguyên tính toán, lưu trữ cho các service.
+Thông thường, một tổ chức sẽ có một nhóm các kỹ sư hạ tầng (Infra engineer) làm nhiệm vụ xây dựng Infra layer. Chức năng chính của Infra layer là quản lý, cung cấp tài nguyên tính toán, lưu trữ cho các ứng dụng ở các layer trên nó. Infra layer có thể được xây dựng đơn giản sử dụng docker-compose, Docker Swarm hoặc phức tạp hơn như Kubernetes. Trong khoá học này, giả sử rằng chúng ta sử dụng docker-compose ở Infra layer để quản lý các containers và cung cấp tài nguyên tính toán, lưu trữ cho các service.
 
 Trên Infra layer là Application layer hay chính là nơi mà các engineer khác xây dựng các ứng dụng cho chính tổ chức đó. Các ứng dụng này có thể là môi trường Jupyter notebook, Gitlab server, Jenkins server, monitoring platform, v.v. MLOps platform mà chúng ta đang xây dựng cũng nằm trên Application layer này.
 
