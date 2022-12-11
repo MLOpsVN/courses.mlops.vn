@@ -15,13 +15,30 @@ Khoá học được tạo ra với 3 tôn chỉ: **_ngắn gọn_, _dễ hiểu
 
 MLOpsVN Team xin gửi lời cảm ơn chân thành tới các _Reviewers_ và _Advisors_ tới từ [cộng đồng MLOpsVN](https://www.facebook.com/groups/mlopsvn) đã dành thời gian và công sức đóng góp ý kiến cho khoá học. Khoá học **MLOps Crash Course** sẽ không thể hoàn thành nếu thiếu phản hồi của các bạn.
 
-## Reviewers
+## Instructors
 
-|        |        |        |
-| ------ | ------ | ------ |
-| [A](A) | [A](A) | [A](A) |
-| [A](A) | [A](A) | [A](A) |
-| [A](A) | [A](A) | [A](A) |
+<div class="multi-bio-cards">
+    <div class="bio-card">
+        <img src="../assets/images/mlops-crash-course/index/tung-dao.jpg" loading="lazy" class="bio-avatar"/>
+        <div class="bio-title">Tung Dao</div>
+        <a class="bio-social-link" href="https://www.linkedin.com/in/tungdao17/" target="_blank">
+            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/linkedin.svg"></object>
+        </a>
+        <a class="bio-social-link" href="https://github.com/dao-duc-tung" target="_blank">
+            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/github.svg"></object>
+        </a>
+    </div>
+    <div class="bio-card">
+        <img src="../assets/images/mlops-crash-course/index/quan-dang.jpeg" loading="lazy" class="bio-avatar"/>
+        <div class="bio-title">Quan Dang</div>
+        <a class="bio-social-link" href="https://www.linkedin.com/in/quan-dang/" target="_blank">
+            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/linkedin.svg"></object>
+        </a>
+        <a class="bio-social-link" href="https://github.com/quan-dang" target="_blank">
+            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/github.svg"></object>
+        </a>
+    </div>
+</div>
 
 ## Advisors
 
@@ -48,27 +65,10 @@ MLOpsVN Team xin gửi lời cảm ơn chân thành tới các _Reviewers_ và _
     </div>
 </div>
 
-## Instructors
+## Reviewers
 
-<div class="multi-bio-cards">
-    <div class="bio-card">
-        <img src="../assets/images/mlops-crash-course/index/tung-dao.jpg" loading="lazy" class="bio-avatar"/>
-        <div class="bio-title">Tung Dao</div>
-        <a class="bio-social-link" href="https://www.linkedin.com/in/tungdao17/" target="_blank">
-            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/linkedin.svg"></object>
-        </a>
-        <a class="bio-social-link" href="https://github.com/dao-duc-tung" target="_blank">
-            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/github.svg"></object>
-        </a>
-    </div>
-    <div class="bio-card">
-        <img src="../assets/images/mlops-crash-course/index/quan-dang.jpeg" loading="lazy" class="bio-avatar"/>
-        <div class="bio-title">Quan Dang</div>
-        <a class="bio-social-link" href="https://www.linkedin.com/in/quan-dang/" target="_blank">
-            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/linkedin.svg"></object>
-        </a>
-        <a class="bio-social-link" href="https://github.com/quan-dang" target="_blank">
-            <object class="bio-social-icon" type="image/svg+xml" data="../assets/images/mlops-crash-course/index/github.svg"></object>
-        </a>
-    </div>
-</div>
+|        |        |        |
+| ------ | ------ | ------ |
+| [A](A) | [A](A) | [A](A) |
+| [A](A) | [A](A) | [A](A) |
+| [A](A) | [A](A) | [A](A) |
