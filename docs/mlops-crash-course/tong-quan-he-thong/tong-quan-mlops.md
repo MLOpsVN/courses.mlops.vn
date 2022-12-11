@@ -48,7 +48,7 @@ Nguyên tắc này đảm bảo mã nguồn (code), dữ liệu (data) và mô h
 
 **5. Hợp tác trong phát triển (Collaboration)**
 
-Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tham gia vào phát triển hệ thống. Nguyễn tắc này đảm bảo việc thiết lập một bộ các quy tắc, công cụ và văn hoá làm việc để quá trình cộng tác giữa các cá nhân, ở các vai trò, trách nhiệm khác nhau, diễn ra hiệu quả.
+Trong một dự án ML, nhiều kĩ sư với chuyên môn khác nhau cùng tham gia vào phát triển hệ thống. Nguyên tắc này đảm bảo việc thiết lập một bộ các quy tắc, công cụ và văn hoá làm việc để quá trình cộng tác giữa các cá nhân, ở các vai trò, trách nhiệm khác nhau, diễn ra hiệu quả.
 
 **6. Huấn luyện và đánh giá ML liên tục (Continuous ML training & evaluation)**
 
