@@ -67,9 +67,9 @@ MLOpsVN Team xin gửi lời cảm ơn chân thành tới các _Reviewers_ và _
 
 ## Reviewers
 
-|                                                                                |                                                                      |                                                      |
-| ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------- |
-| [ChiT](https://drive.google.com/file/d/17pmBAP7dJbjWH2a4hcSfXpr2HKQlCyiL/view) | [Đặng Văn Thức](#)                                                   | [Đinh Văn Quý](https://www.linkedin.com/in/dvquy/)   |
-| [Hải Nguyễn](#)                                                                | [ming đây](#)                                                        | [NguyenDHN](https://www.linkedin.com/in/nguyendhn/)  |
-| [PTSon](https://www.linkedin.com/in/phạm-trung-sơn)                            | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216) | [Sam Nguyen](https://www.linkedin.com/in/primepake/) |
-| [Viet Anh](https://aicurious.io/)                                              |                                                                      |                                                      |
+|                                                                                |                                                                      |                                                     |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | --------------------------------------------------- |
+| [ChiT](https://drive.google.com/file/d/17pmBAP7dJbjWH2a4hcSfXpr2HKQlCyiL/view) | [DangVanThuc](https://www.linkedin.com/in/thuc-dang-611074248/)      | [Đinh Văn Quý](https://www.linkedin.com/in/dvquy/)  |
+| [sudohainguyen](https://github.com/sudohainguyen)                              | [ming đây](#)                                                        | [NguyenDHN](https://www.linkedin.com/in/nguyendhn/) |
+| [PTSon](https://www.linkedin.com/in/phạm-trung-sơn)                            | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216) | [PP](https://www.linkedin.com/in/primepake/)        |
+| [Viet Anh](https://aicurious.io/)                                              |                                                                      |                                                     |
