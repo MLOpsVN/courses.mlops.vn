@@ -67,8 +67,9 @@ MLOpsVN Team xin gửi lời cảm ơn chân thành tới các _Reviewers_ và _
 
 ## Reviewers
 
-|        |        |        |
-| ------ | ------ | ------ |
-| [NguyenDHN](https://www.linkedin.com/in/nguyendhn/) | [PTSon](www.linkedin.com/in/phạm-trung-sơn) | [Đinh Văn Quý](https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fdvquy%2F%3Ffbclid%3DIwAR2HJKNKeQRTM6oYmzZL_C9VDu3N3pAcn_fOZM-gDoUx7q4EE5PFZcnsgNQ&h=AT3uIsGpAOOeanfRb7I7XQDtGaQk1U4fww6Ux9ec5EzmkbV-74JVSgACtBVmkRzf2EL2TvDRw5iT-n_eMK45REPVtmlPUUimfMrwjSl7XRdNRR4cnevT3gogsWxFkQ) |
-| [Viet Anh](https://aicurious.io/) | [ChiT](A) | [Sam Nguyen](https://www.linkedin.com/in/primepake/) |
-| | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216)  |  |
+|                                                                                |                                                                      |                                                      |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------- |
+| [ChiT](https://drive.google.com/file/d/17pmBAP7dJbjWH2a4hcSfXpr2HKQlCyiL/view) | [Đặng Văn Thức](#)                                                   | [Đinh Văn Quý](https://www.linkedin.com/in/dvquy/)   |
+| [Hải Nguyễn](#)                                                                | [ming đây](#)                                                        | [NguyenDHN](https://www.linkedin.com/in/nguyendhn/)  |
+| [PTSon](https://www.linkedin.com/in/phạm-trung-sơn)                            | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216) | [Sam Nguyen](https://www.linkedin.com/in/primepake/) |
+| [Viet Anh](https://aicurious.io/)                                              |                                                                      |                                                      |
