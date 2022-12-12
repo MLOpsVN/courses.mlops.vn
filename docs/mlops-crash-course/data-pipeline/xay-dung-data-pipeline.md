@@ -40,19 +40,18 @@ feast materialize-incremental $(date +%Y-%m-%d)
 ???+tip
 
     Để hiểu rõ hơn về `materialize`, giả sử rằng ở offline store chúng ta có 3 record của ID 1001 như sau:
-    
+
     | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
     | ------     | ------    | ------    | ------   | ------          | ------    |
     | 2021-07-13 11:00:00+00:00   |    1001 |  0.852406 | 0.059147       |       340 | 2021-07-28 11:08:04.802 |
     | 2021-08-10 12:00:00+00:00   |    1001 |  0.571599 | 0.244896       |       752 | 2021-07-28 11:08:04.802 |
     | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821       |       716 | 2021-07-28 11:08:04.802 |
-    
+
     Khi chúng ta chạy command `feast materialize 2021-08-07T00:00:00`, thì dữ liệu có `datetime` mới nhất mà trước thời điểm `2021-08-07T00:00:00` sẽ được cập nhật vào online store. Đó chính là record **thứ 3** ở bảng trên.
-    
+
     | datetime   | driver_id | conv_rate | acc_rate | avg_daily_trips | created   |
     | ------     | ------    | ------    | ------   | ------          | ------    |
-    | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821    |       716 | 2021-07-28 11:08:04.802 |                                                                                        
-
+    | 2021-07-13 13:00:00+00:00   |    1001 |  0.929023 | 0.479821    |       716 | 2021-07-28 11:08:04.802 |
 
 2\. Data scientist, training pipeline hoặc offline batch serving pipeline kéo features về để train model
 
@@ -129,7 +128,7 @@ processor.ingest_stream_feature_view()
 ???+ tip
 
     Ở tương tác 2., thông thường các Data Scientist sẽ kéo dữ liệu từ feature store để:
-    
+
     - thực hiện POC
     - thử nghiệm với các feature khác nhằm mục đích cải thiện model
 
@@ -263,9 +262,11 @@ with DAG(
     )
 ```
 
-### Stream to stores pipeline
+### Stream pipeline
 
-Bạn thậm chí có thể làm feature mới hơn bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_
+Trong phần này, chúng ta sẽ làm mới features bằng cách ghi dữ liệu trực tiếp từ stream source vào _offline_ và _online store_.
+
+Ở bài trước, chúng ta đã chạy Kafka stream. Đoạn code dưới đây sẽ thực hiện tác vụ đọc và xử lý data từ Kafka stream và lưu vào offline store và online store. Khi bạn sử dụng thư viện Feast trong đoạn code training hay inference để đọc features, bạn sẽ thấy features được cập nhật mới liên tục. Các đoạn code training và inference này sẽ được hướng dẫn trong các bài tiếp theo.
 
 ```py title="data_pipeline/dags/stream_to_stores.py" linenums="1"
 with DAG(

@@ -64,6 +64,37 @@ Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao
 - **driver_stats_view:** feature view với data source dạng file
 - **driver_stats_stream:** stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với _driver_stats_view_
 
+Code định nghĩa các data source như sau:
+
+```py title="data_pipeline/feature_repo/data_sources.py" linenums="1"
+driver_stats_parquet_file = "../data_sources/driver_stats.parquet"
+
+# local Parquet file as data source
+driver_stats_batch_source = FileSource(
+    name="driver_stats",
+    file_format=ParquetFormat(),
+    path=driver_stats_parquet_file,
+    timestamp_field="datetime",
+    created_timestamp_column="created",
+)
+
+# Kafka for stream source
+driver_stats_stream_source = KafkaSource(
+    name="driver_stats_stream",
+    kafka_bootstrap_servers="localhost:29092",
+    topic="drivers",
+    timestamp_field="datetime",
+    batch_source=driver_stats_batch_source,
+    message_format=JsonFormat(
+        schema_json="driver_id integer, acc_rate double, conv_rate double, datetime timestamp, created timestamp"
+    ),
+    watermark_delay_threshold=timedelta(minutes=5),   # (1)
+    description="The Kafka stream containing the driver stats",
+)
+```
+
+1.  Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ
+
 Code định nghĩa các feature view như dưới đây:
 
 ```py title="data_pipeline/feature_repo/features.py" linenums="1"
@@ -116,37 +147,6 @@ def driver_stats_stream(df: DataFrame):
 5.  Định nghĩa data source cho bảng feature
 6.  Sử dụng Spark để xử lý dữ liệu stream
 
-Code định nghĩa các data source như sau:
-
-```py title="data_pipeline/feature_repo/data_sources.py" linenums="1"
-driver_stats_parquet_file = "../data_sources/driver_stats.parquet"
-
-# local Parquet file as data source
-driver_stats_batch_source = FileSource(
-    name="driver_stats",
-    file_format=ParquetFormat(),
-    path=driver_stats_parquet_file,
-    timestamp_field="datetime",
-    created_timestamp_column="created",
-)
-
-# Kafka for stream source
-driver_stats_stream_source = KafkaSource(
-    name="driver_stats_stream",
-    kafka_bootstrap_servers="localhost:29092",
-    topic="drivers",
-    timestamp_field="datetime",
-    batch_source=driver_stats_batch_source,
-    message_format=JsonFormat(
-        schema_json="driver_id integer, acc_rate double, conv_rate double, datetime timestamp, created timestamp"
-    ),
-    watermark_delay_threshold=timedelta(minutes=5),   # (1)
-    description="The Kafka stream containing the driver stats",
-)
-```
-
-1.  Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ
-
 Sau khi config feature store bằng cách thay đổi các file trong repo `feature_repo/`, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:
 
 - **FileSource:** đảm bảo đường dẫn tồn tại, file không bị lỗi
@@ -157,23 +157,23 @@ Sau khi config feature store bằng cách thay đổi các file trong repo `feat
       bash deploy.sh start
       cd ../data_pipeline
       ```
-      
+
       Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về
-      
+
       <img src="../../assets/images/mlops-crash-course/data-pipeline/kafka.png" loading="lazy" />
 
 ???+ tip
 
     - Để **stop** server, các bạn chạy: `bash deploy.sh stop`
-    
+
         ```bash
         cd ../stream_emitting
         bash deploy.sh stop
         cd ../data_pipeline
         ```
-    
+
     - Để **teardown** server (stop và remove tất cả docker volume liên quan), các bạn chạy:
-    
+
         ```bash
         cd ../stream_emitting
         bash deploy.sh teardown
@@ -186,6 +186,10 @@ Và cuối cùng chúng ta sẽ cập nhật Offline Feature store bằng cách 
 cd feature_repo
 feast apply
 ```
+
+!!! info
+
+    `feast apply` chỉ cập nhật định nghĩa của các features. `feast apply` chỉ cần chạy khi bạn cần thêm cột, sửa kiểu dữ liệu của cột, v.v...
 
 ## Tổng kết
 
