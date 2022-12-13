@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm site
+rm -rf site
 mkdocs build
 mv site/ mlopsvn-crash-course/
 
