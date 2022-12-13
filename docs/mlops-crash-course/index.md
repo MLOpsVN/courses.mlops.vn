@@ -67,9 +67,9 @@ MLOpsVN Team xin gửi lời cảm ơn chân thành tới các _Reviewers_ và _
 
 ## Reviewers
 
-|                                                         |                                                                      |                                                     |
-| ------------------------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
-| [ChiT](https://www.linkedin.com/in/chi-tran-98002b25a/) | [DangVanThuc](https://www.linkedin.com/in/thuc-dang-611074248/)      | [Đinh Văn Quý](https://www.linkedin.com/in/dvquy/)  |
-| [sudohainguyen](https://github.com/sudohainguyen)       | [ming đây](#)                                                        | [NguyenDHN](https://www.linkedin.com/in/nguyendhn/) |
-| [PTSon](https://www.linkedin.com/in/phạm-trung-sơn)     | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216) | [PP](https://www.linkedin.com/in/primepake/)        |
-| [Viet Anh](https://aicurious.io/)                       |                                                                      |                                                     |
+|                                                                             |                                                                      |                                                     |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
+| [ChiT](https://www.linkedin.com/in/chi-tran-98002b25a/)                     | [DangVanThuc](https://www.linkedin.com/in/thuc-dang-611074248/)      | [Đinh Văn Quý](https://www.linkedin.com/in/dvquy/)  |
+| [Hồng Hạnh](https://www.facebook.com/hanh.nhan0710/)                        | [ming đây](#)                                                        | [NguyenDHN](https://www.linkedin.com/in/nguyendhn/) |
+| [PTSon](https://www.linkedin.com/in/phạm-trung-sơn)                         | [QuynhAnhDang](https://www.linkedin.com/in/quynh-anh-dang-688594216) | [PP](https://www.linkedin.com/in/primepake/)        |
+| [Toan Nguyen Manh](https://www.linkedin.com/in/toan-nguyen-manh-14b33b145/) | [sudohainguyen](https://github.com/sudohainguyen)                    | [Viet Anh](https://aicurious.io/)                   |
