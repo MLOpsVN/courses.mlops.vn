@@ -7,5 +7,6 @@ MLOpsVN là một tổ chức với mong muốn thu ngắn khoảng cách giữa
 ## Liên hệ
 
 - [Facebook group](https://www.facebook.com/groups/mlopsvn)
+- [Facebook page](https://www.facebook.com/MLOpsVN/)
 - [Discord channel](https://discord.gg/q643jf3UMz)
 - Email: [mlopsvn@openfactor.org](maito:mlopsvn@openfactor.org)

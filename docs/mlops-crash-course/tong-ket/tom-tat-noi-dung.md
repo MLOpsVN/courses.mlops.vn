@@ -58,3 +58,7 @@ Sau khi hoàn thành khóa học này, bạn hoàn toàn có thể tự học th
 - **CI/CD:** Thực hiện các nhiều môi trường khác nhau
 
 - **Infrastructure:** Triển khai hệ thống trên Kubernetes
+
+## Đóng góp ý kiến phản hồi
+
+MLOpsVN Team xin gửi lời cảm ơn tới các bạn đã quan tâm và tham giá khoá học **MLOps Crash Course**. Để những dự án tiếp theo của MLOpsVN Team được trọn vẹn hơn, các bạn có thể dành chút thời gian để gửi ý kiến phản hồi cho khoá học [tại đây](https://forms.gle/1z6y762h227etZ8z6). Hy vọng khoá học **MLOps Crash Course** đã đóng góp ít nhiều cho sự phát triển của cộng đồng AI Việt Nam. Hẹn gặp lại các bạn trong các dự án tiếp theo của MLOpsVN.
