@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/poc/xay-dung-poc.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>POC - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              POC
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          POC
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="xay-dung-poc.html">
+        POC
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inh-nghia-poc">
+    Định nghĩa POC
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thu-thap-data">
+    Thu thập data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-data">
+    Phân tích data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chuan-bi-data">
+    Chuẩn bị data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#training-code">
+    Training code
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-thu-nghiem">
+    Theo dõi thử nghiệm
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-features">
+    Theo dõi features
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inh-nghia-poc">
+    Định nghĩa POC
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thu-thap-data">
+    Thu thập data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-data">
+    Phân tích data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chuan-bi-data">
+    Chuẩn bị data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#training-code">
+    Training code
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-thu-nghiem">
+    Theo dõi thử nghiệm
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-features">
+    Theo dõi features
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>POC</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/planning.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/s/photos/problem?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã thực hiện bước đầu tiên của một dự án phần mềm, đó chính là thu thập các yêu cầu, phân tích vấn đề kinh doanh. Quá trình này giúp hiểu rõ và sâu hơn về vấn đề đang gặp phải, về những giải pháp tiềm năng, đồng thời lên kế hoạch để triển khai chúng.</p>
+<p>Trong bài này, chúng ta bắt tay vào xây dựng một dự án POC. Dự án POC thử nghiệm các giải pháp nhanh chóng để chứng minh được tồn tại ít nhất một giải pháp giải quyết được vấn đề kinh doanh, trước khi bắt tay vào xây dựng các tính năng phức tạp khác. Vì ML được chọn làm giải pháp, nên việc cần làm đó là chứng minh rằng giải pháp ML là khả thi, bằng cách sử dụng MLOps platform đã được định nghĩa ở bài <a href="../tong-quan-he-thong/mlops-platform.html">MLOps Platform</a>.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Các thư viện bạn cần cài đặt cho môi trường phát triển được đặt tại <code>training_pipeline/dev_requirements.txt</code>. Bạn có thể dùng <code>virtualenv</code>, <code>conda</code>, hoặc bất kì công cụ nào để cài đặt. Phiên bản Python được sử dụng trong cả khoá học là <code>3.9</code>.</p>
+<p>Các MLOps tools được dùng trong bài này bao gồm:</p>
+<ol>
+<li><strong>Jupyter notebook:</strong> thử nghiệm data, model</li>
+<li><strong>MLflow:</strong> ML Metadata Store, Model Registry</li>
+</ol>
+<h2 id="inh-nghia-poc">Định nghĩa POC</h2>
+<p>Trong quá trình phân tích vấn đề kinh doanh, thông tin về data và quá trình xây dựng ML model đã được tổng hợp như sau.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Câu hỏi</th>
+<th>Trả lời</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Data được lấy từ đâu?</td>
+<td>Được tổng hợp bởi Data Engineer từ ứng dụng của công ty</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data sẽ được biến đổi và lưu trữ thế nào?</td>
+<td>Được Data Engineer xử lý để thực hiện POC trước, format là <code>parquet</code>, tạm thời lưu ở Database nội bộ công ty</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Feature tiềm năng?</td>
+<td><code>conv_rate</code>, <code>acc_rate</code>, <code>avg_daily_trips</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Model architecture tiềm năng?</td>
+<td>Elastic Net</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Dùng metrics nào để đánh giá model?</td>
+<td>MSE, RMSE, R2</td>
+</tr>
+</tbody>
+</table>
+<p>Khi định nghĩa dự án POC, chúng ta cần trả lời một câu hỏi quan trọng:</p>
+<p><strong><em>Thế nào là một dự án POC thành công?</em></strong></p>
+<p>Ở những dự án POC đầu tiên, ML model chưa được triển khai ra production mà chỉ được thử nghiệm offline. Do đó, chúng ta cần sử dụng các offline metrics để đánh giá. Cụ thể, cần đặt một threshold cho các metrics này. Ví dụ, sử dụng metric RMSE với một hạn mức (threshold) để định nghĩa dự án POC thành công là RMSE phải nhỏ hơn <strong>0.5</strong>.</p>
+<p>Ngoài RMSE cho bài toán logistic regression ra, một số metric khác cũng được sử dụng như:</p>
+<ul>
+<li>Sử dụng Accuracy, F1, AUC để đánh giá model performance cho bài toán classification</li>
+<li>Sử dụng thời gian training và inference của ML model để so sánh chi phí và lợi ích</li>
+<li>v.v.</li>
+</ul>
+<h2 id="thu-thap-data">Thu thập data</h2>
+<p>Ở dự án POC đầu tiên, do data pipeline chưa được hoàn thiện, nên data dùng để thử nghiệm được Data Engineer thu thập từ data sources, rồi chuyển giao data thô này cho Data Scientist (DS). DS sẽ thực hiện các công việc sau:</p>
+<ul>
+<li>Phân tích data để định nghĩa các cách biến đổi cho data. Các cách biến đổi này được dùng để xây dựng data pipeline</li>
+<li>Phân tích data, thử nghiệm và định nghĩa các cách biến đổi feature engineering cho data. Các cách biến đổi feature engineering này được dùng để xây dựng data pipeline</li>
+<li>Thử nghiệm các model architecture và hyperparameter. Cách train model được dùng để xây dựng training pipeline</li>
+</ul>
+<h2 id="phan-tich-data">Phân tích data</h2>
+<p>Trong phần này, Jupyter Notebook được dùng để viết code phân tích data và training code. Giả sử Data Engineering đã thu thập data từ data sources và chuyển giao cho chúng ta 2 file data:</p>
+<ol>
+<li><code>training_pipeline/nbs/data/exp_driver_stats.parquet</code>: chứa data của các tài xế, được ghi lại ở nhiều thời điểm</li>
+<li><code>training_pipeline/nbs/data/exp_driver_orders.csv</code>: chứa thông tin về cuốc xe có hoàn thành hay không của các tài xế ở nhiều thời điểm</li>
+</ol>
+<p>Hai file này chứa các cột chính với ý nghĩa tương ứng như sau:</p>
+<table>
+<thead>
+<tr>
+<th><strong>File</strong></th>
+<th><strong>Cột</strong></th>
+<th><strong>Ý nghĩa</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>exp_driver_stats.parquet</strong></td>
+<td>datetime</td>
+<td>Thời gian record được ghi lại</td>
+</tr>
+<tr>
+<td></td>
+<td>driver_id</td>
+<td>ID của tài xế</td>
+</tr>
+<tr>
+<td></td>
+<td>conv_rate</td>
+<td>Một thông số nào đó</td>
+</tr>
+<tr>
+<td></td>
+<td>acc_rate</td>
+<td>Một thông số nào đó</td>
+</tr>
+<tr>
+<td></td>
+<td>avg_daily_trips</td>
+<td>Một thông số nào đó</td>
+</tr>
+<tr>
+<td><strong>exp_driver_orders.csv</strong></td>
+<td>event_timestamp</td>
+<td>Thời gian record được ghi lại</td>
+</tr>
+<tr>
+<td></td>
+<td>driver_id</td>
+<td>ID của tài xế</td>
+</tr>
+<tr>
+<td></td>
+<td>trip_completed</td>
+<td>Cuốc xe có hoàn thành không</td>
+</tr>
+</tbody>
+</table>
+<p>Source code được đặt tại <code>training_pipeline/nbs/poc-training-code.ipynb</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-training-code.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./data"</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"exp_driver_stats.parquet"</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">LABEL_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"exp_driver_orders.csv"</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">df_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">label_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">LABEL_PATH</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">label_orig</span><span class="p">[</span><span class="s2">"event_timestamp"</span><span class="p">])</span> <span class="c1"># (3)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="n">target_col</span> <span class="o">=</span> <span class="s2">"trip_completed"</span> <span class="c1"># (4)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Đường dẫn tới data files</li>
+<li>Load data</li>
+<li>Định dạng lại cột <code>event_timestamp</code></li>
+<li>Định nghĩa tên của cột chứa label</li>
+</ol>
+<p>Tiếp theo, Data Scientist sẽ phân tích data để hiểu data. Quá trình này thường kiểm tra những thứ sau.</p>
+<ul>
+<li>Có feature nào chứa <code>null</code> không? Nên thay <code>null</code> bằng giá trị nào?</li>
+<li>Có feature nào có data không thống nhất không? Ví dụ: khác đơn vị (km/h, m/s), v.v</li>
+<li>Có feature hay label nào bị bias không? Nếu có thì do quá trình sampling hay do data quá cũ? Giải quyết thế nào?</li>
+<li>Các feature có tương quan không? Nếu có thì có cần loại bỏ feature nào không?</li>
+<li>Data có outlier nào không? Nếu có thì có nên xoá bỏ không?</li>
+<li>v.v</li>
+</ul>
+<p>Mỗi một vấn đề về data trên sẽ có một hoặc nhiều cách giải quyết. Tuy nhiên, chúng ta sẽ không biết được ngay các cách giải quyết có hiệu quả hay không. Do vậy, quá trình kiểm tra và phân tích data này thường sẽ đi kèm với các thử nghiệm đánh giá model. Các metrics khi đánh giá model giúp đánh giá xem các giải pháp được thực hiện trên data có hiệu quả không. Vì tiến trình thường gặp của Machine Learning là thử nghiệm với data, model nên bước phân tích data này và bước training model như một vòng lặp được thực hiện lặp lại nhiều lần.</p>
+<p>Vì các file data của chúng ta không có feature nào chứa <code>null</code> và để tập trung vào MLOps, chúng ta sẽ tối giản hoá bước phân tích data này và đi vào viết code train model.</p>
+<h2 id="chuan-bi-data">Chuẩn bị data</h2>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/data-analysis.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@lukechesser?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Luke Chesser</a> on <a href="https://unsplash.com/s/photos/analysis?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<p>Đầu tiên, features được tổng hợp từ DataFrame <code>df_orig</code> với labels từ DataFrame <code>label_orig</code>. Cụ thể, với mỗi record trong <code>label_orig</code>, chúng ta muốn lấy ra <em>record mới nhất tương ứng</em> trong <code>df_orig</code> với <code>driver_id</code> giống nhau. <em>Record mới nhất tương ứng</em> nghĩa là thời gian ở cột <code>datetime</code> trong <code>df_orig</code> sẽ xảy ra trước và gần nhất với thời gian ở cột <code>event_timestamp</code> trong <code>label_orig</code>. Ví dụ:</p>
+<ul>
+<li><code>df_orig</code> chứa 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>datetime</th>
+<th>driver_id</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-01</td>
+<td>1001</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-11-01</td>
+<td>1001</td>
+<td>0.2</td>
+<td>0.2</td>
+<td>200</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2022-10-01</td>
+<td>1001</td>
+<td>0.3</td>
+<td>0.3</td>
+<td>300</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2022-09-01</td>
+<td>1001</td>
+<td>0.4</td>
+<td>0.4</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>label_orig</code> chứa 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>event_timestamp</th>
+<th>driver_id</th>
+<th>trip_completed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-15</td>
+<td>1001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-09-15</td>
+<td>1001</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Data mà chúng ta muốn tổng hợp gồm 2 records như sau</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>event_timestamp</th>
+<th>driver_id</th>
+<th>trip_completed</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2022-12-15</td>
+<td>1001</td>
+<td>1</td>
+<td>0.1</td>
+<td>0.1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2022-09-15</td>
+<td>1001</td>
+<td>0</td>
+<td>0.4</td>
+<td>0.4</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Giải thích</p>
+<ul>
+<li>Features từ <code>index 1</code> ở <code>df_orig</code> được lấy ra cho record <code>index 1</code> ở <code>label_orig</code>, vì feature đó là mới nhất (<code>2022-12-01</code>) so với <code>event_timestamp</code> của record ở <code>index 1</code> (<code>2022-12-15</code>) trong <code>label_orig</code></li>
+<li>Tương tự, features từ <code>index 4</code> ở <code>df_orig</code> được lấy ra cho record <code>index 2</code> ở <code>label_orig</code>, vì feature đó là mới nhất và xảy ra trước (<code>2022-09-01</code>) so với <code>event_timestamp</code> của record ở <code>index 2</code> (<code>2022-09-15</code>) trong <code>label_orig</code></li>
+</ul>
+</li>
+</ul>
+<p>Code để tổng hợp features và labels như dưới đây.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-training-code.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">groups</span> <span class="o">=</span> <span class="n">df_orig</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'driver_id'</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="k">def</span> <span class="nf">proc_row</span><span class="p">(</span><span class="n">row</span><span class="p">):</span> <span class="c1"># (2)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="k">global</span> <span class="n">data_df</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="n">end_time</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'event_timestamp'</span><span class="p">]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="n">driver_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'driver_id'</span><span class="p">]</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">grp_rows</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">driver_id</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="n">grp_rows</span> <span class="o">=</span> <span class="n">grp_rows</span><span class="p">[</span><span class="n">grp_rows</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">]</span> <span class="c1"># (4)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    <span class="n">grp_rows</span> <span class="o">=</span> <span class="n">grp_rows</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span> <span class="c1"># (5)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>    <span class="n">grp_rows</span> <span class="o">=</span> <span class="n">grp_rows</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># (6)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">grp_rows</span><span class="p">[</span><span class="s1">'event_timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">end_time</span> <span class="c1"># (7)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="n">grp_rows</span><span class="p">[</span><span class="s1">'trip_completed'</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'trip_completed'</span><span class="p">]</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>    <span class="k">return</span> <span class="n">grp_rows</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># (8)</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="n">data_df</span> <span class="o">=</span> <span class="n">label_orig</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">proc_row</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="n">data_df</span> <span class="o">=</span> <span class="n">data_df</span><span class="p">[</span><span class="n">data_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span> \ <span class="c1"># (9)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>    <span class="n">drop</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span><span class="o">.</span> \
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="n">drop</span><span class="p">(</span><span class="s2">"driver_id"</span><span class="p">)</span><span class="o">.</span> \
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>    <span class="n">drop</span><span class="p">(</span><span class="s2">"created"</span><span class="p">)</span><span class="o">.</span> \
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>    <span class="n">drop</span><span class="p">(</span><span class="s2">"event_timestamp"</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Nhóm features vào các nhóm theo <code>driver_id</code></li>
+<li>Hàm xử lý mỗi hàng trong <code>label_orig</code></li>
+<li>Lấy ra các hàng trong <code>df_orig</code> của một tài xế</li>
+<li>Lấy ra các hàng trong <code>df_orig</code> có <code>datetime</code> &lt;= <code>event_timestamp</code> của hàng hiện tại trong <code>label_orig</code></li>
+<li>Sắp xếp các hàng theo cột <code>datetime</code></li>
+<li>Lấy ra hàng ở thời gian mới nhất</li>
+<li>Thêm các cột cần thiết vào</li>
+<li>Biến thành <code>Series</code> (một hàng) và return</li>
+<li>Loại bỏ các cột không cần thiết</li>
+</ol>
+<h2 id="training-code">Training code</h2>
+<p>Sau khi tổng hợp features và labels vào <code>data_df</code>, DataFrame này được chia thành training set và test set. Các bước train model và đánh giá model được thực hiện như dưới đây.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-training-code.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">selected_ft</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">,</span> <span class="s2">"avg_daily_trips"</span><span class="p">]</span> <span class="c1"># (1)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">TARGET_COL</span> <span class="o">=</span> <span class="s2">"trip_completed"</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">TEST_SIZE</span> <span class="o">=</span> <span class="mf">0.2</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">TEST_SIZE</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">TARGET_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">selected_ft</span><span class="p">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">TARGET_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">selected_ft</span><span class="p">]</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">TARGET_COL</span><span class="p">]]</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">TARGET_COL</span><span class="p">]]</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">ALPHA</span> <span class="o">=</span> <span class="mf">0.5</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="n">L1_RATIO</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">model</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">ALPHA</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="n">L1_RATIO</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="n">predicted_qualities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="n">mae</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">predicted_qualities</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Chọn các features để train</li>
+<li>Tạo training set và test set</li>
+<li>Train model</li>
+<li>Đánh giá model</li>
+</ol>
+<p>Chúng ta cần thử nghiệm rất nhiều bộ feature, nhiều model architecture với các bộ hyperparameter khác nhau. Để có thể tái lập kết quả training, cần phải biết được thử nghiệm nào dùng bộ feature nào, model architecture, với các hyperparameter nào. Trong khoá học này, chúng ta sẽ sử dụng MLOps Platform đã được giới thiệu trong bài <a href="../tong-quan-he-thong/mlops-platform.html">MLOps Platform</a> và cụ thể là MLflow sẽ đóng vai trò chính giúp chúng ta theo dõi các thông tin trên hay ML metadata của các lần thử nghiệm.</p>
+<h2 id="theo-doi-thu-nghiem">Theo dõi thử nghiệm</h2>
+<p><a href="https://mlflow.org/">MLflow</a> là một open-source platform để quản lý vòng đời và các quy trình trong một hệ thống ML. Một trong những chức năng của MLflow mà chúng ta sử dụng đó là chức năng theo dõi ML metadata. Code của phần này được đặt tại notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>. Logic của code giống như notebook <code>training_pipeline/nbs/poc-training-code.ipynb</code>, chỉ có thêm đoạn code để tích hợp MLflow vào. Bạn hãy làm theo các bước sau để tích hợp MLflow.</p>
+<ol>
+<li>
+<p>Clone github repo <a href="https://github.com/MLOpsVN/mlops-crash-course-platform">mlops-crash-course-platform</a>, chạy MLflow server trên môi trường local</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>bash run.sh mlflow up
+</code></pre></div>
+</li>
+<li>
+<p>Đi tới URL <a href="http://localhost:5000">http://localhost:5000</a> để kiểm tra xem MLflow server đã được khởi tạo thành công chưa</p>
+</li>
+<li>
+<p>Trong notebook <code>training_pipeline/nbs/poc-integrate-mlflow.ipynb</code>, các bạn để ý đoạn code sau được thêm vào ở đoạn code training để tích hợp MLflow vào đoạn code training</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">MLFLOW_TRACKING_URI</span> <span class="o">=</span> <span class="s2">"http://localhost:5000"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">MLFLOW_TRACKING_URI</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span> <span class="c1"># (1)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Vì <code>sklearn</code> được dùng để train model, dòng này tự động quá trình log lại các hyperparameter và các metrics trong quá trình training. Xem thêm <a href="https://mlflow.org/docs/latest/tracking.html#automatic-logging">ở đây</a> để biết thêm thông tin về các training framework được MLflow hỗ trợ tự động log ML metadata.</li>
+</ol>
+</li>
+<li>
+<p>Đoạn code sau để log lại các hyperparameter và metric</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">training_pipeline/nbs/poc-integrate-mlflow.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="s2">"mlflow.runName"</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">())</span> <span class="c1"># (1)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"features"</span><span class="p">,</span> <span class="n">selected_ft</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"alpha"</span><span class="p">,</span> <span class="n">ALPHA</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">"l1_ratio"</span><span class="p">,</span> <span class="n">L1_RATIO</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_rmse"</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_r2"</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">"testing_mae"</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"model"</span><span class="p">)</span> <span class="c1"># (5)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Đặt tên cho lần chạy</li>
+<li>Log lại feature được dùng</li>
+<li>Log lại hyperparameter</li>
+<li>Log lại metric sau khi test trên test set</li>
+<li>Log lại model</li>
+</ol>
+</li>
+<li>
+<p>Mở MLflow trên browser, bạn sẽ thấy giao diện như sau.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/poc/xay-dung-poc/mlflow-dashboard.png"/></a></p>
+<p>Mọi thông tin chúng ta log lại mỗi lần thử nghiệm đã được lưu lại. Bạn có thể xem thêm thông tin chi tiết về một lần chạy bằng cách ấn vào cột <code>Start time</code> của lần chạy đó.</p>
+</li>
+</ol>
+<h2 id="theo-doi-features">Theo dõi features</h2>
+<p>Trong phần trước, chúng ta đã coi bộ feature mà chúng ta sử dụng trong quá trình training như một hyperparameter và dùng MLflow để log lại. Tuy nhiên, đây chưa phải giải pháp tối ưu để theo dõi các feature trong quá trình thử nghiệm.</p>
+<p>Mục đích của việc theo dõi các feature là để có thể tái lập kết quả của một thử nghiệm. Chỉ bằng việc lưu lại tên các feature được dùng thì không đảm bảo được sẽ tạo lại được kết quả, vì có thể feature bị đổi tên hoặc tên vẫn giữ nguyên nhưng cách biến đổi để sinh ra feature đó bị thay đổi. Do đó, việc theo dõi các feature này không chỉ là theo dõi tên của các feature, mà cả quy trình sinh ra các feature đó.</p>
+<p>Ở giai đoạn POC, vì chưa có đủ nguồn lực để xây dựng cơ sở hạ tầng đủ mạnh để hỗ trợ việc theo dõi quy trình tạo ra feature, nên chúng ta chỉ kì vọng sẽ theo dõi được tên các feature là đủ. Trong các bài tiếp theo, chúng ta sẽ học cách theo dõi version của quy trình biến đổi feature và tích hợp version đó vào quá trình training.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Qua nhiều lần thử nghiệm data và model, ngoài việc chứng minh giải pháp ML là khả thi, chúng ta sẽ hiểu rõ hơn về vấn đề kinh doanh, giải pháp tiềm năng, cách đánh giá các giải pháp đó một cách hiệu quả. Các đầu ra này sẽ được dùng để cập nhật lại các định nghĩa của vấn đề kinh doanh, các cách biến đổi data để xây dựng data pipeline, training code để xây dựng training pipeline và serving code để xây dựng model serving component.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ xây dựng data pipeline, một trong những pipeline phức tạp nhất của hệ thống.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://www.mlflow.org/docs/latest/tracking.html">MLflow tracking</a></li>
+<li><a href="https://www.mlflow.org/docs/latest/model-registry.html">MLflow Model registry</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: MLOps platform" class="md-footer__link md-footer__link--prev" href="../tong-quan-he-thong/mlops-platform.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              MLOps platform
+            </div>
+</div>
+</a>
+<a aria-label="Next: Tổng quan pipeline" class="md-footer__link md-footer__link--next" href="../data-pipeline/tong-quan-data-pipeline.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Tổng quan pipeline
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

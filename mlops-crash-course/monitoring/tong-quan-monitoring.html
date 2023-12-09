@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/monitoring/tong-quan-monitoring.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Tổng quan monitoring - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Tổng quan monitoring
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Tổng quan monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-he-thong">
+    Theo dõi hệ thống
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-data-va-model">
+    Theo dõi data và model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cong-cu-theo-doi">
+    Công cụ theo dõi
+  </a>
+<nav aria-label="Công cụ theo dõi" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logs">
+    Logs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dashboards">
+    Dashboards
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alerts">
+    Alerts
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-he-thong">
+    Theo dõi hệ thống
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-data-va-model">
+    Theo dõi data và model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cong-cu-theo-doi">
+    Công cụ theo dõi
+  </a>
+<nav aria-label="Công cụ theo dõi" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logs">
+    Logs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dashboards">
+    Dashboards
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alerts">
+    Alerts
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Tổng quan monitoring</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/tong-quan-monitoring/cat-observe.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/tong-quan-monitoring/cat-observe.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@milada_vigerova?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Milada Vigerova</a> on <a href="https://unsplash.com/s/photos/observe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã triển khai model lên batch serving pipeline và online serving service; tuy vậy, triển khai model xong chưa phải là kết thúc dự án. Model performance cần được theo dõi sau khi triển khai để cải thiện model kịp thời. Có khá nhiều lý do gây ra ảnh hưởng tới model performance, tiêu biểu như:</p>
+<ul>
+<li>Tính chất thống kê của features, labels ở production khác với khi training</li>
+<li>Tính chất thống kê của labels ở production không đổi so với khi training, nhưng cách data được label bị thay đổi</li>
+<li>Quá trình thu thập data và cập nhật Feature Store bị lỗi</li>
+<li>Data bị cập nhật sai</li>
+<li>Quá trình feature engineering lúc training và lúc inference không khớp</li>
+<li>v.v.</li>
+</ul>
+<p>Ngoài model performance, logs, tài nguyên tính toán và các thông số khác của hệ thống cũng cần được theo dõi theo thời gian thực, để xử lý các vấn đề của hệ thống kịp thời ở production. Một số lỗi có thể kể đến như:</p>
+<ul>
+<li>Phiên bản của các thư viện, tools không tương thích</li>
+<li>Lỗi liên quan tới quyền truy cập vào file</li>
+<li>CPU của một server bị quá nóng</li>
+<li>Số requests trung bình trong một giây</li>
+</ul>
+<p>Trong bài này, chúng ta sẽ tìm hiểu các metrics điển hình cần được theo dõi trong một hệ thống ML và cách triển khai hệ thống theo dõi các metrics này.</p>
+<h2 id="theo-doi-he-thong">Theo dõi hệ thống</h2>
+<p>Thông thường, có ba mảng sau cần được theo dõi trong một hệ thống phần mềm:</p>
+<ol>
+<li>Mạng máy tính</li>
+<li>Tài nguyên tính toán</li>
+<li>Ứng dụng</li>
+</ol>
+<p>Một số ví dụ về metrics trong các mảng trên như:</p>
+<ul>
+<li>Độ trễ, thông lượng</li>
+<li>Số requests trong một phút, tỉ lệ số requests có status code là 200</li>
+<li>Mức độ sử dụng CPU, GPU và memory, v.v.</li>
+</ul>
+<p>Những metrics này được gọi là <em>operational metrics</em>, tạm dịch là <em>metrics vận hành hệ thống</em>.</p>
+<p>Trong bài sau, chúng ta sẽ dùng Prometheus để thu thập các metrics trên từ máy local và BentoML để thu thập các metrics liên quan tới Online serving API.</p>
+<h2 id="theo-doi-data-va-model">Theo dõi data và model</h2>
+<p>Trong một hệ thống ML, metrics về data, model cũng cần được theo dõi. Các metrics này được gọi là ML metrics, được chia thành bốn nhóm. Bảng dưới đây chỉ ra thông tin về bốn nhóm metrics và ví dụ về các metrics trong các nhóm đó.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Nhóm</th>
+<th>Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Input thô</td>
+<td>Đầu vào nhận được từ requests gửi tới Online serving API</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Feature</td>
+<td>Để theo dõi sự thay đổi các thuộc tính thống kê của features</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Dự đoán</td>
+<td>Dự đoán của model, để theo dõi model performance và sự thay đổi các thuộc tính thống kê của dự đoán của model</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Label</td>
+<td>Lượt click chuột, mua hàng, yêu thích, chia sẻ, v.v, để theo dõi model performance và sự thay đổi các thuộc tính thống kê của label</td>
+</tr>
+</tbody>
+</table>
+<p>Metrics ở các nhóm sau chính là sự biến đổi của các metrics từ các nhóm trước đó. Metrics càng ở các nhóm sau thì càng có ý nghĩa gần với mục tiêu của dự án.</p>
+<h2 id="cong-cu-theo-doi">Công cụ theo dõi</h2>
+<p>Một bộ công cụ phù hợp giúp chúng ta đo lường, theo dõi và hiểu ý nghĩa của các metrics trong một hệ thống phần mềm. Các công cụ phổ biến được kể đến như logs, dashboards, alerts.</p>
+<h3 id="logs">Logs</h3>
+<p>Logs là một thành phần không thể thiếu trong các hệ thống phần mềm. Logs giúp bạn debug nhanh hơn trong lúc phát triển và đặc biệt khi hệ thống được triển khai ra production.</p>
+<p>Trong quá trình phát triển hệ thống, logs có thể chỉ cần ghi ra bash terminal. Nhưng ở production, khả năng cao là logs sẽ được in ra ở trong một Docker container. Để kiểm tra được logs trong một Docker container, bạn sẽ dùng lệnh <code>docker logs &lt;container-id&gt;</code> hoặc <code>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt;</code>. Việc này rất mất thời gian, vì bạn cần kiểm tra xem <code>container-id</code> là gì hay <code>pod-name</code> là gì. Không chỉ vậy ở production, có rất nhiều replicas của một service, khiến cho việc kiểm tra logs bằng tay sẽ rất khó khăn trong một hệ thống lớn. Thay vào đó, logs của các services sẽ được tập trung vào một nơi để thuận tiện tìm kiếm, giúp cho việc debug trở nên thuận tiện hơn rất nhiều.</p>
+<p>Trong bài sau, chúng ta sẽ dùng ELK Stack (Elasticsearch, Logstash và Kibana) làm giải pháp theo dõi logs của Online serving service.</p>
+<h3 id="dashboards">Dashboards</h3>
+<p>Dashboards hiển thị một bức tranh toàn cảnh về các metrics trong một hệ thống, ở dạng mà con người dễ hiểu nhất và sắp xếp hợp lý gọn gàng tuỳ thuộc vào yêu cầu của mỗi chức năng trong hệ thống. Dựa vào những gì được hiển thị trên dashboards, chúng ta còn biết được mối quan hệ giữa các metrics, tìm ra nguyên nhân của vấn đề đang gặp phải ở production mà không cần phải kiểm tra data, code hay logs.</p>
+<p>Trong bài sau, chúng ta sẽ dùng Grafana để làm dashboards hiển thị các metrics hệ thống và ML metrics.</p>
+<h3 id="alerts">Alerts</h3>
+<p>Alerts giúp cảnh báo tới đúng người, đúng thời điểm, khi một metrics ở trạng thái bất thường. Ví dụ khi một metric vượt quá một threshold hay khi data bị drift (các tính chất thống kê của data bị thay đổi).</p>
+<p>Một alert thường gồm ba thành phần:</p>
+<ol>
+<li><strong>Chính sách (Policy):</strong> điều kiện để xảy ra alert</li>
+<li><strong>Kênh thông báo (Channel):</strong> khi cảnh báo xảy ra, ai sẽ được thông báo, bằng cách nào</li>
+<li><strong>Mô tả (Description):</strong> mô tả cảnh báo về chuyện gì đang xảy ra</li>
+</ol>
+<p>Trong bài sau, chúng ta sẽ dùng Grafana để thiết lập một alert khi dataset bị drift.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Để xây dựng một hệ thống ML thành công, monitoring platform là yếu tố quan trọng. Bạn sẽ không biết trước được chuyện gì hay bug nào sẽ xảy ra. Vì vậy, hãy chuẩn bị cho nó!</p>
+<p>Trong bài tiếp theo, chúng ta sẽ triển khai ELK Stack, Prometheus server, Grafana server và viết Monitoring service để theo dõi các metrics liên quan tới hoạt động của hệ thống, data, ML model.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://docs.google.com/document/d/14uX2m9q7BUn_mgnM3h6if-s-r0MZrvDb-ZHNjgA1Uyo/edit">CS 329S. Lecture 10. Data Distribution Shifts and Monitoring</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Model serving" class="md-footer__link md-footer__link--prev" href="../model-serving/trien-khai-model-serving.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Model serving
+            </div>
+</div>
+</a>
+<a aria-label="Next: Metrics hệ thống" class="md-footer__link md-footer__link--next" href="metrics-he-thong.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Metrics hệ thống
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

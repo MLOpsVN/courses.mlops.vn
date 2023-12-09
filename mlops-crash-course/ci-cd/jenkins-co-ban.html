@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/ci-cd/jenkins-co-ban.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Jenkins cơ bản - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Jenkins cơ bản
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Jenkins cơ bản
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cai-at-jenkins">
+    Cài đặt Jenkins
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ket-noi-jenkins-voi-github">
+    Kết nối Jenkins với Github
+  </a>
+<nav aria-label="Kết nối Jenkins với Github" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expose-jenkins-voi-ngrok">
+    Expose Jenkins với ngrok
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#them-jenkins-webhook-vao-github">
+    Thêm Jenkins webhook vào Github
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#them-github-repo-vao-jenkins">
+    Thêm Github repo vào Jenkins
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trigger-jenkins-pipeline">
+    Trigger Jenkins pipeline
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cai-at-jenkins">
+    Cài đặt Jenkins
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ket-noi-jenkins-voi-github">
+    Kết nối Jenkins với Github
+  </a>
+<nav aria-label="Kết nối Jenkins với Github" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#expose-jenkins-voi-ngrok">
+    Expose Jenkins với ngrok
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#them-jenkins-webhook-vao-github">
+    Thêm Jenkins webhook vào Github
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#them-github-repo-vao-jenkins">
+    Thêm Github repo vào Jenkins
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trigger-jenkins-pipeline">
+    Trigger Jenkins pipeline
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Jenkins cơ bản</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins-meme.png"/></a>
+<figcaption>Photo from <a href="https://wiki.jenkins.io/JENKINS/Internet-Meme-Plugin.html">wiki.jenkins.io</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Vừa rồi, chúng ta đã được làm quen với một số khái niệm liên quan tới CI/CD và các bài học về kiểm thử trong một hệ thống ML. Câu hỏi được đặt ra đó là làm thế nào để triển khai một CI/CD pipeline tự động hóa gồm các bước như build, test, deploy? Jenkins là một open source cho phép hiện thực háo điều này.</p>
+<p>Ở bài học này, bạn sẽ:</p>
+<ol>
+<li>Cài đặt Jenkins trên máy cá nhân</li>
+<li>Kết nối Jenkins tới Github</li>
+<li>Và chạy thử một CI/CD pipeline đơn giản</li>
+</ol>
+<h2 id="cai-at-jenkins">Cài đặt Jenkins</h2>
+<p>Các bạn làm các bước sau để cài đặt:</p>
+<ol>
+<li>
+<p>Vào repo <code>mlops-crash-course-platform/</code> và chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh jenkins up
+</code></pre></div>
+</li>
+<li>
+<p>Kiểm tra tình trạng service:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>docker ps
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                         PORTS                                                                                      NAMES
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>f81b55f1b151   jenkins/jenkins:lts    <span class="s2">"/usr/bin/tini -- /u…"</span>   <span class="m">41</span> minutes ago   Up <span class="m">41</span> minutes                  <span class="m">0</span>.0.0.0:50000-&gt;50000/tcp, :::50000-&gt;50000/tcp, <span class="m">0</span>.0.0.0:8081-&gt;8080/tcp, :::8081-&gt;8080/tcp   jenkins
+</code></pre></div>
+</li>
+<li>
+<p>Truy cập <a href="http://localhost:8081">http://localhost:8081</a>, các bạn sẽ thấy:</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-2.png"/></a></p>
+</li>
+<li>
+<p>Kiểm tra logs của jenkins container để lấy mật khẩu <code>admin</code>:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>docker logs jenkins
+</code></pre></div>
+<p>Các bạn sẽ thấy mật khẩu như sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>*************************************************************
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>*************************************************************
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>*************************************************************
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>Jenkins initial setup is required. An admin user has been created and a password generated.
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>Please use the following password to proceed to installation:
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>e6623e35c18847e7a7ccfd07863feb4a
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a>This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+</code></pre></div>
+</li>
+<li>
+<p>Chọn <code>Install suggested plugins</code> và chờ Jenkins cài đặt các plugins.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-4.png"/></a></p>
+</li>
+<li>
+<p>Ở giao diện đăng ký user sử dụng Jenkins chọn <code>Skip and continue as admin</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-3.png"/></a></p>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Trong thực tế, người quản trị Jenkins sẽ phải tạo user và cấp quyền phù hợp. Ở đây chúng ta sử dụng tài khoản <code>admin</code> để tránh đi quá sâu vào phần quản trị này.</p>
+</details>
+</li>
+<li>
+<p>Cấu hình Jenkins URL như sau:</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-instance-config.png"/></a></p>
+</li>
+<li>
+<p>Cuối cùng, giao diện sẽ như sau:</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-5.png"/></a></p>
+</li>
+</ol>
+<h2 id="ket-noi-jenkins-voi-github">Kết nối Jenkins với Github</h2>
+<p>Bây giờ chúng ta sẽ kết nối Jenkins ở local với Github để mỗi khi push code lên thì Github sẽ trigger CI/CD pipeline trên máy cá nhân của chúng ta.</p>
+<h3 id="expose-jenkins-voi-ngrok">Expose Jenkins với ngrok</h3>
+<p>Các bạn làm các bước sau:</p>
+<ol>
+<li>Cài đặt <em>ngrok</em>, xác nhận email, set token theo hướng dận <a href="https://ngrok.com/download">tại đây</a></li>
+<li>
+<p>Expose Jenkins service tại local với câu lệnh:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>ngrok http <span class="m">8081</span>
+</code></pre></div>
+<p>Bạn sẽ thấy console hiển thị như sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a>ngrok by @inconshreveable                                       <span class="o">(</span>Ctrl+C to quit<span class="o">)</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>Session Status                online
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>Account                       dangvanquan.xyz@gmail.com <span class="o">(</span>Plan: Free<span class="o">)</span>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>Version                       <span class="m">2</span>.3.40
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>Region                        United States <span class="o">(</span>us<span class="o">)</span>
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>Web Interface                 http://127.0.0.1:4040
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>Forwarding                    http://a846-183-80-56-103.ngrok.io -&gt; http://local
+<a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>Forwarding                    https://a846-183-80-56-103.ngrok.io -&gt; http://loca
+<a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>Connections                   ttl     opn     rt1     rt5     p50     p90
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>                            <span class="m">0</span>       <span class="m">0</span>       <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00    <span class="m">0</span>.00
+</code></pre></div>
+</li>
+<li>
+<p>Truy cập Jenkins qua link forward ở trên <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-6.png"/></a></p>
+</li>
+</ol>
+<h3 id="them-jenkins-webhook-vao-github">Thêm Jenkins webhook vào Github</h3>
+<p>Đầu tiên bạn push code đã clone từ <a href="https://github.com/MLOpsVN/mlops-crash-course-code">mlops-crash-course-code</a> lên Github repo của bạn, link repo sau khi đẩy lên sẽ có dạng <code>https://github.com/&lt;yourusername&gt;/mlops-crash-course-code</code>. Ví dụ: nếu Github username là <code>MLOps</code> thi đường link tới repo sẽ là <code>https://github.com/MLOps/mlops-crash-course-code</code>.</p>
+<p>Nội dung bên dưới và các nội dung kế tiếp trong module bài giảng về <code>ci-cd</code>, bạn sẽ làm việc trên repo <code>https://github.com/&lt;yourusername&gt;/mlops-crash-course-code</code> của mình. Do đó, khi mà bạn thấy tác giả đề cập tới repo <code>https://github.com/MLOpsVN/mlops-crash-course-code</code>, thì các bạn hãy thực hành trên repo tương ứng của bạn nhé.</p>
+<ol>
+<li>
+<p>Vào <code>Settings</code> ở repo code, chọn <code>Webhooks</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-7.png"/></a></p>
+</li>
+<li>
+<p>Ấn <code>Add webhook</code>, điền <code>Payload URL</code> là <code>https://a846-183-80-56-103.ngrok.io/github-webhook/</code>, <code>Content type</code> là <code>application/json</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-8.png"/></a></p>
+</li>
+<li>
+<p>Ở phần <code>Which events would you like to trigger this webhook?</code>, chọn <code>Let me select individual events.</code>, tick vào phần <code>Pushes</code> và <code>Pull requests</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-9.png"/></a></p>
+</li>
+<li>
+<p>Ấn <code>Add webhook</code> để hoàn tất</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-10.png"/></a></p>
+</li>
+</ol>
+<h3 id="them-github-repo-vao-jenkins">Thêm Github repo vào Jenkins</h3>
+<ol>
+<li>
+<p>Trở lại mà hình home của Jenkins qua URL <a href="https://a846-183-80-56-103.ngrok.io">https://a846-183-80-56-103.ngrok.io</a></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-11.png"/></a></p>
+</li>
+<li>
+<p>Ấn <code>+ New Item</code>, điền tên dự án vào phần bên dưới <code>Enter an item name</code>, chọn <code>Multibranch Pipeline</code> và ấn <code>OK</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-12.png"/></a></p>
+</li>
+<li>
+<p>Ở phần <code>Branch Sources</code>, ấn <code>Add source</code> chọn <code>GitHub</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-13.png"/></a></p>
+</li>
+<li>
+<p>Thêm Github repo bằng cách chọn <code>Add repository</code>, điền vào <code>Repository URL</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-15.png"/></a></p>
+</li>
+<li>
+<p>Ấn <code>Apply</code> để hoàn tất</p>
+</li>
+</ol>
+<h2 id="trigger-jenkins-pipeline">Trigger Jenkins pipeline</h2>
+<p>Sau khi cài đặt theo các bước như ở trên, chúng ta sẽ thấy có project <code>mlops-demo</code> như bên dưới</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-17.png"/></a></p>
+<details class="bug" open="open">
+<summary>Bug</summary>
+<p>Nếu bạn không thấy branch nào, thì bạn ấn <code>Scan Repository Now</code> như bên dưới và reload lại trang là được.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins_scan_repo.png"/></a></p>
+</details>
+<p>Nếu ấn vào project <code>mlops-demo</code>, chúng ta sẽ thấy ở góc tay trái bên dưới có <code>Build History</code>, chính là lịch sử các lần push code trigger CI/CD pipeline của chúng ta.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-18.png"/></a></p>
+<p>Tuyệt vời, tiếp theo chúng ta sẽ chuẩn bị 1 file <code>Jenkinsfile</code> đơn giản ở trong folder <code>mlops-crash-course-code/</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>mlops-crash-course-code/
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>├── data_pipeline/
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>├── Jenkinsfile
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>├── LICENSE
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>├── model_serving/
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>├── README.md
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>├── .gitignore
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>├── stream_emitting/
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>└── training_pipeline/
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>└── monitoring_service/
+</code></pre></div>
+<p>với nội dung như sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">Jenkinsfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">pipeline</span> <span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">agent</span> <span class="nb">any</span> <span class="c1"># (1)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="n">stages</span> <span class="p">{</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'Build'</span><span class="p">)</span> <span class="p">{</span>  <span class="c1"># (2)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>                <span class="n">echo</span> <span class="s1">'Building something..'</span>  <span class="c1"># (3)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>            <span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        <span class="p">}</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'Test'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>                <span class="n">echo</span> <span class="s1">'Testing something..'</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>            <span class="p">}</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>        <span class="p">}</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        <span class="n">stage</span><span class="p">(</span><span class="s1">'Deploy'</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>            <span class="n">steps</span> <span class="p">{</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>                <span class="n">echo</span> <span class="s1">'Deploying something..'</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>            <span class="p">}</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>        <span class="p">}</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    <span class="p">}</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Định nghĩa <em>executor</em> chạy pipeline (<code>ip:port</code> hoặc <code>docker image</code>), ở đây <code>any</code> được hiểu là một <em>executor</em> bất kỳ</li>
+<li>Khai báo một bước trong pipeline</li>
+<li>Chạy câu lệnh <code>echo ...</code> trong bước này</li>
+</ol>
+<p>Sau khi đã thêm file này vào folder, chúng ta sẽ thực hiện push commit lên branch bất kỳ</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>git init
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>git add Jenkinsfile
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>git push origin your_branch
+</code></pre></div>
+<p>Lúc này chúng ta sẽ thấy có thêm <code>#2</code> ở <code>Build History</code> với 3 bước <code>Build</code>, <code>Test</code> và <code>Deploy</code>, chứng tỏ đã thông luồng từ push code cho tới trigger Jenkins pipeline.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-19.png"/></a></p>
+<p>Nếu chúng ta ấn vào <code>#2</code>, chọn <code>Console Output</code>, chúng ta sẽ thấy hiển thị như sau:</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/jenkins/jenkins-20.png"/></a></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="o">[</span>Pipeline<span class="o">]</span> withEnv
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span>Build<span class="o">)</span>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="nb">echo</span>
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>Building something..
+<a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
+<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
+<a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span>Test<span class="o">)</span>
+<a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="nb">echo</span>
+<a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a>Testing something..
+<a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
+<a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="o">[</span>Pipeline<span class="o">]</span> stage
+<a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">{</span> <span class="o">(</span>Deploy<span class="o">)</span>
+<a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="nb">echo</span>
+<a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a>Deploying something..
+<a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-22" id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="o">[</span>Pipeline<span class="o">]</span> // stage
+<a href="#__codelineno-9-23" id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-24" id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="o">[</span>Pipeline<span class="o">]</span> // withEnv
+<a href="#__codelineno-9-25" id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="o">[</span>Pipeline<span class="o">]</span> <span class="o">}</span>
+<a href="#__codelineno-9-26" id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="o">[</span>Pipeline<span class="o">]</span> // node
+<a href="#__codelineno-9-27" id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="o">[</span>Pipeline<span class="o">]</span> End of Pipeline
+<a href="#__codelineno-9-28" id="__codelineno-9-28" name="__codelineno-9-28"></a>Finished: SUCCESS
+</code></pre></div>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Nếu muốn chạy stage chỉ khi có thay đổi ở file hoặc folder liên quan, ví dụ chỉ test data pipeline khi có thay đổi ở folder <code>data_pipeline/</code>, chúng ta thêm điều kiện <code>when</code> như sau:</p>
+<div class="highlight"><pre><span></span><code>````py title="Jenkinsfile" linenums="1"
+pipeline {
+...
+
+            stage('test data pipeline') {
+                when {changeset "data_pipeline/*.*" }
+
+                steps {
+                    echo 'Testing data pipeline..'
+                }
+            }
+
+            ...
+        }
+    }
+    ```
+````
+</code></pre></div>
+</details>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>Kiểu viết <code>Jenkinsfile</code> như ở trên, tuân theo các rule và syntax được định nghĩa sẵn, gọi là <em>Declarative Pipeline</em>. Ngoài ra còn một cách viết khác dùng <code>Groovy script</code> gọi là <em>Scripted Pipeline</em>, cách này thông thường sử dụng cho những logic phức tạp.</p>
+</details>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học vừa rồi, Jenkins đã được cài đặt để có thể tự động chạy CI/CD pipeline mỗi khi có sự thay đổi ở repo <code>yourusername/mlops-crash-course-code</code> của bạn. Chúng ta đã xây dựng và chạy thử một file Jenkinsfile đơn giản để smoke test các cài đặt xem có vấn đề gì không.</p>
+<p>Ở bài tiếp theo, chúng ta sẽ sử dụng Jenkinsfile để xây dựng các CI/CD pipeline cho data pipeline.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Kiểm thử hệ thống" class="md-footer__link md-footer__link--prev" href="kiem-thu-he-thong.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Kiểm thử hệ thống
+            </div>
+</div>
+</a>
+<a aria-label="Next: CI/CD cho data pipeline" class="md-footer__link md-footer__link--next" href="data-pipeline.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              CI/CD cho data pipeline
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

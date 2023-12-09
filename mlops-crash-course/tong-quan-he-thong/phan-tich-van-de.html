@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Phân tích vấn đề - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Phân tích vấn đề
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Phân tích vấn đề
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-van-e">
+    Phân tích vấn đề
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phan-tich-van-e">
+    Phân tích vấn đề
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Phân tích vấn đề</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/tong-quan-he-thong/phan-tich-van-de/requirements.jpg"/></a>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Hệ thống ML tương tự như là hệ thống phần mềm. Khi xây dựng hệ thống phần mềm, việc đầu tiên cần làm đó là xác định các vấn đề và cụ thể hoá thành các yêu cầu có thể đánh giá được và đề xuất các giải pháp khả thi để giải quyết các yêu cầu đó. Cốt lõi của hệ thống ML khi được xây dựng vẫn là đưa ra và xử lý được bài toán kinh doanh của một tổ chức.</p>
+<p>Trong khoá học này, chúng ta cùng nhau tìm hiểu bài toán giả định của một công ty có mô hình kinh doanh tương tự <em>Grab</em> và đã tìm hiểu về ML chọn đó làm giải pháp, vấn đề kinh doanh của công ty của bạn là:</p>
+<p><strong><em>Làm thế nào để chọn ra tài xế có khả năng cao nhất sẽ hoàn thành một cuốc xe khi có yêu cầu đặt xe từ khách hàng?</em></strong></p>
+<p>Hình dưới đây thể hiện yêu cầu về đầu vào và đầu ra của vấn đề.</p>
+<pre class="mermaid"><code>graph LR
+    n01[ ] --Thông tin tài xế 1--&gt; n1[Hệ thống ML] --Tài xế có khả năng cao nhất&lt;br&gt;hoàn thành cuốc xe--&gt; n02[ ]
+    n03[ ] --Thông tin tài xế 2--&gt; n1
+    n04[ ] --Thông tin tài xế 3--&gt; n1
+    style n01 height:0px;
+    style n02 height:0px;
+    style n03 height:0px;
+    style n04 height:0px;</code></pre>
+<h2 id="phan-tich-van-e">Phân tích vấn đề</h2>
+<p>Quá trình định nghĩa vấn đề kinh doanh là quá trình trả lời nhiều câu hỏi. Bảng dưới đây liệt kê các câu hỏi tiêu biểu và các câu trả lời.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Chủ đề</strong></th>
+<th><strong>Câu hỏi</strong></th>
+<th><strong>Trả lời</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mục tiêu</strong></td>
+<td>Mục tiêu kinh doanh?</td>
+<td>Tăng số lượng cuốc xe được hoàn thành trong 1 tháng 10%</td>
+</tr>
+<tr>
+<td></td>
+<td>Các chức năng chính?</td>
+<td>Chọn tài xế có khả năng cao nhất hoàn thành cuốc xe</td>
+</tr>
+<tr>
+<td><strong>Các bên liên quan</strong></td>
+<td>Ai là người tham gia? Vai trò và trách nhiệm?</td>
+<td>Product owner, Product manager, Solution Architect, Data Scientist, Data engineer, ML engineer</td>
+</tr>
+<tr>
+<td></td>
+<td>Ai cần được thông báo về dự án?</td>
+<td>Head of Engineering, CTO, CEO</td>
+</tr>
+<tr>
+<td></td>
+<td>Ai là người dùng cuối?</td>
+<td>Khách hàng</td>
+</tr>
+<tr>
+<td><strong>Data</strong></td>
+<td>Có thể lấy ở các nguồn nào?</td>
+<td>Static data và streaming data từ ứng dụng đặt xe của công ty</td>
+</tr>
+<tr>
+<td></td>
+<td>Định nghĩa quy trình để biến đổi data sang format có thể dùng được?</td>
+<td>Giả sử quy trình để biến đổi data, feature engineering đã được định nghĩa</td>
+</tr>
+<tr>
+<td><strong>Phát triển model</strong></td>
+<td>Có giải pháp nào đã được thực hiện để đối chiếu?</td>
+<td>Giả sử đã tìm hiểu các giải pháp của đối thủ cạnh tranh</td>
+</tr>
+<tr>
+<td></td>
+<td>Có những thresholds nào được dùng để khiến giải pháp trở nên hữu ích?</td>
+<td>Model inference không được chạy quá 500ms</td>
+</tr>
+<tr>
+<td></td>
+<td>Cân nhắc tradeoffs</td>
+<td>False positives (false alarm) có ảnh hưởng nghiêm trọng hơn</td>
+</tr>
+<tr>
+<td></td>
+<td>Có cần confidence score không? Dùng threshold nào?</td>
+<td>Không cần, rank các tài xế theo xác suất mà model dự đoán sau</td>
+</tr>
+<tr>
+<td></td>
+<td>Làm gì với các dự đoán không được chọn?</td>
+<td>Được log lại và gán label</td>
+</tr>
+<tr>
+<td><strong>Đánh giá model</strong></td>
+<td>Dùng metrics nào để đánh giá model lúc phát triển và ở production?</td>
+<td>Dùng metrics Root Mean Square Error (RMSE)</td>
+</tr>
+<tr>
+<td></td>
+<td>Làm sao để liên kết model performance với mục tiêu kinh doanh?</td>
+<td>Ở production, ngoài RMSE để đánh giá model performance, cần tính tỉ lệ hoàn thành các cuốc xe trong 1 tháng gần nhất</td>
+</tr>
+<tr>
+<td><strong>Triển khai</strong></td>
+<td>Data của quá trình inference sẽ được lấy từ đâu? Được format và lưu trữ thế nào?</td>
+<td>Data đầu vào của quá trình inference được lấy từ <em>Online Feature Store</em> (sẽ được giải thích trong bài <strong>Model serving</strong>)</td>
+</tr>
+<tr>
+<td></td>
+<td>Model được triển khai ở đâu?</td>
+<td>Lên server nội bộ của công ty</td>
+</tr>
+<tr>
+<td></td>
+<td>Khi nào chạy batch prediction? Khi nào chạy online prediction?</td>
+<td>Chạy batch prediction mỗi giờ cho các tài xế ít hoạt động, data ít thay đổi. Chạy online prediction cho các tài xế hoạt động nhiều</td>
+</tr>
+<tr>
+<td></td>
+<td>Tốc độ thay đổi của data thế nào?</td>
+<td>Vài features sẽ thay đổi không thường xuyên, đặt lịch để cập nhật hàng ngày. Vài features cần lấy từ streaming data, cần data pipeline riêng để xử lý và lưu trữ</td>
+</tr>
+<tr>
+<td></td>
+<td>Bao lâu thì cần train lại model?</td>
+<td>Dựa vào tốc độ thay đổi của data hoặc chất lượng data ở production</td>
+</tr>
+<tr>
+<td></td>
+<td>Labels ở production được thu thập như thế nào?</td>
+<td>Sau khi tài xế được chọn, ứng dụng đặt xe sẽ trả về kết quả xem cuốc xe có hoàn thành không</td>
+</tr>
+<tr>
+<td><strong>Quyền riêng tư</strong></td>
+<td>Có yêu cầu nào về quyền riêng tư của data, labels, v.v</td>
+<td>Data và labels chỉ được dùng trong nội bộ công ty</td>
+</tr>
+<tr>
+<td></td>
+<td>Hệ thống có thể được kết nối với internet không?</td>
+<td>Có</td>
+</tr>
+<tr>
+<td></td>
+<td>Có thể giữ data của users trong bao lâu?</td>
+<td>Không giới hạn</td>
+</tr>
+<tr>
+<td><strong>Chi phí và lợi ích</strong></td>
+<td>Ngân sách ban đầu</td>
+<td>$500,000</td>
+</tr>
+<tr>
+<td></td>
+<td>So sánh chi phí và lợi ích</td>
+<td>Lợi ích lớn hơn chi phí nhiều, hệ thống có thể tái sử dụng, chi phí để optimize không lớn</td>
+</tr>
+<tr>
+<td></td>
+<td>Cần đạt yêu cầu nào để tăng kinh phí?</td>
+<td>Hoàn thành các mốc thời gian tiếp theo, triển khai model ra production và tiếp tục chứng minh lợi ích lớn hơn nhiều chi phí</td>
+</tr>
+<tr>
+<td><strong>Rủi ro</strong></td>
+<td>Phân tích rủi ro đi kèm</td>
+<td>Có thể model được đánh giá offline là tốt, nhưng ở production không mang lại hiệu quả cao</td>
+</tr>
+<tr>
+<td></td>
+<td>Phân tích rủi ro kinh doanh khác</td>
+<td>Hết tiền trước khi hoàn thiện POC</td>
+</tr>
+<tr>
+<td><strong>Ràng buộc kĩ thuật</strong></td>
+<td>Có hệ thống cũ nào cần tích hợp với không?</td>
+<td>Không</td>
+</tr>
+<tr>
+<td></td>
+<td>Architecture và tools sẽ dùng?</td>
+<td>Được định nghĩa ở bài tiếp theo</td>
+</tr>
+</tbody>
+</table>
+<p>Ngoài một vài câu hỏi được nêu ở trên, tuỳ vào mục tiêu kinh doanh sẽ có các vấn đề và câu hỏi khác được đưa ra. Trong bảng trên, nhiều câu trả lời liên quan tới mảng kinh doanh của công ty đã được trả lời ngắn gọn. Những câu trả lời này thông thường được một đội ngũ các Data Analyst và Business Strategist thảo luận, phân tích, và giải đáp. Trong quá trình thực hiện dự án, các câu hỏi trên sẽ được cập nhật liên tục. Chúng ta không mong đợi câu trả lời sẽ chính xác từ khi còn chưa bắt đầu thực hiện dự án. Bạn có thể tham khảo thêm <a href="https://ml-ops.org/content/phase-zero">ở đây</a> về các câu hỏi khác khi định nghĩa vấn đề kinh doanh.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Trong quá trình phát triển hệ thống ML, mọi thành viên đều cần chú ý tới 4 tính chất cơ bản của một hệ thống ML, bao gồm <strong>Tính tin cậy (Reliability), khả năng thay đổi quy mô (Scalability), khả năng bảo trì (Maintainability) và tính thích nghi (Adaptability)</strong>. Bạn có thể đọc thêm ở khoá học <a href="https://docs.google.com/document/d/1C3dlLmFdYHJmACVkz99lSTUPF4XQbWb_Ah7mPE12Igo/edit#heading=h.f2r0clc6xjgx">CS 329S: Machine Learning Systems Design</a> để hiểu rõ hơn về chúng.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ cùng tìm hiểu về các architecture, workflows và MLOps platform được dùng trong khoá học.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://docs.google.com/document/d/10K3pYTNvreVy5hl2EqWf_LX3mMW4CQw1TdMrHplMu00/edit#heading=h.aix49dp857xj">CS 329S. Lecture 2. ML and Data Systems Fundamentals</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Tổng quan MLOps" class="md-footer__link md-footer__link--prev" href="tong-quan-mlops.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Tổng quan MLOps
+            </div>
+</div>
+</a>
+<a aria-label="Next: MLOps platform" class="md-footer__link md-footer__link--next" href="mlops-platform.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              MLOps platform
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

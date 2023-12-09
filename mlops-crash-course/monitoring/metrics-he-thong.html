@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/monitoring/metrics-he-thong.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Metrics hệ thống - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Metrics hệ thống
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Metrics hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logs">
+    Logs
+  </a>
+<nav aria-label="Logs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cach-elk-stack-hoat-ong">
+    Cách ELK Stack hoạt động
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trien-khai-elk-stack">
+    Triển khai ELK Stack
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#truy-van-logs">
+    Truy vấn logs
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metrics-he-thong">
+    Metrics hệ thống
+  </a>
+<nav aria-label="Metrics hệ thống" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-va-grafana-servers">
+    Prometheus và Grafana servers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#node-exporter-full-dashboard">
+    Node Exporter Full dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bentoml-dashboard">
+    BentoML dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logs">
+    Logs
+  </a>
+<nav aria-label="Logs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cach-elk-stack-hoat-ong">
+    Cách ELK Stack hoạt động
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trien-khai-elk-stack">
+    Triển khai ELK Stack
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#truy-van-logs">
+    Truy vấn logs
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metrics-he-thong">
+    Metrics hệ thống
+  </a>
+<nav aria-label="Metrics hệ thống" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-va-grafana-servers">
+    Prometheus và Grafana servers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#node-exporter-full-dashboard">
+    Node Exporter Full dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bentoml-dashboard">
+    BentoML dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Metrics hệ thống</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/speed-scale.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/speed-scale.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/dashboard?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã tìm hiểu về theo dõi một hệ thống ML nói chung, với các metrics điển hình và các bộ công cụ được dùng trong quá trình theo dõi.</p>
+<p>Trong bài này, chúng ta sẽ triển khai các giải pháp để theo dõi hệ thống ML trong khoá học này, cụ thể là những công việc sau:</p>
+<ol>
+<li>Triển khai ELK Stack để theo dõi logs của hệ thống</li>
+<li>Triển khai Prometheus và Grafana servers để theo dõi metrics hệ thống</li>
+</ol>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Ở bài này, chúng ta không viết code, mà sẽ triển khai ELK Stack, Prometheus và Grafana servers. Do đó, bạn không cần cài đặt môi trường phát triển.</p>
+<p>Các MLOps tools được dùng trong bài này bao gồm:</p>
+<ol>
+<li>Elasticsearch, Kibana và Filebeat: thu thập và hiển thị logs tập trung từ Online serving service</li>
+<li>Prometheus và Grafana: theo dõi và hiển thị metrics</li>
+</ol>
+<h2 id="logs">Logs</h2>
+<p>Việc sử dụng công nghệ container có nhiều ưu điểm, nhưng cũng xuất hiện thêm nhiều thách thức cho các kĩ sư. Một trong những thách thức đó là việc thu thập và xử lý logs của mỗi container một cách hiệu quả. May mắn thay, ELK Stack là một trong những giải pháp được cộng đồng ưa chuộng để xử lý vấn đề này.</p>
+<h3 id="cach-elk-stack-hoat-ong">Cách ELK Stack hoạt động</h3>
+<p>Hình dưới là một pipeline điển hình cho việc thu thập và xử lý logs tập trung sử dụng ELK Stack.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elk-stack.png"/></a></p>
+<p>Đầu tiên, Logstash thu thập logs từ containers và lọc logs. Các cách để lọc logs được người dùng định nghĩa. Sau đó, Logstash đẩy logs tới Elasticsearch để đánh index, tiện cho việc tìm kiếm. Kibana lấy logs ra, phân tích, hiển thị data lên Kibana dashboard.</p>
+<p>Có khá nhiều biến thể của pipeline trên, ví dụ như dùng <em>Filebeat</em> để thu thập logs từ containers và gửi logs tới Elasticsearch. Trong bài này, Logstash sẽ được thay thế bằng Filebeat để thu thập logs từ containers và gửi tới Elasticsearch.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>ELK Stack được sử dụng làm tên chung cho giải pháp, mặc dù Filebeat sẽ được dùng thay thế cho Logstash trong bài này.</p>
+</div>
+<h3 id="trien-khai-elk-stack">Triển khai ELK Stack</h3>
+<p>Để triển khai ELK Stack, ở trong repo <code>mlops-crash-course-platform</code>, bạn hãy làm các bước sau:</p>
+<ol>
+<li>
+<p>Triển khai các servers cần thiết</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh elk up
+</code></pre></div>
+<p>Câu lệnh trên sẽ chạy các servers với các file config sau:</p>
+<ul>
+<li>
+<p>Filebeat server</p>
+<ul>
+<li><code>elk/extensions/filebeat/filebeat-compose.yml</code>: File docker-compose để chạy Filebeat server</li>
+<li><code>elk/extensions/filebeat/config/filebeat.yml</code>: Config của Filebeat server</li>
+</ul>
+</li>
+<li>
+<p>Elasticsearch server</p>
+<ul>
+<li><code>elk/elk-docker-compose.yml</code>: File docker-compose để chạy Elasticsearch server</li>
+<li><code>elk/elasticsearch/config/elasticsearch.yml</code>: Config của Elasticsearch server</li>
+</ul>
+</li>
+<li>
+<p>Kibana server</p>
+<ul>
+<li><code>elk/elk-docker-compose.yml</code>: File docker-compose để chạy Kibana server</li>
+<li><code>elk/kibana/config/kibana.yml</code>: Config của Kibana server</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Đợi 20s để việc khởi tạo các servers hoàn thành</p>
+</li>
+<li>
+<p>Kiểm tra Elasticsearch server được triển khai thành công chưa:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>curl -X GET http://localhost:9200 -u elastic:changeme
+</code></pre></div>
+<p>Nếu Elasticsearch server được triển khai thành công, ở terminal sẽ hiển thị tương tự như sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="o">{</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="s2">"name"</span> : <span class="s2">"ee711e6d1977"</span>,
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="s2">"cluster_name"</span> : <span class="s2">"docker-cluster"</span>,
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="s2">"cluster_uuid"</span> : <span class="s2">"sG38FtFuQSedHb68U_Uv5Q"</span>,
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="s2">"version"</span> : <span class="o">{</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>        <span class="s2">"number"</span> : <span class="s2">"8.4.1"</span>,
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="s2">"build_flavor"</span> : <span class="s2">"default"</span>,
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="s2">"build_type"</span> : <span class="s2">"docker"</span>,
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="s2">"build_hash"</span> : <span class="s2">"2bd229c8e56650b42e40992322a76e7914258f0c"</span>,
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="s2">"build_date"</span> : <span class="s2">"2022-08-26T12:11:43.232597118Z"</span>,
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>        <span class="s2">"build_snapshot"</span> : false,
+<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>        <span class="s2">"lucene_version"</span> : <span class="s2">"9.3.0"</span>,
+<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>        <span class="s2">"minimum_wire_compatibility_version"</span> : <span class="s2">"7.17.0"</span>,
+<a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a>        <span class="s2">"minimum_index_compatibility_version"</span> : <span class="s2">"7.0.0"</span>
+<a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="o">}</span>,
+<a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="s2">"tagline"</span> : <span class="s2">"You Know, for Search"</span>
+<a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="o">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>Kiểm tra Kibana server được triển khai thành công chưa:</p>
+<ol>
+<li>Trên browser, truy cập vào Kibana server tại <a href="http://localhost:5601">http://localhost:5601</a></li>
+<li>
+<p>Đăng nhập với tên user là <code>elastic</code> và mật khẩu là <code>changeme</code></p>
+<p>Việc đăng nhập thành công chứng tỏ Kibana server đã triển khai thành công.</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="truy-van-logs">Truy vấn logs</h3>
+<p>Sau khi đã triển khai ELK Stack, hãy thử truy vấn logs ở ELK Stack xem logs đã được thu thập thành công từ Online serving service hay chưa.</p>
+<ol>
+<li>
+<p>Gửi vài requests tới Online serving API bằng cách truy cập <a href="http://localhost:8172">http://localhost:8172</a>, mở API <code>/inference</code>, click <code>Try it out</code>. Ở phần <code>Request body</code>, bạn gõ nội dung sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span><span class="w"></span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</li>
+<li>
+<p>Đăng nhập vào Kibana server <a href="http://localhost:5601">http://localhost:5601</a>. Ở sidebar bên phải, chọn <strong>Discover</strong>.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-select-discover.png"/></a></p>
+</li>
+<li>
+<p>Trên UI của page <strong>Discover</strong>, trong phần gõ câu truy vấn, gõ truy vấn sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>container.name:"online_serving"
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Câu truy vấn trên sử dụng ngôn ngữ truy vấn KQL. Bạn có thể tham khảo thêm <a href="https://www.elastic.co/guide/en/kibana/current/kuery-query.html">tại đây</a>.</p>
+</div>
+<p>Bảng hiển thị logs của Online Serving service sẽ giống như sau</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/elastic-logs.png"/></a></p>
+<p>Bạn có thể lưu lại lần <em>discover</em> này bằng cách click vào nút <code>Save</code> ở góc trên bên phải.</p>
+</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Làm thế nào ELK stack có thể biết được nên thu thập logs từ containers nào?</p>
+</div>
+<p>Nếu bạn nào đã đọc file config của Filebeat tại <code>elk/extensions/filebeat/config/filebeat.yml</code>, bạn sẽ thấy một đoạn config như sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">elk/extensions/filebeat/config/filebeat.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">filebeat.autodiscover</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="nt">providers</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="c1"># The Docker autodiscover provider automatically retrieves logs from Docker</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="c1"># containers as they start and stop.</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">      </span><span class="nt">hints.enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Đoạn config này cấu hình để Filebeat tự động thu thập logs từ các containers và gửi về Elasticsearch. Trong thực tế, chúng ta không muốn thu thập logs từ mọi containers và cũng muốn lọc ra những dòng log nhất định từ service. Để làm điều này, bạn có thể đọc thêm <a href="https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html">tại đây</a>.</p>
+<h2 id="metrics-he-thong">Metrics hệ thống</h2>
+<p>Trong phần này, Prometheus sẽ được dùng để thu thập các metrics hệ thống và Grafana sẽ được dùng để hiển thị các metrics đó.</p>
+<h3 id="prometheus-va-grafana-servers">Prometheus và Grafana servers</h3>
+<p>Để triển khai Prometheus và Grafana servers, ở trong repo <code>mlops-crash-course-platform</code>, bạn hãy làm các bước sau:</p>
+<ol>
+<li>
+<p>Triển khai các servers cần thiết</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>bash run.sh prom-graf up
+</code></pre></div>
+<p>Câu lệnh trên sẽ chạy các servers sau:</p>
+<ul>
+<li>
+<p>Prometheus server</p>
+<ul>
+<li><code>prom-graf/prom-graf-docker-compose.yml</code>: File docker-compose để chạy Prometheus server</li>
+<li><code>prom-graf/prometheus/config/prometheus.yml</code>: Config của Prometheus server</li>
+</ul>
+</li>
+<li>
+<p>Grafana server</p>
+<ul>
+<li><code>prom-graf/prom-graf-docker-compose.yml</code>: File docker-compose để chạy Grafana server</li>
+<li><code>prom-graf/grafana/config/dashboards.yaml</code>: Grafana <em>dashboard</em> config</li>
+<li><code>prom-graf/grafana/config/datasources.yaml</code>. Grafana <em>datasource</em> config. File này định nghĩa sẵn datasource là Prometheus server được triển khai ở trên</li>
+</ul>
+</li>
+<li>
+<p>Node exporter server</p>
+<ul>
+<li><code>prom-graf/prom-graf-docker-compose.yml</code>: File docker-compose để chạy Node exporter server</li>
+</ul>
+</li>
+</ul>
+<p>Node exporter server được cài đặt thêm vào để tính toán các metrics liên quan tới node (chính là máy local hiện tại của bạn), ví dụ như các metrics liên quan tới CPU, memory, v.v. Chúng ta sẽ học cách lấy ra các metrics này từ Node exporter server và hiển thị lên Grafana dashboard ở phần dưới.</p>
+</li>
+<li>
+<p>Kiểm tra Prometheus server được triển khai thành công chưa:</p>
+<ol>
+<li>Truy cập Prometheus server tại <a href="http://localhost:9090">http://localhost:9090</a></li>
+<li>Trên Navbar, click <strong>Status</strong>, chọn <strong>Targets</strong></li>
+<li>
+<p>Kiểm tra xem các endpoints của các job <strong>prometheus</strong>, <strong>node</strong>, <strong>online_serving</strong> có ở trạng thái <strong>UP</strong> không. Bạn có thể cần đợi 30s cho tới khi các endpoints đạt trạng thái này. Hình dưới cho thấy endpoints của các targets trên đã ở trạng thái <strong>UP</strong>.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/prometheus-endpoints.png"/></a></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Một <em>endpoint</em> hoặc một <em>instance</em>, trong Prometheus được hiểu là địa chỉ của service mà Prometheus thu thập metrics. Một <em>job</em> là một process làm nhiệm vụ thu thập metrics từ một tập hợp các <em>instance</em> có chung mục đích. Bạn có thể đọc thêm <a href="https://prometheus.io/docs/concepts/jobs_instances/">tại đây</a>.</p>
+</div>
+</li>
+</ol>
+</li>
+<li>
+<p>Kiểm tra xem Grafana server được triển khai thành công chưa</p>
+<ol>
+<li>Truy cập vào Grafana server tại <a href="http://localhost:3000">http://localhost:3000</a></li>
+<li>Đăng nhập với tên user là <code>admin</code>, và mật khẩu là <code>admin</code>. Việc đăng nhập thành công chứng tỏ Grafana server đã được triển khai thành công.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Grafana cần một datasource để có thể lấy metrics về và hiển thị. Prometheus đã được cấu hình làm datasource mặc định của Grafana. Cấu hình này được đặt tại <code>prom-graf/grafana/config/datasources.yaml</code>.</p>
+</div>
+</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Làm thế nào để tạo một job hay một instance trong Prometheus?</p>
+</div>
+<p>Trong config file <code>prom-graf/prometheus/config/prometheus.yml</code> của Prometheus server, job <code>online_serving</code> đã được thiết lập sẵn để thu thập metrics từ Online serving service.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">prom-graf/prometheus/config/prometheus.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">"online_serving"</span><span class="w"></span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span><span class="w"></span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">static_configs</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"localhost:8172"</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Thiết lập này báo cho Prometheus biết rằng, mỗi 5s nó cần phải thu thập metrics từ URI <a href="http://localhost:8172/metrics">http://localhost:8172/metrics</a>, với <code>/metrics</code> là route mặc định để Prometheus đọc các metrics. Bạn có thể mở URI này trên browser và sẽ thấy nội dung tương tự như sau.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/metrics-route.png"/></a></p>
+<h3 id="node-exporter-full-dashboard">Node Exporter Full dashboard</h3>
+<p>Ở phần này, chúng ta sẽ triển khai Grafana dashboard tên là <a href="https://grafana.com/grafana/dashboards/1860-node-exporter-full/">Node Exporter Full</a>. Dashboard này được xây dựng sẵn bởi cộng đồng sử dụng Prometheus và Grafana. Nó hiển thị các thông tin quan trọng của hệ thống về máy local mà bạn đang chạy. Bạn hãy làm các bước sau để triển khai.</p>
+<ol>
+<li>
+<p>Đảm bảo config file <code>prom-graf/prometheus/config/prometheus.yml</code> của Prometheus server chứa config sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">prom-graf/prometheus/config/prometheus.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">"node"</span><span class="w"></span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="nt">static_configs</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"localhost:9100"</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p>Trên giao diện của Grafana Web UI, ở menu bên trái chọn <code>Dashboards</code> &gt; <code>Browse</code></p>
+</li>
+<li>Click <code>Import</code>, nhập vào ID của Node Exporter Full dashboard là <em>1860</em>, click <code>Load</code></li>
+<li>
+<p>Chọn datasource là Prometheus, click <code>Import</code>. Bạn sẽ nhìn thấy dashboard giống như sau</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/node-exporter-full-dashboard.png"/></a></p>
+<p>Tuỳ thuộc vào cài đặt của Node Exporter service trong file docker-compose <code>prom-graf/prom-graf-docker-compose.yml</code> mà một vài phần của dashboard sẽ không được hiển thị hết. Bạn có thể xem thêm <a href="https://grafana.com/grafana/dashboards/1860-node-exporter-full/">tại đây</a> nếu cần biết thêm chi tiết về cách cấu hình Node Exporter service.</p>
+</li>
+</ol>
+<h3 id="bentoml-dashboard">BentoML dashboard</h3>
+<p>BentoML dashboard đã được chuẩn bị sẵn tại <code>mlops-crash-course-code/monitoring_service/dashboards/bentoml_dashboard.json</code>. Bạn làm các bước sau để triển khai BentoML dashboard trên Grafana.</p>
+<ol>
+<li>Copy file dashboard trên vào <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code></li>
+<li>Truy cập vào Grafana server tại <a href="http://localhost:3000">http://localhost:3000</a></li>
+<li>Ở sidebar bên phải chọn <strong>Dashboards</strong></li>
+<li>
+<p>Ở giao diện của trang Dashboards, bạn sẽ thấy <em>BentoML Dashboard</em>, click chọn để mở. BentoML dashboard sẽ giống như sau.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/bentoml-dashboard.png"/></a></p>
+<p>Dashboard này bao gồm 2 panel:</p>
+<ul>
+<li><code>request_in_progress</code>: Hiển thị số lượng requests đang được xử lý</li>
+<li><code>request_total</code>: Hiển thị số lượng requests trong 1s, được đo trong thời gian mỗi 5 phút</li>
+</ul>
+</li>
+<li>
+<p>Click vào tên của panel, chọn <strong>Explore</strong> để xem câu truy vấn <em>PromQL</em> được sử dụng để đọc data từ Prometheus.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/metrics-he-thong/grafana-explore.png"/></a></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>PromQL là ngôn ngữ truy vấn được dùng trong Prometheus để tổng hợp data dạng time-series trong thời gian thực. Bạn có thể đọc thêm <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">tại đây</a>.</p>
+</div>
+</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Làm thế nào mà Grafana tự động đọc được file <code>bentoml_dashboard.json</code>?</p>
+</div>
+<p>Trong config <code>prom-graf/grafana/config/dashboards.yaml</code> của Grafana, bạn sẽ thấy một số config như sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">prom-graf/grafana/config/dashboards.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">updateIntervalSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"> </span><span class="c1"># (1)</span><span class="w"></span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/grafana/dashboards</span><span class="w"> </span><span class="c1"># (2)</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Chu kì mà Grafana đọc và cập nhật dashboard nằm trong folder chứa dashboard</li>
+<li>Folder chứa Grafana dashboard</li>
+</ol>
+<p>Ngoài ra, trong file docker-compose của Grafana server tại <code>prom-graf/prom-graf-docker-compose.yml</code>, chúng ta đã mount folder <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code> ở máy local vào folder <code>/opt/grafana/dashboards</code> ở trong docker container. Điều này giúp Grafana tự động đọc các file dashboard trong folder <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code>.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Chúng ta vừa triển khai ELK Stack để thu thập logs tập trung lại một chỗ, truy vấn và hiển thị logs. Chúng ta cũng vừa triển khai Prometheus, Grafana servers để thu thập các metrics hệ thống và hiển thị chúng.</p>
+<p>Trong thực tế với ELK Stack, bạn sẽ cần thiết lập các bộ lọc để truy vấn và hiển thị logs hiệu quả hơn, dễ dàng tìm ra logs chứa lỗi để kịp thời xử lý. Với Prometheus, Grafana, bạn sẽ cần tìm hiểu thêm về cách viết các câu lệnh truy vấn sử dung <em>PromQL</em> để có thể chọn lọc và tổng hợp metrics data hiệu quả. Bạn có thể đọc thêm tại <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">Querying Prometheus</a>.</p>
+<p>Tập trung logs lại một nơi, theo dõi các metrics hệ thống của Online serving service là chưa đủ trong một hệ thống ML. Ngoài các metrics đó, các metrics về data và model cũng cần được quan tâm, ví dụ như data ở production có bị drift không, model performance như thế nào, v.v. Việc theo dõi các metrics liên quan tới data, model sẽ giúp kịp thời cập nhật data và train lại model. Trong bài sau, chúng ta sẽ thực hiện triển khai một service khá phức tạp, đó là Monitoring service.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://logz.io/blog/docker-logging/">Docker Logs with the ELK Stack</a></li>
+<li><a href="https://grafana.com/docs/grafana-cloud/quickstart/docker-compose-linux/">Monitoring a Linux host with Prometheus, Node Exporter, and Docker Compose</a></li>
+<li><a href="https://docs.bentoml.org/en/0.13-lts/guides/monitoring.html">BentoML - Monitoring with Prometheus</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Tổng quan monitoring" class="md-footer__link md-footer__link--prev" href="tong-quan-monitoring.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Tổng quan monitoring
+            </div>
+</div>
+</a>
+<a aria-label="Next: Thiết kế monitoring service" class="md-footer__link md-footer__link--next" href="thiet-ke-monitoring-service.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Thiết kế monitoring service
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

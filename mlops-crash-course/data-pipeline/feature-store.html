@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/data-pipeline/feature-store.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Feature store - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Feature store
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Feature store
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="feature-store.html">
+        Feature store
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feature-store">
+    Feature store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feast">
+    Feast
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feature-store">
+    Feature store
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feast">
+    Feast
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Feature store</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/data-pipeline/feature-store-meme.jpg"/></a>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Câu chuyện bắt đầu ở một công ty X nọ có 2 ông data scientist làm 2 bài toán khác nhau là credit score và churn prediction. Vào một ngày đẹp trời đầy nắng và gió, 2 ông ngồi trà đá và chia sẻ với nhau về bài toán mình đang làm thì chợt nhận ra cả 2 đều đang tạo một tập hợp các tính năng về demographics (như độ tuổi, giới tính, ngôn ngữ, .v.v.) một cách độc lập, mà đáng lẽ ra là có thể chia sẻ cho nhau. 2 ông chợt này ra ý tưởng về một nơi lưu trữ feature chung để có thể dễ dàng sử dụng cho nhiều vấn đề khác nhau, thế là phiên bản đầu tiên của feature store ra đời.</p>
+<p>Liệu rằng feature store còn có công dụng gì không và xây dựng feature store như thế nào, mời bạn đến với nội dung bài học hôm nay.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
+<ol>
+<li>
+<p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>data_pipeline/dev_requirements.txt</code></p>
+</li>
+<li>
+<p>Feast sẽ được sử dụng trong bài này. Bạn vào repo <code>mlops-crash-course-platform/</code> và chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>bash run.sh feast up
+</code></pre></div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trong quá trình chạy code cho tất cả các phần dưới đây, chúng ta giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>data_pipeline</code>.</p>
+</div>
+<h2 id="feature-store">Feature store</h2>
+<p>Feature store là một hệ thống giúp lưu trữ, tương tác và quản lý feature. Công cụ này sinh ra để giải quyết vấn đề về:</p>
+<ul>
+<li><strong>Feature reuse:</strong> lưu trữ các feature đã được tạo ra để tái sử dụng khi cần thiết</li>
+<li><strong>Feature sharing:</strong> chia sẻ feature giữa các thành viên trong team hoặc với nhiều team khác nhau</li>
+<li><strong>Feature consistency:</strong> một nguồn dữ liệu cho cả mục đích training và serving</li>
+<li><strong>Feature monitoring:</strong> theo dõi thay đổi (drift) và chất lượng dữ liệu trước khi đưa qua model sử dụng</li>
+<li><strong>Data leakage:</strong> đảm bảo không xảy ra hiện tượng rò rỉ (leak) dữ liệu trong tập training. Ví dụ: dữ liệu training vào thời điểm bất kỳ không được bao gồm dữ liệu mà có timestamp sau đó.</li>
+</ul>
+<p>Có rất nhiều feature store ở thời điểm hiện tại, có thể kể tới một số như:</p>
+<ul>
+<li><strong>Open-source:</strong> Feast, Hopsworks</li>
+<li><strong>Trả phí:</strong> Tecton (Feast phiên bản enterprise), Hopworks (phiên bản enterprise), Amazon SageMaker Feature Store, Vertex AI Feature Store</li>
+</ul>
+<h2 id="feast">Feast</h2>
+<p>Ở series này chúng ta sẽ tìm hiểu về feature store thông qua <a href="https://feast.dev/">Feast</a>.</p>
+<p>Feast có 2 khái niệm stores là:</p>
+<ul>
+<li>
+<p><strong>Offline store:</strong> lưu trữ dữ liệu lịch sử để phục vụ mục đích training hoặc offline batch serving. Hiện tại Feast hỗ trợ chọn một trong loại data source sau để làm offline store: File, Snowflake, Bigquery và Redshift. Ngoài ra còn các loại khác được contribute bởi cộng đồng ví dụ như PostgreSQL, Spark, Trino, .v.v.., tuy nhiên nên hạn chế dùng vì chưa đạt full test coverage.</p>
+</li>
+<li>
+<p><strong>Online store:</strong> lưu trữ dữ liệu mới nhất cho mỗi ID. Store này cần có khả năng serve với low latency để sử dụng cho online serving. Các loại data source mà Feast hỗ trợ để làm online store bao gồm: SQLite, Snowflake, Redis, MongoDB và Datastore. Các loại khác contribute bởi cộng đồng có thể kể đến như PostgreSQL và Cassandra + Astra DB.</p>
+</li>
+</ul>
+<p>Tất cả các config cho Feast bao gồm data source cho mỗi loại store, định nghĩa các feature và entity (ID) nằm trong folder sau:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>data_pipeline/feature_repo
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>├── data_sources.py: định nghĩa các data source
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>├── entities.py: định nghĩa entity
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>├── features.py: định nghĩa các bảng feature và các feature cùng kiểu dữ liệu trong từng bảng
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>└── feature_store.yaml: định nghĩa loại data source và đường dẫn tới feature definition object store
+</code></pre></div>
+<p>Các bảng feature (còn gọi là feature view) chúng ta sẽ sử dụng bao gồm:</p>
+<ul>
+<li><strong>driver_stats_view:</strong> feature view với data source dạng file</li>
+<li><strong>driver_stats_stream:</strong> stream feature view với data source là Kafka và xử lý dữ liệu bằng Spark. Do bảng này lấy dữ liệu từ stream source nên feature sẽ mới hơn so với <em>driver_stats_view</em></li>
+</ul>
+<p>Code định nghĩa các data source như sau:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/feature_repo/data_sources.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">driver_stats_parquet_file</span> <span class="o">=</span> <span class="s2">"../data_sources/driver_stats.parquet"</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># local Parquet file as data source</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">driver_stats_batch_source</span> <span class="o">=</span> <span class="n">FileSource</span><span class="p">(</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">file_format</span><span class="o">=</span><span class="n">ParquetFormat</span><span class="p">(),</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="n">path</span><span class="o">=</span><span class="n">driver_stats_parquet_file</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="n">created_timestamp_column</span><span class="o">=</span><span class="s2">"created"</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="c1"># Kafka for stream source</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">driver_stats_stream_source</span> <span class="o">=</span> <span class="n">KafkaSource</span><span class="p">(</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats_stream"</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="n">kafka_bootstrap_servers</span><span class="o">=</span><span class="s2">"localhost:29092"</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="n">topic</span><span class="o">=</span><span class="s2">"drivers"</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="n">batch_source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="n">message_format</span><span class="o">=</span><span class="n">JsonFormat</span><span class="p">(</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>        <span class="n">schema_json</span><span class="o">=</span><span class="s2">"driver_id integer, acc_rate double, conv_rate double, datetime timestamp, created timestamp"</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    <span class="p">),</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    <span class="n">watermark_delay_threshold</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>   <span class="c1"># (1)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"The Kafka stream containing the driver stats"</span><span class="p">,</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Khoảng thời gian đến muộn cho phép của feature trước khi nó bị loại bỏ</li>
+</ol>
+<p>Code định nghĩa các feature view như dưới đây:</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">data_pipeline/feature_repo/features.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">driver_stats_view</span> <span class="o">=</span> <span class="n">FeatureView</span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"driver_stats"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">"driver features"</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span> <span class="c1"># (1)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>  <span class="c1"># (2)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span> <span class="c1"># (3)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"avg_daily_trips"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Int32</span><span class="p">),</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="p">],</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># (4)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_batch_source</span><span class="p">,</span>  <span class="c1"># (5)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"batch_source_owner@gmail.com"</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="nd">@stream_feature_view</span><span class="p">(</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">entities</span><span class="o">=</span><span class="p">[</span><span class="n">driver</span><span class="p">],</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="n">ttl</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">36500</span><span class="p">),</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">mode</span><span class="o">=</span><span class="s2">"spark"</span><span class="p">,</span>  <span class="c1"># (6)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="n">schema</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="n">Field</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"acc_rate"</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Float32</span><span class="p">),</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="p">],</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>    <span class="n">timestamp_field</span><span class="o">=</span><span class="s2">"datetime"</span><span class="p">,</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="n">online</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>    <span class="n">source</span><span class="o">=</span><span class="n">driver_stats_stream_source</span><span class="p">,</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">tags</span><span class="o">=</span><span class="p">{},</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>    <span class="n">owner</span><span class="o">=</span><span class="s2">"stream_source_owner@gmail.com"</span><span class="p">,</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="k">def</span> <span class="nf">driver_stats_stream</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>    <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">col</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="n">col</span><span class="p">(</span><span class="s2">"acc_rate"</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"conv_percentage"</span><span class="p">,</span> <span class="s2">"conv_rate"</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s2">"acc_percentage"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Định nghĩa entity cho bảng feature</li>
+<li><strong>Time-to-live:</strong> Thời gian sử dụng của feature trước khi bị stale</li>
+<li>Định nghĩa feature và kiểu dữ liệu</li>
+<li>Cho phép online serving</li>
+<li>Định nghĩa data source cho bảng feature</li>
+<li>Sử dụng Spark để xử lý dữ liệu stream</li>
+</ol>
+<p>Sau khi config feature store bằng cách thay đổi các file trong repo <code>feature_repo/</code>, chúng ta cần đảm bảo các data source đã sẵn sàng, bao gồm:</p>
+<ul>
+<li><strong>FileSource:</strong> đảm bảo đường dẫn tồn tại, file không bị lỗi</li>
+<li>
+<p><strong>KafkaSource:</strong> đảm bảo bootstrap servers đang chạy. Để start bootstrap server này, các bạn chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>bash deploy.sh start
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nb">cd</span> ../data_pipeline
+</code></pre></div>
+<p>Nếu các bạn sẽ thấy console như sau, tức là Kafka đang stream dữ liệu driver về</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/data-pipeline/kafka.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/data-pipeline/kafka.png"/></a></p>
+</li>
+</ul>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<ul>
+<li>
+<p>Để <strong>stop</strong> server, các bạn chạy: <code>bash deploy.sh stop</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>bash deploy.sh stop
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nb">cd</span> ../data_pipeline
+</code></pre></div>
+</li>
+<li>
+<p>Để <strong>teardown</strong> server (stop và remove tất cả docker volume liên quan), các bạn chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">cd</span> ../stream_emitting
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>bash deploy.sh teardown
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">cd</span> ../data_pipeline
+</code></pre></div>
+</li>
+</ul>
+</details>
+<p>Và cuối cùng chúng ta sẽ cập nhật Offline Feature store bằng cách chạy:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cd</span> feature_repo
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>feast apply
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><code>feast apply</code> chỉ cập nhật định nghĩa của các features. <code>feast apply</code> chỉ cần chạy khi bạn cần thêm cột, sửa kiểu dữ liệu của cột, v.v...</p>
+</div>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Chúng ta vừa làm quen với một số khái niệm về feature store thông qua Feast. Ở bài tiếp theo, chúng ta sẽ:</p>
+<ul>
+<li>Lấy feature từ Feast</li>
+<li>aterialize feature từ offline qua online store</li>
+<li>Đẩy dữ liệu stream về online store và offline store</li>
+<li>Xây dựng các Airflow pipeline để tự động hóa các công việc trên.</li>
+</ul>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://feast.dev/">https://feast.dev/</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Airflow cơ bản" class="md-footer__link md-footer__link--prev" href="airflow-co-ban.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Airflow cơ bản
+            </div>
+</div>
+</a>
+<a aria-label="Next: Xây dựng pipeline" class="md-footer__link md-footer__link--next" href="xay-dung-data-pipeline.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Xây dựng pipeline
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

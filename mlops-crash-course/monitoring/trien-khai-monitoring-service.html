@@ -1,0 +1,1225 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/monitoring/trien-khai-monitoring-service.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Triển khai monitoring service - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Triển khai monitoring service
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Triển khai monitoring service
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-service">
+    Monitoring service
+  </a>
+<nav aria-label="Monitoring service" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-api">
+    Monitoring API
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tich-hop-online-serving">
+    Tích hợp Online serving
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grafana-dashboards-va-alerts">
+    Grafana dashboards và Alerts
+  </a>
+<nav aria-label="Grafana dashboards và Alerts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-drift-dashboard">
+    Data Drift Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-performance-dashboard">
+    Model Performance Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alerts">
+    Alerts
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thu-nghiem">
+    Thử nghiệm
+  </a>
+<nav aria-label="Thử nghiệm" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-bi-drift">
+    Data bị drift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-khong-bi-drift">
+    Data không bị drift
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-service">
+    Monitoring service
+  </a>
+<nav aria-label="Monitoring service" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-api">
+    Monitoring API
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tich-hop-online-serving">
+    Tích hợp Online serving
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grafana-dashboards-va-alerts">
+    Grafana dashboards và Alerts
+  </a>
+<nav aria-label="Grafana dashboards và Alerts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-drift-dashboard">
+    Data Drift Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-performance-dashboard">
+    Model Performance Dashboard
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alerts">
+    Alerts
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thu-nghiem">
+    Thử nghiệm
+  </a>
+<nav aria-label="Thử nghiệm" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-bi-drift">
+    Data bị drift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-khong-bi-drift">
+    Data không bị drift
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Triển khai monitoring service</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner-2.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner-2.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@dawson2406?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Stephen Dawson</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã thiết kế <em>monitoring service</em> với các công việc:</p>
+<ol>
+<li>Tạo ra dataset chứa feature bị drift</li>
+<li>Triển khai monitoring service để theo dõi data và model performance</li>
+<li>Thiết lập Grafana dashboards để hiển thị metrics về data và model</li>
+</ol>
+<p>Trong bài này, chúng ta sẽ thực hiện code để triển khai service này.</p>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
+<ol>
+<li>
+<p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>monitoring_service/dev_requirements.txt</code></p>
+</li>
+<li>
+<p>Đặt environment variable <code>MONITORING_SERVICE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>monitoring_service</code>. Env var này hỗ trợ chạy python code ở folder <code>monitoring_service/src</code> trong quá trình phát triển.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-code/monitoring_service
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">export</span> <span class="nv">MONITORING_SERVICE_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+</code></pre></div>
+</li>
+</ol>
+<p>Các tools sẽ được sử dụng trong bài này bao gồm:</p>
+<ol>
+<li><strong>Feast:</strong> truy xuất Feature Store</li>
+<li><strong>Flask:</strong> viết API cho monitoring service</li>
+<li><strong>Evidently:</strong> kiểm tra chất lượng data và model performance</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>monitoring_service</code>.</p>
+</div>
+<h2 id="monitoring-service">Monitoring service</h2>
+<p>Trong phần này, chúng ta sẽ thực hiện code monitoring service. Hình dưới đây thể hiện các luồng data của monitoring service.</p>
+<pre class="mermaid"><code>    flowchart LR
+        n01[ ] --Label--&gt; n2
+        n0[Client] --Request--&gt; n1[Online serving&lt;br&gt;service] --Features &amp;&lt;br&gt;prediction--&gt; n2[Monitoring&lt;br&gt;service] --Metrics--&gt; n3[Prometheus&lt;br&gt;&amp; Grafana]
+        n1 --Response--&gt; n0
+
+        style n01 height:0px;</code></pre>
+<p>Quá trình phát triển monitoring service gồm các bước chính sau.</p>
+<ol>
+<li>Viết code gửi request và response data từ Online serving API sang <em>Monitoring API</em> (một RESTful API) của monitoring service</li>
+<li>Viết Monitoring API ở monitoring service, nhận data từ Online serving API, dùng data này để theo dõi data drift và model performance</li>
+<li>Thiết lập Prometheus server và Grafana dashboards để hiển thị các metrics về data drift và model performance</li>
+</ol>
+<h3 id="monitoring-api">Monitoring API</h3>
+<p>Đầu tiên, chúng ta sẽ viết Monitoring API ở monitoring service. Code của monitoring service được đặt tại <code>monitoring_service/src/monitoring_service.py</code>. Bạn hãy để ý tới hàm <code>iterate</code> của class <code>MonitoringService</code> với luồng xử lý data như sau.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_rows</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (1)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_curr_data</span><span class="p">(</span><span class="n">new_rows</span><span class="p">):</span> <span class="c1"># (2)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>        <span class="k">return</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_next_run</span><span class="p">():</span> <span class="c1"># (3)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>        <span class="k">return</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_execute_monitoring</span><span class="p">()</span> <span class="c1"># (4)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_process_metrics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features_and_target_monitor</span><span class="o">.</span><span class="n">metrics</span><span class="p">())</span> <span class="c1"># (5)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_process_metrics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_performance_monitor</span><span class="o">.</span><span class="n">metrics</span><span class="p">())</span> <span class="c1"># (6)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Hàm <code>iterate</code> nhận vào <code>new_rows</code>, chính là data được Online serving API gửi tới</li>
+<li>Xử lý data nhận được</li>
+<li>Kiểm tra xem đã đến thời điểm chạy quá trình đánh giá data drift và model performance chưa</li>
+<li>Thực hiện phân tích đánh giá data drift và model performance</li>
+<li>Gửi metrics về data drift tới Prometheus server</li>
+<li>Gửi metrics về model performance tới Prometheus server</li>
+</ol>
+<p>Data nhận được từ Online serving API gồm các cột chính sau.</p>
+<table>
+<thead>
+<tr>
+<th>Cột</th>
+<th>Ý nghĩa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>request_id</code></td>
+<td>Request ID</td>
+</tr>
+<tr>
+<td><code>conv_rate</code></td>
+<td>Feature</td>
+</tr>
+<tr>
+<td><code>acc_rate</code></td>
+<td>Feature</td>
+</tr>
+<tr>
+<td><code>avg_daily_trips</code></td>
+<td>Feature</td>
+</tr>
+<tr>
+<td><code>best_driver_id</code></td>
+<td>ID tài xế được chọn</td>
+</tr>
+<tr>
+<td><code>prediction</code></td>
+<td>Dự đoán của model cho driver ID được chọn</td>
+</tr>
+</tbody>
+</table>
+<p>Hãy cùng xem hàm <code>_process_curr_data</code> làm công việc gì.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">def</span> <span class="nf">_process_curr_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_rows</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span> <span class="c1"># (1)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="n">label_data</span> <span class="o">=</span> <span class="n">read_label_data</span><span class="p">()</span> <span class="c1"># (2)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="k">if</span> <span class="n">label_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merge_request_with_label</span><span class="p">(</span><span class="n">new_rows</span><span class="p">,</span> <span class="n">label_data</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># (4)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="n">curr_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">current_data</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="n">curr_data</span> <span class="o">=</span> <span class="n">merged_data</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">curr_size</span> <span class="o">=</span> <span class="n">curr_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="k">if</span> <span class="n">curr_size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">WINDOW_SIZE</span><span class="p">:</span> <span class="c1"># (5)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>        <span class="n">curr_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>            <span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curr_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">WINDOW_SIZE</span><span class="p">)),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>        <span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>        <span class="n">curr_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">current_data</span> <span class="o">=</span> <span class="n">curr_data</span> <span class="c1"># (6)</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    <span class="k">if</span> <span class="n">curr_size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">WINDOW_SIZE</span><span class="p">:</span> <span class="c1"># (7)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">Log</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>            <span class="sa">f</span><span class="s2">"Not enough data for measurement: </span><span class="si">{</span><span class="n">curr_size</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">WINDOW_SIZE</span><span class="si">}</span><span class="s2"> rows. Waiting for more data"</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>        <span class="p">)</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Hàm <code>_process_curr_data</code> nhận vào data mới được gửi từ Online serving API sang</li>
+<li>Đọc label data hay chính là <code>request_data</code></li>
+<li>Kết hợp data mới với label data theo <code>request_id</code></li>
+<li>Tích luỹ data mới với data hiện tại</li>
+<li>Bỏ bớt records nếu như số records vượt quá <code>WINDOW_SIZE</code> chính là kích thước của <strong>test window</strong></li>
+<li>Lưu data mới đã được xử lý vào làm data hiện tại</li>
+<li>Kiểm tra xem đã đủ số records cần thiết chưa</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Tại sao cần đọc label data hay <code>request_data</code> mỗi khi có records mới được gửi đến từ Online serving API?</p>
+</div>
+<p>Chúng ta không cần phải đọc lại <code>request_data</code> mỗi khi có records mới vì <code>request_data</code> là không đổi. Sở dĩ code được viết như vậy là để giả sử rằng không phải lúc nào label cũng có sẵn ở production.</p>
+<p>Sau khi kết hợp data mới với label data theo <code>request_id</code> data được tổng hợp chứa các cột sau:</p>
+<ul>
+<li>Các cột features: dùng để theo dõi data drift</li>
+<li>Cột <code>prediction</code> và cột label <code>trip_completed</code>: dùng để theo dõi model performance. Lưu ý, cột <code>prediction</code> được biến đổi trong hàm <code>merge_request_with_label</code> để luôn có giá trị là <code>1</code></li>
+</ul>
+<p>Tiếp đến, hãy xem hàm <code>_process_next_run</code> và <code>_execute_monitoring</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">def</span> <span class="nf">_process_next_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_run</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_run</span> <span class="o">&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">():</span> <span class="c1"># (1)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">next_run</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">RUN_PERIOD_SEC</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">def</span> <span class="nf">_execute_monitoring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">features_and_target_monitor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="c1"># (3)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">reference_data</span><span class="p">,</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">current_data</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">column_mapping</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">model_performance_monitor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="c1"># (4)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">current_data</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">current_data</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">column_mapping</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Kiểm tra xem thời điểm hiện tại có chạy monitoring không</li>
+<li>Tính thời điểm tiếp theo sẽ chạy monitoring</li>
+<li>Thực hiện đánh giá data drift, giống như chúng ta đã thực hiện ở file notebook <code>monitoring_service/nbs/test_datasets.ipynb</code></li>
+<li>Thực hiện đánh giá model performance</li>
+</ol>
+<p>Cuối cùng, đoạn code dưới đây của hàm <code>_process_metrics</code> sẽ gửi metrics của data drift và model performance tới Prometheus server.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">def</span> <span class="nf">_process_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evidently_metrics</span><span class="p">):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">evidently_metrics</span><span class="p">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>        <span class="n">metric_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"evidently:</span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="c1"># (1)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">labels</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>            <span class="n">labels</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>        <span class="n">labels</span><span class="p">[</span><span class="s2">"dataset_name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">MonitoringService</span><span class="o">.</span><span class="n">DATASET_NAME</span> <span class="c1"># (2)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>            <span class="k">continue</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>        <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric_key</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>        <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>            <span class="n">found</span> <span class="o">=</span> <span class="n">prometheus_client</span><span class="o">.</span><span class="n">Gauge</span><span class="p">(</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>                <span class="n">metric_key</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>            <span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="n">metric_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">found</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>            <span class="n">found</span><span class="o">.</span><span class="n">labels</span><span class="p">(</span><span class="o">**</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>            <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Tạo tên metric, phải giống với metric được dùng trong Prometheus query trên Grafana dashboards</li>
+<li><code>labels</code> là một <code>dict</code> với key, value là tên và giá trị của các label được quy ước bởi Evidently, ví dụ <code>{'dataset': 'reference', 'metric': 'accuracy'}</code>. <code>labels</code> này có ý nghĩa tương đương với <a href="https://prometheus.io/docs/practices/naming/#labels">Prometheus labels</a></li>
+<li><code>self.metrics</code> lưu các object <code>Gauge</code> của Prometheus. <code>Gauge</code> gửi metrics tới Prometheus server. Biến <code>found</code> là một object <code>Gauge</code>, tương ứng với mỗi metric lấy ra từ Evidently</li>
+<li>Gán Prometheus labels và giá trị cho <code>Gauge</code> object. <code>Gauge</code> object sẽ gửi labels, giá trị của các metrics lên Prometheus server</li>
+</ol>
+<p>Ngoài các đoạn code quan trọng nhất của monitoring service ở trên, các đoạn code còn lại khác mà bạn cần lưu ý như dưới đây.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/monitoring_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">AppConst</span><span class="o">.</span><span class="n">MONITORING_SERVICE</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="o">...</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">DispatcherMiddleware</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">,</span> <span class="p">{</span><span class="s2">"/metrics"</span><span class="p">:</span> <span class="n">prometheus_client</span><span class="o">.</span><span class="n">make_wsgi_app</span><span class="p">()})</span> <span class="c1"># (2)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="o">...</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="n">SERVICE</span> <span class="o">=</span> <span class="n">MonitoringService</span><span class="p">()</span> <span class="c1"># (3)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="o">...</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">"/iterate"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">"POST"</span><span class="p">])</span> <span class="c1"># (4)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="k">def</span> <span class="nf">iterate</span><span class="p">():</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="n">item</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c1"># (5)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="n">SERVICE</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="n">new_rows</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># (6)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>    <span class="k">return</span> <span class="s2">"ok"</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="o">...</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">"0.0.0.0"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8309</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># (7)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Tạo Flask app. Flask là một thư viện phổ biến được dùng để viết RESTful API trong Python</li>
+<li>Tự động tạo endpoint <code>/metrics</code> để Prometheus thu thập metrics</li>
+<li>Khởi tạo <code>MonitoringService</code> class</li>
+<li>Tạo endpoint <code>/iterate</code> để Online serving API gửi data tới</li>
+<li>Biến đổi data nhận vào thành <code>DataFrame</code></li>
+<li>Gọi hàm <code>iterate</code> để thực hiện đánh giá data drift và model performance</li>
+<li>Chạy Flask app tại port <code>8309</code> ở máy local</li>
+</ol>
+<p>Để Prometheus thu thập được metrics gửi qua endpoint <code>/metrics</code>, bạn cần tạo 1 Prometheus Job trong file config của Prometheus server được đặt tại <code>prom-graf/prometheus/config/prometheus.yml</code> trong repo <code>mlops-crash-course-platform</code>. Prometheus Job này đã được tạo sẵn như dưới đây.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">prom-graf/prometheus/config/prometheus.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">"monitoring_service"</span><span class="w"></span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span><span class="w"></span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="nt">static_configs</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"localhost:8309"</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Sau khi code xong monitoring service, chúng ta sẽ cập nhật code trong Online serving API để gửi data tới Monitoring API sau khi model thực hiện dự đoán.</p>
+<h3 id="tich-hop-online-serving">Tích hợp Online serving</h3>
+<p>Bạn mở file code của Online serving API tại <code>model_serving/src/bentoml_service.py</code> trong repo <code>mlops-crash-course-code</code>. Hãy chú ý tới đoạn code trong hàm <code>inference</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">model_serving/src/bentoml_service.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nd">@svc</span><span class="o">.</span><span class="n">api</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="o">...</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">InferenceRequest</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>        <span class="o">...</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">input_features</span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">input_features</span><span class="p">)])</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>        <span class="n">df</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span> <span class="c1"># (1)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        <span class="n">best_driver_id</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"driver_id"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span> <span class="c1"># (2)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        <span class="c1"># monitor</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>        <span class="n">monitor_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">best_idx</span><span class="p">]]</span> <span class="c1"># (3)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>        <span class="n">monitor_df</span> <span class="o">=</span> <span class="n">monitor_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">])</span> <span class="c1"># (4)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        <span class="n">monitor_df</span> <span class="o">=</span> <span class="n">monitor_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">best_driver_id</span><span class="o">=</span><span class="p">[</span><span class="n">best_driver_id</span><span class="p">])</span> <span class="c1"># (5)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>        <span class="n">monitor_request</span><span class="p">(</span><span class="n">monitor_df</span><span class="p">)</span> <span class="c1"># (6)</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>        <span class="o">...</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="k">def</span> <span class="nf">monitor_request</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="bp">cls</span><span class="o">=</span><span class="n">NumpyEncoder</span><span class="p">)</span> <span class="c1"># (7)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span> <span class="c1"># (8)</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>            <span class="n">MONITORING_SERVICE_API</span><span class="p">,</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>            <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"content-type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">},</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="p">)</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>        <span class="o">...</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a>        <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Lấy ra index của tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe</li>
+<li>Lấy ra ID của tài xế được chọn</li>
+<li>Lấy ra record trong <code>DataFrame</code> gốc của tài xế được chọn</li>
+<li>Thêm cột <code>request_id</code> vào <code>monitor_df</code> với giá trị là <code>request_id</code> được gửi tới trong request</li>
+<li>Thêm cột <code>best_driver_id</code> vào <code>monitor_df</code>. Việc lưu trữ lại thông tin về dự đoán của model là cần thiết, giúp cho việc theo dõi data và debug ở production dễ dàng hơn</li>
+<li>Gọi tới hàm <code>monitor_request</code> để gửi data tới Monitoring API. Data được gửi bao gồm các cột chính: <code>request_id</code>, các cột features, <code>prediction</code> và <code>best_driver_id</code></li>
+<li>Biến đổi <code>DataFrame</code> thành dạng JSON với sự hỗ trợ của <code>NumpyEncoder</code> class, giúp cho việc biến đổi JSON trở lại thành <code>DataFrame</code> ở phía Monitoring API dễ dàng hơn</li>
+<li>Gửi POST request tới Monitoring API</li>
+</ol>
+<p>Như vậy là chúng ta vừa tích hợp Online serving API với Monitoring API của Monitoring service. Sau khi model thực hiện dự đoán ở Online serving API, data được tổng hợp từ requests và prediction của model sẽ được gửi sang Monitoring API để được theo dõi và đánh giá. Monitoring API sẽ thực hiện việc đánh giá data drift, model performance, rồi gửi các metrics sau khi đánh giá ra API endpoint <code>/metrics</code>. Prometheus server sẽ định kì thu thập các metrics qua endpoint <code>/metrics</code> này. Grafana sẽ đọc các metrics từ Prometheus server và hiển thị lên dashboards. Trong phần tiếp theo, chúng ta sẽ thiết lập Grafana dashboards để hiển thị các metrics.</p>
+<h2 id="grafana-dashboards-va-alerts">Grafana dashboards và Alerts</h2>
+<p>Có 2 dashboards chúng ta cần thiết lập, bao gồm:</p>
+<ol>
+<li><code>monitoring_service/dashboards/data_drift.json</code>: Dashboard cho metrics về data drift</li>
+<li><code>monitoring_service/dashboards/classification_performance.json</code>: Dashboard cho metrics về model performance</li>
+</ol>
+<p>Bạn cần làm các bước sau để triển khai các dashboards này lên Grafana.</p>
+<ol>
+<li>Copy 2 file dashboards trên vào <code>mlops-crash-course-platform/prom-graf/run_env/grafana/dashboards</code></li>
+<li>Truy cập vào Grafana server tại <a href="http://localhost:3000">http://localhost:3000</a></li>
+<li>Mở 2 dashboards có tên <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong></li>
+</ol>
+<h3 id="data-drift-dashboard">Data Drift Dashboard</h3>
+<p>Dashboard <strong>Evidently Data Drift Dashboard</strong> sẽ giống như hình dưới đây.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-no-data.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-no-data.png"/></a></p>
+<p>Dashboard này chứa các panels về data drift bao gồm:</p>
+<ul>
+<li>
+<p><code>General information</code></p>
+<ul>
+<li><code>Dataset drift</code>: Dataset có bị drift hay không</li>
+<li><code>Share of drifted features</code>: Tỉ lệ số features bị drift trên tổng số features</li>
+<li><code># of drifted features</code>: Số features bị drift</li>
+<li><code># of features</code>: Tổng số features</li>
+</ul>
+</li>
+<li>
+<p><code>Detailed information</code></p>
+<ul>
+<li><code>P-value of features</code>: <a href="https://en.wikipedia.org/wiki/P-value">p-value</a> của các features</li>
+</ul>
+</li>
+</ul>
+<h3 id="model-performance-dashboard">Model Performance Dashboard</h3>
+<p>Dashboard <strong>Evidently Classification Performance Dashboard</strong> sẽ giống như hình dưới đây.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-no-data.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-no-data.png"/></a></p>
+<p>Dashboard này chứa các panels về model performance bao gồm:</p>
+<ul>
+<li>
+<p><code>Reference dataset data</code></p>
+<ul>
+<li><code>Quality</code>: Tổng hợp model performance metrics theo thời gian</li>
+<li><code>accuracy</code>, <code>f1</code>, <code>precision</code>, <code>recall</code>: Model performance metrics</li>
+<li><code>Prediction class representation</code>: Số lượng các dự đoán theo class</li>
+<li><code>Target class representation</code>: Số lượng các label theo class</li>
+</ul>
+</li>
+<li>
+<p><code>Class 0 information</code>: Thông tin về class 0</p>
+<ul>
+<li><code>Confusion 0</code>: Confusion matrix cho class 0</li>
+<li><code>Confusion in time</code>: Giá trị của confusion matrix theo thời gian</li>
+<li><code>Quality</code>: Tổng hợp model performance metrics cho class 0 theo thời gian</li>
+</ul>
+</li>
+<li>
+<p><code>Class 1 information</code>: Tương tự class 0</p>
+</li>
+</ul>
+<h3 id="alerts">Alerts</h3>
+<p>Grafana Alerts cho phép kích hoạt cảnh báo khi một vấn đề về metrics xảy ra. Trong bài này, chúng ta sẽ tạo một cảnh báo đơn giản để cảnh báo khi dataset bị drift.</p>
+<ol>
+<li>
+<p>Ở sidebar bên phải của Grafana, click <code>Dashabords</code>. Ở trang Dashboard, tạo Folder tên là <code>Alerts</code>. Folder này được dùng để lưu cảnh báo chúng ta sẽ tạo</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-folder.png"/></a></p>
+</li>
+<li>
+<p>Ở sidebar bên phải của Grafana, bạn click vào <code>Alerting</code>. Ở trang <code>Alerting</code>, tab <code>Alert rules</code>, click nút <code>New alert rule</code>.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/new-alert.png"/></a></p>
+</li>
+<li>
+<p>Trong trang tạo cảnh báo, tạo cảnh báo mới tên là <code>Data drift detection</code>, điền các thông tin trong phần <code>1. Set a query and alert condition</code> như ảnh dưới, với query <code>A</code> là:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">evidently</span><span class="err">:</span><span class="nv">data_drift</span><span class="err">:</span><span class="nv">dataset_drift</span><span class="p">{</span><span class="nl">dataset_name</span><span class="o">=</span><span class="p">"</span><span class="s">drivers</span><span class="p">"}</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-1.png"/></a></p>
+</li>
+<li>
+<p>Phần <code>2. Alert evaluation behavior</code> và <code>3. Add details for your alert</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-2-3.png"/></a></p>
+</li>
+<li>
+<p>Click <code>Save and exit</code></p>
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Để cấu hình cách mà Alert được gửi đi, bạn vào tab <code>Notification polices</code> và thêm policy mới. Trong bài này, để đơn giản hơn chúng ta sẽ giữ nguyên policy mặc định của Grafana.</p>
+</div>
+<h2 id="thu-nghiem">Thử nghiệm</h2>
+<h3 id="data-bi-drift">Data bị drift</h3>
+<p>Sau khi thiết lập xong dashboards, chúng ta sẽ viết code để gửi request giả tới Online serving API. Code để gửi requests được đặt tại <code>monitoring_service/src/mock_request.py</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/src/mock_request.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span>
+<span class="normal"><a href="#__codelineno-9-37">37</a></span>
+<span class="normal"><a href="#__codelineno-9-38">38</a></span>
+<span class="normal"><a href="#__codelineno-9-39">39</a></span>
+<span class="normal"><a href="#__codelineno-9-40">40</a></span>
+<span class="normal"><a href="#__codelineno-9-41">41</a></span>
+<span class="normal"><a href="#__codelineno-9-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">def</span> <span class="nf">construct_request</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span> <span class="c1"># (1)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">request_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">"request_id"</span><span class="p">]</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">driver_ids</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"driver_ids"</span><span class="p">])</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="k">return</span> <span class="p">{</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>        <span class="s2">"request_id"</span><span class="p">:</span> <span class="n">request_id</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="s2">"driver_ids"</span><span class="p">:</span> <span class="n">driver_ids</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="p">}</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="k">def</span> <span class="nf">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># (2)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>            <span class="n">ONLINE_SERVING_API</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a>            <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"content-type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">},</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>        <span class="p">)</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>        <span class="o">...</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>        <span class="o">...</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">data_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n_request</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># (3)</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>    <span class="n">data_path</span> <span class="o">=</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">NORMAL_DATA</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>    <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DRIFT</span><span class="p">:</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a>        <span class="n">data_path</span> <span class="o">=</span> <span class="n">AppPath</span><span class="o">.</span><span class="n">DRIFT_DATA</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a>    <span class="n">data_source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"fastparquet"</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>    <span class="n">request_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">REQUEST_DATA</span><span class="p">)</span> <span class="c1"># (5)</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>    <span class="o">...</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>    <span class="n">data_source</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">AppPath</span><span class="o">.</span><span class="n">FEAST_DATA_SOURCE</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"fastparquet"</span><span class="p">)</span> <span class="c1"># (6)</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"make"</span><span class="p">,</span> <span class="s2">"feast_teardown"</span><span class="p">])</span> <span class="c1"># (7)</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a>    <span class="o">...</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"make"</span><span class="p">,</span> <span class="s2">"feast_apply"</span><span class="p">])</span> <span class="c1"># (8)</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>    <span class="o">...</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"make"</span><span class="p">,</span> <span class="s2">"feast_materialize"</span><span class="p">])</span> <span class="c1"># (9)</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a>    <span class="o">...</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a>
+<a id="__codelineno-9-37" name="__codelineno-9-37"></a>    <span class="n">total_request</span> <span class="o">=</span> <span class="n">request_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a>    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_request</span><span class="p">):</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39"></a>        <span class="n">row</span> <span class="o">=</span> <span class="n">request_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span> <span class="o">%</span> <span class="n">total_request</span><span class="p">]</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40"></a>        <span class="n">request</span> <span class="o">=</span> <span class="n">construct_request</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41"></a>        <span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="c1"># (10)</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42"></a>        <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Hàm <code>construct_request</code> tạo payload dạng JSON để gửi tới Online serving API</li>
+<li>Hàm <code>send_request</code> gửi payload trên tới Online serving API</li>
+<li>Hàm <code>main</code> thực hiện quá trình gửi data</li>
+<li>Đọc dataset chứa các features tuỳ thuộc vào loại data là <code>normal_data</code> hay <code>drift_data</code></li>
+<li>Đọc <code>request_data</code></li>
+<li>Ghi đè dataset chứa các features vào file data source của Feast</li>
+<li>Xoá data ở cả Offline Feature Store và Online Feature Store</li>
+<li>Ghi data từ file data source của Feast vào Offline Feature Store</li>
+<li>Ghi data từ Offline Feature Store vào Online Feature Store</li>
+<li>Gửi lần lượt các request trong <code>request_data</code> tới Online serving API</li>
+</ol>
+<p>Để tiến hành thử nghiệm, bạn làm theo các bước sau.</p>
+<ol>
+<li>
+<p>Đảm bảo <a href="../model-serving/trien-khai-model-serving.html#online-serving">Online serving service</a> đã chạy</p>
+</li>
+<li>
+<p>Cập nhật Feature Store</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">cd</span> ../data_pipeline
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>make deploy_feature_repo <span class="c1"># (1)</span>
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nb">cd</span> ../monitoring_service
+</code></pre></div>
+<ol>
+<li>Triển khai code của Feature Store</li>
+</ol>
+</li>
+<li>
+<p>Build docker image và chạy docker compose cho monitoring service</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>make build_image
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>make compose_up
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Định nghĩa về các env vars được dùng trong quá trình build image được lưu tại <code>monitoring_service/deployment/.env</code>. Bạn có thể thay đổi nếu cần.</p>
+</div>
+</li>
+<li>
+<p>Gửi 5 requests giả chứa <code>drift_data</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>python src/mock_request.py -d drift -n <span class="m">5</span>
+</code></pre></div>
+</li>
+<li>
+<p>Đợi 30s, kiểm tra <strong>Evidently Data Drift Dashboard</strong> và <strong>Evidently Classification Performance Dashboard</strong>, kết quả sẽ giống như sau.</p>
+<p><figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-drifted.png"/></a>
+<figcaption>Evidently Data Drift Dashboard - Dataset drift</figcaption>
+</figure></p>
+<p><figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-with-data.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/model-performance-with-data.png"/></a>
+<figcaption>Evidently Classification Performance Dashboard</figcaption>
+</figure></p>
+</li>
+<li>
+<p>Mở trang Grafana Alerting, bạn sẽ thấy cảnh báo <code>Data drift detection</code> đang ở trạng thái <code>Firing</code></p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-firing.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-firing.png"/></a></p>
+</li>
+<li>
+<p>Click nút <code>Show state history</code> để xem thời điểm của các trạng thái trong cảnh báo này.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-history.png"/></a></p>
+</li>
+</ol>
+<h3 id="data-khong-bi-drift">Data không bị drift</h3>
+<p>Tiếp theo, chúng ta sẽ test trường hợp data không bị drift. Bạn làm các bước sau.</p>
+<ol>
+<li>
+<p>Gửi 5 requests giả chứa <code>normal_data</code> tới Online serving API</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a>python src/mock_request.py -d normal -n <span class="m">5</span>
+</code></pre></div>
+</li>
+<li>
+<p>Kiểm tra <strong>Evidently Data Drift Dashboard</strong>, bạn sẽ thấy thông tin Dataset không bị drift số features bị drift là 0. Ngoài ra, cảnh báo <code>Data drift detection</code> cũng đã ở trạng thái <code>Normal</code></p>
+<p><figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/drift-dashboard-normal.png"/></a>
+<figcaption>Evidently Data Drift Dashboard - Dataset không drift</figcaption>
+</figure></p>
+<p><figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-normal.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/alert-normal.png"/></a>
+<figcaption>Alert Data drift detection ở trạng thái Normal</figcaption>
+</figure></p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Nếu mở Kibana ra, bạn cũng sẽ thấy logs của Monitoring service được tự động thu thập nhờ chức năng tự động thu thập logs từ các containers của Filebeat</p>
+</div>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Theo dõi và bảo trì luôn là một phần quan trọng trong quá trình phát triển một hệ thống phần mềm nói chung, đặc biệt là trong một hệ thống ML nói riêng. Trong bài <strong>Monitoring</strong> này, chúng ta đã biết về các metrics điển hình của hệ thống về data và về model mà một hệ thống ML thường theo dõi.</p>
+<p>Chúng ta cũng đã phân tích và thiết kế một service khá phức tạp là Monitoring service. Bạn đã biết cách theo dõi các metrics của data, model như <strong>Phát hiện Data drift</strong>, <strong>Theo dõi model performance</strong>, triển khai và thiết lập cảnh báo trên Grafana. Trong thực tế, bạn có thể sẽ cần dùng Grafana alert để kích hoạt một tác vụ nào đó, ví dụ như kích hoạt training pipeline tự động khi phát hiện dataset bị drift hay đơn giản là gửi email thông báo về model performance tới Data Scientist, v.v.</p>
+<p>Trong bài tiếp theo, chúng ta sẽ thiết lập và triển khai CI/CD cho các phần trong hệ thống ML. CI/CD giúp chúng ta tự động test và tự động triển khai các Airflow DAGs, cũng như là các services như Online serving service hay Monitoring service, thay vì gõ các lệnh thủ công trong terminal.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://flask.palletsprojects.com/en/2.2.x/">Flask</a></li>
+<li><a href="https://grafana.com/docs/grafana/latest/alerting/">Grafana Alerting</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Thiết kế monitoring service" class="md-footer__link md-footer__link--prev" href="thiet-ke-monitoring-service.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Thiết kế monitoring service
+            </div>
+</div>
+</a>
+<a aria-label="Next: Giới thiệu" class="md-footer__link md-footer__link--next" href="../ci-cd/gioi-thieu.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Giới thiệu
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

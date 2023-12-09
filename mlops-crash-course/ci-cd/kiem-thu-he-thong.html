@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/ci-cd/kiem-thu-he-thong.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Kiểm thử hệ thống - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Kiểm thử hệ thống
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../monitoring/trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Kiểm thử hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kiem-thu-he-thong-phan-mem-truyen-thong">
+    Kiểm thử hệ thống phần mềm truyền thống
+  </a>
+<nav aria-label="Kiểm thử hệ thống phần mềm truyền thống" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functional-testing">
+    Functional Testing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#non-functional-testing">
+    Non-functional Testing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#luong-phat-trien-phan-mem-co-ban">
+    Luồng phát triển phần mềm cơ bản
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#he-thong-ml-can-kiem-thu-nhung-gi">
+    Hệ thống ML cần kiểm thử những gì?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mot-so-tool-hay-dung-e-test-va-debug">
+    Một số tool hay dùng để test và debug
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kiem-thu-he-thong-phan-mem-truyen-thong">
+    Kiểm thử hệ thống phần mềm truyền thống
+  </a>
+<nav aria-label="Kiểm thử hệ thống phần mềm truyền thống" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functional-testing">
+    Functional Testing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#non-functional-testing">
+    Non-functional Testing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#luong-phat-trien-phan-mem-co-ban">
+    Luồng phát triển phần mềm cơ bản
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#he-thong-ml-can-kiem-thu-nhung-gi">
+    Hệ thống ML cần kiểm thử những gì?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mot-so-tool-hay-dung-e-test-va-debug">
+    Một số tool hay dùng để test và debug
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Kiểm thử hệ thống</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"><img loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/testing_meme.png"/></a>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Khác với các hệ thống phần mềm truyển thống: một developer ngồi nghĩ ra các rule và lập trình bằng Python, Java, hoặc... LOLCODE, thì ML model sẽ tự sinh ra các rule sử dụng dữ liệu được cung cấp. Điều này đương nhiên là tốt, vì không phải rule nào con người cũng nghĩ ra được, tuy nhiên nó cũng có mặt trái của nó: rule được sinh ra có thể thay đổi, theo hướng tốt, xấu hoặc bị BUG. Điều này dẫn tới việc kiểm thử và debug một hệ thống ML không hề đơn giản.</p>
+<p>Ở bài học này chúng ta hãy cùng tìm hiểu về vấ n đề hóc búa này: kiểm thử trong hệ thống ML.</p>
+<pre class="mermaid"><code>graph LR
+    n01[ ] --"Đầu vào"--&gt; n1[Hệ thống phần mềm&lt;br&gt;truyền thống] --Kết quả--&gt; n02[ ]
+    n03[ ] --Thuật toán--&gt; n1
+    n04[ ] --"Đầu vào"--&gt; n2[Hệ thống&lt;br&gt;Machine Learning] --"Thuật toán&lt;br&gt;(model)"--&gt; n05[ ]
+    n06[ ] --Kết quả&lt;br&gt;mong muốn--&gt; n2
+    style n01 height:0px;
+    style n02 height:0px;
+    style n03 height:0px;
+    style n04 height:0px;
+    style n05 height:0px;
+    style n06 height:0px;</code></pre>
+<h2 id="kiem-thu-he-thong-phan-mem-truyen-thong">Kiểm thử hệ thống phần mềm truyền thống</h2>
+<p>Thông thường có 2 loại kiểm thử phần mềm:</p>
+<ul>
+<li><strong>Functional Testing:</strong> kiểm tra xem hệ thống đã đảm bảo yêu cầu về chức năng chưa, ví dụ ấn tắt windows update mãi mà nó vẫn update thì không được</li>
+<li><strong>Non-functional Testing:</strong> kiểm tra xem hệ thống có đáp ứng được kỳ vọng của khách hàng không, ví dụ tất cả người trên thế giới cùng ấn nút tham gia group MLOpsVN thì group cũng không được sập</li>
+</ul>
+<h3 id="functional-testing">Functional Testing</h3>
+<p>Thông thường loại này bao gồm:</p>
+<ol>
+<li><strong>Unit testing:</strong> test từng module nhỏ</li>
+<li><strong>Integration testing:</strong> test một module lớn bao gồm nhiều module nhỏ để đảm bảo khi kết hợp không xảy ra vấn đề gì</li>
+</ol>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>Theo nguyên tắc <a href="https://people.apache.org/~fhanik/kiss.html">KISS</a>, hãy luôn cố gắng bẻ vấn đề thành nhiều module đủ nhỏ và đủ dễ hiểu.</p>
+<p>Ví dụ dưới đây được trích từ <a href="https://machinelearningmastery.com/machine-learning-in-python-step-by-step/">Machine learning mastery blog</a> cho thấy tác giả đã áp dụng rất tốt nguyên tắc này, thể hiện qua việc cố gắng sử dụng nhiều hàm nhất có thể, ví dụ <code>train_test_split</code>, <code>accuracy_score</code> và <code>confusion_matrix</code>, khi đó chuyện test và debug sẽ dễ dàng hơn rất nhiều.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># make predictions</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="c1"># Load dataset</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">url</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'sepal-length'</span><span class="p">,</span> <span class="s1">'sepal-width'</span><span class="p">,</span> <span class="s1">'petal-length'</span><span class="p">,</span> <span class="s1">'petal-width'</span><span class="p">,</span> <span class="s1">'class'</span><span class="p">]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">dataset</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="c1"># Split-out validation dataset</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">array</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">values</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">X</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">y</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_validation</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="c1"># Make predictions on validation dataset</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">model</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_validation</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="c1"># Evaluate predictions</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">Y_validation</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<ol>
+<li><strong>Regression testing:</strong> kiểm tra lại toàn bộ chức năng của hệ thống mỗi khi có thay đổi của một hoặc vài chức năng nào đó</li>
+<li><strong>Smoke testing:</strong> chạy một bài test cơ bản với chức năng tối thiểu để xem hệ thống sẵn sàng cho việc test chưa
+   Một ví dụ đơn giản: Bắt đầu kiểm tra một hệ thống bóng đèn, vừa ấn nút xong khói (smoke) bốc lên nghi ngút thì không được</li>
+</ol>
+<h3 id="non-functional-testing">Non-functional Testing</h3>
+<ol>
+<li><strong>Load testing:</strong> xác định độ chịu tải, SLA (Service Level Agreement) của hệ thống</li>
+<li><strong>Stress testing:</strong> đánh giá hành vi của hệ thống tại các điều kiện không lường trước, ví dụ một phần hệ thống đột nhiên shutdown thì phản hồi có chấp nhận được không</li>
+</ol>
+<h3 id="luong-phat-trien-phan-mem-co-ban">Luồng phát triển phần mềm cơ bản</h3>
+<p>Thông thường, các developer tuân thủ một số quy ước sau khi phát triển phần mềm:</p>
+<ol>
+<li>Không merge code nếu chưa chạy các test case</li>
+<li>Luôn viết code test khi commit logic mới</li>
+<li>Khi fix bug, luôn viết code test để bắt bug và phòng xảy ra trường hợp tương tự trong tương lai</li>
+</ol>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg"><img height="150" loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/typical_workflow_se.jpeg" width="600"/></a></p>
+<figcaption align="center" font-size="8px"><i>Source: https://www.jeremyjordan.me/testing-ml/</i></figcaption>
+<h2 id="he-thong-ml-can-kiem-thu-nhung-gi">Hệ thống ML cần kiểm thử những gì?</h2>
+<p>Những bài test cho hệ thống phần mềm có thể ứng dụng cho hầu hết ML code, tuy nhiên vẫn chưa để đủ đảm bảo hệ thống ML có thể hoạt động với độ tin cậy cao.</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png"><img height="300" loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/difference.png" width="600"/></a></p>
+<figcaption align="center" font-size="8px"><i>Source: https://learning.oreilly.com/library/view/building-machine-learning</i></figcaption>
+<p>Để hệ thống ML tin tưởng được thì cần kiểm tra thêm những phần sau:</p>
+<ul>
+<li>
+<p><strong>Data pipeline testing:</strong> đảm bảo dữ liệu không bị corrupt, đúng format và đúng schema (kiểu dữ liệu), ...</p>
+<p>Data là một phần không thể thiếu trong một hệ thống ML, do đó duy trì một data pipeline với độ tin cậy cao là điều rất quan trọng.
+  Hình dưới đây là ví dụ về 1 data pipeline và những thứ yếu tố cần cân nhắc ở mỗi bước:</p>
+<p><a class="glightbox" href="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png"><img height="300" loading="lazy" src="../../assets/images/mlops-crash-course/ci-cd/test-in-ml/data_pipeline_testing.png" width="600"/></a></p>
+</li>
+<li>
+<p><strong>Model testing:</strong> đảm bảo model đạt hiểu quả (ví dụ accuracy) như mong muốn và model có consistent không, ...</p>
+</li>
+</ul>
+<p>Có thể chia thành 2 loại model testing:</p>
+<ul>
+<li>
+<p><strong>Testing</strong></p>
+<ul>
+<li><strong>Pre-train testing:</strong> tìm bug trước khi train/evaluate</li>
+<li>Kiểm tra xem có data leakage (leak thông tin), ví dụ observation trong tập train cũng có ở tập validation/test</li>
+<li>Kiểm tra xem có feature leakage (feature mang thông tin của label)</li>
+<li>Kiểm tra model output có shape hoặc có miền giá trị như ý muốn</li>
+<li>
+<p><strong>Post-train testing:</strong> hoạt động của model (model behavior) có như ý muốn ở các tình huống (scenarios) khác nhau?</p>
+</li>
+<li>
+<p><strong>Invariance testing:</strong> mô tả những thay đổi của input mà không làm thay đổi kết quả dự đoán của model
+    Ví dụ: trong bài toán sentiment analysis, thì 2 câu sau nên có cùng một output:</p>
+<ul>
+<li>Bộ phim A hay quá!</li>
+<li>Bộ phim B hay quá!</li>
+</ul>
+</li>
+<li><strong>Directional expectation test:</strong> mô tả những thay đổi của input sẽ làm thay đổi kết quả dự đoán của model một cách có thể lường trước.
+    Ví dụ: trong bài toán dự đoán giá nhà, có thể đoán trước nếu không gian tăng thì giá nhà sẽ tăng.</li>
+<li><strong>Bias/Fairness:</strong> kiểm tra xem model có dự đoán công bằng không, ví dụ dự đoán income của người châu Mỹ chính xác hơn người châu Á, chứng tỏ model đang bị bias.</li>
+<li><strong>Model Output Consistency:</strong> với cùng 1 dữ liệu đầu vào, model output có bị thay đổi sau nhiều lần chạy khác nhau không?</li>
+</ul>
+<p><strong>Note:</strong> Công cụ <a href="https://pair-code.github.io/what-if-tool/">What-If</a> hỗ trợ rất tốt trong việc kiểm tra model behavior ở các tình huống khác nhau.</p>
+</li>
+<li>
+<p><strong>Evaluation:</strong> đánh giá hiệu quả của model thông qua các metrics như accuracy và F1, ... trên tập validation/test.</p>
+</li>
+</ul>
+<h2 id="mot-so-tool-hay-dung-e-test-va-debug">Một số tool hay dùng để test và debug</h2>
+<ul>
+<li><a href="https://docs.python.org/3/library/pdb.html">pdb</a> để debug python code</li>
+<li><a href="https://docs.pytest.org/en/6.2.x/">pytest</a> là framework hỗ trợ viết code test</li>
+<li><a href="https://coverage.readthedocs.io/en/coverage-5.5/#:~:text=Coverage.py%20is%20a%20tool,gauge%20the%20effectiveness%20of%20tests.">Coverage.py</a> để xác định đoạn code nào có thể được execute nhưng đã không</li>
+<li><a href="https://www.pylint.org/">pylint</a> để kiểm tra lỗi cú pháp/logic</li>
+</ul>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Ở bài học vừa rồi, chúng ta đã tìm hiểu về kiểm thử phần mềm truyền thống, cũng như trong ML và các tool hữu ích để triển khai quá trình kiểm thử này. Hy vọng tài liệu này giúp ích cho bạn trong việc đảm bảo hệ thống ML đáng tin cậy hơn.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ol>
+<li><a href="https://serokell.io/blog/machine-learning-testing">https://serokell.io/blog/machine-learning-testing</a></li>
+<li><a href="https://developers.google.com/machine-learning/testing-debugging/common/overview">https://developers.google.com/machine-learning/testing-debugging/common/overview</a></li>
+<li><a href="https://www.oreilly.com/library/view/building-machine-learning/9781492045106/">Emmanuel Ameisen, Building Machine Learning Powered Applications: Going from Idea to Product</a></li>
+<li><a href="https://www.jeremyjordan.me/testing-ml/">https://www.jeremyjordan.me/testing-ml/</a></li>
+<li><a href="https://homes.cs.washington.edu/~marcotcr/acl20_checklist.pdf">https://homes.cs.washington.edu/~marcotcr/acl20_checklist.pdf</a></li>
+<li><a href="https://fontysblogt.nl/software-engineering-for-machine-learning-applications/">https://fontysblogt.nl/software-engineering-for-machine-learning-applications/</a></li>
+<li><a href="https://futurice.com/blog/differences-between-machine-learning-and-software-engineering">https://futurice.com/blog/differences-between-machine-learning-and-software-engineering</a></li>
+<li><a href="https://www.geeksforgeeks.org/differences-between-functional-and-non-functional-testing/">https://www.geeksforgeeks.org/differences-between-functional-and-non-functional-testing/</a></li>
+<li><a href="https://eugeneyan.com/writing/testing-ml/">https://eugeneyan.com/writing/testing-ml/</a></li>
+</ol>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Giới thiệu" class="md-footer__link md-footer__link--prev" href="gioi-thieu.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Giới thiệu
+            </div>
+</div>
+</a>
+<a aria-label="Next: Jenkins cơ bản" class="md-footer__link md-footer__link--next" href="jenkins-co-ban.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Jenkins cơ bản
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>

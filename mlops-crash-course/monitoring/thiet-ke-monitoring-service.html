@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://courses.mlops.vn/mlops-crash-course/monitoring/thiet-ke-monitoring-service.html" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
+<title>Thiết kế monitoring service - MLOpsVN Courses</title>
+<link href="../../assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<meta content="#4cae4f" name="theme-color"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/stylesheets/styles.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-JX2MD05JFT"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-JX2MD05JFT",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-JX2MD05JFT",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>html.glightbox-open { overflow: initial; height: 100%; }</style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
+<body data-md-color-accent="green" data-md-color-primary="green" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#gioi-thieu">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="MLOpsVN Courses" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            MLOpsVN Courses
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Thiết kế monitoring service
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="MLOpsVN Courses" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="MLOpsVN Courses">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    MLOpsVN Courses
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../index.html">MLOps Crash Course</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-label="MLOps Crash Course" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          MLOps Crash Course
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" id="__nav_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_1">
+          Tổng quan hệ thống
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Tổng quan hệ thống" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Tổng quan hệ thống
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/tong-quan-mlops.html">
+        Tổng quan MLOps
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/phan-tich-van-de.html">
+        Phân tích vấn đề
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-quan-he-thong/mlops-platform.html">
+        MLOps platform
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../poc/xay-dung-poc.html">
+        POC
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_3">
+          Data pipeline
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data pipeline" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Data pipeline
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/tong-quan-data-pipeline.html">
+        Tổng quan pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/airflow-co-ban.html">
+        Airflow cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/feature-store.html">
+        Feature store
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-pipeline/xay-dung-data-pipeline.html">
+        Xây dựng pipeline
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../training-pipeline/xay-dung-training-pipeline.html">
+        Training pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../model-serving/trien-khai-model-serving.html">
+        Model serving
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_6">
+          Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_6">
+<span class="md-nav__icon md-icon"></span>
+          Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="tong-quan-monitoring.html">
+        Tổng quan monitoring
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="metrics-he-thong.html">
+        Metrics hệ thống
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Thiết kế monitoring service
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="thiet-ke-monitoring-service.html">
+        Thiết kế monitoring service
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+    Architecture
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cach-test">
+    Cách test
+  </a>
+<nav aria-label="Cách test" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phat-hien-data-drift">
+    Phát hiện data drift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-model-performance">
+    Theo dõi model performance
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tao-datasets">
+    Tạo datasets
+  </a>
+<nav aria-label="Tạo datasets" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-datasets">
+    Test datasets
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="trien-khai-monitoring-service.html">
+        Triển khai monitoring service
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" id="__nav_2_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_7">
+          CI/CD
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="CI/CD" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          CI/CD
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/gioi-thieu.html">
+        Giới thiệu
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/kiem-thu-he-thong.html">
+        Kiểm thử hệ thống
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/jenkins-co-ban.html">
+        Jenkins cơ bản
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/data-pipeline.html">
+        CI/CD cho data pipeline
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ci-cd/model-serving.html">
+        CI/CD cho model serving
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tong-ket/tom-tat-noi-dung.html">
+        Tổng kết
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CONTRIBUTING.html">
+        Contributing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../CODE_OF_CONDUCT.html">
+        Code of Conduct
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gioi-thieu">
+    Giới thiệu
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moi-truong-phat-trien">
+    Môi trường phát triển
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+    Architecture
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cach-test">
+    Cách test
+  </a>
+<nav aria-label="Cách test" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phat-hien-data-drift">
+    Phát hiện data drift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#theo-doi-model-performance">
+    Theo dõi model performance
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tao-datasets">
+    Tạo datasets
+  </a>
+<nav aria-label="Tạo datasets" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-datasets">
+    Test datasets
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tong-ket">
+    Tổng kết
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tai-lieu-tham-khao">
+    Tài liệu tham khảo
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1>Thiết kế monitoring service</h1>
+<figure>
+<a class="glightbox" href="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner.jpg"><img loading="lazy" src="../../assets/images/mlops-crash-course/monitoring/monitoring-service/monitoring-banner.jpg"/></a>
+<figcaption>Photo by <a href="https://unsplash.com/@ibrahimboran?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ibrahim Boran</a> on <a href="https://unsplash.com/s/photos/monitoring?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></figcaption>
+</figure>
+<h2 id="gioi-thieu">Giới thiệu</h2>
+<p>Trong bài trước, chúng ta đã triển khai ELK Stack thu thập, theo dõi logs từ các services, Prometheus và Grafana server để theo dõi các metrics hệ thống như CPU, memory, network, v.v. Trong một hệ thống ML, chúng ta cũng cần theo dõi metrics liên quan tới data, model để kịp thời phát hiện sự thay đổi của chúng ở production, để cập nhật data hay train lại model kịp thời. Trong bài này, chúng ta sẽ thiết kế <em>monitoring service</em> với các công việc cụ thể sau:</p>
+<ol>
+<li>Tạo ra dataset chứa feature bị drift</li>
+<li>Triển khai monitoring service để theo dõi data và model performance</li>
+<li>Thiết lập Grafana dashboards để hiển thị metrics về data và model</li>
+</ol>
+<h2 id="moi-truong-phat-trien">Môi trường phát triển</h2>
+<p>Các bạn làm các bước sau để cài đặt môi trường phát triển:</p>
+<ol>
+<li>
+<p>Cài đặt <strong>môi trường Python 3.9 mới</strong> với các thư viện cần thiết trong file <code>monitoring_service/dev_requirements.txt</code></p>
+</li>
+<li>
+<p>Đặt environment variable <code>MONITORING_SERVICE_DIR</code> ở terminal bạn dùng bằng đường dẫn tuyệt đối tới folder <code>monitoring_service</code>. Env var này hỗ trợ chạy python code ở folder <code>monitoring_service/src</code> trong quá trình phát triển.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span> mlops-crash-course-code/monitoring_service
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">export</span> <span class="nv">MONITORING_SERVICE_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+</code></pre></div>
+</li>
+</ol>
+<p>Các tools sẽ được sử dụng trong bài này bao gồm:</p>
+<ol>
+<li><strong>Feast:</strong> truy xuất Feature Store</li>
+<li><strong>Flask:</strong> viết API cho monitoring service</li>
+<li><strong>Evidently:</strong> kiểm tra chất lượng data và model performance</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trong quá trình chạy code cho tất cả các phần dưới đây, giả sử rằng folder gốc nơi chúng ta làm việc là folder <code>monitoring_service</code>.</p>
+</div>
+<h2 id="architecture">Architecture</h2>
+<p>Theo dõi metrics liên quan tới chất lượng data và model performance, là quá trình kiểm tra xem data và model performance thay đổi như thế nào theo thời gian. Đây cũng là yêu cầu đầu ra của monitoring service. Các chức năng chính của monitoring service được thể hiện như hình dưới</p>
+<pre class="mermaid"><code>    graph LR
+        n00[ ]--Training data--&gt;n1[Phát hiện&lt;br&gt;data drift]--Data metrics--&gt;n01[ ]
+        n02[ ]--Production data--&gt;n1
+
+        n10[ ]--Prediction--&gt;n2[Theo dõi model&lt;br&gt;performance]--Model performance--&gt;n11[ ]
+        n12[ ]--Label--&gt;n2
+
+        style n00 height:0px;
+        style n01 height:0px;
+        style n02 height:0px;
+        style n10 height:0px;
+        style n11 height:0px;
+        style n12 height:0px;</code></pre>
+<p>Để biết data thay đổi thế nào, training data sẽ được so sánh với production data dựa trên một thuật toán so sánh. Thuật toán này xem xét các thuộc tính về thống kê của data bị thay đổi nhiều hay ít thế nào. Như vậy, đầu vào của chức năng <strong>Phát hiện data drift</strong> là features ở khi training và features ở production.</p>
+<p>Để biết model performance thay đổi thế nào, label ở production sẽ được so sánh với prediction mà model tạo ra. Model performance ở production cũng có thể được so sánh với model performance ở khi training. Để đơn giản, monitoring service sẽ chỉ theo dõi model performance ở production. Như vậy, đầu vào của chức năng <strong>Theo dõi model performance</strong> là dự đoán của model và label ở production.</p>
+<p>Trong bài này, thư viện Evidently được dùng để phát hiện data drift, tính toán model performance metrics. Evidently là một thư viện open-source được sử dụng để đánh giá, kiểm tra và giám sát data, model performance. Evidently đã tích hợp sẵn các thuật toán để theo dõi các thuộc tính thống kê của data như <strong>PSI</strong>, <strong>K-L divergence</strong>, <strong>Jensen-Shannon distance</strong>, <strong>Wasserstein distance</strong> và các metrics phổ biến của model performance như <strong>Accuracy</strong>, <strong>F1 score</strong>, <strong>RMSE</strong>, <strong>MAE</strong>, v.v. Bạn có thể đọc thêm ở <a href="https://docs.evidentlyai.com/reference/data-drift-algorithm">document của Evidently</a> để tìm hiểu về cách mà Evidently lựa chọn thuật toán tự động khi phát hiện data drift.</p>
+<h2 id="cach-test">Cách test</h2>
+<p>Trước khi code, chúng ta sẽ phân tích xem làm thế nào để test các chức năng của monitoring service.</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Before you start anything, learn how to finish it.</p>
+</div>
+<h3 id="phat-hien-data-drift">Phát hiện data drift</h3>
+<p>Để test chức năng <strong>Phát hiện data drift</strong>, 2 bộ datasets cần được tạo ra:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Tên dataset</th>
+<th>Giá trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>normal_data</code></td>
+<td>Trong đoạn <code>[A, B]</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>drift_data</code></td>
+<td>Trong đoạn <code>[C, D]</code>; <code>C</code>, <code>D</code> nằm đủ xa <code>A</code>, <code>B</code> để gây ra data drift</td>
+</tr>
+</tbody>
+</table>
+<p>Hai tình huống như bảng dưới đây cũng cần được sắp đặt.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Tình huống</th>
+<th>Data đầu vào</th>
+<th>Dataset được dùng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Production data không bị drift</td>
+<td>Training data</td>
+<td><code>normal_data</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Production data</td>
+<td><code>normal_data</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Production data bị drift</td>
+<td>Training data</td>
+<td><code>normal_data</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Production data</td>
+<td><code>drift_data</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ở tình huống 1, production data không bị drift <code>normal_data</code> vừa là training data, vừa là production data và được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store sẽ giống với prodution data, tức là sẽ không xảy ra data drift.</p>
+<p>Ở tình huống 2, production data bị drift <code>normal_data</code> ở trên vẫn là training data, còn <code>drift_data</code> là production data. <code>drift_data</code> được lưu vào Online Feature Store. Data được lấy ra ở Online Feature Store (<code>drift_data</code>) để model dự đoán có giá trị nằm xa training data (<code>normal_data</code>), tức là sẽ xảy ra data drift.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Cần lấy ra bao nhiêu records từ training data và tích luỹ bao nhiêu records của production data thì mới bắt đầu thực hiện quá trình so sánh?</p>
+</div>
+<p>Khi training dataset quá lớn, chúng ta không thể lấy hết các records ra để so sánh được. Thông thường, một con số đủ nhỏ sẽ được dùng để việc theo dõi data được diễn ra liên tục và gần với thời gian thực (near real-time). Đồng thời, con số này cũng phải đủ lớn, để các tính chất thống kê của data không quá khác biệt ở các phần của dataset. Phương pháp lựa chọn và số records cần lựa chọn tuỳ thuộc vào nhu cầu và tần suất theo dõi production data của mỗi dự án.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Thuật ngữ <strong><em>reference window</em></strong> chỉ tập hợp các records để so sánh với production data. Thuật ngữ <strong><em>test window</em></strong> chỉ tập hợp các records để so sánh với <strong><em>reference window</em></strong></p>
+</div>
+<p>Để đơn giản, chúng ta sẽ tạo ra 5 records cho mỗi dataset và chỉ tích luỹ 5 records của production data để thực hiện việc so sánh data.</p>
+<p>Một lý do nữa cho con số 5 là vì ở Online serving API, features được lấy ra sẽ là features mới nhất trong dataset. Do đó, việc tạo ra nhiều records ở nhiều thời điểm là không cần thiết. Chỉ cần đảm bảo rằng trong Feature Store, tồn tại ít nhất 1 record cho mỗi ID của tài xế ở request gửi đến. Vì dataset gốc chỉ chứa ID của 5 tài xế bao gồm <code>[1001, 1002, 1003, 1004, 1005]</code>, nên chỉ cần 5 records cho mỗi dataset.</p>
+<p>Tóm lại, chúng ta cần tạo ra 2 datasets có khoảng giá trị nằm xa nhau, mỗi dataset có 5 records tương ứng với 5 ID của các tài xế. Để đơn giản hoá quá trình test, phân phối chuẩn sẽ được sử dụng cho các giá trị của features trong cả 2 datasets.</p>
+<p>Bảng dưới đây là một ví dụ của <code>normal_data</code>.</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>datetime</th>
+<th>driver_id</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2021-07-19 23:00:00+00:00</td>
+<td>1001</td>
+<td>0.186341</td>
+<td>0.226879</td>
+<td>107</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2021-07-18 06:00:00+00:00</td>
+<td>1002</td>
+<td>0.071032</td>
+<td>0.229490</td>
+<td>250</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2021-07-28 09:00:00+00:00</td>
+<td>1003</td>
+<td>0.050000</td>
+<td>0.192864</td>
+<td>103</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2021-07-27 10:00:00+00:00</td>
+<td>1004</td>
+<td>0.184332</td>
+<td>0.050000</td>
+<td>49</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2021-07-23 05:00:00+00:00</td>
+<td>1005</td>
+<td>0.250000</td>
+<td>0.250000</td>
+<td>246</td>
+</tr>
+</tbody>
+</table>
+<p>Bảng dưới đây là một ví dụ của <code>drift_data</code>.</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>datetime</th>
+<th>driver_id</th>
+<th>conv_rate</th>
+<th>acc_rate</th>
+<th>avg_daily_trips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2021-07-19 23:00:00+00:00</td>
+<td>1001</td>
+<td>0.886341</td>
+<td>0.926879</td>
+<td>807</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2021-07-18 06:00:00+00:00</td>
+<td>1002</td>
+<td>0.771032</td>
+<td>0.929490</td>
+<td>950</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2021-07-28 09:00:00+00:00</td>
+<td>1003</td>
+<td>0.750000</td>
+<td>0.892864</td>
+<td>803</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2021-07-27 10:00:00+00:00</td>
+<td>1004</td>
+<td>0.884332</td>
+<td>0.750000</td>
+<td>750</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2021-07-23 05:00:00+00:00</td>
+<td>1005</td>
+<td>0.950000</td>
+<td>0.950000</td>
+<td>946</td>
+</tr>
+</tbody>
+</table>
+<h3 id="theo-doi-model-performance">Theo dõi model performance</h3>
+<p>Để test chức năng <strong>Theo dõi model performance</strong>, label của mỗi request được gửi tới Online serving API cần được biết, thì mới đánh giá được dự đoán của model là đúng hay sai.</p>
+<p>Ở <a href="../model-serving/trien-khai-model-serving.html#online-serving">phần Online serving của bài Triển khai model serving</a>, request và response được gửi tới Online serving API có dạng như sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1">// Request</span><span class="w"></span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p">{</span><span class="w"></span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uuid-1"</span><span class="p">,</span><span class="w"></span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">"driver_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="mi">1005</span><span class="p">]</span><span class="w"></span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="p">}</span><span class="w"></span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="c1">// Response</span><span class="w"></span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="p">{</span><span class="w"></span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="nt">"prediction"</span><span class="p">:</span><span class="w"> </span><span class="mi">1001</span><span class="p">,</span><span class="w"></span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>Với mỗi ID của tài xế, model trả về 1 số thực. Số thực này thể hiện khả năng mà tài xế có hoàn thành cuốc xe hay không. Tuy nhiên ở production, chúng ta không biết chính xác số thực này là bao nhiêu. Chúng ta chỉ biết rằng, khi model trả về ID tài xế có khả năng cao nhất hoàn thành cuốc xe là <code>1001</code>, thì tức là model đang dự đoán tài xế có ID <code>1001</code> sẽ hoàn thành cuốc xe. Bảng dưới đây thể hiện kết quả dự đoán của model và ID của tài xế được chọn, thông tin cuốc xe có hoàn thành không, với mỗi request được gửi đến Online serving API.</p>
+<table>
+<thead>
+<tr>
+<th>request_id</th>
+<th>driver_ids</th>
+<th>Dự đoán của model</th>
+<th>Tài xế được chọn</th>
+<th>Hoàn thành</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid-1</td>
+<td>[1001, 1002, 1003]</td>
+<td>0.1234</td>
+<td>1001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>uuid-2</td>
+<td>[1001, 1002, 1003]</td>
+<td>1.2345</td>
+<td>1001</td>
+<td>0</td>
+</tr>
+<tr>
+<td>uuid-3</td>
+<td>[1001, 1002, 1003]</td>
+<td>-1.5678</td>
+<td>1002</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Như bạn thấy, mặc dù có dự đoán của model, nhưng bạn sẽ không có label ở dạng số thực này để so sánh. Bạn chỉ biết tài xế được chọn được dự đoán là sẽ hoàn thành cuốc xe, tức là dự đoán luôn là <code>1</code> cho tài xế được chọn đó. Như vậy, để test chức năng theo dõi model performance của monitoring service, bạn chỉ cần tạo ra labels cho mỗi request được gửi tới ở dạng 1/0 chứ không phải ở dạng số thực mà model trả về.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Cần tạo ra bao nhiêu request và label tương ứng?</p>
+</div>
+<p>Ở phần trước, chúng ta đã phân tích rằng chỉ cần tích luỹ 5 records là đủ để thực hiện quá trình so sánh data, nên số lượng request và label tương ứng cũng chỉ cần 5 records. Dataset chứa 5 records này được gọi là <code>request_data</code>, gồm 3 cột:</p>
+<ol>
+<li><code>request_id</code>: request id</li>
+<li><code>driver_ids</code>: danh sách ID các tài xế được gửi đến trong request</li>
+<li><code>trip_completed</code>: label cho request</li>
+</ol>
+<p>Có một vấn đề như sau. Nếu tài xế <code>1001</code> luôn được dự đoán là tài xế có khả năng cao nhất sẽ hoàn thành cuốc xe, thì bộ features của tài xế <code>1001</code> sẽ luôn được gửi về monitoring service, khiến cho tính chất thống kê của production data sẽ không giống với tính chất thống kê của <code>normal_data</code> hoặc <code>drift_data</code>. Để khắc phục, bạn cần đảm bảo cả 5 bộ features của 5 tài xế trong dataset mà chúng ta dùng (<code>normal_data</code> hoặc <code>drift_data</code>) đều được gửi tới monitoring service. Bảng dưới đây là một ví dụ cho dataset <code>request_data</code>.</p>
+<table>
+<thead>
+<tr>
+<th>request_id</th>
+<th>driver_ids</th>
+<th>trip_completed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid-1</td>
+<td>[1001]</td>
+<td>1</td>
+</tr>
+<tr>
+<td>uuid-2</td>
+<td>[1002]</td>
+<td>0</td>
+</tr>
+<tr>
+<td>uuid-3</td>
+<td>[1003]</td>
+<td>1</td>
+</tr>
+<tr>
+<td>uuid-4</td>
+<td>[1004]</td>
+<td>0</td>
+</tr>
+<tr>
+<td>uuid-5</td>
+<td>[1005]</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Như các bạn thấy, khi <code>driver_ids</code> chỉ chứa 1 ID, thì chắc chắc ID này sẽ được chọn làm dự đoán của model.</p>
+<p>Như vậy là chúng ta đã phân tích xong cách test monitoring service, với các bộ dataset cần được tạo ra bao gồm <code>normal_data</code>, <code>drift_data</code> và <code>request_data</code>. Các phần dưới đây sẽ tập trung vào viết code.</p>
+<h2 id="tao-datasets">Tạo datasets</h2>
+<p>Trong phần này, chúng ta sẽ tạo ra 2 datasets có tính chất và mục đích như bảng dưới đây.</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Phân phối</th>
+<th>Số records</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normal_data</code></td>
+<td>Phân phối chuẩn, giá trị thuộc [0.05, 0.25]</td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>drift_data</code></td>
+<td>Phân phối chuẩn, giá trị thuộc [0.75, 0.95]</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Code để tạo ra 2 datasets này nằm tại <code>monitoring_service/nbs/prepare_datasets.ipynb</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/nbs/prepare_datasets.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">df_orig</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">driver_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df_orig</span><span class="p">[</span><span class="s1">'driver_id'</span><span class="p">])</span> <span class="c1"># (1)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">N_SAMPLES</span> <span class="o">=</span> <span class="n">driver_ids</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="n">N_SAMPLES</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span> <span class="c1"># (2)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">X</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># (3)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">))</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">X_shift</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># (4)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">generated_X</span><span class="p">):</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="n">df</span><span class="p">[</span><span class="s1">'conv_rate'</span><span class="p">]</span> <span class="o">=</span> <span class="n">generated_X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># (5)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="n">df</span><span class="p">[</span><span class="s1">'acc_rate'</span><span class="p">]</span> <span class="o">=</span> <span class="n">generated_X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>    <span class="n">df</span><span class="p">[</span><span class="s1">'avg_daily_trips'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">generated_X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># (6)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="k">return</span> <span class="n">df</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="c1"># Tạo normal_data và drift_data</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="n">normal_df</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="n">drift_df</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="c1"># Tạo request_data</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="n">request_id_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># (7)</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="n">driver_ids_list</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_SAMPLES</span><span class="p">):</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="n">request_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"uuid-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="n">request_id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    <span class="n">driver_id</span> <span class="o">=</span> <span class="n">driver_ids</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">driver_ids</span><span class="p">)]</span> <span class="c1"># (8)</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">driver_ids_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">driver_id</span><span class="p">])</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_SAMPLES</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span> <span class="c1"># (9)</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="n">request_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span> <span class="c1"># (10)</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="n">request_df</span><span class="p">[</span><span class="s1">'request_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">request_id_list</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="n">request_df</span><span class="p">[</span><span class="s1">'driver_ids'</span><span class="p">]</span> <span class="o">=</span> <span class="n">driver_ids_list</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="n">request_df</span><span class="p">[</span><span class="s1">'trip_completed'</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Lấy ra ID các tài xế từ dataset gốc</li>
+<li>Tạo ra 1 dataset dạng classification theo phân phối chuẩn dùng hàm <code>make_classification</code> của scikit-learn</li>
+<li>Biến đổi <code>X</code> về đoạn [0.05, 0.25]. <code>X</code> sẽ được dùng để tạo <code>normal_data</code></li>
+<li>Biến đổi <code>X</code> về đoạn [0.75, 0.95], lưu vào <code>X_shift</code>. <code>X_shift</code> sẽ được dùng để tạo <code>drift_data</code></li>
+<li>Sử dụng 3 cột đầu tiên của <code>X</code> và <code>X_shift</code> để làm features cho <code>normal_data</code> và <code>drift_data</code></li>
+<li>Feature <code>avg_daily_trips</code> nằm trong khoảng từ 0 tới 1000</li>
+<li>Khởi tạo list chứa request ID và list chứa ID các tài xế cho mỗi request</li>
+<li>Lần lượt lấy ra ID các tài xế</li>
+<li>Tạo ra label cho mỗi request với xác suất 0.3 cho label <code>0</code> và 0.7 cho label <code>1</code>. 2 con số này được lấy bất kì</li>
+<li>Tạo <code>DataFrame</code> chứa <code>request_data</code></li>
+</ol>
+<p>Đoạn code trên tạo ra <code>request_data</code> chứa thông tin về request được gửi tới Online serving API. Thông tin về request cũng sẽ chứa label tương ứng của mỗi request. Tiếp theo, chúng ta sẽ test các datasets được tạo ra bằng cách sử dụng Evidently để phát hiện data drift và đánh giá model performance.</p>
+<h3 id="test-datasets">Test datasets</h3>
+<p>Code của phần này được đặt tại <code>monitoring_service/nbs/test_datasets.ipynb</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">monitoring_service/nbs/test_datasets.ipynb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">normal_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">ORIG_DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span> <span class="c1"># (1)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="n">drift_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">DRIFT_DATA_PATH</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'fastparquet'</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">request_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">REQUEST_DATA_PATH</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="n">column_mapping</span> <span class="o">=</span> <span class="n">ColumnMapping</span><span class="p">(</span> <span class="c1"># (2)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">target</span><span class="o">=</span><span class="s2">"trip_completed"</span><span class="p">,</span> <span class="c1"># (3)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">prediction</span><span class="o">=</span><span class="s2">"prediction"</span><span class="p">,</span> <span class="c1"># (4)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">numerical_features</span><span class="o">=</span><span class="p">[</span><span class="s2">"conv_rate"</span><span class="p">,</span> <span class="s2">"acc_rate"</span><span class="p">,</span> <span class="s2">"avg_daily_trips"</span><span class="p">],</span> <span class="c1"># (5)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="n">categorical_features</span><span class="o">=</span><span class="p">[],</span> <span class="c1"># (6)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">features_and_target_monitor</span> <span class="o">=</span> <span class="n">ModelMonitoring</span><span class="p">(</span><span class="n">monitors</span><span class="o">=</span><span class="p">[</span><span class="n">DataDriftMonitor</span><span class="p">()])</span> <span class="c1"># (7)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">model_performance_monitor</span> <span class="o">=</span> <span class="n">ModelMonitoring</span><span class="p">(</span><span class="n">monitors</span><span class="o">=</span><span class="p">[</span><span class="n">ClassificationPerformanceMonitor</span><span class="p">()])</span> <span class="c1"># (8)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="c1"># Chạy kiểm tra data drift</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="n">features_and_target_monitor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="c1"># (9)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">normal_df</span><span class="p">,</span> <span class="c1"># (10)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">current_data</span><span class="o">=</span><span class="n">drift_df</span><span class="p">,</span> <span class="c1"># (11)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="n">column_mapping</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">,</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="p">)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="c1"># Chạy kiểm tra model performance</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">drift_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="n">drift_df</span> <span class="o">=</span> <span class="n">drift_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">prediction</span><span class="o">=</span><span class="n">predictions</span><span class="p">)</span> <span class="c1"># (12)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="n">drift_df</span> <span class="o">=</span> <span class="n">drift_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">trip_completed</span><span class="o">=</span><span class="n">request_df</span><span class="p">[</span><span class="s2">"trip_completed"</span><span class="p">])</span> <span class="c1"># (13)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="n">model_performance_monitor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> <span class="c1"># (14)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">drift_df</span><span class="p">,</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>    <span class="n">current_data</span><span class="o">=</span><span class="n">drift_df</span><span class="p">,</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>    <span class="n">column_mapping</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">,</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Đọc <code>normal_data</code>, <code>drift_data</code> và <code>request_data</code></li>
+<li><code>ColumnMapping</code> là 1 class trong Evidently định nghĩa ý nghĩa của các cột trong bộ data</li>
+<li>Định nghĩa cột <code>target</code> hay chính là label</li>
+<li>Định nghĩa cột <code>prediction</code> hay chính là dự đoán của model</li>
+<li>Định nghĩa các cột là features ở dạng số</li>
+<li>Định nghĩa các cột là features ở dạng categorical</li>
+<li>Định nghĩa object <code>ModelMonitoring</code> để theo dõi data drift. <code>ModelMonitoring</code> là 1 class trong Evidently định nghĩa các loại monitoring mà chúng ta muốn chạy. Có nhiều loại monitoring như <code>DataDriftMonitor</code>, <code>CatTargetDriftMonitor</code>, <code>NumTargetDriftMonitor</code>, v.v.</li>
+<li>Định nghĩa object <code>ModelMonitoring</code> để theo dõi model performance</li>
+<li>Kiểm tra data drift, so sánh <code>drift_data</code> với <code>normal_data</code></li>
+<li>Dùng <code>normal_data</code> làm <strong>reference window</strong> hay training data. Trong Evidently, <strong>reference window</strong> được gán vào tham số <code>reference_data</code></li>
+<li>Dùng <code>drift_data</code> làm <strong>test window</strong> hay production data để so sánh với training data. Trong Evidently, <strong>test window</strong> được gán vào tham số <code>current_data</code></li>
+<li>Thêm cột <code>prediction</code> vào <code>drift_data</code>, hay chính là dự đoán của model. Như đã phân tích ở phần trước, predictions của model luôn là <code>1</code></li>
+<li>Thêm cột <code>trip_completed</code> vào <code>drift_data</code> hay chính là label của mỗi record</li>
+<li>Kiểm tra model performance so sánh <code>drift_data</code> với chính nó</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Tại sao lại cần kiểm tra model performance bằng cách so sánh <code>drift_data</code> hay production data với chính nó?</p>
+</div>
+<p>Trong Evidently, với loại monitoring là <code>ClassificationPerformanceMonitor</code> nếu cả <strong>reference window</strong>, <strong>test window</strong> đều chứa prediction và label thì Evidently sẽ tính toán các metrics của model performance trên cả 2 datasets này, việc thực hiện so sánh xem các metrics đó khác nhau thế nào. Tuy nhiên để đơn giản hoá, chúng ta chỉ cần biết model performance của model với production data, chứ không cần so sánh model performance giữa <strong>reference window</strong>, <strong>test window</strong>. Vì vậy, chúng ta sẽ truyền vào <code>drift_data</code> vào cả <code>reference_data</code> và <code>current_data</code>. Bạn có thể đọc thêm <a href="https://docs.evidentlyai.com/reports/classification-performance#requirements">tại đây</a> để hiểu rõ hơn về cách Evidently tính model performance.</p>
+<p>Kết quả được in ra sau khi chạy giống như sau.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>data_drift:n_drifted_features <span class="p">|</span> <span class="m">3</span> <span class="p">|</span> None <span class="c1"># (1)</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>data_drift:dataset_drift <span class="p">|</span> True <span class="p">|</span> None <span class="c1"># (2)</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>...
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>classification_performance:quality <span class="p">|</span> <span class="m">0</span>.4 <span class="p">|</span> <span class="o">{</span><span class="s1">'dataset'</span>: <span class="s1">'reference'</span>, <span class="s1">'metric'</span>: <span class="s1">'accuracy'</span><span class="o">}</span> <span class="c1"># (3)</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>classification_performance:class_quality <span class="p">|</span> <span class="m">0</span>.0 <span class="p">|</span> <span class="o">{</span><span class="s1">'dataset'</span>: <span class="s1">'reference'</span>, <span class="s1">'class_name'</span>: <span class="s1">'0'</span>, <span class="s1">'metric'</span>: <span class="s1">'precision'</span><span class="o">}</span> <span class="c1"># (4)</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>...
+</code></pre></div>
+<ol>
+<li>Số features bị drift</li>
+<li><code>current_data</code>, hay <strong>test window</strong>, có bị drift không</li>
+<li><code>accuracy</code> của model</li>
+<li><code>precision</code> của model cho class <code>0</code></li>
+</ol>
+<p>Để tìm hiểu thêm về các loại monitoring khác hay các chức năng khác của Evidently, bạn có thể xem thêm các ví dụ tại <a href="https://docs.evidentlyai.com/examples">website của Evidently</a>.</p>
+<h2 id="tong-ket">Tổng kết</h2>
+<p>Trong bài này chúng ta đã phân tích, thiết kế một service khá phức tạp là Monitoring service. Bạn đã hiểu các yêu cầu về các chức năng của một Monitoring service để theo dõi các metrics của data, model như <strong>Phát hiện Data drift</strong>, <strong>Theo dõi model performance</strong>. Trong bài tiếp theo, chúng ta sẽ học cách triển khai và thiết lập cảnh báo trên Grafana.</p>
+<h2 id="tai-lieu-tham-khao">Tài liệu tham khảo</h2>
+<ul>
+<li><a href="https://docs.evidentlyai.com/">Evidently</a></li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Metrics hệ thống" class="md-footer__link md-footer__link--prev" href="metrics-he-thong.html" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Metrics hệ thống
+            </div>
+</div>
+</a>
+<a aria-label="Next: Triển khai monitoring service" class="md-footer__link md-footer__link--next" href="trien-khai-monitoring-service.html" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Triển khai monitoring service
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright 2022 MLOpsVN Community. All Rights Reserved. Licensed under the Creative Commons Attribution 4.0 International Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/mlopsvn/courses.mlops.vn" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+<script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "width": "100%", "height": "auto", "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
+</html>
