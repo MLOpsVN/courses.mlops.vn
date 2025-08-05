@@ -1,0 +1,8 @@
+{
+  "name": "courses.mlops.vn",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "mkdocs serve",
+    "build": "mkdocs build -d public"
+  }
+}
